@@ -1,0 +1,26 @@
+[
+    {
+        "id": "repvgg_b0.rvgg_in1k",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/P0_U8S8_quantized_models_a1354b9/repvgg_b0.rvgg_in1k/repvgg_b0.rvgg_in1k.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "26ecc7a591e126c78cfc22ff5229f806"
+    },
+    {
+        "id": "xception41p",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/P0_U8S8_quantized_models_a1354b9/xception41p/xception41p.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "7aad9406f76f79a156758aaf468a9981"
+    },
+    {
+        "id": "tv_densenet121",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/P0_U8S8_quantized_models_a1354b9/tv_densenet121/tv_densenet121.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "f6087d342078eb9c1914227b836b9bd1"
+    },
+    {
+        "id": "densenet121",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/P0_U8S8_quantized_models_a1354b9/densenet121/densenet121.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "8388d627595a78e3deab24f456edcbbc"
+    }
+]

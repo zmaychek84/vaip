@@ -1,0 +1,32 @@
+[
+    {
+        "id": "PSO0_v0.1_hack_symmetric",
+        "onnx_model": "/proj/rdi/staff/tianping/share/__HACK/PSO0_v0.1_hack_symmetric.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "b60886927c7fb238637b0d0722c6ab57"
+    },
+    {
+        "id": "PSO1_V0.1_hack_symmetric",
+        "onnx_model": "/proj/rdi/staff/tianping/share/__HACK/PSO1_V0.1_hack_symmetric.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "e7896fbf7629a9181c3a0894fead3741"
+    },
+    {
+        "id": "PSA_v6.0_hack_symmetric.quant",
+        "onnx_model": "/proj/rdi/staff/tianping/share/__HACK/PSA_v6.0_hack_symmetric.quant.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "f402abfcf5965341ef1f77d69658ed12"
+    },
+    {
+        "id": "PSI_v1.0_hack_symmetric.quant",
+        "onnx_model": "/proj/rdi/staff/tianping/share/__HACK/PSI_v1.0_hack_symmetric.quant.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "0878688151559af0d67ef40564f6093c"
+    },
+    {
+        "id": "PSO1_V0.1_hack_symmetric_batchsize_1",
+        "onnx_model": "/proj/xcdhdstaff2/mingyue/qdq/from_yiming/PSO1_V0.1_hack_symmetric_batchsize_1.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "3e1047d82d4f18ee9cca8925a23f2850"
+    }
+]

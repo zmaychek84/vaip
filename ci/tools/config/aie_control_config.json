@@ -1,0 +1,1037 @@
+{
+    "schema_version": {
+        "major": "1",
+        "minor": "0",
+        "patch": "0"
+    },
+    "aie_metadata": {
+        "driver_config": {
+            "hw_gen": 4,
+            "base_address": 2199023255552,
+            "npi_address": 0,
+            "column_shift": 25,
+            "row_shift": 20,
+            "num_rows": 6,
+            "num_columns": 8,
+            "shim_row": 0,
+            "mem_tile_row_start": 1,
+            "mem_tile_num_rows": 1,
+            "aie_tile_row_start": 2,
+            "aie_tile_num_rows": 4,
+            "partition_num_cols": 5,
+            "partition_isolation": true,
+            "partition_overlay_start_cols": [
+                0,
+                1,
+                2,
+                3
+            ]
+        },
+        "aiecompiler_options": {
+            "broadcast_enable_core": false,
+            "graph_iterator_event": false,
+            "event_trace": "runtime"
+        },
+        "graphs": {
+            "graph0": {
+                "id": 0,
+                "name": "ipu_inst",
+                "core_columns": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    2,
+                    2,
+                    2,
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                "core_rows": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "iteration_memory_columns": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    2,
+                    2,
+                    2,
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                "iteration_memory_rows": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "iteration_memory_addresses": [
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4
+                ],
+                "multirate_triggers": [
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
+                ],
+                "pl_kernel_instance_names": [],
+                "pl_axi_lite_modes": []
+            }
+        },
+        "TileMapping": {
+            "AIEKernelToTileMapping": [
+                {
+                    "graph": "ipu_inst.pe_4x4.col0.core0",
+                    "tile": "aie",
+                    "column": 0,
+                    "row": 0,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col0.core1",
+                    "tile": "aie",
+                    "column": 0,
+                    "row": 1,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col0.core2",
+                    "tile": "aie",
+                    "column": 0,
+                    "row": 2,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col0.core3",
+                    "tile": "aie",
+                    "column": 0,
+                    "row": 3,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col1.core0",
+                    "tile": "aie",
+                    "column": 1,
+                    "row": 0,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col1.core1",
+                    "tile": "aie",
+                    "column": 1,
+                    "row": 1,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col1.core2",
+                    "tile": "aie",
+                    "column": 1,
+                    "row": 2,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col1.core3",
+                    "tile": "aie",
+                    "column": 1,
+                    "row": 3,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col2.core0",
+                    "tile": "aie",
+                    "column": 2,
+                    "row": 0,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col2.core1",
+                    "tile": "aie",
+                    "column": 2,
+                    "row": 1,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col2.core2",
+                    "tile": "aie",
+                    "column": 2,
+                    "row": 2,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col2.core3",
+                    "tile": "aie",
+                    "column": 2,
+                    "row": 3,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col3.core0",
+                    "tile": "aie",
+                    "column": 3,
+                    "row": 0,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col3.core1",
+                    "tile": "aie",
+                    "column": 3,
+                    "row": 1,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col3.core2",
+                    "tile": "aie",
+                    "column": 3,
+                    "row": 2,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4.col3.core3",
+                    "tile": "aie",
+                    "column": 3,
+                    "row": 3,
+                    "schedule": 0,
+                    "function": "wrapper_row.CoreRow0"
+                }
+            ],
+            "SharedBufferToTileMapping": [
+                {
+                    "graph": "ipu_inst.pe_4x4",
+                    "tile": "memory",
+                    "bufferName": "mtx[0]",
+                    "column": 0,
+                    "row": 0,
+                    "dmaChannels": {
+                        "mtx[0].in[0]": {
+                            "channel": 0,
+                            "direction": "s2mm"
+                        },
+                        "mtx[0].in[1]": {
+                            "channel": 1,
+                            "direction": "s2mm"
+                        },
+                        "mtx[0].out[0]": {
+                            "channel": 0,
+                            "direction": "mm2s"
+                        },
+                        "mtx[0].out[1]": {
+                            "channel": 1,
+                            "direction": "mm2s"
+                        },
+                        "mtx[0].out[2]": {
+                            "channel": 2,
+                            "direction": "mm2s"
+                        },
+                        "mtx[0].out[3]": {
+                            "channel": 3,
+                            "direction": "mm2s"
+                        },
+                        "mtx[0].out[4]": {
+                            "channel": 4,
+                            "direction": "mm2s"
+                        }
+                    }
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4",
+                    "tile": "memory",
+                    "bufferName": "mtx[1]",
+                    "column": 0,
+                    "row": 0,
+                    "dmaChannels": {
+                        "mtx[1].in[0]": {
+                            "channel": 2,
+                            "direction": "s2mm"
+                        },
+                        "mtx[1].in[1]": {
+                            "channel": 3,
+                            "direction": "s2mm"
+                        },
+                        "mtx[1].in[2]": {
+                            "channel": 4,
+                            "direction": "s2mm"
+                        },
+                        "mtx[1].in[3]": {
+                            "channel": 5,
+                            "direction": "s2mm"
+                        },
+                        "mtx[1].out[0]": {
+                            "channel": 5,
+                            "direction": "mm2s"
+                        }
+                    }
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4",
+                    "tile": "memory",
+                    "bufferName": "mtx[2]",
+                    "column": 1,
+                    "row": 0,
+                    "dmaChannels": {
+                        "mtx[2].in[0]": {
+                            "channel": 0,
+                            "direction": "s2mm"
+                        },
+                        "mtx[2].in[1]": {
+                            "channel": 1,
+                            "direction": "s2mm"
+                        },
+                        "mtx[2].out[0]": {
+                            "channel": 0,
+                            "direction": "mm2s"
+                        },
+                        "mtx[2].out[1]": {
+                            "channel": 1,
+                            "direction": "mm2s"
+                        },
+                        "mtx[2].out[2]": {
+                            "channel": 2,
+                            "direction": "mm2s"
+                        },
+                        "mtx[2].out[3]": {
+                            "channel": 3,
+                            "direction": "mm2s"
+                        },
+                        "mtx[2].out[4]": {
+                            "channel": 4,
+                            "direction": "mm2s"
+                        }
+                    }
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4",
+                    "tile": "memory",
+                    "bufferName": "mtx[3]",
+                    "column": 1,
+                    "row": 0,
+                    "dmaChannels": {
+                        "mtx[3].in[0]": {
+                            "channel": 2,
+                            "direction": "s2mm"
+                        },
+                        "mtx[3].in[1]": {
+                            "channel": 3,
+                            "direction": "s2mm"
+                        },
+                        "mtx[3].in[2]": {
+                            "channel": 4,
+                            "direction": "s2mm"
+                        },
+                        "mtx[3].in[3]": {
+                            "channel": 5,
+                            "direction": "s2mm"
+                        },
+                        "mtx[3].out[0]": {
+                            "channel": 5,
+                            "direction": "mm2s"
+                        }
+                    }
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4",
+                    "tile": "memory",
+                    "bufferName": "mtx[4]",
+                    "column": 2,
+                    "row": 0,
+                    "dmaChannels": {
+                        "mtx[4].in[0]": {
+                            "channel": 0,
+                            "direction": "s2mm"
+                        },
+                        "mtx[4].in[1]": {
+                            "channel": 1,
+                            "direction": "s2mm"
+                        },
+                        "mtx[4].out[0]": {
+                            "channel": 0,
+                            "direction": "mm2s"
+                        },
+                        "mtx[4].out[1]": {
+                            "channel": 1,
+                            "direction": "mm2s"
+                        },
+                        "mtx[4].out[2]": {
+                            "channel": 2,
+                            "direction": "mm2s"
+                        },
+                        "mtx[4].out[3]": {
+                            "channel": 3,
+                            "direction": "mm2s"
+                        },
+                        "mtx[4].out[4]": {
+                            "channel": 4,
+                            "direction": "mm2s"
+                        }
+                    }
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4",
+                    "tile": "memory",
+                    "bufferName": "mtx[5]",
+                    "column": 2,
+                    "row": 0,
+                    "dmaChannels": {
+                        "mtx[5].in[0]": {
+                            "channel": 2,
+                            "direction": "s2mm"
+                        },
+                        "mtx[5].in[1]": {
+                            "channel": 3,
+                            "direction": "s2mm"
+                        },
+                        "mtx[5].in[2]": {
+                            "channel": 4,
+                            "direction": "s2mm"
+                        },
+                        "mtx[5].in[3]": {
+                            "channel": 5,
+                            "direction": "s2mm"
+                        },
+                        "mtx[5].out[0]": {
+                            "channel": 5,
+                            "direction": "mm2s"
+                        }
+                    }
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4",
+                    "tile": "memory",
+                    "bufferName": "mtx[6]",
+                    "column": 3,
+                    "row": 0,
+                    "dmaChannels": {
+                        "mtx[6].in[0]": {
+                            "channel": 0,
+                            "direction": "s2mm"
+                        },
+                        "mtx[6].in[1]": {
+                            "channel": 1,
+                            "direction": "s2mm"
+                        },
+                        "mtx[6].out[0]": {
+                            "channel": 0,
+                            "direction": "mm2s"
+                        },
+                        "mtx[6].out[1]": {
+                            "channel": 1,
+                            "direction": "mm2s"
+                        },
+                        "mtx[6].out[2]": {
+                            "channel": 2,
+                            "direction": "mm2s"
+                        },
+                        "mtx[6].out[3]": {
+                            "channel": 3,
+                            "direction": "mm2s"
+                        },
+                        "mtx[6].out[4]": {
+                            "channel": 4,
+                            "direction": "mm2s"
+                        }
+                    }
+                },
+                {
+                    "graph": "ipu_inst.pe_4x4",
+                    "tile": "memory",
+                    "bufferName": "mtx[7]",
+                    "column": 3,
+                    "row": 0,
+                    "dmaChannels": {
+                        "mtx[7].in[0]": {
+                            "channel": 2,
+                            "direction": "s2mm"
+                        },
+                        "mtx[7].in[1]": {
+                            "channel": 3,
+                            "direction": "s2mm"
+                        },
+                        "mtx[7].in[2]": {
+                            "channel": 4,
+                            "direction": "s2mm"
+                        },
+                        "mtx[7].in[3]": {
+                            "channel": 5,
+                            "direction": "s2mm"
+                        },
+                        "mtx[7].out[0]": {
+                            "channel": 5,
+                            "direction": "mm2s"
+                        }
+                    }
+                }
+            ]
+        },
+        "RTPs": {},
+        "GMIOs": {
+            "gmio0": {
+                "id": 0,
+                "name": "ipu_inst.aPr_slice_c0[0]",
+                "logical_name": "IFM_MT0",
+                "type": 0,
+                "shim_column": 0,
+                "channel_number": 2,
+                "stream_id": 3,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio1": {
+                "id": 1,
+                "name": "ipu_inst.bPr_slice_c0[0]",
+                "logical_name": "WGT_MT0",
+                "type": 0,
+                "shim_column": 0,
+                "channel_number": 3,
+                "stream_id": 7,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio2": {
+                "id": 2,
+                "name": "ipu_inst.cPr_slice_c0[0]",
+                "logical_name": "OFM_MT0",
+                "type": 1,
+                "shim_column": 0,
+                "channel_number": 0,
+                "stream_id": 2,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio3": {
+                "id": 3,
+                "name": "ipu_inst.dPr_slice_c0[0]",
+                "logical_name": "OFM_MT4",
+                "type": 1,
+                "shim_column": 0,
+                "channel_number": 1,
+                "stream_id": 3,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio4": {
+                "id": 4,
+                "name": "ipu_inst.aPr_slice_c0[1]",
+                "logical_name": "IFM_MT1",
+                "type": 0,
+                "shim_column": 1,
+                "channel_number": 2,
+                "stream_id": 3,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio5": {
+                "id": 5,
+                "name": "ipu_inst.bPr_slice_c0[1]",
+                "logical_name": "WGT_MT1",
+                "type": 0,
+                "shim_column": 1,
+                "channel_number": 3,
+                "stream_id": 7,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio6": {
+                "id": 6,
+                "name": "ipu_inst.cPr_slice_c0[1]",
+                "logical_name": "OFM_MT1",
+                "type": 1,
+                "shim_column": 1,
+                "channel_number": 0,
+                "stream_id": 2,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio7": {
+                "id": 7,
+                "name": "ipu_inst.dPr_slice_c0[1]",
+                "logical_name": "OFM_MT5",
+                "type": 1,
+                "shim_column": 1,
+                "channel_number": 1,
+                "stream_id": 3,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio8": {
+                "id": 8,
+                "name": "ipu_inst.aPr_slice_c0[2]",
+                "logical_name": "IFM_MT2",
+                "type": 0,
+                "shim_column": 2,
+                "channel_number": 2,
+                "stream_id": 3,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio9": {
+                "id": 9,
+                "name": "ipu_inst.bPr_slice_c0[2]",
+                "logical_name": "WGT_MT2",
+                "type": 0,
+                "shim_column": 2,
+                "channel_number": 3,
+                "stream_id": 7,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio10": {
+                "id": 10,
+                "name": "ipu_inst.cPr_slice_c0[2]",
+                "logical_name": "OFM_MT2",
+                "type": 1,
+                "shim_column": 2,
+                "channel_number": 0,
+                "stream_id": 2,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio11": {
+                "id": 11,
+                "name": "ipu_inst.dPr_slice_c0[2]",
+                "logical_name": "OFM_MT6",
+                "type": 1,
+                "shim_column": 2,
+                "channel_number": 1,
+                "stream_id": 3,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio12": {
+                "id": 12,
+                "name": "ipu_inst.aPr_slice_c0[3]",
+                "logical_name": "IFM_MT3",
+                "type": 0,
+                "shim_column": 3,
+                "channel_number": 2,
+                "stream_id": 3,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio13": {
+                "id": 13,
+                "name": "ipu_inst.bPr_slice_c0[3]",
+                "logical_name": "WGT_MT3",
+                "type": 0,
+                "shim_column": 3,
+                "channel_number": 3,
+                "stream_id": 7,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio14": {
+                "id": 14,
+                "name": "ipu_inst.cPr_slice_c0[3]",
+                "logical_name": "OFM_MT3",
+                "type": 1,
+                "shim_column": 3,
+                "channel_number": 0,
+                "stream_id": 2,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            },
+            "gmio15": {
+                "id": 15,
+                "name": "ipu_inst.dPr_slice_c0[3]",
+                "logical_name": "OFM_MT7",
+                "type": 1,
+                "shim_column": 3,
+                "channel_number": 1,
+                "stream_id": 3,
+                "burst_length_in_16byte": 16,
+                "pl_kernel_instance_name": "",
+                "pl_parameter_index": -1
+            }
+        },
+        "PLIOs": {
+            "plio0": {
+                "id": 0,
+                "name": "ipu_inst.tct0[0]",
+                "logical_name": "TCT0",
+                "shim_column": 0,
+                "slaveOrMaster": 1,
+                "stream_id": 0
+            },
+            "plio1": {
+                "id": 1,
+                "name": "ipu_inst.tct0[1]",
+                "logical_name": "TCT1",
+                "shim_column": 1,
+                "slaveOrMaster": 1,
+                "stream_id": 0
+            },
+            "plio2": {
+                "id": 2,
+                "name": "ipu_inst.tct0[2]",
+                "logical_name": "TCT2",
+                "shim_column": 2,
+                "slaveOrMaster": 1,
+                "stream_id": 0
+            },
+            "plio3": {
+                "id": 3,
+                "name": "ipu_inst.tct0[3]",
+                "logical_name": "TCT3",
+                "shim_column": 3,
+                "slaveOrMaster": 1,
+                "stream_id": 0
+            }
+        },
+        "CDOs": {
+            "files": [
+                "aie_cdo_reset.bin",
+                "aie_cdo_error_handling.bin",
+                "aie_cdo_clock_gating.bin",
+                "aie_cdo_mem_clear.bin",
+                "aie_cdo_elfs_dm.bin",
+                "aie_cdo_elfs_pm.bin",
+                "aie_cdo_init_static.bin",
+                "aie_cdo_init_reconfig.bin",
+                "aie_cdo_enable.bin",
+                "aie_cdo_debug.bin"
+            ]
+        },
+        "EventGraphs": {
+            "graph0": {
+                "id": 0,
+                "name": "ipu_inst",
+                "core_columns": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    2,
+                    2,
+                    2,
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                "core_rows": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "dma_columns": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    2,
+                    2,
+                    2,
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                "dma_rows": [
+                    0,
+                    0,
+                    1,
+                    1,
+                    2,
+                    2,
+                    3,
+                    3,
+                    0,
+                    0,
+                    1,
+                    1,
+                    2,
+                    2,
+                    3,
+                    3,
+                    0,
+                    0,
+                    1,
+                    1,
+                    2,
+                    2,
+                    3,
+                    3,
+                    0,
+                    0,
+                    1,
+                    1,
+                    2,
+                    2,
+                    3,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3
+                ]
+            }
+        },
+        "DeviceData": {
+            "AIEBaseAddress": "0x20000000000",
+            "AIEFrequency": 1000
+        },
+        "TraceGMIOs": {
+            "gmio0": {
+                "id": 0,
+                "name": "traceGraph.event_trace0",
+                "logical_name": "event_trace0",
+                "type": 1,
+                "shim_column": 4,
+                "channel_number": 0,
+                "stream_id": 2,
+                "burst_length_in_16byte": 4
+            }
+        },
+        "AIEConfigsForTraceAndProfile": {
+            "GMIOs": {
+                "gmio0": {
+                    "logical_name": "IFM_MT0",
+                    "data_width": 32
+                },
+                "gmio1": {
+                    "logical_name": "WGT_MT0",
+                    "data_width": 32
+                },
+                "gmio2": {
+                    "logical_name": "OFM_MT0",
+                    "data_width": 32
+                },
+                "gmio3": {
+                    "logical_name": "OFM_MT4",
+                    "data_width": 32
+                },
+                "gmio4": {
+                    "logical_name": "IFM_MT1",
+                    "data_width": 32
+                },
+                "gmio5": {
+                    "logical_name": "WGT_MT1",
+                    "data_width": 32
+                },
+                "gmio6": {
+                    "logical_name": "OFM_MT1",
+                    "data_width": 32
+                },
+                "gmio7": {
+                    "logical_name": "OFM_MT5",
+                    "data_width": 32
+                },
+                "gmio8": {
+                    "logical_name": "IFM_MT2",
+                    "data_width": 32
+                },
+                "gmio9": {
+                    "logical_name": "WGT_MT2",
+                    "data_width": 32
+                },
+                "gmio10": {
+                    "logical_name": "OFM_MT2",
+                    "data_width": 32
+                },
+                "gmio11": {
+                    "logical_name": "OFM_MT6",
+                    "data_width": 32
+                },
+                "gmio12": {
+                    "logical_name": "IFM_MT3",
+                    "data_width": 32
+                },
+                "gmio13": {
+                    "logical_name": "WGT_MT3",
+                    "data_width": 32
+                },
+                "gmio14": {
+                    "logical_name": "OFM_MT3",
+                    "data_width": 32
+                },
+                "gmio15": {
+                    "logical_name": "OFM_MT7",
+                    "data_width": 32
+                }
+            },
+            "PLIOs": {
+                "plio0": {
+                    "logical_name": "TCT0",
+                    "data_width": 32
+                },
+                "plio1": {
+                    "logical_name": "TCT1",
+                    "data_width": 32
+                },
+                "plio2": {
+                    "logical_name": "TCT2",
+                    "data_width": 32
+                },
+                "plio3": {
+                    "logical_name": "TCT3",
+                    "data_width": 32
+                }
+            }
+        }
+    }
+}

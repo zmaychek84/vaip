@@ -1,0 +1,1 @@
+vaip_pass_manual_partition__hook

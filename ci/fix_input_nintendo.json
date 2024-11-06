@@ -1,0 +1,14 @@
+[
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "face_detection.qdq.U8S8.uint8", 
+        "md5sum": "b7af1af0ffe09fb77e74e73f4cf173d5", 
+        "onnx_model": "/group/dphi_software/mingyue/Ninetendo/face_detection.qdq.U8S8.uint8.ios.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "face_detection_yunet_2023mar-int8-s8s8.int8",
+        "md5sum": "b529965088df4537f5517d991a6948ab", 
+        "onnx_model": "/group/dphi_software/mingyue/Ninetendo/face_detection_yunet_2023mar-int8-s8s8.int8.ios.onnx"
+    }
+]

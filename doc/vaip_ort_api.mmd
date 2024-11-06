@@ -1,0 +1,96 @@
+---
+title: VAIP ORT API
+---
+classDiagram
+
+    Model "1" *-- "1" Graph
+    class Model {
+        +load(string path)$
+        +delete()
+        +clone(): Model
+        +main_graph(): Graph
+        +set_meta_data(string key, string value)
+        +get_meta_data(string key): string
+        +has_meta_data(string key): bool
+    }
+    class Graph{
+       +get_name() string
+       +?nodes() vector~Node*~
+       +get_inputs() vector~NodeArg*~
+       +get_outputs() vector~NodeArg*~
+       +set_outputs(vector~NodeArg*~ inputs)
+       +produce_node(string name): Node
+       +consumer_nodes(string name)
+       +get_node_arg(string name): NodeArg
+       +get_node(size_t index): Node
+       +get_all_initialzied_tensors():  vector~NodeArg*~
+       +add_node(...): Node
+       +remove_node(NodeInput)
+       +save()
+       +fuse(): Node
+       +resolve()
+       +reverse_dfs_from(...)
+    }
+    Graph "1" *-- "1..*" Node
+    class Node {
+        +get_name(): string
+        +description(): string
+        +get_index(): size_t
+        +op_type(): string
+        +op_domain(): string
+        +get_inputs(): vectort~NodeInput~
+        +get_output_node_args(): vector~NodeArg~
+        +get_attributes(): NodeAttributes
+        +get_function_body(): Graph
+        +type_is_fused(): bool
+    }
+    Graph "1" *-- "1..*" NodeArg
+    Node "1" *-- "1..*" NodeArg
+    NodeArg "1" *-- "1..*" TensorProto
+    class NodeArg {
+        +new()$
+        +clone()$
+        +get_name(): string
+        +get_shape(): unique_ptr~vector~i64~~
+        +set_shape(vector~i64~):
+        +get_denotation(): unique_ptr~vector~string~~
+        +set_denotation()
+        +get_element_type()
+        +set_element_type()
+        +get_const_data_as_tensor(): TensorProto
+    }
+    Node "1" *-- "1" NodeAttributes
+    class NodeAttributes{
+        +delete()$
+        +add(AttributeProto* attr)
+        +get(): AttributeProto
+    }
+    NodeAttributes "1" *-- "0..*" AttributeProto
+    class AttributeProto {
+        +delete()$
+        +new_int()$
+        +new_float()$
+        +new_string()$
+        +new_ints()$
+        +new_floats()$
+        +new_strings()$
+        +new_tensor(string name, TensorProto tensor)$
+        +get_int()
+        +get_float()
+        +get_string()
+        +get_ints()
+        +get_floats()
+        +get_strings()
+        +get_tensor(): TensorProto
+    }
+    AttributeProto "1" *-- TensorProto
+    class TensorProto {
+        +delete()$
+        +new_floats()$
+        +new_i32()$
+        +new_i8()$
+        +datae_type():int
+        +get_name(): string
+        +raw_data_size(): size_t
+        +as_raw(): span~char~
+    }

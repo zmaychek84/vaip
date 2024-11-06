@@ -1,0 +1,86 @@
+[
+    {
+        "id": "A3",
+	    "float_onnx": "/group/modelzoo/vai_q_onnx/WIN24_MEP/MEP_Models/A3/A3_v_0_1.onnx",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/WIN24_MEP/win24_cpu_best_accuracy_models/A3/A3_v_0_1_quantized_U8S8-ort-AAWS-Percentile-ADAROUND.onnx",
+        "accuracy_input": "accuracy_input/A3_input.json",
+        "cos_target": "0.999",
+        "psnr_target": "30.8",
+        "l2norm_target": "7.8",
+        "input": [
+            "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/A3_input_bin/input-09986_image_0.bin"
+        ],
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "e4496282641a72636d6d54ea3a1ff1b1"
+    },
+    {
+        "id": "C2",
+	    "float_onnx": "/group/modelzoo/vai_q_onnx/WIN24_MEP/MEP_Models/C2/C2_v_0_1.onnx",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/WIN24_MEP/win24_cpu_best_accuracy_models/C2/C2_v_0_1_quantized_U8S8-ort-AAWS-Percentile-ADAROUND.onnx",
+        "accuracy_input": "accuracy_input/C2_input.json",
+        "cos_target": "0.9985/0.9985",
+        "psnr_target": "45.9/38.264",
+        "l2norm_target": "106.33/1.461",
+        "input": [
+            "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/C2_input_bin/000000018193_input_0.bin"
+        ],
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "756a3fe245cb9bc750722c53dda114b2"
+    },
+    {
+        "id": "E",
+	    "float_onnx": "/group/modelzoo/vai_q_onnx/WIN24_MEP/MEP_Models/E/E_v_0_1.onnx",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/WIN24_MEP/win24_cpu_best_accuracy_models/E/E_v_0_1_quantized_U8S8-cpu-ASWS-MinMSE-ADAROUND_converted.onnx",
+        "accuracy_input": "accuracy_input/E_input.json",
+        "cos_target": "0.99731/0.997",
+        "psnr_target": "40.6329/40.8485",
+        "l2norm_target": "3.4617/1.7009",
+        "input": [
+            "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-511598827291099511_2-full_0631_normed_rgbm_0.bin"
+        ],
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "0840f867757fa577c7f2c5ecb3a73b3f"
+    },
+    {
+        "id": "L",
+	    "float_onnx": "/group/modelzoo/vai_q_onnx/WIN24_MEP/MEP_Models/L/L_v_0_1.onnx",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/WIN24_MEP/win24_cpu_best_accuracy_models/L/L_v_0_1_quantized_U8S8-ort-AAWS-Percentile-ADAROUND.onnx",
+        "accuracy_input": "accuracy_input/L_input.json",
+        "cos_target": "0.9992",
+        "psnr_target": "36.7",
+        "l2norm_target": "9.3154",
+        "input": [
+            "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/L_input_bin/015_input_2.bin"
+        ],
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "28892a83dc48861b3c6b5cc8cf0edd57"
+    },
+    {
+        "id": "N",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/WIN24_MEP/win24_cpu_best_accuracy_models/N1/N_v_0_1_quantized_S8S8-cpu-ASWS-MinMSE-mc-CLEStep3_converted.onnx",
+        "float_onnx": "/group/modelzoo/vai_q_onnx/WIN24_MEP/MEP_Models/N/N_v_0_1.onnx",
+        "accuracy_input": "accuracy_input/N_input.json",
+        "cos_target": "0.9989",
+        "psnr_target": "36.322",
+        "l2norm_target": "2.1003",
+        "input": [
+            "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/N1_input_bin/00219_input_face.bin"
+        ],
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "64d5eb5d786da36f5fc93ca9d24bafdb"
+    },
+    {
+        "id": "U",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/WIN24_MEP/win24_cpu_best_accuracy_models/U/U_v_0_1_quantized_U8S8-ipu-ASWS-MinMSE-ADAROUND.onnx",
+        "float_onnx": "/group/modelzoo/vai_q_onnx/WIN24_MEP/MEP_Models/U/U_v_0_1.onnx",
+        "accuracy_input": "accuracy_input/U_input.json",
+        "cos_target": "0.9999",
+        "psnr_target": "47.21",
+        "l2norm_target": "4.068",
+        "input": [
+            "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/U_input_bin/0216_input.bin"
+        ],
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "f822db1f24a242fbab87afe4197b2db5"
+    }
+]

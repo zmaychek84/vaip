@@ -1,0 +1,30 @@
+[
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Model_A",
+        "md5sum": "d86c6b6bcd3ea8a51c850af15aca0454",
+        "onnx_model": "/group/dphi_software/software/workspace/runfengw/ipu/MEP_models/Model_A/Model_A.quant.onnx",
+        "golden": "4fa75a2470d570161e20a639e6362863"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Model_C2",
+        "md5sum": "40e638a3a5c980e21a3a7b93bae363af",
+        "onnx_model": "/group/dphi_software/software/workspace/runfengw/ipu/MEP_models/Model_C2/Model_C2.quant.onnx",
+        "golden": "7ad54340fc3366236001c5c656c41e81"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Model_C1",
+        "md5sum": "215b1f9878eed9e453b0fb34e19f8ab7",
+        "onnx_model": "/group/dphi_software/software/workspace/runfengw/ipu/MEP_models/Model_C1/Model_C1.quant.onnx",
+        "golden": "0b2e973e5ac4fb402f124dd75e2ac019"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Model_E",
+        "md5sum": "dd39454d661428949192de2a6f94b6ee",
+        "onnx_model": "/group/dphi_software/software/workspace/runfengw/ipu/MEP_models/Model_E/Model_E.quant.onnx",
+        "golden": "ec1848fd08e4d1fa8610c810660342f735ae9ec838486567f96344fb414ebb84"
+    }
+]

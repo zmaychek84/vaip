@@ -1,0 +1,31 @@
+{
+    "supported_ops": [
+      "QMatMul",        "QMatMulAddGelu",
+      "QMatMulAdd",     "QLayerNorm",
+      "QEltWiseAdd",    "QMHAGRPB",
+      "QConcateOPs",    "QConv",
+      "QConcat",        "QGroupNorm",
+      "QSlice",         "QELWEMUL_qdq",
+      "IConv",          "QReshapeTranspose",
+      "QGlobalAvgPool", "QMHACHANNEL",
+      "QMHAWINDOW",     "QMHA",
+      "DQAdd",          "mzdk5MHA",
+      "QSilu",          "QGelu",
+      "QMatMulDynamic", "QMulSoftmax",
+      "QMatMulDynamicSoftmax",
+      "xcom-conv2d",    "QBroadcastAdd",
+      "Mladfsoftmax",   "QuantOP",
+      "QResize",        "DeQuantOP",
+      "QConv2MatMul"
+    ],
+    "excluded_ops": {
+        "vaip_node_1028_QuantizeLinear_Output": "QEltWiseAdd",
+        "vaip_node_1049_QuantizeLinear_Output": "QMatMulAdd",
+        "input_1_QuantizeLinear_Output": "QuantOP",
+        "input_2_QuantizeLinear_Output": "QuantOP",
+        "vaip_node_input_1_QuantizeLinear_Output": "QuantOP",
+        "vaip_node_input_2_QuantizeLinear_Output": "QuantOP",
+        "vaip_node_output_1_DequantizeLinear_Output": "DeQuantOP", 
+        "vaip_node_/down_blocks.0/resnets.0/Unsqueeze_1_output_0_QuantizeLinear_Output": "QConv2MatMul"
+    }
+}

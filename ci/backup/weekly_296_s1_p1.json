@@ -1,0 +1,463 @@
+[
+    {
+        "id": "hrnet_w32",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/hrnet_w32/HighResolutionNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "62866eb23c08609500130b9058c1215b"
+    },
+    {
+        "id": "hrnet_w64",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/hrnet_w64/HighResolutionNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "6107435840ef4e8e691ea0f97cf6ba42"
+    },
+    {
+        "id": "legacy_senet154",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/legacy_senet154/SENet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "6baa7c2608dba939e4a91d8f158f7375"
+    },
+    {
+        "id": "legacy_seresnext101_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/legacy_seresnext101_32x4d/SENet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "b219144236ac96f61a253eabe31cf710"
+    },
+    {
+        "id": "resnext101_64x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/resnext101_64x4d/ResNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/resnext101_64x4d/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "9471f46f054d479d4c48ae105d59dfbe"
+    },
+    {
+        "id": "resnext50d_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/resnext50d_32x4d/ResNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/resnext50d_32x4d/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "30b45535b5c2243caf7cf63e2f43a7bf"
+    },
+    {
+        "id": "sebotnet33ts_256",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/sebotnet33ts_256/ByobNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/sebotnet33ts_256/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "6702698cb121a09fe2e258f3292cce5a"
+    },
+    {
+        "id": "sequencer2d_s",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/sequencer2d_s/Sequencer2d_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "2266af226e54fade731ecc85a1954a5e"
+    },
+    {
+        "id": "seresnet50",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/seresnet50/ResNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/seresnet50/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "57d919d73852a22516d949475d23d7c2"
+    },
+    {
+        "id": "seresnext26d_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/seresnext26d_32x4d/ResNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "e3d3e8049e4640f77a4b48b0e1b60451"
+    },
+    {
+        "id": "seresnext26t_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/seresnext26t_32x4d/ResNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "5ff4479738bd889d641a8090d30ac724"
+    },
+    {
+        "id": "seresnext50_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/seresnext50_32x4d/ResNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "771290ef2322073c5196363a925d7d60"
+    },
+    {
+        "id": "skresnet18",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/skresnet18/ResNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "792512512066797f926c65b91a988ad7"
+    },
+    {
+        "id": "skresnet34",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/skresnet34/ResNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/skresnet34/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "2333087e57128086a7480cb611846e6c"
+    },
+    {
+        "id": "skresnext50_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/skresnext50_32x4d/ResNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "4b7535734c129517fa39f1bc4b7e0c79"
+    },
+    {
+        "id": "wide_resnet50_2",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/wide_resnet50_2/ResNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "b746422ea41d77d90e666bd4da7c6516"
+    },
+    {
+        "id": "xception41",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/xception41/XceptionAligned_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/xception41/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "e9734586b48ef57fc556179cec9f265e"
+    },
+    {
+        "id": "xception65",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/xception65/XceptionAligned_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "e515ba49d3c047c802f77b16d96d922f"
+    },
+    {
+        "id": "xception71",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/xception71/XceptionAligned_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "e92e6865dcaa3189e06ddc020b4f4109"
+    },
+    {
+        "id": "tv_resnext50_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tv_resnext50_32x4d/ResNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/tv_resnext50_32x4d/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "c3a60f7d1b5fe4394e8adf6b5c5917c7"
+    },
+    {
+        "id": "eca_nfnet_l1.ra2_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/eca_nfnet_l1.ra2_in1k/NormFreeNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "448d3ec2982e73e182860ea456801e52"
+    },
+    {
+        "id": "eca_nfnet_l2.ra3_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/eca_nfnet_l2.ra3_in1k/NormFreeNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "5b0833ad5614b411b068b523d1e6ed2d"
+    },
+    {
+        "id": "focalnet_tiny_lrf.ms_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/focalnet_tiny_lrf.ms_in1k/FocalNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "76a2585fb60c804667582303be34f1f6"
+    },
+    {
+        "id": "focalnet_tiny_srf.ms_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/focalnet_tiny_srf.ms_in1k/FocalNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "25d003ed6af491ea15d14d2f2533e13f"
+    },
+    {
+        "id": "gc_efficientnetv2_rw_t.agc_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/gc_efficientnetv2_rw_t.agc_in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "5a6da13ebebcfb8f54b437ad0ae407d6"
+    },
+    {
+        "id": "jx_nest_base",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/jx_nest_base/Nest_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "51b07e0a374fab1f47b86c1322755c04"
+    },
+    {
+        "id": "regnetx_080.pycls_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnetx_080.pycls_in1k/RegNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "f834b70ab73d8e9be6a8b318bbc312f8"
+    },
+    {
+        "id": "regnetx_120.pycls_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnetx_120.pycls_in1k/RegNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "4b7a0d229823f2b83737b3bacf39a19e"
+    },
+    {
+        "id": "regnetx_320.pycls_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnetx_320.pycls_in1k/RegNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "981b264e8527aaae0dfeb1bb501cae53"
+    },
+    {
+        "id": "regnetx_320.tv2_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnetx_320.tv2_in1k/RegNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "739390c8bd01708a3da4cec1cc09dfd9"
+    },
+    {
+        "id": "regnety_080.ra3_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnety_080.ra3_in1k/RegNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "645a913cbc89885bf5ab3427cd28ba00"
+    },
+    {
+        "id": "regnety_160.tv2_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnety_160.tv2_in1k/RegNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "a22c5f51dd5a4f71f41afa2e78c41aec"
+    },
+    {
+        "id": "regnety_640.seer_ft_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnety_640.seer_ft_in1k/RegNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "7fc7e07cfa73e867f919dc9a9586a8c7"
+    },
+    {
+        "id": "regnetz_c16_evos.ch_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnetz_c16_evos.ch_in1k/ByobNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "38fa741da24916a68f2e2a3e831656ce"
+    },
+    {
+        "id": "regnetz_d32.ra3_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnetz_d32.ra3_in1k/ByobNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "c7d612f001e10c6ab55c2eca426933c0"
+    },
+    {
+        "id": "regnetz_d8.ra3_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnetz_d8.ra3_in1k/ByobNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "c950d6bb03b76b1059fb5617d8e20708"
+    },
+    {
+        "id": "regnetz_e8.ra3_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/regnetz_e8.ra3_in1k/ByobNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "e15097c72525699e819f06639273f93a"
+    },
+    {
+        "id": "resnetv2_101x1_bit.goog_in21k_ft_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/resnetv2_101x1_bit.goog_in21k_ft_in1k/ResNetV2_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "9e989e4db487ece14384c8c43c11f9ae"
+    },
+    {
+        "id": "rexnetr_200.sw_in12k_ft_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/rexnetr_200.sw_in12k_ft_in1k/RexNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "651ef19bed9ef230629cd18b4f5253eb"
+    },
+    {
+        "id": "rexnetr_300.sw_in12k_ft_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/rexnetr_300.sw_in12k_ft_in1k/RexNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "3791934450905bca06a7dbde9edac8ca"
+    },
+    {
+        "id": "rexnet_100.nav_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/rexnet_100.nav_in1k/RexNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "47e4b66ecf6ee2041ce12aeae5d6280b"
+    },
+    {
+        "id": "rexnet_130.nav_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/rexnet_130.nav_in1k/RexNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/rexnet_130.nav_in1k/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "b839984078c796921302e7e8401250b4"
+    },
+    {
+        "id": "rexnet_150.nav_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/rexnet_150.nav_in1k/RexNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "ba7c57edd71fbc8c300a3634be4967ad"
+    },
+    {
+        "id": "rexnet_200.nav_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/rexnet_200.nav_in1k/RexNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "95293e26a52c0352985d11e41774f4b3"
+    },
+    {
+        "id": "rexnet_300.nav_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/rexnet_300.nav_in1k/RexNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "2e8367123211dc7be55f3ce9dcea3122"
+    },
+    {
+        "id": "semnasnet_075.rmsp_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/semnasnet_075.rmsp_in1k/EfficientNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/semnasnet_075.rmsp_in1k/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "87b904997b1093f4234a8a669a77a437"
+    },
+    {
+        "id": "semnasnet_100.rmsp_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/semnasnet_100.rmsp_in1k/EfficientNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/semnasnet_100.rmsp_in1k/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "9e2ef9fcf1a33c61e4ad9c7a3b9ab059"
+    },
+    {
+        "id": "seresnet33ts.ra2_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/seresnet33ts.ra2_in1k/ByobNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/seresnet33ts.ra2_in1k/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "fa0092d2b5009fde21cc68fe9a1b81c5"
+    },
+    {
+        "id": "seresnext26ts.ch_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/seresnext26ts.ch_in1k/ByobNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "b79aa5547bdfef2ff61e2a6bcd522636"
+    },
+    {
+        "id": "ssl_resnext50_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/ssl_resnext50_32x4d/ResNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/ssl_resnext50_32x4d/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "15765cb39914f45d574f08e2bc341028"
+    },
+    {
+        "id": "swsl_resnext50_32x4d",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/swsl_resnext50_32x4d/ResNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "11f83ea0dd1813ecb488976366772fd9"
+    },
+    {
+        "id": "tf_efficientnetv2_b0.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnetv2_b0.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "69dc03f43d3a4c5d88c92c90e88f8085"
+    },
+    {
+        "id": "tf_efficientnetv2_b1.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnetv2_b1.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "7b183cb0cb570d9628a9e6ebf7c8fd4e"
+    },
+    {
+        "id": "tf_efficientnetv2_b2.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnetv2_b2.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "927e11460dbb664f3c7f48fe3d0b7026"
+    },
+    {
+        "id": "tf_efficientnetv2_b3.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnetv2_b3.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "d17f7e8a7eb858a5666c9747bd4b844f"
+    },
+    {
+        "id": "tf_efficientnetv2_b3.in21k_ft_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnetv2_b3.in21k_ft_in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "bc6d098e0a3cac6ac1b2a02845eeab71"
+    },
+    {
+        "id": "tf_efficientnet_el.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnet_el.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "ad23374b912d737b3810b61a8b729b74"
+    },
+    {
+        "id": "tf_efficientnet_em.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnet_em.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "90323128b5bd1fc7ecbd58c2fe5f05b6"
+    },
+    {
+        "id": "tf_efficientnet_es.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnet_es.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "a8c04d66548510b3b89b6758a862eaac"
+    },
+    {
+        "id": "tf_efficientnet_lite0.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnet_lite0.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "2c424602e1482a72e6bb890602c45241"
+    },
+    {
+        "id": "tf_efficientnet_lite1.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnet_lite1.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "78d61f4734573866e63e445ba8efc789"
+    },
+    {
+        "id": "tf_efficientnet_lite2.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnet_lite2.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "420392435cf35fa9a731823ac86ccd36"
+    },
+    {
+        "id": "tf_efficientnet_lite3.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnet_lite3.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "520ec33f5e9083395bffa5b9ac1f72aa"
+    },
+    {
+        "id": "tf_efficientnet_lite4.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_efficientnet_lite4.in1k/EfficientNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/tf_efficientnet_lite4.in1k/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "9272b66708213b531789b391b39f4c59"
+    },
+    {
+        "id": "tf_mobilenetv3_large_minimal_100.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_mobilenetv3_large_minimal_100.in1k/MobileNetV3_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "61c4fce4c5e868e8009bffaeb540eac4"
+    },
+    {
+        "id": "tf_mobilenetv3_small_075.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_mobilenetv3_small_075.in1k/MobileNetV3_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "768e31e623dc0372bb595d2037e283ce"
+    },
+    {
+        "id": "tf_mobilenetv3_small_100.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_mobilenetv3_small_100.in1k/MobileNetV3_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/tf_mobilenetv3_small_100.in1k/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "49eee24f2fc875da08109250e92e6cc1"
+    },
+    {
+        "id": "tf_mobilenetv3_small_minimal_100.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tf_mobilenetv3_small_minimal_100.in1k/MobileNetV3_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "44e751646b22303cdd2878f9aad53790"
+    },
+    {
+        "id": "tinynet_a.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tinynet_a.in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "699e34a37e34c8555f5f26bbafd37c0c"
+    },
+    {
+        "id": "tinynet_d.in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/tinynet_d.in1k/EfficientNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/tinynet_d.in1k/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "da182aa068d1eb656a9800bdd89e74ff"
+    },
+    {
+        "id": "efficientnet_b5.in12k_ft_in1k",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/efficientnet_b5.in12k_ft_in1k/EfficientNet_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "927ef9fc529015faada35b87806d1062"
+    },
+    {
+        "id": "selecsls42b",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/selecsls42b/SelecSLS_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/selecsls42b/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "d56e831f7fb344a4209eeb093430a976"
+    },
+    {
+        "id": "selecsls60",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/selecsls60/SelecSLS_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/selecsls60/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "fb9ff7f754dbb2eaea65eeca3a9ac027"
+    },
+    {
+        "id": "selecsls60b",
+        "onnx_model": "/proj/ipu_models/hug_fc/onnx_req_gpu/selecsls60b/SelecSLS_int.onnx",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "573d3a13b79e4bfc91b47b4233626644"
+    }
+]

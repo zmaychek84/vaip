@@ -1,0 +1,1 @@
+vaip_custom_op_gmatmul_integer__hook

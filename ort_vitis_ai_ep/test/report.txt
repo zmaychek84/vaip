@@ -1,0 +1,70 @@
+#
+#   The Xilinx Vitis AI Vaip in this distribution are provided under the following free 
+#   and permissive binary-only license, but are not provided in source code form.  While the following free 
+#   and permissive license is similar to the BSD open source license, it is NOT the BSD open source license 
+#   nor other OSI-approved open source license.
+#
+#    Copyright (C) 2022 Xilinx, Inc. All rights reserved.
+#    Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+#
+#    Redistribution and use in binary form only, without modification, is permitted provided that the following conditions are met:
+#
+#    1. Redistributions must reproduce the above copyright notice, this list of conditions and the following disclaimer in 
+#    the documentation and/or other materials provided with the distribution.
+#
+#    2. The name of Xilinx, Inc. may not be used to endorse or promote products redistributed with this software without specific 
+#    prior written permission.
+#
+#    THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+#    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL XILINX, INC. 
+#    BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+#    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
+#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT 
+#    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+#
+
+
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/Bayesian-Crowd-Counting/quantize_result/ResNet_BCC_int.onnx /home/public/zhaolin/pytorch/Bayesian-Crowd-Counting/quantize_result/ResNet_BCC_int.xmodel 
+# OK 2D_UNet_LW/code/quantize_result/unet_int.onnx 
+# 69d45fd0e935d13f1346c8cab280eafa  /home/public/zhaolin/pytorch/2D_UNet_LW/code/quantize_result/unet_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/2D_UNet_LW/code/quantize_result/unet_int.onnx /home/public/zhaolin/pytorch/2D_UNet_LW/code/quantize_result/unet_int.xmodel 
+# OK ENet_xilinx/quantize_result/ENet_int.onnx 
+# b67dda654698f6fa1d77db9d2d9594f3  /home/public/zhaolin/pytorch/ENet_xilinx/quantize_result/ENet_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/ENet_xilinx/quantize_result/ENet_int.onnx /home/public/zhaolin/pytorch/ENet_xilinx/quantize_result/ENet_int.xmodel 
+# OK SA-Gate/code/quantize_result/DeepLab_int.onnx 
+# 65aa8fe438596021089402a3d81c10b1  /home/public/zhaolin/pytorch/SA-Gate/code/quantize_result/DeepLab_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/SA-Gate/code/quantize_result/DeepLab_int.onnx /home/public/zhaolin/pytorch/SA-Gate/code/quantize_result/DeepLab_int.xmodel 
+# OK facereid/facereid_large/facereid_large_quant_result/Resnet18_int.onnx 
+# d111d3ee33c942c0b6f1134bc6a0f56b  /home/public/zhaolin/pytorch/facereid/facereid_large/facereid_large_quant_result/Resnet18_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/facereid/facereid_large/facereid_large_quant_result/Resnet18_int.onnx /home/public/zhaolin/pytorch/facereid/facereid_large/facereid_large_quant_result/Resnet18_int.xmodel 
+# OK facereid/facereid_small/facereid_small_quant_result/Resnetsmall_int.onnx 
+# d433623580877856db2e1109bd72e52c  /home/public/zhaolin/pytorch/facereid/facereid_small/facereid_small_quant_result/Resnetsmall_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/facereid/facereid_small/facereid_small_quant_result/Resnetsmall_int.onnx /home/public/zhaolin/pytorch/facereid/facereid_small/facereid_small_quant_result/Resnetsmall_int.xmodel 
+# OK person_reid/personreid_resnet18/reid_resnet18_quant_result/Baseline_int.onnx 
+# 6e918ba54d46bc115a9426d39b72b865  /home/public/zhaolin/pytorch/person_reid/personreid_resnet18/reid_resnet18_quant_result/Baseline_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/person_reid/personreid_resnet18/reid_resnet18_quant_result/Baseline_int.onnx /home/public/zhaolin/pytorch/person_reid/personreid_resnet18/reid_resnet18_quant_result/Baseline_int.xmodel 
+# OK person_reid/personreid_resnet50/reid_resnet50_quant_result/Baseline_int.onnx 
+# ebfb6f2cf12cc97f133424caac8ac3ca  /home/public/zhaolin/pytorch/person_reid/personreid_resnet50/reid_resnet50_quant_result/Baseline_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/person_reid/personreid_resnet50/reid_resnet50_quant_result/Baseline_int.onnx /home/public/zhaolin/pytorch/person_reid/personreid_resnet50/reid_resnet50_quant_result/Baseline_int.xmodel 
+# OK pointpainting-nus/semanticfpn/quantized/FPN_int.onnx 
+# 29b3c3660ec3853f4a32f65232165087  /home/public/zhaolin/pytorch/pointpainting-nus/semanticfpn/quantized/FPN_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/pointpainting-nus/semanticfpn/quantized/FPN_int.onnx /home/public/zhaolin/pytorch/pointpainting-nus/semanticfpn/quantized/FPN_int.xmodel 
+# OK pmg/pmg_quant_result/PMG_int.onnx 
+# 64a2a63be3c2eeb1e286790f2d12ec5c  /home/public/zhaolin/pytorch/pmg/pmg_quant_result/PMG_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/pmg/pmg_quant_result/PMG_int.onnx /home/public/zhaolin/pytorch/pmg/pmg_quant_result/PMG_int.xmodel 
+# OK multi_task_v3/code/test/quantize_result/MTNet_int.onnx 
+# 7154d7df638473a190b53fa2d9a90c6b  /home/public/zhaolin/pytorch/multi_task_v3/code/test/quantize_result/MTNet_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/multi_task_v3/code/test/quantize_result/MTNet_int.onnx /home/public/zhaolin/pytorch/multi_task_v3/code/test/quantize_result/MTNet_int.xmodel 
+# OK face_quality/code/train/quantize_result/PointsQuality_int.onnx 
+# 7d193c440e556093ff3ed4e7df4a2590  /home/public/zhaolin/pytorch/face_quality/code/train/quantize_result/PointsQuality_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/face_quality/code/train/quantize_result/PointsQuality_int.onnx /home/public/zhaolin/pytorch/face_quality/code/train/quantize_result/PointsQuality_int.xmodel 
+# OK facerec_pretrain_res20/code/test/quantize_result/Resnet_int.onnx 
+# 7731f37c873ae1dc4ec25dd2f1ab768c  /home/public/zhaolin/pytorch/facerec_pretrain_res20/code/test/quantize_result/Resnet_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/facerec_pretrain_res20/code/test/quantize_result/Resnet_int.onnx /home/public/zhaolin/pytorch/facerec_pretrain_res20/code/test/quantize_result/Resnet_int.xmodel 
+# OK Joint-training-covid19-segmentation/quantize_result/ResNet_int.onnx 
+# eacb1635f3fc8e7098d1565b883e28e1  /home/public/zhaolin/pytorch/Joint-training-covid19-segmentation/quantize_result/ResNet_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/Joint-training-covid19-segmentation/quantize_result/ResNet_int.onnx /home/public/zhaolin/pytorch/Joint-training-covid19-segmentation/quantize_result/ResNet_int.xmodel 
+# OK salsanext/code/train/tasks/semantic/quantize_result/SalsaNet_int.onnx 
+# be3fe678880adf9e5c1d07e047f90c60  /home/public/zhaolin/pytorch/salsanext/code/train/tasks/semantic/quantize_result/SalsaNet_int.onnx 
+    bash -e run_model.sh  /home/public/zhaolin/pytorch/salsanext/code/train/tasks/semantic/quantize_result/SalsaNet_int.onnx /home/public/zhaolin/pytorch/salsanext/code/train/tasks/semantic/quantize_result/SalsaNet_int.xmodel 
+pass

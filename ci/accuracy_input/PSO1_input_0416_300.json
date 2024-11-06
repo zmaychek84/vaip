@@ -1,0 +1,1202 @@
+{
+    "0": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/00ba6ceb2755858c46422767053ca83a6dacfcc8fb3586dbc71bc2a1fcbf0827_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/00ba6ceb2755858c46422767053ca83a6dacfcc8fb3586dbc71bc2a1fcbf0827_0_seq_mask.raw"
+    ],
+    "1": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/00ea004cfb7a50e031e61dac571b770c265537c528864003ac7d973f8c4c9469_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/00ea004cfb7a50e031e61dac571b770c265537c528864003ac7d973f8c4c9469_0_seq_mask.raw"
+    ],
+    "2": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/00ea004cfb7a50e031e61dac571b770c265537c528864003ac7d973f8c4c9469_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/00ea004cfb7a50e031e61dac571b770c265537c528864003ac7d973f8c4c9469_7_seq_mask.raw"
+    ],
+    "3": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_0_seq_mask.raw"
+    ],
+    "4": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_16_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_16_seq_mask.raw"
+    ],
+    "5": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_24_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_24_seq_mask.raw"
+    ],
+    "6": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_32_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_32_seq_mask.raw"
+    ],
+    "7": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_39_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_39_seq_mask.raw"
+    ],
+    "8": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_56_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_56_seq_mask.raw"
+    ],
+    "9": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/022ff5ca8d537fed4dbe9ef7005ee63d112d9a2e3f198039b159b74afadf9ada_8_seq_mask.raw"
+    ],
+    "10": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/025670300897900ae08d43e333bfeab4b8ce77190a4cb0b62087ef3d011714fd_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/025670300897900ae08d43e333bfeab4b8ce77190a4cb0b62087ef3d011714fd_0_seq_mask.raw"
+    ],
+    "11": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/02b4c5b76685f21a28b3afa2b10a2f0cb48772c9f92c6a787e683940b80ec3d6_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/02b4c5b76685f21a28b3afa2b10a2f0cb48772c9f92c6a787e683940b80ec3d6_0_seq_mask.raw"
+    ],
+    "12": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/032796b3a951301d09ec26a7194a42fa6d4e5a6ace3dfab34c869e29bb755b02_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/032796b3a951301d09ec26a7194a42fa6d4e5a6ace3dfab34c869e29bb755b02_0_seq_mask.raw"
+    ],
+    "13": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/032796b3a951301d09ec26a7194a42fa6d4e5a6ace3dfab34c869e29bb755b02_27_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/032796b3a951301d09ec26a7194a42fa6d4e5a6ace3dfab34c869e29bb755b02_27_seq_mask.raw"
+    ],
+    "14": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_0_seq_mask.raw"
+    ],
+    "15": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_12_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_12_seq_mask.raw"
+    ],
+    "16": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_17_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_17_seq_mask.raw"
+    ],
+    "17": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_23_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_23_seq_mask.raw"
+    ],
+    "18": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_4_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_4_seq_mask.raw"
+    ],
+    "19": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03374b80adb43035767eda39ec53be1787a6f90e3c146ddaf20c4a39f3e6198b_8_seq_mask.raw"
+    ],
+    "20": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03938fa45402c088e3f4a520ea4d50a71b7f3ca68458bdbb88234592e7c98d48_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03938fa45402c088e3f4a520ea4d50a71b7f3ca68458bdbb88234592e7c98d48_0_seq_mask.raw"
+    ],
+    "21": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03938fa45402c088e3f4a520ea4d50a71b7f3ca68458bdbb88234592e7c98d48_18_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03938fa45402c088e3f4a520ea4d50a71b7f3ca68458bdbb88234592e7c98d48_18_seq_mask.raw"
+    ],
+    "22": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_0_seq_mask.raw"
+    ],
+    "23": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_15_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_15_seq_mask.raw"
+    ],
+    "24": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_22_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_22_seq_mask.raw"
+    ],
+    "25": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_29_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_29_seq_mask.raw"
+    ],
+    "26": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/03adb4e09dcba350e5d494c89538d83c615ca9739fbeedf23027b34f49b442b5_7_seq_mask.raw"
+    ],
+    "27": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_0_seq_mask.raw"
+    ],
+    "28": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_11_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_11_seq_mask.raw"
+    ],
+    "29": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_14_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_14_seq_mask.raw"
+    ],
+    "30": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_20_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_20_seq_mask.raw"
+    ],
+    "31": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_4_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_4_seq_mask.raw"
+    ],
+    "32": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0436716c8038d3212f286acbde943b480ee6159d2d4654b843099247e1a146eb_7_seq_mask.raw"
+    ],
+    "33": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_0_seq_mask.raw"
+    ],
+    "34": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_14_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_14_seq_mask.raw"
+    ],
+    "35": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_21_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_21_seq_mask.raw"
+    ],
+    "36": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_28_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_28_seq_mask.raw"
+    ],
+    "37": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_36_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_36_seq_mask.raw"
+    ],
+    "38": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_43_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_43_seq_mask.raw"
+    ],
+    "39": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_50_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_50_seq_mask.raw"
+    ],
+    "40": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_65_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_65_seq_mask.raw"
+    ],
+    "41": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/04cd7f4693b0e4e521ac571bccd312f6357edf9dbc4d7a6054e0e2d677abc5f3_7_seq_mask.raw"
+    ],
+    "42": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_0_seq_mask.raw"
+    ],
+    "43": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_12_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_12_seq_mask.raw"
+    ],
+    "44": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_23_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_23_seq_mask.raw"
+    ],
+    "45": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_35_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_35_seq_mask.raw"
+    ],
+    "46": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_46_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_46_seq_mask.raw"
+    ],
+    "47": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_58_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_58_seq_mask.raw"
+    ],
+    "48": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_72_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_72_seq_mask.raw"
+    ],
+    "49": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_89_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05080b415e7681c316e2e82df46a74282056ede081fddd59ec35152f129a4f97_89_seq_mask.raw"
+    ],
+    "50": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_0_seq_mask.raw"
+    ],
+    "51": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_18_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_18_seq_mask.raw"
+    ],
+    "52": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_27_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_27_seq_mask.raw"
+    ],
+    "53": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_37_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_37_seq_mask.raw"
+    ],
+    "54": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_48_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_48_seq_mask.raw"
+    ],
+    "55": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_9_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/050df73d447d4bb0cfd635cb47dc6308471a046884db8b00201ecd63562dac8e_9_seq_mask.raw"
+    ],
+    "56": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/053c52b06ba18e2c11321c29b101dfe851db37dc726949d14941e65869cb0d3a_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/053c52b06ba18e2c11321c29b101dfe851db37dc726949d14941e65869cb0d3a_0_seq_mask.raw"
+    ],
+    "57": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/053c52b06ba18e2c11321c29b101dfe851db37dc726949d14941e65869cb0d3a_10_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/053c52b06ba18e2c11321c29b101dfe851db37dc726949d14941e65869cb0d3a_10_seq_mask.raw"
+    ],
+    "58": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/053c52b06ba18e2c11321c29b101dfe851db37dc726949d14941e65869cb0d3a_13_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/053c52b06ba18e2c11321c29b101dfe851db37dc726949d14941e65869cb0d3a_13_seq_mask.raw"
+    ],
+    "59": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/053c52b06ba18e2c11321c29b101dfe851db37dc726949d14941e65869cb0d3a_18_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/053c52b06ba18e2c11321c29b101dfe851db37dc726949d14941e65869cb0d3a_18_seq_mask.raw"
+    ],
+    "60": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/059a72d3ea458e93760108633bf96c13390d01971154e4c269995af40db34157_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/059a72d3ea458e93760108633bf96c13390d01971154e4c269995af40db34157_0_seq_mask.raw"
+    ],
+    "61": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/059a72d3ea458e93760108633bf96c13390d01971154e4c269995af40db34157_11_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/059a72d3ea458e93760108633bf96c13390d01971154e4c269995af40db34157_11_seq_mask.raw"
+    ],
+    "62": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_0_seq_mask.raw"
+    ],
+    "63": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_12_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_12_seq_mask.raw"
+    ],
+    "64": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_16_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_16_seq_mask.raw"
+    ],
+    "65": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_20_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_20_seq_mask.raw"
+    ],
+    "66": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_24_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_24_seq_mask.raw"
+    ],
+    "67": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_31_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_31_seq_mask.raw"
+    ],
+    "68": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_4_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_4_seq_mask.raw"
+    ],
+    "69": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05a8550a702a02d4463124b93448c1638c87b52ae986f200d126a04601ff76dd_8_seq_mask.raw"
+    ],
+    "70": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05e381877e437404d908d871f925e4e72425653c8a219bec88c409edd5b0f0f4_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/05e381877e437404d908d871f925e4e72425653c8a219bec88c409edd5b0f0f4_0_seq_mask.raw"
+    ],
+    "71": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/067c1f77032d2a8e304051e287fc75181d6110705ee2c97fccbb6f7672a1b29d_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/067c1f77032d2a8e304051e287fc75181d6110705ee2c97fccbb6f7672a1b29d_0_seq_mask.raw"
+    ],
+    "72": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/067c1f77032d2a8e304051e287fc75181d6110705ee2c97fccbb6f7672a1b29d_21_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/067c1f77032d2a8e304051e287fc75181d6110705ee2c97fccbb6f7672a1b29d_21_seq_mask.raw"
+    ],
+    "73": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/06f722b558c08f9a3446a37da3a2c9c5f995217e05b4e660e94ff85e9ecf3b2f_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/06f722b558c08f9a3446a37da3a2c9c5f995217e05b4e660e94ff85e9ecf3b2f_0_seq_mask.raw"
+    ],
+    "74": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/06f722b558c08f9a3446a37da3a2c9c5f995217e05b4e660e94ff85e9ecf3b2f_19_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/06f722b558c08f9a3446a37da3a2c9c5f995217e05b4e660e94ff85e9ecf3b2f_19_seq_mask.raw"
+    ],
+    "75": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/06f722b558c08f9a3446a37da3a2c9c5f995217e05b4e660e94ff85e9ecf3b2f_43_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/06f722b558c08f9a3446a37da3a2c9c5f995217e05b4e660e94ff85e9ecf3b2f_43_seq_mask.raw"
+    ],
+    "76": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/06f722b558c08f9a3446a37da3a2c9c5f995217e05b4e660e94ff85e9ecf3b2f_9_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/06f722b558c08f9a3446a37da3a2c9c5f995217e05b4e660e94ff85e9ecf3b2f_9_seq_mask.raw"
+    ],
+    "77": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0765faf3ac051647d8761e77ce42868189cf34e49d727154ad000ffa7b7aa0a0_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0765faf3ac051647d8761e77ce42868189cf34e49d727154ad000ffa7b7aa0a0_0_seq_mask.raw"
+    ],
+    "78": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0765faf3ac051647d8761e77ce42868189cf34e49d727154ad000ffa7b7aa0a0_10_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0765faf3ac051647d8761e77ce42868189cf34e49d727154ad000ffa7b7aa0a0_10_seq_mask.raw"
+    ],
+    "79": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0820980b5bc986bd4a1ab977faabda734fed39f8fb4d549b38dcf60eb467c166_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0820980b5bc986bd4a1ab977faabda734fed39f8fb4d549b38dcf60eb467c166_0_seq_mask.raw"
+    ],
+    "80": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0820980b5bc986bd4a1ab977faabda734fed39f8fb4d549b38dcf60eb467c166_14_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0820980b5bc986bd4a1ab977faabda734fed39f8fb4d549b38dcf60eb467c166_14_seq_mask.raw"
+    ],
+    "81": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0820980b5bc986bd4a1ab977faabda734fed39f8fb4d549b38dcf60eb467c166_26_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0820980b5bc986bd4a1ab977faabda734fed39f8fb4d549b38dcf60eb467c166_26_seq_mask.raw"
+    ],
+    "82": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0820980b5bc986bd4a1ab977faabda734fed39f8fb4d549b38dcf60eb467c166_6_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0820980b5bc986bd4a1ab977faabda734fed39f8fb4d549b38dcf60eb467c166_6_seq_mask.raw"
+    ],
+    "83": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/08af3adefd5f09b52569d9f2588fc732589bc595f1eca8332241ebff3284275e_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/08af3adefd5f09b52569d9f2588fc732589bc595f1eca8332241ebff3284275e_0_seq_mask.raw"
+    ],
+    "84": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/098976b08eb5b4a5ec6ef7a741df08b9fda97a75be8fdc1b4b441d29ae733d77_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/098976b08eb5b4a5ec6ef7a741df08b9fda97a75be8fdc1b4b441d29ae733d77_0_seq_mask.raw"
+    ],
+    "85": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/098976b08eb5b4a5ec6ef7a741df08b9fda97a75be8fdc1b4b441d29ae733d77_4_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/098976b08eb5b4a5ec6ef7a741df08b9fda97a75be8fdc1b4b441d29ae733d77_4_seq_mask.raw"
+    ],
+    "86": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/098976b08eb5b4a5ec6ef7a741df08b9fda97a75be8fdc1b4b441d29ae733d77_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/098976b08eb5b4a5ec6ef7a741df08b9fda97a75be8fdc1b4b441d29ae733d77_8_seq_mask.raw"
+    ],
+    "87": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0993e08bce166728468848def2f56cf316ba3a0bedcd3531282efeb77ab6e1a7_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0993e08bce166728468848def2f56cf316ba3a0bedcd3531282efeb77ab6e1a7_0_seq_mask.raw"
+    ],
+    "88": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0993e08bce166728468848def2f56cf316ba3a0bedcd3531282efeb77ab6e1a7_12_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0993e08bce166728468848def2f56cf316ba3a0bedcd3531282efeb77ab6e1a7_12_seq_mask.raw"
+    ],
+    "89": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0993e08bce166728468848def2f56cf316ba3a0bedcd3531282efeb77ab6e1a7_20_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0993e08bce166728468848def2f56cf316ba3a0bedcd3531282efeb77ab6e1a7_20_seq_mask.raw"
+    ],
+    "90": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0993e08bce166728468848def2f56cf316ba3a0bedcd3531282efeb77ab6e1a7_6_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0993e08bce166728468848def2f56cf316ba3a0bedcd3531282efeb77ab6e1a7_6_seq_mask.raw"
+    ],
+    "91": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/09b80c28ae10e6bfa02adb9b46501ea19b887bf5c4a2240cd6344f7f8dc857ae_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/09b80c28ae10e6bfa02adb9b46501ea19b887bf5c4a2240cd6344f7f8dc857ae_0_seq_mask.raw"
+    ],
+    "92": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/09b80c28ae10e6bfa02adb9b46501ea19b887bf5c4a2240cd6344f7f8dc857ae_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/09b80c28ae10e6bfa02adb9b46501ea19b887bf5c4a2240cd6344f7f8dc857ae_8_seq_mask.raw"
+    ],
+    "93": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0ae85d53a4e7c8dfbf681e09c1868fe73ef903af1bf7113e440be06de33cc1e5_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0ae85d53a4e7c8dfbf681e09c1868fe73ef903af1bf7113e440be06de33cc1e5_0_seq_mask.raw"
+    ],
+    "94": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0b1cb9ebac953602d867a29fa2f11c0d9a46174501c5aff6c4012518e83465dd_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0b1cb9ebac953602d867a29fa2f11c0d9a46174501c5aff6c4012518e83465dd_0_seq_mask.raw"
+    ],
+    "95": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0b1cb9ebac953602d867a29fa2f11c0d9a46174501c5aff6c4012518e83465dd_21_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0b1cb9ebac953602d867a29fa2f11c0d9a46174501c5aff6c4012518e83465dd_21_seq_mask.raw"
+    ],
+    "96": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0b1cb9ebac953602d867a29fa2f11c0d9a46174501c5aff6c4012518e83465dd_36_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0b1cb9ebac953602d867a29fa2f11c0d9a46174501c5aff6c4012518e83465dd_36_seq_mask.raw"
+    ],
+    "97": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0b1cb9ebac953602d867a29fa2f11c0d9a46174501c5aff6c4012518e83465dd_9_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0b1cb9ebac953602d867a29fa2f11c0d9a46174501c5aff6c4012518e83465dd_9_seq_mask.raw"
+    ],
+    "98": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_0_seq_mask.raw"
+    ],
+    "99": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_19_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_19_seq_mask.raw"
+    ],
+    "100": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_24_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_24_seq_mask.raw"
+    ],
+    "101": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_31_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_31_seq_mask.raw"
+    ],
+    "102": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_37_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_37_seq_mask.raw"
+    ],
+    "103": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_48_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_48_seq_mask.raw"
+    ],
+    "104": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0c282704028d82aa5c21998129ad0dcb5e7ba6c69bab341758c17b00016be962_8_seq_mask.raw"
+    ],
+    "105": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb75169565672c6d08e0a0a96337f6519705c6e4dcb572a7a76b7e61bfff3b0_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb75169565672c6d08e0a0a96337f6519705c6e4dcb572a7a76b7e61bfff3b0_0_seq_mask.raw"
+    ],
+    "106": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_0_seq_mask.raw"
+    ],
+    "107": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_12_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_12_seq_mask.raw"
+    ],
+    "108": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_16_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_16_seq_mask.raw"
+    ],
+    "109": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_22_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_22_seq_mask.raw"
+    ],
+    "110": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_4_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_4_seq_mask.raw"
+    ],
+    "111": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0cb7f860885b30fc5ffee8b71dba2e3fc77e16949c4ec5b13bce664ab9249ad0_8_seq_mask.raw"
+    ],
+    "112": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0d1faa607ebe8ef06608e0901d2b55ee79a3b30efb979a5b6f5740f70d867eea_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0d1faa607ebe8ef06608e0901d2b55ee79a3b30efb979a5b6f5740f70d867eea_0_seq_mask.raw"
+    ],
+    "113": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0d1faa607ebe8ef06608e0901d2b55ee79a3b30efb979a5b6f5740f70d867eea_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0d1faa607ebe8ef06608e0901d2b55ee79a3b30efb979a5b6f5740f70d867eea_7_seq_mask.raw"
+    ],
+    "114": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0d616e53c967e94e4a4bc977ce122bf3ddefd617de57122ecba41b2ff22fe1a3_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0d616e53c967e94e4a4bc977ce122bf3ddefd617de57122ecba41b2ff22fe1a3_0_seq_mask.raw"
+    ],
+    "115": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0ddc241da19e1cb6c58ab95aa8a3cb266083a440a558c19354a938f67c2383f1_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0ddc241da19e1cb6c58ab95aa8a3cb266083a440a558c19354a938f67c2383f1_0_seq_mask.raw"
+    ],
+    "116": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0ddc241da19e1cb6c58ab95aa8a3cb266083a440a558c19354a938f67c2383f1_13_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0ddc241da19e1cb6c58ab95aa8a3cb266083a440a558c19354a938f67c2383f1_13_seq_mask.raw"
+    ],
+    "117": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e0ce1dfe55be0297e0200af3ea0753dbac42626c8518bbc0fd6e63d6516d9d9_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e0ce1dfe55be0297e0200af3ea0753dbac42626c8518bbc0fd6e63d6516d9d9_0_seq_mask.raw"
+    ],
+    "118": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e0ce1dfe55be0297e0200af3ea0753dbac42626c8518bbc0fd6e63d6516d9d9_18_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e0ce1dfe55be0297e0200af3ea0753dbac42626c8518bbc0fd6e63d6516d9d9_18_seq_mask.raw"
+    ],
+    "119": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_0_seq_mask.raw"
+    ],
+    "120": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_17_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_17_seq_mask.raw"
+    ],
+    "121": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_26_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_26_seq_mask.raw"
+    ],
+    "122": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_35_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_35_seq_mask.raw"
+    ],
+    "123": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_44_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_44_seq_mask.raw"
+    ],
+    "124": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_53_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_53_seq_mask.raw"
+    ],
+    "125": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_63_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_63_seq_mask.raw"
+    ],
+    "126": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e3f722cbcc7068eacba4117cc2e9d26355a1f28e389af830e1a0a5e6803dc92_8_seq_mask.raw"
+    ],
+    "127": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e69e1ffff90c8546bc3b360812ab527aa5631a255d6e2bc13a2ce9929b9d917_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e69e1ffff90c8546bc3b360812ab527aa5631a255d6e2bc13a2ce9929b9d917_0_seq_mask.raw"
+    ],
+    "128": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e69e1ffff90c8546bc3b360812ab527aa5631a255d6e2bc13a2ce9929b9d917_25_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e69e1ffff90c8546bc3b360812ab527aa5631a255d6e2bc13a2ce9929b9d917_25_seq_mask.raw"
+    ],
+    "129": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e69e1ffff90c8546bc3b360812ab527aa5631a255d6e2bc13a2ce9929b9d917_61_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0e69e1ffff90c8546bc3b360812ab527aa5631a255d6e2bc13a2ce9929b9d917_61_seq_mask.raw"
+    ],
+    "130": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0ec2877448a0dc3c7d4a168538454d211405dd2c125ddac92dec82b310b129f9_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0ec2877448a0dc3c7d4a168538454d211405dd2c125ddac92dec82b310b129f9_0_seq_mask.raw"
+    ],
+    "131": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0f5975f9699ef3f3060ae9fbc0ef833fde510a7e3e153932a60e20bda9ae1eae_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0f5975f9699ef3f3060ae9fbc0ef833fde510a7e3e153932a60e20bda9ae1eae_0_seq_mask.raw"
+    ],
+    "132": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0f5975f9699ef3f3060ae9fbc0ef833fde510a7e3e153932a60e20bda9ae1eae_5_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0f5975f9699ef3f3060ae9fbc0ef833fde510a7e3e153932a60e20bda9ae1eae_5_seq_mask.raw"
+    ],
+    "133": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0fca353760fed7260bbf5906b6c84741395c6e36643749777df5f2e3f775a08c_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0fca353760fed7260bbf5906b6c84741395c6e36643749777df5f2e3f775a08c_0_seq_mask.raw"
+    ],
+    "134": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0fd766afea933f2cb4fec8cefe7df1776006d86e4e56fd135163844575abf6ea_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/0fd766afea933f2cb4fec8cefe7df1776006d86e4e56fd135163844575abf6ea_0_seq_mask.raw"
+    ],
+    "135": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1037b4cfecd7fa3ecbd2c67793179a74a6b3d71ef2996dc3ccdbcf76adc4ecfc_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1037b4cfecd7fa3ecbd2c67793179a74a6b3d71ef2996dc3ccdbcf76adc4ecfc_0_seq_mask.raw"
+    ],
+    "136": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_0_seq_mask.raw"
+    ],
+    "137": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_14_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_14_seq_mask.raw"
+    ],
+    "138": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_21_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_21_seq_mask.raw"
+    ],
+    "139": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_27_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_27_seq_mask.raw"
+    ],
+    "140": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_32_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_32_seq_mask.raw"
+    ],
+    "141": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_37_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_37_seq_mask.raw"
+    ],
+    "142": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_45_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_45_seq_mask.raw"
+    ],
+    "143": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_48_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_48_seq_mask.raw"
+    ],
+    "144": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_55_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_55_seq_mask.raw"
+    ],
+    "145": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_61_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_61_seq_mask.raw"
+    ],
+    "146": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/106a4cf1becfa87d89b9258c1596d3cda52f676838b5783d418f8d6509ecf48b_7_seq_mask.raw"
+    ],
+    "147": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1088b10bbb6de8b5eb68ae63ed9b8192cced23011240341d102e0498963d56a3_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1088b10bbb6de8b5eb68ae63ed9b8192cced23011240341d102e0498963d56a3_0_seq_mask.raw"
+    ],
+    "148": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_0_seq_mask.raw"
+    ],
+    "149": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_12_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_12_seq_mask.raw"
+    ],
+    "150": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_25_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_25_seq_mask.raw"
+    ],
+    "151": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_37_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_37_seq_mask.raw"
+    ],
+    "152": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_50_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_50_seq_mask.raw"
+    ],
+    "153": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_62_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_62_seq_mask.raw"
+    ],
+    "154": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_75_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_75_seq_mask.raw"
+    ],
+    "155": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_92_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/110c4079ea76c0ecebacd805c4d0a322e6a59c54795c50015376951a7b649cdf_92_seq_mask.raw"
+    ],
+    "156": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_0_seq_mask.raw"
+    ],
+    "157": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_13_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_13_seq_mask.raw"
+    ],
+    "158": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_21_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_21_seq_mask.raw"
+    ],
+    "159": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_28_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_28_seq_mask.raw"
+    ],
+    "160": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_39_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_39_seq_mask.raw"
+    ],
+    "161": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_47_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_47_seq_mask.raw"
+    ],
+    "162": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_6_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1110744799dc4e1f61ce03b9b863549d08eab2f138ba40979fd6b6de10a72f9f_6_seq_mask.raw"
+    ],
+    "163": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_0_seq_mask.raw"
+    ],
+    "164": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_10_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_10_seq_mask.raw"
+    ],
+    "165": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_19_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_19_seq_mask.raw"
+    ],
+    "166": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_28_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_28_seq_mask.raw"
+    ],
+    "167": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_37_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_37_seq_mask.raw"
+    ],
+    "168": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_49_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117ce99a1b15b69c0cb6373bc2af6b02223b953507ab4ba77cef1364698d04b2_49_seq_mask.raw"
+    ],
+    "169": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117db701e893a84695a2ea0f071af50aec949a4ca9717ae35aebb23f523f884d_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/117db701e893a84695a2ea0f071af50aec949a4ca9717ae35aebb23f523f884d_0_seq_mask.raw"
+    ],
+    "170": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_0_seq_mask.raw"
+    ],
+    "171": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_17_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_17_seq_mask.raw"
+    ],
+    "172": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_26_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_26_seq_mask.raw"
+    ],
+    "173": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_41_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_41_seq_mask.raw"
+    ],
+    "174": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_52_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_52_seq_mask.raw"
+    ],
+    "175": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_70_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_70_seq_mask.raw"
+    ],
+    "176": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/11e733192898000e5a499dc422396f0c27cd5ed2946e8f94c9c3fa46dff5ef0e_8_seq_mask.raw"
+    ],
+    "177": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_0_seq_mask.raw"
+    ],
+    "178": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_13_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_13_seq_mask.raw"
+    ],
+    "179": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_20_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_20_seq_mask.raw"
+    ],
+    "180": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_29_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_29_seq_mask.raw"
+    ],
+    "181": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1214a75bef77ecb0991027a753ea56b4b451daa78f79ef19ee1cd76d87973ec4_7_seq_mask.raw"
+    ],
+    "182": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1254b93ed9118c5708fd0f48ec73f0ed7b4905786d0bc87ceef45671e5292e95_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1254b93ed9118c5708fd0f48ec73f0ed7b4905786d0bc87ceef45671e5292e95_0_seq_mask.raw"
+    ],
+    "183": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12bec2d9dc9b8796c1646037609b325a43ee1122643b25e87d7daf0c55210853_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12bec2d9dc9b8796c1646037609b325a43ee1122643b25e87d7daf0c55210853_0_seq_mask.raw"
+    ],
+    "184": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12dbcbee1c476d5c8c35878b9d0bd95fcfbbf15b9e4cf8563abd2fe153e32637_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12dbcbee1c476d5c8c35878b9d0bd95fcfbbf15b9e4cf8563abd2fe153e32637_0_seq_mask.raw"
+    ],
+    "185": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_0_seq_mask.raw"
+    ],
+    "186": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_105_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_105_seq_mask.raw"
+    ],
+    "187": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_10_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_10_seq_mask.raw"
+    ],
+    "188": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_110_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_110_seq_mask.raw"
+    ],
+    "189": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_120_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_120_seq_mask.raw"
+    ],
+    "190": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_136_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_136_seq_mask.raw"
+    ],
+    "191": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_21_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_21_seq_mask.raw"
+    ],
+    "192": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_31_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_31_seq_mask.raw"
+    ],
+    "193": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_40_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_40_seq_mask.raw"
+    ],
+    "194": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_46_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_46_seq_mask.raw"
+    ],
+    "195": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_52_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_52_seq_mask.raw"
+    ],
+    "196": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_60_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_60_seq_mask.raw"
+    ],
+    "197": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_70_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_70_seq_mask.raw"
+    ],
+    "198": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_79_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_79_seq_mask.raw"
+    ],
+    "199": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_89_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_89_seq_mask.raw"
+    ],
+    "200": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_97_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/12e195f36d40068e78e051ada84470adfc6a0bfac2c3db7daec2750127283581_97_seq_mask.raw"
+    ],
+    "201": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/13702972d9de2028c78e80a02260bc19ad733372b4a856544d4dfd43cb24525e_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/13702972d9de2028c78e80a02260bc19ad733372b4a856544d4dfd43cb24525e_0_seq_mask.raw"
+    ],
+    "202": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1407f7d1897e514f739c363f088f0c738da03ec116c5e3e5773a39e1f239f34e_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1407f7d1897e514f739c363f088f0c738da03ec116c5e3e5773a39e1f239f34e_0_seq_mask.raw"
+    ],
+    "203": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1414216a6e6c9016cb698eb53652b8abd61164d758faf719eba77dea5ecdbf27_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1414216a6e6c9016cb698eb53652b8abd61164d758faf719eba77dea5ecdbf27_0_seq_mask.raw"
+    ],
+    "204": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_0_seq_mask.raw"
+    ],
+    "205": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_15_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_15_seq_mask.raw"
+    ],
+    "206": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_33_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_33_seq_mask.raw"
+    ],
+    "207": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_43_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_43_seq_mask.raw"
+    ],
+    "208": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_53_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_53_seq_mask.raw"
+    ],
+    "209": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_62_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_62_seq_mask.raw"
+    ],
+    "210": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_85_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1493bec77355f46aa10f9881ffdc67c01c5b96baa27df24e85911dd919e0ea1a_85_seq_mask.raw"
+    ],
+    "211": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/14f9010602d5dab40ff9476acd5c46dfa3c848639075ca92683e53a194c90b72_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/14f9010602d5dab40ff9476acd5c46dfa3c848639075ca92683e53a194c90b72_0_seq_mask.raw"
+    ],
+    "212": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1664dfd2bfb2398de3663e89b82192b93c82c1e062adcd7186cfec76d21704c6_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1664dfd2bfb2398de3663e89b82192b93c82c1e062adcd7186cfec76d21704c6_0_seq_mask.raw"
+    ],
+    "213": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1664dfd2bfb2398de3663e89b82192b93c82c1e062adcd7186cfec76d21704c6_19_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1664dfd2bfb2398de3663e89b82192b93c82c1e062adcd7186cfec76d21704c6_19_seq_mask.raw"
+    ],
+    "214": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1664dfd2bfb2398de3663e89b82192b93c82c1e062adcd7186cfec76d21704c6_48_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1664dfd2bfb2398de3663e89b82192b93c82c1e062adcd7186cfec76d21704c6_48_seq_mask.raw"
+    ],
+    "215": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1664dfd2bfb2398de3663e89b82192b93c82c1e062adcd7186cfec76d21704c6_91_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1664dfd2bfb2398de3663e89b82192b93c82c1e062adcd7186cfec76d21704c6_91_seq_mask.raw"
+    ],
+    "216": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/16b7dccbfc0a961f541fec0372c9be052992270aa40359ab0dce47faf9cd6902_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/16b7dccbfc0a961f541fec0372c9be052992270aa40359ab0dce47faf9cd6902_0_seq_mask.raw"
+    ],
+    "217": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/16b7dccbfc0a961f541fec0372c9be052992270aa40359ab0dce47faf9cd6902_46_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/16b7dccbfc0a961f541fec0372c9be052992270aa40359ab0dce47faf9cd6902_46_seq_mask.raw"
+    ],
+    "218": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1706d66ecd3ada523fc4f7fbae08c2534ead25adcede89933e2493fac77bc375_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1706d66ecd3ada523fc4f7fbae08c2534ead25adcede89933e2493fac77bc375_0_seq_mask.raw"
+    ],
+    "219": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1706d66ecd3ada523fc4f7fbae08c2534ead25adcede89933e2493fac77bc375_9_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1706d66ecd3ada523fc4f7fbae08c2534ead25adcede89933e2493fac77bc375_9_seq_mask.raw"
+    ],
+    "220": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_0_seq_mask.raw"
+    ],
+    "221": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_109_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_109_seq_mask.raw"
+    ],
+    "222": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_11_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_11_seq_mask.raw"
+    ],
+    "223": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_24_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_24_seq_mask.raw"
+    ],
+    "224": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_38_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_38_seq_mask.raw"
+    ],
+    "225": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_45_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_45_seq_mask.raw"
+    ],
+    "226": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_57_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_57_seq_mask.raw"
+    ],
+    "227": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_68_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/175589181cf1b23025c83c5ce69fb2fda67997740394dd40529ebaae790d4fd5_68_seq_mask.raw"
+    ],
+    "228": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1772cb01dbe3ec86e38726e1b0801f312b8e83c857efda07fdea0e2641aa24e1_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1772cb01dbe3ec86e38726e1b0801f312b8e83c857efda07fdea0e2641aa24e1_0_seq_mask.raw"
+    ],
+    "229": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1772cb01dbe3ec86e38726e1b0801f312b8e83c857efda07fdea0e2641aa24e1_18_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1772cb01dbe3ec86e38726e1b0801f312b8e83c857efda07fdea0e2641aa24e1_18_seq_mask.raw"
+    ],
+    "230": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1772cb01dbe3ec86e38726e1b0801f312b8e83c857efda07fdea0e2641aa24e1_56_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1772cb01dbe3ec86e38726e1b0801f312b8e83c857efda07fdea0e2641aa24e1_56_seq_mask.raw"
+    ],
+    "231": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1772cb01dbe3ec86e38726e1b0801f312b8e83c857efda07fdea0e2641aa24e1_6_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1772cb01dbe3ec86e38726e1b0801f312b8e83c857efda07fdea0e2641aa24e1_6_seq_mask.raw"
+    ],
+    "232": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17a3f93bb48731901864c8a4d24c730c73bd8afe82ab753c6f0d28d58b3f59c8_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17a3f93bb48731901864c8a4d24c730c73bd8afe82ab753c6f0d28d58b3f59c8_0_seq_mask.raw"
+    ],
+    "233": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17a3f93bb48731901864c8a4d24c730c73bd8afe82ab753c6f0d28d58b3f59c8_12_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17a3f93bb48731901864c8a4d24c730c73bd8afe82ab753c6f0d28d58b3f59c8_12_seq_mask.raw"
+    ],
+    "234": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17c0e869cf4833ccbee25902401c03095c7e0b55941de229416ae10994de08da_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17c0e869cf4833ccbee25902401c03095c7e0b55941de229416ae10994de08da_0_seq_mask.raw"
+    ],
+    "235": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17c0e869cf4833ccbee25902401c03095c7e0b55941de229416ae10994de08da_14_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17c0e869cf4833ccbee25902401c03095c7e0b55941de229416ae10994de08da_14_seq_mask.raw"
+    ],
+    "236": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17c0e869cf4833ccbee25902401c03095c7e0b55941de229416ae10994de08da_26_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17c0e869cf4833ccbee25902401c03095c7e0b55941de229416ae10994de08da_26_seq_mask.raw"
+    ],
+    "237": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17c0e869cf4833ccbee25902401c03095c7e0b55941de229416ae10994de08da_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17c0e869cf4833ccbee25902401c03095c7e0b55941de229416ae10994de08da_7_seq_mask.raw"
+    ],
+    "238": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_0_seq_mask.raw"
+    ],
+    "239": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_11_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_11_seq_mask.raw"
+    ],
+    "240": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_20_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_20_seq_mask.raw"
+    ],
+    "241": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_30_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_30_seq_mask.raw"
+    ],
+    "242": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_40_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_40_seq_mask.raw"
+    ],
+    "243": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_50_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_50_seq_mask.raw"
+    ],
+    "244": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_59_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17d2b8acee891ec0645b8d1fc7292092e9312c14440feac01ba9f6a6596285d6_59_seq_mask.raw"
+    ],
+    "245": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17f843caa134cbae0aa12aa3656c678399428ddaab2e0193ab8205243a0a22c0_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/17f843caa134cbae0aa12aa3656c678399428ddaab2e0193ab8205243a0a22c0_0_seq_mask.raw"
+    ],
+    "246": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/188d2449e954c2832a6aecd4193f3ca08044acbfed6bfd7019a584d601c805e8_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/188d2449e954c2832a6aecd4193f3ca08044acbfed6bfd7019a584d601c805e8_0_seq_mask.raw"
+    ],
+    "247": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1a76694e3af78f2a5f9250392904f2022d60fdade96c1eabb657b4d88c023eb8_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1a76694e3af78f2a5f9250392904f2022d60fdade96c1eabb657b4d88c023eb8_0_seq_mask.raw"
+    ],
+    "248": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_0_seq_mask.raw"
+    ],
+    "249": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_14_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_14_seq_mask.raw"
+    ],
+    "250": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_21_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_21_seq_mask.raw"
+    ],
+    "251": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_28_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_28_seq_mask.raw"
+    ],
+    "252": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_36_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_36_seq_mask.raw"
+    ],
+    "253": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_46_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_46_seq_mask.raw"
+    ],
+    "254": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_61_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_61_seq_mask.raw"
+    ],
+    "255": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_7_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b2d7225bbb878ddb6013dff534693c062aeb0380e52181f9756e47db9718395_7_seq_mask.raw"
+    ],
+    "256": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b35490f458f8191cc270df46a89283d9d63ce59b1937bf98d210067e17a9418_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b35490f458f8191cc270df46a89283d9d63ce59b1937bf98d210067e17a9418_0_seq_mask.raw"
+    ],
+    "257": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b35490f458f8191cc270df46a89283d9d63ce59b1937bf98d210067e17a9418_9_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b35490f458f8191cc270df46a89283d9d63ce59b1937bf98d210067e17a9418_9_seq_mask.raw"
+    ],
+    "258": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b8f1e09fb4994bdcdb2d05bc903f1e58cf266bcd717a70daa348323f78578c2_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b8f1e09fb4994bdcdb2d05bc903f1e58cf266bcd717a70daa348323f78578c2_0_seq_mask.raw"
+    ],
+    "259": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b8f1e09fb4994bdcdb2d05bc903f1e58cf266bcd717a70daa348323f78578c2_29_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b8f1e09fb4994bdcdb2d05bc903f1e58cf266bcd717a70daa348323f78578c2_29_seq_mask.raw"
+    ],
+    "260": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b8f1e09fb4994bdcdb2d05bc903f1e58cf266bcd717a70daa348323f78578c2_47_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b8f1e09fb4994bdcdb2d05bc903f1e58cf266bcd717a70daa348323f78578c2_47_seq_mask.raw"
+    ],
+    "261": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b8f1e09fb4994bdcdb2d05bc903f1e58cf266bcd717a70daa348323f78578c2_84_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1b8f1e09fb4994bdcdb2d05bc903f1e58cf266bcd717a70daa348323f78578c2_84_seq_mask.raw"
+    ],
+    "262": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1baa7e9618a1023c7750eeb0d08e5eec9de69c9580bdf102d46f48eb97b2664a_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1baa7e9618a1023c7750eeb0d08e5eec9de69c9580bdf102d46f48eb97b2664a_0_seq_mask.raw"
+    ],
+    "263": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_0_seq_mask.raw"
+    ],
+    "264": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_16_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_16_seq_mask.raw"
+    ],
+    "265": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_24_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_24_seq_mask.raw"
+    ],
+    "266": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_32_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_32_seq_mask.raw"
+    ],
+    "267": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_40_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_40_seq_mask.raw"
+    ],
+    "268": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_47_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_47_seq_mask.raw"
+    ],
+    "269": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_62_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_62_seq_mask.raw"
+    ],
+    "270": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_9_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1bda019aa04f0ebfa3e9223b1da47b3bf7505cd84d3eebdcb15ff901a015494a_9_seq_mask.raw"
+    ],
+    "271": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1c9dd086a2404af336c9ed3ec995febabd632536f7bb23bea14d5be6b1b707a4_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1c9dd086a2404af336c9ed3ec995febabd632536f7bb23bea14d5be6b1b707a4_0_seq_mask.raw"
+    ],
+    "272": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd3eae0f2f1232ec9fff3ace70da7a186ede3189722c36a47fa79bc49bb83ef_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd3eae0f2f1232ec9fff3ace70da7a186ede3189722c36a47fa79bc49bb83ef_0_seq_mask.raw"
+    ],
+    "273": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd3eae0f2f1232ec9fff3ace70da7a186ede3189722c36a47fa79bc49bb83ef_11_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd3eae0f2f1232ec9fff3ace70da7a186ede3189722c36a47fa79bc49bb83ef_11_seq_mask.raw"
+    ],
+    "274": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_0_seq_mask.raw"
+    ],
+    "275": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_12_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_12_seq_mask.raw"
+    ],
+    "276": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_16_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_16_seq_mask.raw"
+    ],
+    "277": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_21_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_21_seq_mask.raw"
+    ],
+    "278": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_26_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_26_seq_mask.raw"
+    ],
+    "279": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_30_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_30_seq_mask.raw"
+    ],
+    "280": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_38_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_38_seq_mask.raw"
+    ],
+    "281": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_43_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_43_seq_mask.raw"
+    ],
+    "282": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_4_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_4_seq_mask.raw"
+    ],
+    "283": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_53_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_53_seq_mask.raw"
+    ],
+    "284": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_62_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_62_seq_mask.raw"
+    ],
+    "285": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1cd8bbd9f93be29e4d236a45e17d7dbe4121ea80e443c6046982223c2e4e2e6b_8_seq_mask.raw"
+    ],
+    "286": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1d693344f962a7f09f11e7c561b0956b6abf3bd0576003bc038edc052e512c6a_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1d693344f962a7f09f11e7c561b0956b6abf3bd0576003bc038edc052e512c6a_0_seq_mask.raw"
+    ],
+    "287": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1d693344f962a7f09f11e7c561b0956b6abf3bd0576003bc038edc052e512c6a_11_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1d693344f962a7f09f11e7c561b0956b6abf3bd0576003bc038edc052e512c6a_11_seq_mask.raw"
+    ],
+    "288": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1d693344f962a7f09f11e7c561b0956b6abf3bd0576003bc038edc052e512c6a_20_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1d693344f962a7f09f11e7c561b0956b6abf3bd0576003bc038edc052e512c6a_20_seq_mask.raw"
+    ],
+    "289": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1d693344f962a7f09f11e7c561b0956b6abf3bd0576003bc038edc052e512c6a_46_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1d693344f962a7f09f11e7c561b0956b6abf3bd0576003bc038edc052e512c6a_46_seq_mask.raw"
+    ],
+    "290": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1e1449c5c1ff917fbffa93b58a0d06b264f96ba2a4d8a4fb031d47fdb1561f6d_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1e1449c5c1ff917fbffa93b58a0d06b264f96ba2a4d8a4fb031d47fdb1561f6d_0_seq_mask.raw"
+    ],
+    "291": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1e1449c5c1ff917fbffa93b58a0d06b264f96ba2a4d8a4fb031d47fdb1561f6d_15_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1e1449c5c1ff917fbffa93b58a0d06b264f96ba2a4d8a4fb031d47fdb1561f6d_15_seq_mask.raw"
+    ],
+    "292": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1e5f7567e26e601c7a92f7c201544a9fcef7ca4455bf7775966543e263824c66_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1e5f7567e26e601c7a92f7c201544a9fcef7ca4455bf7775966543e263824c66_0_seq_mask.raw"
+    ],
+    "293": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_0_seq_mask.raw"
+    ],
+    "294": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_13_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_13_seq_mask.raw"
+    ],
+    "295": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_19_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_19_seq_mask.raw"
+    ],
+    "296": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_4_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_4_seq_mask.raw"
+    ],
+    "297": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_8_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1ef990da4a59d8131133259d41fd6c20f85cef0feb9723daf6a0d7e5f7fc16c9_8_seq_mask.raw"
+    ],
+    "298": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1efa164b653e3a0a90cccecbe83be688d077dd3b4bf658fd5376d148b22eaf3c_0_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1efa164b653e3a0a90cccecbe83be688d077dd3b4bf658fd5376d148b22eaf3c_0_seq_mask.raw"
+    ],
+    "299": [
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1efa164b653e3a0a90cccecbe83be688d077dd3b4bf658fd5376d148b22eaf3c_24_data.raw",
+        "/group/dphi_software/April_16_Drop/data/accuracy_input/PSO1/input_data/1efa164b653e3a0a90cccecbe83be688d077dd3b4bf658fd5376d148b22eaf3c_24_seq_mask.raw"
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "AMD_AIE2P_4x4_Overlay_CFG0": "/proj/rdi/staff/zhans/win24/ci_used/Conv_A3/A3_Conv__64_0.onnx",
+    "AMD_AIE2P_4x4_Overlay_CFG1": "/proj/rdi/staff/zhans/win24/ci_used/Conv_A3/A3_Conv__64_0.onnx",
+    "AMD_AIE2P_4x4_Overlay_CFG2": "/proj/rdi/staff/zhans/win24/ci_used/Conv_PST/PST_1_conv_in_Conv_output_0.onnx",
+    "AMD_AIE2P_4x4_Overlay_CFG3": "/proj/rdi/staff/zhans/win24/ci_used/Conv_PST/PST_1_conv_in_Conv_output_0.onnx",
+    "AMD_AIE2P_8x4_Overlay": "/proj/rdi/staff/jianxuw/win24_models/unit_cases/esrgan_Conv/esrgan_1_input.1.onnx",
+    "AMD_AIE2P_2x4x1_Overlay": "/proj/rdi/staff/zhans/win24/ci_used/Conv_PST/PST_1_conv_in_Conv_output_0.onnx"
+}

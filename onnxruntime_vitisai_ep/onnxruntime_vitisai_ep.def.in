@@ -1,0 +1,5 @@
+LIBRARY onnxruntime_providers_vitisai
+EXPORTS
+GetProvider
+?ParseFromString@TextFormat@protobuf@google@@SA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAVMessage@23@@Z
+@ALL_DUMPED_SYMBOLS@

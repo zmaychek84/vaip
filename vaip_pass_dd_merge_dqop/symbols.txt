@@ -1,0 +1,2 @@
+vaip_pass_dd_merge_dqop__hook
+vaip_pass_dd_merge_dqop_onnx__hook

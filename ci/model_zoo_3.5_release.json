@@ -1,0 +1,271 @@
+[
+    {
+        "id": "10",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/personreid_prune/reid_r50_prune0.5/quantized/Baseline_quant_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "2e48a4521624ea1605a4a9ee114bdf68",
+        "golden": "977b290601785e629d84e7c0719d30b7"
+    },
+    {
+        "id": "28",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/SESR-S/onnx_dynamic_batch_xmodel/Model_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "03d2b4f7416a1826dd6050960896cec9",
+        "golden": "0af3d6d86a2deb19d8f616b21c9bb588"
+    },
+    {
+        "id": "39",
+        "onnx_model": "/group/modelzoo/UIF-compression-models/ofa_resnet50_series_cv/pt_ofa_resnet_50_imagenet_224_224_15.0G_2.5/code/quantize_result/ResNets_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "ebcab994c892d1f14b9884858078bc9d",
+        "golden": "784a663dfd929939f0f8d083bd1b96e7"
+    },
+    {
+        "id": "39.1",
+        "onnx_model": "/group/modelzoo/UIF-compression-models/ofa_resnet50_series_cv/pt_ofa_resnet_50_imagenet_224_224_0.45_8.2G_2.5/code/quantize_result/ResNets_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "32ea62f9069f912f5facb97b2ca27a66",
+        "golden": "ad11e3ff2c3d12ce6e1cde2ed9a8e041"
+    },
+    {
+        "id": "39.2",
+        "onnx_model": "/group/modelzoo/UIF-compression-models/ofa_resnet50_series_cv/pt_ofa_resnet_50_imagenet_224_224_0.60_6.0G_2.5/code/quantize_result/ResNets_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "306c89a9aaf41f1461b27276fb4c30d9",
+        "golden": "727bce740bee1f7c7d535c129a2b3bd5"
+    },
+    {
+        "id": "39.3",
+        "onnx_model": "/group/modelzoo/UIF-compression-models/ofa_resnet50_series_cv/pt_ofa_resnet_50_imagenet_192_192_0.74_3.6G_2.5/code/quantize_result/ResNets_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "5c1760f6625286ab401c132d8f3359c0",
+        "golden": "9e46c60602e55099e3dfeea81c6528b4"
+    },
+    {
+        "id": "39.4",
+        "onnx_model": "/group/modelzoo/UIF-compression-models/ofa_resnet50_series_cv/pt_ofa_resnet_50_imagenet_160_160_0.88_1.8G_2.5/code/quantize_result/ResNets_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "cf209387b9d2a32074d8702365768276",
+        "golden": "521d4d667960256b2868f4c4d77ca9ab"
+    },
+    {
+        "id": "40",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/ofa_depthwise_res50_quantize_results_dynamic_onnx_xmodel/qat_model_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "c7551ea38ae57c9cbc72b493637c4b5a",
+        "golden": "bf2c89dc141a0980655f0f6e0874bff9"
+    },
+    {
+        "id": "41",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/inceptionv3/quantized_20220706/Inception3_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "15013acd9a06ea5331bea1dd8c32502b",
+        "golden": "7dd94f61c0636c71f7e66c4ee9f67897"
+    },
+    {
+        "id": "41.1",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/inceptionv3_prune0.3/prune0.3_quant_result/Inception3_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "fd807293779520067b5312390d661eb4",
+        "golden": "7a1f74767662751b257d88034f97be6b"
+    },
+    {
+        "id": "41.2",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/inceptionv3_prune0.4/prune0.4_quant_result/Inception3_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "a48ceca4436d6c1bb59f90466bfcfd69"
+    },
+    {
+        "id": "41.3",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/inceptionv3_prune0.5/prune0.5_quant_result/Inception3_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "b8ee8bdcf8ef196969a7bfdbca9a8d3f",
+        "golden": "55bb366e076baf9c76563c0776dc607f"
+    },
+    {
+        "id": "41.4",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/inceptionv3_prune0.6/prune0.6_quant_result/Inception3_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "c5e2ad86084e8e61014d506ba162b3d5",
+        "golden": "28ae02c4d359ae9a5ba9fda627143ece"
+    },
+    {
+        "id": "42",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/squeezenet/qat_result_onnx_xmodel/SqueezeNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "38f0c4dba5f86b557a2fb323da28656a",
+        "golden": "22a2581787f626632ced5a6303e56d11"
+    },
+    {
+        "id": "43",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/resnet50/quantized/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "53988c005cbaba5bd000bc87a6d225a1",
+        "golden": "513b537bc1f1db4ea382a6ecffe9baa2"
+    },
+    {
+        "id": "43.1",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/resnet50_prune0.3/quantized/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "3f2a5b8d2da250fd82fd298a853b7e77",
+        "golden": "3213f3c62d916bfdba8e855580f2bfa6"
+    },
+    {
+        "id": "43.2",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/resnet50_prune0.3/quantized/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "3f2a5b8d2da250fd82fd298a853b7e77",
+        "golden": "3213f3c62d916bfdba8e855580f2bfa6"
+    },
+    {
+        "id": "43.3",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/resnet50_prune0.5/quantized/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "a99e1ddf221c962cb0bf8b1e638244a1",
+        "golden": "599a8197515e2fd9f291910f054fb5ab"
+    },
+    {
+        "id": "43.4",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/resnet50_prune0.6/quantized/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "a5d086c59709494337a4168f31699450",
+        "golden": "ef03e07a3b7631cc32c726028614c21f"
+    },
+    {
+        "id": "43.5",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/torchvision/resnet50_prune0.7/quantized/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "b306e1b9f6787dce9232d99fc00a48a1",
+        "golden": "df1cf79a31c1df81ec89d72540aa24ea"
+    },
+    {
+        "id": "45",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/ofa-rcan-latency-dynamic-onnx-xmodel/Model_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "ae9f6cd4ba48dd8066707f8b8df18c22",
+        "golden": "ce1e0d2c61a7e8f23465e0ba24d2e600"
+    },
+    {
+        "id": "46",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/ofa_yolo/quantized/dynamic_xmodel_onnx_0/ofa_yolo_0_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "8dc839de0b4405ce485ba0d334cdbcd7",
+        "golden": "b9df184994a9acff8b8b3f32d9168371d2d8902dc7fecf72d729be8b93c611dbba77a35322b7a14dfccfd5f073d9e072aac9132ca99239c1ff8a5e79305f37a1"
+    },
+    {
+        "id": "47",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/ofa_yolo/quantized/dynamic_xmodel_onnx_30/ofa_yolo_30_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "717c79560a2dd50bbae52bc65103afdd",
+        "golden": "658412482943aa317b9328a7623242c79b96c8cb32796f4c7d0c4b8b94a53b971e6cb6c4447cc768670500cf514c6a5c44a3d7fba6f19ab6e52e26ada46d23d2"
+    },
+    {
+        "id": "48",
+        "onnx_model": " /group/modelzoo/internal-cooperation-models/pytorch/ofa_yolo/quantized/dynamic_xmodel_onnx_50/ofa_yolo_50_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "81ef885bd595518dab3f1843686435a6",
+        "golden": "82d466a1f335eb42add2cf9f1062455cd7a34e887dcf8263d7ebaeae172f801d8af713ce8ce1fa8fc5de280d4dd19ee1d110f6ddecea80338664c1b4ddd88ae1"
+    },
+    {
+        "id": "49",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/face_mask_detection/quantize_result_dynamic_onnx/Darknet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "e0657872493f0bcc9b4aa9c5a38bd366",
+        "golden": "b7781a1c7e7e80d98b0e8dacb26a4a31ee64a937e954702c2d23db3fbc902a59"
+    },
+    {
+        "id": "50",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/vehicle_type/quantize_result_dynamic_onnx/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "654e39ad3c7eb31e72fcdaf33cacf931",
+        "golden": "5deda0d83ddb0d1121f454cd9202a039"
+    },
+    {
+        "id": "51",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/vehicle_make/quantize_result_dynamic_onnx/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "a927fadad9829068699380038c540902",
+        "golden": "d954378271c2728e082e1d283f05e093"
+    },
+    {
+        "id": "52",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/vehicle_color/quantize_result_dynamic_onnx/ResNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "a3905b3cb9ddf9bf58fb474a4d3e44a9",
+        "golden": "37c3d4888c9e98ba49dd91a3621fb485"
+    },
+    {
+        "id": "53",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/movenet/quantize_result_dynamic_20230413/MoveNet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "e0463dd3d4b7272666c17c13a678704d",
+        "golden": "02fb55fdba52f786fc99fe239756d88ab79a1e162a5f9dd33dbd883eb9e5f251ed9130bccb06c6885b94f2a8afdaae60c394fee7e90a385267a2de36a21ed36c"
+    },
+    {
+        "id": "56",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/xilinxSR/quantize_result_0423/Model_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "7112600c467ca151862bd9efc8ff1010"
+    },
+    {
+        "id": "57",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolov4-csp/onnxruntime/Darknet_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "f1eea1d65e87f4ffcb88811cb2923c01",
+        "golden": "fd685489d4e06972f32ee46ce00a2b123a8e0a50e84084ba133febbcd0de75795408a44d9dab85c1c514a965d57d48299e72216496e833e0dc54dac125b234e9"
+    },
+    {
+        "id": "58",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolov5_v2/onnxruntime/yolov5l_qat.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "e7db8956f5ef8853e3383904f84cbb37",
+        "golden": "3305b7a8a43dff0c635acc492a8031ac58d0d088df527c72457679565b724f3da119912a7b84c3e442a6745f65a8e98ba09d77689d0701bb53fb4b331838cd77"
+    },
+    {
+        "id": "59",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolov5_v2/onnxruntime/yolov5n_qat.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "a48871d072bb93c5175f7abfee3a4960",
+        "golden": "5d1354f360230ebb0f6ce1fb316ec06e2fdd80d536ec69aa9d4a7d32f20d93cd397cdf1ac30823b8c94122e7d763efaec7a1df878dad1f802aabbd0bdd4e4d80"
+    },
+    {
+        "id": "60",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolov5_v2/onnxruntime/yolov5s6_qat.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "870f0b971e9452a24797d8c813b637cc"
+    },
+    {
+        "id": "61",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolov6/yolov6m_opt_wodfl_distill_qat/weights_onnx_dynamic_batch/ModelNNDct_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "a6197933a58abdda19a116a0bac65439",
+        "golden": "b06662ead33fd9059380cfe02086b25c3f8afe9f8b2372252bfa4a2b027793637ec066491fc65b0ec728e3161e07b9029d4a48d4c4a6cbd9c41fabf868ff4c9d"
+    },
+    {
+        "id": "62",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolox/yolox_nano/onnx_dynamic_batch/qat/YOLOX_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "00d67dd613fde6f65242578b5578aae7",
+        "golden": "d4f6b2c4fe7485d894a69325d2f91d6174b9d1ab31364a6750c3a8d0a736f8337a8aeb1a1ef7a4ca9cf220139e6c2bde"
+    },
+    {
+        "id": "69",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolov5-v6.0-silu/yolov5l/onnxruntime/Model_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "794a4759c15a3cf6cede0c5dcd93139d",
+        "golden": "02e4bd1190e274cd74df6586fa376995954ee4b30e5229f5f38a0a7f0af5f2d30263bbac6693f415620c2155b295642ce3f7379ff6ab224f092acdc389a1dc24"
+    },
+    {
+        "id": "70",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolov7/yolov7/nndct_47.9/Model_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "4ea6816defa1ea348e60eef4453c1f09"
+    },
+    {
+        "id": "71",
+        "onnx_model": "/group/modelzoo/internal-cooperation-models/pytorch/yolov8/DetectionModel_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "d26625e781cc98a38a138bf7896238d4",
+        "golden": "338edece93f1d3cd0956c626ff09f17f43d69c6499f594f7991b01dcc7b8433262129aec48a0f76dbf5cac63846415eb0be53355aec68c1516d3785455268867"
+    }
+]

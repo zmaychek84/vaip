@@ -1,0 +1,4 @@
+LIBRARY "onnxruntime_vitis_ai_custom_ops.dll"
+EXPORTS
+ RegisterCustomOps @1
+ RegisterCustomOpsAltName @2

@@ -1,0 +1,106 @@
+[
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "PSS",
+        "accuracy_input": "accuracy_input/PSS_input.json",
+        "accuracy_golden": "accuracy_golden/PSS_golden.json",
+        "psnr_target": "20.0",
+        "l2norm_target": "105.5389",
+        "input": [
+            "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/PSS-FP-data-v1_0/pss_input/input_1_001.raw"
+        ],
+        "md5sum": "5ad2857510b5646376f3f9348591b83e",
+        "onnx_model": "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/Model-PSS-v1_0.quant.shape_inf.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "PST",
+        "accuracy_input": "accuracy_input/PST_input.json",
+        "accuracy_golden": "accuracy_golden/PST_golden.json",
+        "psnr_target": "20.0",
+        "l2norm_target": "54.2699",
+        "input": [
+            "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/PST-FP-data-v1_0/pst_input/input_1_002.raw"
+        ],
+        "md5sum": "c8c2ab668b56daf7d2228e53c9a4f0db",
+        "onnx_model": "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/Model-PST-v1_0.quant.shape_inf.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "PSS_nhwc",
+        "accuracy_input": "accuracy_input/PSS_input_nhwc.json",
+        "accuracy_golden": "accuracy_golden/PSS_golden.json",
+        "psnr_target": "20.0",
+        "l2norm_target": "0.1",
+        "input": [
+            "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/PSS-FP-data-v1_0/pss_input_nhwc/input_1_001.raw"
+        ],
+        "md5sum": "1d46fbe6a09e79b36e21d985d937df3b",
+        "onnx_model": "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/Model-PSS-v1_0.quant.shape_inf_nhwc.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "PST_nhwc",
+        "accuracy_input": "accuracy_input/PST_input_nhwc.json",
+        "accuracy_golden": "accuracy_golden/PST_golden_nhwc.json",
+        "psnr_target": "20.0",
+        "l2norm_target": "0.1",
+        "input": [
+            "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/PST-FP-data-v1_0/pst_input_nhwc/input_1_002.raw"
+        ],
+        "md5sum": "02c8e157824d0c75289f2333b307a5a9",
+        "onnx_model": "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/Model-PST-v1_0.quant.shape_inf_nhwc.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "PSS_bf16",
+        "accuracy_input": "accuracy_input/PSS_input.json",
+        "accuracy_golden": "accuracy_golden/PSS_golden.json",
+        "psnr_target": "20.0",
+        "l2norm_target": "105.5389",
+        "input": [
+            "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/PSS-FP-data-v1_0/pss_input/input_1_001.raw"
+        ],
+        "md5sum": "b6e6ec2ff1b39ee4e5e4449da0abb12e",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/SHELL_MODELS/BFP16_BFloat16_Mixed/PSS/PSS_v_1_0_mixed_quantized.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "PST_bf16",
+        "accuracy_input": "accuracy_input/PST_input.json",
+        "accuracy_golden": "accuracy_golden/PST_golden.json",
+        "psnr_target": "20.0",
+        "l2norm_target": "54.2699",
+        "input": [
+            "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/PST-FP-data-v1_0/pst_input/input_1_002.raw"
+        ],
+        "md5sum": "17fa949f503fe724def5e5010c1d097b",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/SHELL_MODELS/BFP16_BFloat16_Mixed/PST/PST_v_1_0_mixed_quantized.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "PSS_v1.1",
+        "accuracy_input": "accuracy_input/PSS_input_nhwc.json",
+        "accuracy_golden": "accuracy_golden/PSS_golden.json",
+        "psnr_target": "20.0",
+        "l2norm_target": "0.1",
+        "input": [
+            "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/PSS-FP-data-v1_0/pss_input_nhwc/input_1_001.raw"
+        ],
+        "md5sum": "63a4651d48b4281ddf6a6a33ebad5fc7",
+        "onnx_model": "/group/dphi_dnndk/suzhan/PSS_PST_NHWC_V1.1/Model_PSS_v1.1.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "PST_v1.1",
+        "accuracy_input": "accuracy_input/PST_input_nhwc.json",
+        "accuracy_golden": "accuracy_golden/PST_golden_nhwc.json",
+        "psnr_target": "20.0",
+        "l2norm_target": "0.1",
+        "input": [
+            "/proj/xcdhdstaff2/genmingz/CI/PSS_PST/PST-FP-data-v1_0/pst_input_nhwc/input_1_002.raw"
+        ],
+        "md5sum": "92358bd7e8a68ea9c6e9d327423069e3",
+        "onnx_model": "/group/dphi_dnndk/suzhan/PSS_PST_NHWC_V1.1/Model_PST_v1.1.onnx"
+    }
+]

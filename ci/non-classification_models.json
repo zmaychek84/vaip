@@ -1,0 +1,596 @@
+[
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "deeplabv3_mobilenet_v3_large", 
+        "md5sum": "33c7f8fac7782d5a3d2f91479286d005", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/deeplabv3_mobilenet_v3_large/deeplabv3_mobilenet_v3_large.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "deeplabv3_resnet50", 
+        "md5sum": "24d85444dba270666cf3d0133f3ad597", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/deeplabv3_resnet50/deeplabv3_resnet50.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "deeplabv3_resnet101", 
+        "md5sum": "00cfda31c6784e2de3e0f2024ce3fcb9", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/deeplabv3_resnet101/deeplabv3_resnet101.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "fcn_resnet50", 
+        "md5sum": "bb9208ccc2478f51f25ec9973155c53d", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/fcn_resnet50/fcn_resnet50.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "fcn_resnet101", 
+        "md5sum": "7bc1a50653c69739d730a372792c80c2", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/fcn_resnet101/fcn_resnet101.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "lraspp_mobilenet_v3_large", 
+        "md5sum": "12a93b3708125af232daa3f401d93363", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/lraspp_mobilenet_v3_large/lraspp_mobilenet_v3_large.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "fasterrcnn_resnet50_fpn", 
+        "md5sum": "ae8a33effc48f713643559a502b4f6f2", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/fasterrcnn_resnet50_fpn/fasterrcnn_resnet50_fpn.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "fasterrcnn_mobilenet_v3_large_fpn", 
+        "md5sum": "7916fa4b8f016a39603621fb372df35d", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/fasterrcnn_mobilenet_v3_large_fpn/fasterrcnn_mobilenet_v3_large_fpn.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "fasterrcnn_mobilenet_v3_large_320_fpn", 
+        "md5sum": "44365f7acecf5e0c43093950ca9d102d", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/fasterrcnn_mobilenet_v3_large_320_fpn/fasterrcnn_mobilenet_v3_large_320_fpn.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "fcos_resnet50_fpn", 
+        "md5sum": "cbc4fd5271ec529358f03ba8fdc9e5c3", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/fcos_resnet50_fpn/fcos_resnet50_fpn.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "retinanet_resnet50_fpn", 
+        "md5sum": "5916dca46389c2105f1bcb2ed0eae398", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/retinanet_resnet50_fpn/retinanet_resnet50_fpn.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "retinanet_resnet50_fpn_v2", 
+        "md5sum": "7b73301cad5f5c7ca83e0cb7cea77a56", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/retinanet_resnet50_fpn_v2/retinanet_resnet50_fpn_v2.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "maskrcnn_resnet50_fpn", 
+        "md5sum": "fd7cde753cb1e6680782ccd31543f097", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/maskrcnn_resnet50_fpn/maskrcnn_resnet50_fpn.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "maskrcnn_resnet50_fpn_v2", 
+        "md5sum": "e07ded3c83269071bdaab9e7df5b21f6", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/maskrcnn_resnet50_fpn_v2/maskrcnn_resnet50_fpn_v2.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "keypointrcnn_resnet50_fpn", 
+        "md5sum": "317881eb46f65e6a5bf7bad2991a46f5", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/quantized_det_seg/keypointrcnn_resnet50_fpn/keypointrcnn_resnet50_fpn.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8n-cls", 
+        "md5sum": "20c86d3839f5329321389fce69d074c1", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8n-cls/yolov8n-cls.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8n", 
+        "md5sum": "f166c444293a0e1efb9739bd88d7ec57", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8n/yolov8n.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8s", 
+        "md5sum": "8cae736f838937bd4786ed3f5f5a810e", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8s/yolov8s.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8s-pose", 
+        "md5sum": "4c01a1f8b99a539593e571892e54b52d", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8s-pose/yolov8s-pose.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8s-cls", 
+        "md5sum": "0b515214b880a8da4107283a0732a8da", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8s-cls/yolov8s-cls.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8m-cls", 
+        "md5sum": "035787da36ecd34aae9ac1874a21d75f", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8m-cls/yolov8m-cls.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8n-pose", 
+        "md5sum": "44420eef918b059504870f28b4174b44", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8n-pose/yolov8n-pose.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8x-pose", 
+        "md5sum": "59218c495ae0ba8810fbfa79a3dd9182", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8x-pose/yolov8x-pose.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8x-cls", 
+        "md5sum": "e7bf756975f23c297e6b01ee3cf389f8", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8x-cls/yolov8x-cls.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8l-pose", 
+        "md5sum": "5ddf991e31f9bd34573e5dce04c7d2cd", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8l-pose/yolov8l-pose.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8l-cls", 
+        "md5sum": "0aa9beae695fcef9999c64d489ed80db", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8l-cls/yolov8l-cls.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8m-pose", 
+        "md5sum": "2481cdf8be720ea2bb26dcd6a74011f9", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8m-pose/yolov8m-pose.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8l-seg", 
+        "md5sum": "653e744f4005a223319dd539fdb12000", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8l-seg/yolov8l-seg.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8m", 
+        "md5sum": "4186cde537b01d9d783ae5cb203d6560", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8m/yolov8m.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8x-seg", 
+        "md5sum": "c47faf13dc2c93704372ef0b124a6cf7", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8x-seg/yolov8x-seg.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8l", 
+        "md5sum": "bb6b2694fff7484550a0a5e76f910a58", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8l/yolov8l.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8x", 
+        "md5sum": "a18b7b6ff6a3c3cc476f72e12af72968", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8x/yolov8x.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8s-seg", 
+        "md5sum": "fa8579c960604c4e8f7f06e324589dda", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8s-seg/yolov8s-seg.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8n-seg", 
+        "md5sum": "064b1d9df97647c11b5e6be3b418c153", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8n-seg/yolov8n-seg.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "yolov8m-seg", 
+        "md5sum": "b20c9c6afca61e5b9aba44c019a6786e", 
+        "onnx_model": "/group/dphi_software/software/workspace/linqiang/ipu-2023/hugging_face_non_classification/ultralytics/QDQ/yolov8m-seg/yolov8m-seg.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Bharathk91987_emotionsyolos", 
+        "md5sum": "9a20e4c96578018046b20621f7ce7748", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Bharathk91987_emotionsyolos/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DI-Huy_hustvl-yolos-tiny-benetech", 
+        "md5sum": "c19bb37f3b51fae7c339b69650cabb0a", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DI-Huy_hustvl-yolos-tiny-benetech/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-tiny-Brain_Tumor_Detection", 
+        "md5sum": "2ee40a11a9412b27de9f7be5212feb5e", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-tiny-Brain_Tumor_Detection/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-tiny-Hard_Hat_Detection", 
+        "md5sum": "79365d700dba947389b9b0217c297e75", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-tiny-Hard_Hat_Detection/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Mahmoud7_OD_YOLOS_strat1_classes", 
+        "md5sum": "c66eb9bba8a4ae0cd3e0a62d673fb110", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Mahmoud7_OD_YOLOS_strat1_classes/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Mahmoud7_OD_YOLOS_strat2_classes", 
+        "md5sum": "3e0be47d43b05856cba0ea4872bb5e27", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Mahmoud7_OD_YOLOS_strat2_classes/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Mahmoud7_OD_YOLOS_strat2_classes_for_layoutlm", 
+        "md5sum": "e415a660256cf308006c25d6c52b0f5a", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Mahmoud7_OD_YOLOS_strat2_classes_for_layoutlm/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Marianoleiras_trial-detr", 
+        "md5sum": "2524ffba2191228f5d667c8d3f7e9616", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Marianoleiras_trial-detr/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_BallonTestYOLO", 
+        "md5sum": "6a78bd187220fe96c36ce7f8d37a1b9f", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_BallonTestYOLO/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GamblePARI", 
+        "md5sum": "c0f9c1d244926ba470f7f30bb4442fd8", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GamblePARI/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GamblePARIMATCH", 
+        "md5sum": "b9d416e8af2a2e244c1910cb2ee22046", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GamblePARIMATCH/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GambleSPORTSBET", 
+        "md5sum": "5aec5f2b505ae4ed1a5f005a4ca16d40", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GambleSPORTSBET/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GambleStrTestYOLO", 
+        "md5sum": "e8b3807e1d94bceb08b959f3c8513291", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GambleStrTestYOLO/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GambleTestYOLO", 
+        "md5sum": "767e5197ad111c3e8d1eb6b5fea0fbf8", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GambleTestYOLO/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GambleZENIT", 
+        "md5sum": "66c72fbe9639f85c1465bb6048608ee5", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GambleZENIT/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Yorai_yolos-tiny_finetuned_cppe-5", 
+        "md5sum": "67bdcdeb35bf58fb69355ee4e3723183", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Yorai_yolos-tiny_finetuned_cppe-5/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Yorai_yolos-tiny_finetuned_dataset", 
+        "md5sum": "edb553fe8fb661996cd8db8a6a41300a", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Yorai_yolos-tiny_finetuned_dataset/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "api19750904_cupra", 
+        "md5sum": "33c183abfe9aae6a0a5f10ac2a9a73d0", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/api19750904_cupra/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "hustvl_yolos-tiny", 
+        "md5sum": "b6c86d68efcd08deae2da31ac1dc6d0b", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/hustvl_yolos-tiny/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "madhubalajik96_YoloS_Emotiondetection", 
+        "md5sum": "024f7c25c39df5f3b8c30d9c99e4df9c", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/madhubalajik96_YoloS_Emotiondetection/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "omarhkh_CutLER-n-omary00", 
+        "md5sum": "8aa5f8ce00707e0625b567202e212515", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/omarhkh_CutLER-n-omary00/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "omarhkh_CutLER-n-omary02", 
+        "md5sum": "7be7dd80dd0025c344234f0f54b53841", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/omarhkh_CutLER-n-omary02/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "omarhkh_CutLER-n-omary03", 
+        "md5sum": "64a955ab34b08d502a33e03fcc48ef6a", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/omarhkh_CutLER-n-omary03/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "polejowska_yolos-tiny-CD45RB-1000", 
+        "md5sum": "c614ba6a2254b4706e6383aaeadfa0a6", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/polejowska_yolos-tiny-CD45RB-1000/model.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-small-Abdomen_MRI", 
+        "md5sum": "ae64939b6068b918d382709c7b9c0f98", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-small-Abdomen_MRI/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-small-Axial_MRIs", 
+        "md5sum": "f686d4f25e1e81150e559d5fc66a52cb", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-small-Axial_MRIs/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-small-Blood_Cell_Object_Detection", 
+        "md5sum": "cd976effb83687cb357564ae63463195", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-small-Blood_Cell_Object_Detection/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-small-Cell_Tower_Detection", 
+        "md5sum": "dee6a3f7c8e73c48b50d20e88a15f2bf", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-small-Cell_Tower_Detection/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-small-Forklift_Object_Detection", 
+        "md5sum": "1fea0ed26447c184228f508793363d96", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-small-Forklift_Object_Detection/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-small-Liver_Disease", 
+        "md5sum": "58331d34d941f8dad7e04a38d1b5dc3e", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-small-Liver_Disease/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-small-Stomata_Cells", 
+        "md5sum": "6b065d3f6f28e20ea6f34f508e5f89fe", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-small-Stomata_Cells/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "DunnBC22_yolos-small-Wall_Damage", 
+        "md5sum": "66b65e190dd75f4d36f6754e39067014", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/DunnBC22_yolos-small-Wall_Damage/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Mahmoud7_OD_YOLOS_strat2_nu", 
+        "md5sum": "680860e17bef78dc58fa2c696f65dd18", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Mahmoud7_OD_YOLOS_strat2_nu/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Mahmoud7_OD_YOLOS_strat2_nu3", 
+        "md5sum": "b0fb3c1296c4c1285b3d24dfae4ab73d", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Mahmoud7_OD_YOLOS_strat2_nu3/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Mahmoud7_OD_YOLOS_strat2_nu4", 
+        "md5sum": "ccc3f67973aa2690bdf4e741099c230f", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Mahmoud7_OD_YOLOS_strat2_nu4/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "RaphaelKalandadze_tmp_trainer", 
+        "md5sum": "87ed366ae0f75cfb9dd808907dc4bd40", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/RaphaelKalandadze_tmp_trainer/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GambleBETBOOM", 
+        "md5sum": "ac403d68b131b1ebcb4a969c33c51326", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GambleBETBOOM/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GambleMOSTBET", 
+        "md5sum": "869cdeadb7899fdf313d7e3ab5dd2b72", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GambleMOSTBET/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GamblePARIMATCH_s", 
+        "md5sum": "b681ef93b485fa3cb03d2e7007f0ff32", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GamblePARIMATCH_s/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "SvNext_GambleSTRUCTUreYOLO", 
+        "md5sum": "dfe677cdf1ebf48e2ce84ca33bad7e5e", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/SvNext_GambleSTRUCTUreYOLO/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "WillNewbo12_detr-resnet-50_finetuned_cppe5", 
+        "md5sum": "f961890efecc55513858e1c3c0f9fe66", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/WillNewbo12_detr-resnet-50_finetuned_cppe5/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "Yorai_yolos-small_finetuned_detect-waste", 
+        "md5sum": "4a2e6c7ebf69777ee04c7e4befb48981", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/Yorai_yolos-small_finetuned_detect-waste/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "abhayji_yolos-fashionpedia", 
+        "md5sum": "cec602c7ba1bc852edbefce4ed43bdcf", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/abhayji_yolos-fashionpedia/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "chanelcolgate_yolos_finetuned_yenthienviet", 
+        "md5sum": "1fccc3bbfd589a1d0c86ba497b98f62a", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/chanelcolgate_yolos_finetuned_yenthienviet/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "gary109_STAS_yolos-base", 
+        "md5sum": "3a147bba072f6a1ff2099cc6bb5edb9f", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/gary109_STAS_yolos-base/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "gary109_STAS_yolos-small", 
+        "md5sum": "325a67625bb948624e2f0367c575ac07", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/gary109_STAS_yolos-small/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "hackolite_fashionpedia", 
+        "md5sum": "9b21f92d29d7eab914cdde39fe3738bc", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/hackolite_fashionpedia/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "hackolite_yolos-fashionpedia", 
+        "md5sum": "9d3b0a612aec7697c9c326cc075c5611", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/hackolite_yolos-fashionpedia/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "hustvl_yolos-base", 
+        "md5sum": "50a033b34d9ec39a159dcbe74ca6bd47", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/hustvl_yolos-base/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "hustvl_yolos-small-300", 
+        "md5sum": "cd119e76e17c993eb3daedb3268676ca", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/hustvl_yolos-small-300/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "hustvl_yolos-small-dwr", 
+        "md5sum": "f17e8cb3858d98f309e1ae8abfacd744", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/hustvl_yolos-small-dwr/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "hustvl_yolos-small", 
+        "md5sum": "3f04bd6647071c7eb1537b52644e6cb8", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/hustvl_yolos-small/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "nickmuchi_yolos-base-finetuned-masks", 
+        "md5sum": "cb544b9201b543b5dc4d45c0caedd78a", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/nickmuchi_yolos-base-finetuned-masks/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "nickmuchi_yolos-small-finetuned-masks", 
+        "md5sum": "0d27a17df0e1129725677d21b85709aa", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/nickmuchi_yolos-small-finetuned-masks/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "nickmuchi_yolos-small-plant-disease-detection", 
+        "md5sum": "05d7f5e383c0986c7ef1dfd9e983798d", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/nickmuchi_yolos-small-plant-disease-detection/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "nickmuchi_yolos-small-rego-plates-detection", 
+        "md5sum": "af8aa5b3c46ac89f65928def6d900f21", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/nickmuchi_yolos-small-rego-plates-detection/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "omarhkh_CutLER-n-omary01", 
+        "md5sum": "2e2d07ff6427b50524028d2862e5390b", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/omarhkh_CutLER-n-omary01/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "omarhkh_CutLER-n-omary05", 
+        "md5sum": "c4a30a26fd03e357b4349cd2b69a8a17", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/omarhkh_CutLER-n-omary05/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "polejowska_yolos-tiny-CD45RB-1000-att", 
+        "md5sum": "695d6a24b031b21b64ec23204e9a032b", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/polejowska_yolos-tiny-CD45RB-1000-att/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "schumannc_detect-chess-pieces", 
+        "md5sum": "3d3da8a67159d66b9cb691b88b31d9c7", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/schumannc_detect-chess-pieces/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "shevek_yolos-fashionpedia", 
+        "md5sum": "46fb31eba228a10b133fdbb42d1fb19c", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/shevek_yolos-fashionpedia/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "taiseiya_yolos-fashionpedia", 
+        "md5sum": "99cd16b6bc8b8a69968f2e8a4c2f33ce", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/taiseiya_yolos-fashionpedia/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "valentinafeve_yolos-fashionpedia", 
+        "md5sum": "97177c4623ccc7189565e20a537b7ab8", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/valentinafeve_yolos-fashionpedia/model.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "zoheb_yolos-small-balloon", 
+        "md5sum": "e88bd2208d1a4702f38287686b0c6595", 
+        "onnx_model": "/group/dphi_software/hug_fc-det_out_q/QDQ/zoheb_yolos-small-balloon/model.onnx"
+    }
+]

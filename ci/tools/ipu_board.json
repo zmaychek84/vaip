@@ -1,0 +1,50 @@
+{
+    "xcdhwkpt01": {
+      "power": {
+        "strip_type": "ApcAP8930PDU",
+        "outlet": "18",
+        "strip_addr": "xcdpdug8a"
+      },
+      "board": "HPT"
+    },
+    "xcdhwkpt02": {
+      "power": {
+        "strip_type": "ApcAP8930PDU",
+        "outlet": "17",
+        "strip_addr": "xcdpdug8a"
+      },
+      "board": "HPT"
+    },
+    "xcdhwkpt03": {
+      "power": {
+        "strip_type": "ApcAP8930PDU",
+        "outlet": "7",
+        "strip_addr": "xcdpdug8a"
+      },
+      "board": "HPT"
+    },
+    "xcdhwkpt04": {
+      "power": {
+        "strip_type": "ApcAP8930PDU",
+        "outlet": "6",
+        "strip_addr": "xcdpdug8a"
+      },
+      "board": "HPT"
+    },
+    "xcdstrix19": {
+      "power": {
+        "strip_type": "ApcAP8930PDU",
+        "outlet": "4",
+        "strip_addr": "xcdpdug7a"
+      },
+      "board": "strix"
+    },
+    "xcdstrix20": {
+      "power": {
+        "strip_type": "ApcAP8930PDU",
+        "outlet": "5",
+        "strip_addr": "xcdpdug7a"
+      },
+      "board": "strix"
+    }
+}

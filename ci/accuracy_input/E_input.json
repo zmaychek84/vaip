@@ -1,0 +1,428 @@
+{
+    "0": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk1-9ef81da8-488d-4592-926a-2094a373314a_0030_normed_rgbm_0.bin"
+    ],
+    "1": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-10015965839284051181-full_0811_normed_rgbm_0.bin"
+    ],
+    "2": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-10115967551185011161-full_0001_normed_rgbm_0.bin"
+    ],
+    "3": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-10115971868709211161-full_0841_normed_rgbm_0.bin"
+    ],
+    "4": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-11215965836299151081-full_0511_normed_rgbm_0.bin"
+    ],
+    "5": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-481598037274643731-partial_0541_normed_rgbm_0.bin"
+    ],
+    "6": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-481598872358531701-full_0481_normed_rgbm_0.bin"
+    ],
+    "7": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-491597228818028671-partial_0661_normed_rgbm_0.bin"
+    ],
+    "8": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-491598129517155511-full_0241_normed_rgbm_0.bin"
+    ],
+    "9": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-491598489018450561-full_0961_normed_rgbm_0.bin"
+    ],
+    "10": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-491599005380692901-full_0331_normed_rgbm_0.bin"
+    ],
+    "11": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-501598549132717811-full_0151_normed_rgbm_0.bin"
+    ],
+    "12": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-511597122041118731-full_0691_normed_rgbm_0.bin"
+    ],
+    "13": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-511597961330999511-full_0091_normed_rgbm_0.bin"
+    ],
+    "14": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-511598441829617691-full_0091_normed_rgbm_0.bin"
+    ],
+    "15": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-511598549232257801-full_0901_normed_rgbm_0.bin"
+    ],
+    "16": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-511598827291099511_2-full_0631_normed_rgbm_0.bin"
+    ],
+    "17": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-521597117873746501-partial_0451_normed_rgbm_0.bin"
+    ],
+    "18": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-521597715582346551-full_0241_normed_rgbm_0.bin"
+    ],
+    "19": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-521598279865961731-full_0121_normed_rgbm_0.bin"
+    ],
+    "20": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-521598475438160521-full_0721_normed_rgbm_0.bin"
+    ],
+    "21": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-531596822824005771-full_0331_normed_rgbm_0.bin"
+    ],
+    "22": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-531597382038225521-full_0601_normed_rgbm_0.bin"
+    ],
+    "23": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-531598037927994821-partial_0691_normed_rgbm_0.bin"
+    ],
+    "24": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-531598317640265831-full_0961_normed_rgbm_0.bin"
+    ],
+    "25": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-531598545093124571-full_0721_normed_rgbm_0.bin"
+    ],
+    "26": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-531598900742289501-full_0511_normed_rgbm_0.bin"
+    ],
+    "27": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-541597749045224661-full_0481_normed_rgbm_0.bin"
+    ],
+    "28": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-541598650278880831-full_0181_normed_rgbm_0.bin"
+    ],
+    "29": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-551597217654021551-full_0121_normed_rgbm_0.bin"
+    ],
+    "30": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-551597977712754721-full_0211_normed_rgbm_0.bin"
+    ],
+    "31": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-551598150039995681-partial_0781_normed_rgbm_0.bin"
+    ],
+    "32": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-551598906966956701-full_0031_normed_rgbm_0.bin"
+    ],
+    "33": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-561597219364294871-full_0061_normed_rgbm_0.bin"
+    ],
+    "34": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-561597919866254851-full_0541_normed_rgbm_0.bin"
+    ],
+    "35": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-561598628873309801-full_0361_normed_rgbm_0.bin"
+    ],
+    "36": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-571597879533927811-full_0931_normed_rgbm_0.bin"
+    ],
+    "37": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-571598043272988831-partial_0961_normed_rgbm_0.bin"
+    ],
+    "38": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-571598979159784781-full_0181_normed_rgbm_0.bin"
+    ],
+    "39": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-651597295065821821-full_0121_normed_rgbm_0.bin"
+    ],
+    "40": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-651598005220683761-full_0271_normed_rgbm_0.bin"
+    ],
+    "41": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-651598478555305551-full_0151_normed_rgbm_0.bin"
+    ],
+    "42": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-661598073847415861-partial_0091_normed_rgbm_0.bin"
+    ],
+    "43": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-661598398887553701-full_1021_normed_rgbm_0.bin"
+    ],
+    "44": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-661598645006654661-full_0781_normed_rgbm_0.bin"
+    ],
+    "45": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-661598987708069841-full_0241_normed_rgbm_0.bin"
+    ],
+    "46": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-671597366595703731-full_0391_normed_rgbm_0.bin"
+    ],
+    "47": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-671598305133627721-full_0181_normed_rgbm_0.bin"
+    ],
+    "48": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-671598667270736571_3-full_0061_normed_rgbm_0.bin"
+    ],
+    "49": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-681597953700168861-full_0001_normed_rgbm_0.bin"
+    ],
+    "50": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-681598132611581891-full_0091_normed_rgbm_0.bin"
+    ],
+    "51": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-681598316121539901-full_0961_normed_rgbm_0.bin"
+    ],
+    "52": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-691596753932668891_3-full_0061_normed_rgbm_0.bin"
+    ],
+    "53": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-691597249238270831-full_0181_normed_rgbm_0.bin"
+    ],
+    "54": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-691598041730736731-full_0571_normed_rgbm_0.bin"
+    ],
+    "55": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-691598822073587541-full_0031_normed_rgbm_0.bin"
+    ],
+    "56": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-701597264016816771_5-full_0241_normed_rgbm_0.bin"
+    ],
+    "57": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-701598038725683881-partial_0691_normed_rgbm_0.bin"
+    ],
+    "58": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-701598296202522751-full_0121_normed_rgbm_0.bin"
+    ],
+    "59": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-701598476216966511-full_0421_normed_rgbm_0.bin"
+    ],
+    "60": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-701598547884750521-full_0631_normed_rgbm_0.bin"
+    ],
+    "61": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-701599004569764901-full_0374_normed_rgbm_0.bin"
+    ],
+    "62": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-711597252127914721-full_0151_normed_rgbm_0.bin"
+    ],
+    "63": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-711598476625506881-full_0061_normed_rgbm_0.bin"
+    ],
+    "64": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-711598892124279531-full_0241_normed_rgbm_0.bin"
+    ],
+    "65": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-711598971647583531-full_0001_normed_rgbm_0.bin"
+    ],
+    "66": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-721597958967703721-full_0211_normed_rgbm_0.bin"
+    ],
+    "67": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-721598409443235791-full_0871_normed_rgbm_0.bin"
+    ],
+    "68": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-721598560274047651_2-full_1021_normed_rgbm_0.bin"
+    ],
+    "69": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-731598041121146681-full_0061_normed_rgbm_0.bin"
+    ],
+    "70": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-731598298165132511-full_0839_normed_rgbm_0.bin"
+    ],
+    "71": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-731598639571501481-full_0601_normed_rgbm_0.bin"
+    ],
+    "72": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-741597204863515731-full_0871_normed_rgbm_0.bin"
+    ],
+    "73": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-741597250367058501-partial_0121_normed_rgbm_0.bin"
+    ],
+    "74": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-741598057914002881-full_0751_normed_rgbm_0.bin"
+    ],
+    "75": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-741598245368463831-full_0571_normed_rgbm_0.bin"
+    ],
+    "76": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-751597043890510711-partial_0121_normed_rgbm_0.bin"
+    ],
+    "77": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-751597960916570531-full_0031_normed_rgbm_0.bin"
+    ],
+    "78": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-751598211116078741-full_0121_normed_rgbm_0.bin"
+    ],
+    "79": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-751598581787019691_2-full_0601_normed_rgbm_0.bin"
+    ],
+    "80": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-751599000370039681-full_0933_normed_rgbm_0.bin"
+    ],
+    "81": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-761598035438420681-partial_0061_normed_rgbm_0.bin"
+    ],
+    "82": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-761598576194909541-full_0091_normed_rgbm_0.bin"
+    ],
+    "83": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-771597224943972531-partial_0421_normed_rgbm_0.bin"
+    ],
+    "84": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-771597947304574791-full_0031_normed_rgbm_0.bin"
+    ],
+    "85": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-771598299302051521-full_0361_normed_rgbm_0.bin"
+    ],
+    "86": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-781597228582270791-partial_0301_normed_rgbm_0.bin"
+    ],
+    "87": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-781598131345075711-partial_0091_normed_rgbm_0.bin"
+    ],
+    "88": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-781598546766979711-full_0241_normed_rgbm_0.bin"
+    ],
+    "89": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-791597963408754791-full_0571_normed_rgbm_0.bin"
+    ],
+    "90": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-791598337557029531-full_0271_normed_rgbm_0.bin"
+    ],
+    "91": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-791598567317889791-full_0031_normed_rgbm_0.bin"
+    ],
+    "92": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-801598038035409521-full_0901_normed_rgbm_0.bin"
+    ],
+    "93": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-801598298040764831-full_0001_normed_rgbm_0.bin"
+    ],
+    "94": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-801598729104851541-full_0361_normed_rgbm_0.bin"
+    ],
+    "95": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-801598849564646881-full_0751_normed_rgbm_0.bin"
+    ],
+    "96": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-811597240313981781-full_0121_normed_rgbm_0.bin"
+    ],
+    "97": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-811598084296092541-full_0481_normed_rgbm_0.bin"
+    ],
+    "98": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-821597033702442821-partial_0331_normed_rgbm_0.bin"
+    ],
+    "99": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-821597234286688491-full_0631_normed_rgbm_0.bin"
+    ],
+    "100": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-821598282224003761-full_0541_normed_rgbm_0.bin"
+    ],
+    "101": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-821598397584320481-full_0361_normed_rgbm_0.bin"
+    ],
+    "102": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-821598996093648821_2-full_0391_normed_rgbm_0.bin"
+    ],
+    "103": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-831597961286768731-full_0241_normed_rgbm_0.bin"
+    ],
+    "104": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-831598336819809651-full_0871_normed_rgbm_0.bin"
+    ],
+    "105": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-831598482820443821-full_0991_normed_rgbm_0.bin"
+    ],
+    "106": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-841597237766088521-partial_0601_normed_rgbm_0.bin"
+    ],
+    "107": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-841598547250076741-full_0121_normed_rgbm_0.bin"
+    ],
+    "108": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-851597947517379501-full_0301_normed_rgbm_0.bin"
+    ],
+    "109": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-851598586786032511-full_0901_normed_rgbm_0.bin"
+    ],
+    "110": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-861597161654235701-partial_0451_normed_rgbm_0.bin"
+    ],
+    "111": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-861598022550938701-full_0811_normed_rgbm_0.bin"
+    ],
+    "112": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-861598303768461891-full_0841_normed_rgbm_0.bin"
+    ],
+    "113": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-871597214215417871-full_0121_normed_rgbm_0.bin"
+    ],
+    "114": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-871597981817887651-full_0331_normed_rgbm_0.bin"
+    ],
+    "115": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-871598241257424741-full_0031_normed_rgbm_0.bin"
+    ],
+    "116": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-871598423434755651-full_0031_normed_rgbm_0.bin"
+    ],
+    "117": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-881597116027569541-partial_0091_normed_rgbm_0.bin"
+    ],
+    "118": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-881597253720990721-full_0631_normed_rgbm_0.bin"
+    ],
+    "119": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-881598047185560661-full_0061_normed_rgbm_0.bin"
+    ],
+    "120": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-881598396204226511-full_0301_normed_rgbm_0.bin"
+    ],
+    "121": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-891596742700725861-full_0181_normed_rgbm_0.bin"
+    ],
+    "122": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-891597221398596781-full_0121_normed_rgbm_0.bin"
+    ],
+    "123": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-891598141235745481-full_0301_normed_rgbm_0.bin"
+    ],
+    "124": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-891598378374990901-full_0841_normed_rgbm_0.bin"
+    ],
+    "125": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-901597952465900791-full_0601_normed_rgbm_0.bin"
+    ],
+    "126": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-901598254885043901-full_0061_normed_rgbm_0.bin"
+    ],
+    "127": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-901598360449627871-full_0451_normed_rgbm_0.bin"
+    ],
+    "128": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-901598625705018561-full_0121_normed_rgbm_0.bin"
+    ],
+    "129": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/turk2-901598989149788691-full_0211_normed_rgbm_0.bin"
+    ],
+    "130": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube-JSLCi7Zh2y8_0085_0045_normed_rgbm_0.bin"
+    ],
+    "131": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube-fN58lpgi1QI_0090_normed_rgbm_0.bin"
+    ],
+    "132": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug--k_cTjrLm6U_0060_02_normed_rgbm_0.bin"
+    ],
+    "133": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-BIXAL7h6WPs_0045_0045_02_normed_rgbm_0.bin"
+    ],
+    "134": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-JGX8WsCn4Qs_0030_0045_02_normed_rgbm_0.bin"
+    ],
+    "135": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-L9TIcNaL5fw_0150_02_normed_rgbm_0.bin"
+    ],
+    "136": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-Sf6pfTg68E8_0060_02_normed_rgbm_0.bin"
+    ],
+    "137": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-YktQtfMGP8U_0095_0045_02_normed_rgbm_0.bin"
+    ],
+    "138": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-esWr_ggXDVY_0090_02_normed_rgbm_0.bin"
+    ],
+    "139": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-mjvSyxvDZr0_0030_02_normed_rgbm_0.bin"
+    ],
+    "140": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-tHuQcKqeBmo_0030_02_normed_rgbm_0.bin"
+    ],
+    "141": [
+        "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/E_input_bin/youtube_aug-yZpf-EqaytUd_0060_02_normed_rgbm_0.bin"
+    ]
+}

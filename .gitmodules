@@ -1,0 +1,3 @@
+[submodule "3rd-party/tar"]
+	path = 3rd-party/tar
+	url = ../../VitisAI/tar.git

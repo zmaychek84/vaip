@@ -1,0 +1,1 @@
+vaip_pass_norm_k__hook

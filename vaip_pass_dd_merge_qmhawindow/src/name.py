@@ -1,0 +1,136 @@
+##
+##  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc.
+##
+##  Licensed under the Apache License, Version 2.0 (the "License");
+##  you may not use this file except in compliance with the License.
+##  You may obtain a copy of the License at
+##
+##  http://www.apache.org/licenses/LICENSE-2.0
+##
+##  Unless required by applicable law or agreed to in writing, software
+##  distributed under the License is distributed on an "AS IS" BASIS,
+##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+##  See the License for the specific language governing permissions and
+##  limitations under the License.
+##
+node = {
+    "Reshape1_allowzero": 0,
+    "Transpose4_perm": [2, 0, 1, 3],
+    "Reshape7_allowzero": 0,
+    "Transpose10_perm": [0, 2, 1, 3],
+    "Reshape13_allowzero": 0,
+    "Gather16_axis": 0,
+    "Reshape19_allowzero": 0,
+    "Gather27_axis": 0,
+    "Reshape30_allowzero": 0,
+    "Transpose33_perm": [0, 1, 3, 2],
+    "Softmax39_axis": -1,
+    "Gather43_axis": 0,
+    "Reshape46_allowzero": 0,
+    "Transpose52_perm": [0, 2, 1, 3],
+    "Reshape55_allowzero": 0,
+    "design_param": "4x2",
+    "QKT_input_qparams": [
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Mul_4_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Mul_4_output_0_zero_point",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/qkv/Add_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/qkv/Add_output_0_zero_point",
+    ],
+    "QKT_output_qparams": [
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_output_0_zero_point",
+    ],
+    "VSQKT_input_qparams": [
+        "/blocks.3/blocks.3.0/channel_block/channel_attn/fn/Softmax_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/softmax/Softmax_output_0_zero_point",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/qkv/Add_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/qkv/Add_output_0_zero_point",
+    ],
+    "VSQKT_output_qparams": [
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_1_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_1_output_0_zero_point",
+    ],
+    "softmax_input_qparams": [
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_output_0_zero_point",
+    ],
+    "softmax_output_qparams": [
+        "/blocks.3/blocks.3.0/channel_block/channel_attn/fn/Softmax_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/softmax/Softmax_output_0_zero_point",
+    ],
+    "MUL_input_qparams": [
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/qkv/Add_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/qkv/Add_output_0_zero_point",
+    ],
+    "MUL_weight_qparams": [
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Constant_33_output_0_quantized",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Constant_33_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Constant_33_output_0_zero_point",
+    ],
+    "MUL_output_qparams": [
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Mul_4_output_0_scale",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Mul_4_output_0_zero_point",
+    ],
+    "QKT_K_dim": 32,
+    "VSQKT_K_dim": 49,
+    "nodes": [
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/qkv/Add_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_6_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_6_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_6_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_2_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_2_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_2_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_7_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_7_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_7_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_3_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_3_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_3_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_8_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_8_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_8_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_7_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_7_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_7_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_9_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_9_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_9_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Constant_33_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Mul_4_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Mul_4_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Mul_4_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_8_output_0_DequantizeLinear_Output/duplicated",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_8_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_8_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_8_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_10_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_10_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_10_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_4_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_4_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_4_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/softmax/Softmax_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/softmax/Softmax_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/softmax/Softmax_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_8_output_0_DequantizeLinear_Output/duplicated_token_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_9_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_9_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Gather_9_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_11_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_11_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_11_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_1_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_1_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/MatMul_1_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_5_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_5_output_0_QuantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Transpose_5_output_0_DequantizeLinear_Output",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_12_output_0",
+        "/blocks.0/blocks.0.0/spatial_block/window_attn/fn/Reshape_12_output_0_QuantizeLinear_Output",
+    ],
+    "orig_output_shape": [64, 49, 128],
+}

@@ -1,0 +1,38 @@
+[
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "human_segmentation", 
+        "md5sum": "ebc15a31f6b831ade6e27b87cdfa6b42", 
+        "onnx_model": "/group/dphi_software/Nintendo-quantized-models-1.16.0+a794043/human_segmentation/human_segmentation_pphumanseg_2023mar_quant.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "face_recognition", 
+        "md5sum": "17df43520fe253b6f5c6464eb0aff7ac", 
+        "onnx_model": "/group/dphi_software/Nintendo-quantized-models-1.16.0+a794043/face_recognition/85b14e5_face_recognition.qdq.U8S8.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "face_detecion_int8_ios", 
+        "md5sum": "73bff4be8d4ec2cb7ce837833794f14e", 
+        "onnx_model": "/group/dphi_software/Nintendo-quantized-models-1.16.0+a794043/face_detecion_int8_ios/modified_face_detection.qdq.S8S8.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "face_emotion_recognition", 
+        "md5sum": "fb630ff19ab5b0e5d2b10075a9b32c4e", 
+        "onnx_model": "/group/dphi_software/Nintendo-quantized-models-1.16.0+a794043/face_emotion_recognition/enet_b0_8_best_vgaf_quant_v2.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "handpose_estimation", 
+        "md5sum": "27f45f6017515f340bb5338ac9ead9d4", 
+        "onnx_model": "/group/dphi_software/Nintendo-quantized-models-1.16.0+a794043/handpose_estimation/handpose_estimation_mediapipe_2023feb_quant.onnx"
+    }, 
+    {
+        "hostname": "xcdl190074.xilinx.com", 
+        "id": "face_detection", 
+        "md5sum": "92ee69fa19b6e05506939d4bb963d0de", 
+        "onnx_model": "/group/dphi_software/Nintendo-quantized-models-1.16.0+a794043/face_detection/face_detection.qdq.U8S8.onnx"
+    }
+]

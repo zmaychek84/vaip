@@ -1,0 +1,26 @@
+[
+    {
+        "id": "DMC5DecoderPart1-sim_v3_int8",
+        "onnx_model": "/group/dphi_software/software/workspace/max/workspace/ipu_package/0721/v3_quant_fp32/DMC5DecoderPart1-sim_v3_int8.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "02c9e4f1e4e0ba9c848c5dff031d2764"
+    },
+    {
+        "id": "DMC5DecoderPart2-sim_v3_int8",
+        "onnx_model": "/group/dphi_software/software/workspace/max/workspace/ipu_package/0721/v3_quant_fp32/DMC5DecoderPart2-sim_v3_int8.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "0137f03304f41914d0727f2e0e2c35ef"
+    },
+    {
+        "id": "DMC5DecoderPart3-sim_v3_int8",
+        "onnx_model": "/group/dphi_software/software/workspace/max/workspace/ipu_package/0721/v3_quant_fp32/DMC5DecoderPart3-sim_v3_int8.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "03117aaa6c332cea918dfe78dcbeb7eb"
+    },
+    {
+        "id": "DMC5Encoder-sim_v3_int8",
+        "onnx_model": "/group/dphi_software/software/workspace/max/workspace/ipu_package/0721/v3_quant_fp32/DMC5Encoder-sim_v3_int8.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "86adc18909c7e3e695df11b750294f23"
+    }
+]

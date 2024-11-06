@@ -1,0 +1,3 @@
+vaip_pass_dd_merge_attentionprepro__hook
+vaip_pass_dd_merge_attentionprepro_mxgan__hook
+vaip_pass_dd_merge_attentionprepro_mxpzi__hook

@@ -1,0 +1,162 @@
+[
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_Conv0_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_Conv0_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_Conv12_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_Conv12_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_Conv14_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_Conv14_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_Conv16_BiasAdd_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_Conv16_BiasAdd_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_Conv18_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_Conv18_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_1_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_1_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_3_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_3_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_3_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_3_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_5_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_5_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_5_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_5_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_7_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_7_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_7_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_7_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_9_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_9_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_DarkDownsample_9_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_DarkDownsample_9_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_10_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_10_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_10_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_10_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_11_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_11_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_11_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_11_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_13_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_13_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_13_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_13_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_15_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_15_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_15_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_15_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_17_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_17_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_17_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_17_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_2_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_2_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_2_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_2_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_4_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_4_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_4_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_4_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_6_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_6_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_6_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_6_Conv_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_8_Conv_1_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_8_Conv_1_Relu_0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "Conv_Detector_ResBlock_8_Conv_Relu_0",
+        "onnx_model": "/group/dphi_software/software/workspace/zhenzew/share/C2/Conv_Detector_ResBlock_8_Conv_Relu_0.onnx"
+    }
+]

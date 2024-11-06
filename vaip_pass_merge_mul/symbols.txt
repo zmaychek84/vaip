@@ -1,0 +1,1 @@
+vaip_pass_merge_mul__hook

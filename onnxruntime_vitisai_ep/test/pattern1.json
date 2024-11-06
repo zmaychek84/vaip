@@ -1,0 +1,37 @@
+{
+    "patterns": [
+        {
+            "id": "input",
+            "wildcard": {}
+        },
+        {
+            "id": "weight",
+            "wildcard": {}
+        },
+        {
+            "call_node": {
+                "args": [
+                    {
+                        "name": "input"
+                    },
+                    {
+                        "name": "weight"
+                    },
+                    {
+                        "pattern": {
+                            "wildcard": {}
+                        }
+                    }
+                ],
+                "op_type": "Conv",
+                "optional_args": [
+                    "false",
+                    "false",
+                    "false"
+                ]
+            },
+            "id": "conv",
+            "is_root": true
+        }
+    ]
+}

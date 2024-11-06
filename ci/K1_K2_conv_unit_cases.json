@@ -1,0 +1,362 @@
+[
+    {
+        "id": "CI_K2__alig_resblk1_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__alig_resblk1_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "e382aca740281b04d8414f2f84388914"
+    },
+    {
+        "id": "CI_K2__alig_resblk2_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__alig_resblk2_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "4f291d468d6c234b7035f469860e76cb"
+    },
+    {
+        "id": "CI_K2__alig_resblk3_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__alig_resblk3_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "62e2673752d606b848257bb1e3221eab"
+    },
+    {
+        "id": "CI_K2__cond_resblk1_1_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__cond_resblk1_1_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "56c1196dda906f0c343af3e94ec40eaf"
+    },
+    {
+        "id": "CI_K2__cond_resblk2_1_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__cond_resblk2_1_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "d73695acd1ae69c11c01508d418053e5"
+    },
+    {
+        "id": "CI_K2__cond_resblk2_2_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__cond_resblk2_2_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "2813ea5baf2f817de36f3466ac7f6804"
+    },
+    {
+        "id": "CI_K2__cond_resblk3_1_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__cond_resblk3_1_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "ba02764469988e50e82c53cb1b2e9ef3"
+    },
+    {
+        "id": "CI_K2__cond_resblk3_2_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__cond_resblk3_2_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "52acc381727505b34f95fe3c0e16b333"
+    },
+    {
+        "id": "CI_K2__cond_resblk4_1_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__cond_resblk4_1_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "c6354fda4efecad2adcdc4778e8381af"
+    },
+    {
+        "id": "CI_K2__cond_resblk4_2_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CI_K2__cond_resblk4_2_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "ddc1645af05c373d5237da5d5a113771"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_conv1_ops_ops.0_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_conv1_ops_ops.0_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "e05f4ac3d44d15f36af7e7d8f65bf028"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_conv2_ops_ops.0_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_conv2_ops_ops.0_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "2110186d505d96cf8c721edf42b8217a"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk1a_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk1a_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "410cebb6416d52d41d906b3d70be8c01"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk1a_conv2_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk1a_conv2_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "a54d6d18c942d5b175951dbe7cd0854a"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk1b_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk1b_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "cf601ab14f7f9d913e1daee655d34ecb"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk2a_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk2a_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "1ffb23fc6afce22b690f1fccd66780cb"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk2a_conv2_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk2a_conv2_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "65a8ba7128202542fe53b392f455cacb"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk2a_shortcut_shor_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk2a_shortcut_shor_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "9b29047d89bf4bc0333fed29abacf5f9"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk2b_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk2b_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "21809709df49f8421bc93f651e48dcea"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk3a_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk3a_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "3e4a2de539ce87d087fa165c66d16bfc"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk3a_conv2_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk3a_conv2_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "3ed4f2ac5a10a4db22bc397578768076"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk3a_shortcut_shor_1",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk3a_shortcut_shor_1.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "032e7a87f2e602e2c798056a678a16b6"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk3b_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk3b_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "27bf05bbd071960c94080f8c265642ab"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk4a_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk4a_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "f9d48e7c10e4f8d7a864242f6a843585"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk4a_conv2_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk4a_conv2_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "9b7ec5463db9815a7e3ce6346464da53"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk4a_shortcut_shor_2",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk4a_shortcut_shor_2.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "03e5d9dd95e9dc1a76f49132d0afc1ac"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk4b_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk4b_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "92def289fcb8644c624cb2faa79ff1d8"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk5a_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk5a_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "1502a6d219d61a65c42e808adebb1c43"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk5a_conv2_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk5a_conv2_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "1399e8588a52488613b028e20dc9c6cf"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk5a_shortcut_shor_3",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk5a_shortcut_shor_3.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "114129154efe9e70bbcb079f0097e87a"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk5b_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk5b_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "f960f3dbc77727846a86a2b5aa926f54"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk6a_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk6a_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "94e0e25b203711ee6966f9ceb430ed27"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk6a_conv2_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk6a_conv2_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "7b6a0ed7d169f2bc5f790f87af41460f"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk6a_shortcut_shor_4",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk6a_shortcut_shor_4.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "938ccbfbaa0d3fa03df7552c3cc21c69"
+    },
+    {
+        "id": "CIC_K1__resnet_enc_resblk6b_conv1_ops_ops.2_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K1__resnet_enc_resblk6b_conv1_ops_ops.2_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "43f40cebc7aa324f2ee2de5c90cca828"
+    },
+    {
+        "id": "CIC_K2__alig_resblk1_fuse1_ops_ops.1_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K2__alig_resblk1_fuse1_ops_ops.1_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "4051dbac1a6ab169bab0a1acfd84ac7d"
+    },
+    {
+        "id": "CIC_K2__alig_resblk2_fuse1_ops_ops.1_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K2__alig_resblk2_fuse1_ops_ops.1_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "b38e1a633bfbc78f75f0f9ee3750b677"
+    },
+    {
+        "id": "CIC_K2__alig_resblk3_fuse1_ops_ops.1_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K2__alig_resblk3_fuse1_ops_ops.1_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "9a63503a4ca158b5b6c51514541b084a"
+    },
+    {
+        "id": "CIC_K2__cond_resblk2_1_conv2_ops_ops.1_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K2__cond_resblk2_1_conv2_ops_ops.1_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "3b5bb590635b8ab2db225543488d8766"
+    },
+    {
+        "id": "CIC_K2__cond_resblk3_1_conv2_ops_ops.1_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K2__cond_resblk3_1_conv2_ops_ops.1_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "74f2dc07b9a04d5838e06948df316ae1"
+    },
+    {
+        "id": "CIC_K2__cond_resblk4_1_conv2_ops_ops.1_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K2__cond_resblk4_1_conv2_ops_ops.1_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "d6406c11764ba5629c37f577618e1c90"
+    },
+    {
+        "id": "CIC_K2__cond_resblk4_2_conv2_ops_ops.1_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K2__cond_resblk4_2_conv2_ops_ops.1_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "f26bc82ec1c4cfd8896a7e82ca71479f"
+    },
+    {
+        "id": "CIC_K2__cond_resblk4_2_shortcut_ops_ops.1_Conv_output_0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/CIC_K2__cond_resblk4_2_shortcut_ops_ops.1_Conv_output_0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "4816badef64cf6ec77c8846d41b93fa4"
+    },
+    {
+        "id": "IC_K1__resnet_enc_resblk2a_shortcut_shortcut.1_ops_ops.0__0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K1__resnet_enc_resblk2a_shortcut_shortcut.1_ops_ops.0__0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "ccbd40c498459a8d778c08ef09dfc3e4"
+    },
+    {
+        "id": "IC_K1__resnet_enc_resblk3a_shortcut_shortcut.1_ops_ops.0__1",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K1__resnet_enc_resblk3a_shortcut_shortcut.1_ops_ops.0__1.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "72e3141c87620b60e053ec4d8de565bf"
+    },
+    {
+        "id": "IC_K1__resnet_enc_resblk4a_shortcut_shortcut.1_ops_ops.0__2",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K1__resnet_enc_resblk4a_shortcut_shortcut.1_ops_ops.0__2.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "2bef5d8682928b5a2d953828171f3067"
+    },
+    {
+        "id": "IC_K1__resnet_enc_resblk5a_shortcut_shortcut.1_ops_ops.0__3",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K1__resnet_enc_resblk5a_shortcut_shortcut.1_ops_ops.0__3.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "66e28efa6fa58984c83e085442553c5d"
+    },
+    {
+        "id": "IC_K1__resnet_enc_resblk6a_shortcut_shortcut.1_ops_ops.0__4",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K1__resnet_enc_resblk6a_shortcut_shortcut.1_ops_ops.0__4.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "5c6365be6a5e4675e8abd6c2f96cb56b"
+    },
+    {
+        "id": "IC_K2__alig_resblk1_fuse1_ops_ops.0__0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__alig_resblk1_fuse1_ops_ops.0__0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "79a73f9e996fbe83e89022436f463afe"
+    },
+    {
+        "id": "IC_K2__alig_resblk1_gate_ops_ops.0__3",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__alig_resblk1_gate_ops_ops.0__3.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "fee6a4d36f10918341d3c0d48b7e3a17"
+    },
+    {
+        "id": "IC_K2__alig_resblk2_conv_ops_ops.0__1",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__alig_resblk2_conv_ops_ops.0__1.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "321d3665f22b77816ee0fd54fc681d59"
+    },
+    {
+        "id": "IC_K2__alig_resblk2_fuse1_ops_ops.0__2",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__alig_resblk2_fuse1_ops_ops.0__2.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "7530fbb67ee7b6abb091c443d5d48a77"
+    },
+    {
+        "id": "IC_K2__alig_resblk2_gate_ops_ops.0__6",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__alig_resblk2_gate_ops_ops.0__6.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "65a0c52beb201a1d33400d128a1d18b9"
+    },
+    {
+        "id": "IC_K2__alig_resblk3_conv_ops_ops.0__0",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__alig_resblk3_conv_ops_ops.0__0.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "1cf8f4b732f4dd2c9ed4c4aa0d5d1788"
+    },
+    {
+        "id": "IC_K2__alig_resblk3_fuse1_ops_ops.0__4",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__alig_resblk3_fuse1_ops_ops.0__4.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "a15ae34bc1ccc06d480294b72fb42d90"
+    },
+    {
+        "id": "IC_K2__alig_resblk3_gate_ops_ops.0__9",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__alig_resblk3_gate_ops_ops.0__9.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "7826c1718e1c711303301c6910f8cb74"
+    },
+    {
+        "id": "IC_K2__cond_resblk1_1_conv1_ops_ops.0__2",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__cond_resblk1_1_conv1_ops_ops.0__2.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "c5b20b42d43da1cea89e8f90370f54fe"
+    },
+    {
+        "id": "IC_K2__cond_resblk2_1_conv1_ops_ops.0__5",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__cond_resblk2_1_conv1_ops_ops.0__5.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "d24a02f0e5ce33ed3e089594e5b27964"
+    },
+    {
+        "id": "IC_K2__cond_resblk3_1_conv1_ops_ops.0__8",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__cond_resblk3_1_conv1_ops_ops.0__8.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "05cf9af62f4c7ba58524fa7b65ff84d1"
+    },
+    {
+        "id": "IC_K2__cond_resblk4_1_conv1_ops_ops.0__11",
+        "onnx_model": "/proj/rdi/staff/zhans/win24/unit_test_case/Conv_IN_Conv_K1_K2_shrink/IC_K2__cond_resblk4_1_conv1_ops_ops.0__11.onnx",
+        "hostname": "xsjncuph07.xilinx.com",
+        "md5sum": "acf9c27c1f4d72d2adc647da6d82c6d2"
+    }
+]

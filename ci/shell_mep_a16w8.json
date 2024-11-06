@@ -1,0 +1,80 @@
+[
+    {
+        "id": "G3",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "01bbde5aea0095d9e785ea07e7541a08",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/Model_G3_v1.1.quant.onnx"
+    },
+    {
+        "id": "GT",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "2b56b49aba8ac75237717a5143bf07fd",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/Model_GT_v1.0.onnx"
+    },
+    {
+        "hostname": "xcdl190074.xilinx.com",
+        "id": "H3",
+        "md5sum": "f86c928e1d79ec403cc84a55cfd2d08b",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/Model_H3_v1.1.quant.onnx"
+    },
+    {
+        "id": "HT",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "5d3230b05061a602fe5e39d1d06c33fb",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/Model_HT_v1.0.onnx"
+    },
+    {
+        "id": "PSA",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "9b10dd6fad295f7bebb3a26853158f77",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSA_v6.0.quant.onnx"
+    },
+    {
+        "id": "PSF",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "3f37909b7b4aa4b389a5964bff9ddfcf",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSF_v1.0.quant.onnx"
+    },
+    {
+        "id": "PSH",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "5c97401229be33e776cf153ee297c0bd",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSH_v1.0.quant.onnx"
+    },
+    {
+        "id": "PSI",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "c4e1b53ff4601af712d54133a7b72466",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSI_v1.0.quant.onnx"
+    },
+    {
+        "id": "PSJ",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "d11596c1729d92d90a2304681a4b27f4",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSJ_v1.0.quant.onnx"
+    },
+    {
+        "id": "PSK",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "6b296390732851f90cefa2a94977081f",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSK_v1.0.1.quant.onnx"
+    },
+    {
+        "id": "PSL",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "12e0d0cc4f8c1f7e8bd4f5cb4209a59b",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSL_v1.0.quant.onnx"
+    },
+    {
+        "id": "PSO0",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "bbd45dd10e728e33d8e03ddb242dff88",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSO0_v0.1.onnx"
+    },
+    {
+        "id": "PSO1",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "d1159eff3e12c80bf847491a02c5a7ac",
+        "onnx_model": "/group/dphi_software/shell_quant_onnx/QDQ-A16W8-Models/Models_CI_2024_0205/PSO1_V0.1.onnx"
+    }
+]

@@ -1,0 +1,1752 @@
+{
+    "0": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_0_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_0_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_0_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_0_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_0_x.bin_output_4.bin"
+    ],
+    "1": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_100_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_100_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_100_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_100_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_100_x.bin_output_4.bin"
+    ],
+    "2": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_101_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_101_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_101_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_101_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_101_x.bin_output_4.bin"
+    ],
+    "3": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_102_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_102_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_102_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_102_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_102_x.bin_output_4.bin"
+    ],
+    "4": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_103_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_103_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_103_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_103_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_103_x.bin_output_4.bin"
+    ],
+    "5": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_104_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_104_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_104_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_104_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_104_x.bin_output_4.bin"
+    ],
+    "6": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_105_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_105_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_105_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_105_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_105_x.bin_output_4.bin"
+    ],
+    "7": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_106_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_106_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_106_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_106_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_106_x.bin_output_4.bin"
+    ],
+    "8": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_107_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_107_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_107_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_107_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_107_x.bin_output_4.bin"
+    ],
+    "9": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_108_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_108_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_108_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_108_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_108_x.bin_output_4.bin"
+    ],
+    "10": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_109_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_109_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_109_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_109_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_109_x.bin_output_4.bin"
+    ],
+    "11": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_10_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_10_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_10_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_10_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_10_x.bin_output_4.bin"
+    ],
+    "12": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_110_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_110_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_110_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_110_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_110_x.bin_output_4.bin"
+    ],
+    "13": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_111_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_111_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_111_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_111_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_111_x.bin_output_4.bin"
+    ],
+    "14": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_112_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_112_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_112_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_112_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_112_x.bin_output_4.bin"
+    ],
+    "15": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_113_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_113_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_113_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_113_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_113_x.bin_output_4.bin"
+    ],
+    "16": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_114_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_114_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_114_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_114_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_114_x.bin_output_4.bin"
+    ],
+    "17": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_115_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_115_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_115_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_115_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_115_x.bin_output_4.bin"
+    ],
+    "18": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_116_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_116_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_116_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_116_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_116_x.bin_output_4.bin"
+    ],
+    "19": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_117_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_117_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_117_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_117_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_117_x.bin_output_4.bin"
+    ],
+    "20": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_118_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_118_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_118_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_118_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_118_x.bin_output_4.bin"
+    ],
+    "21": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_119_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_119_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_119_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_119_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_119_x.bin_output_4.bin"
+    ],
+    "22": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_11_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_11_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_11_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_11_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_11_x.bin_output_4.bin"
+    ],
+    "23": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_120_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_120_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_120_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_120_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_120_x.bin_output_4.bin"
+    ],
+    "24": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_121_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_121_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_121_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_121_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_121_x.bin_output_4.bin"
+    ],
+    "25": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_122_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_122_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_122_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_122_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_122_x.bin_output_4.bin"
+    ],
+    "26": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_123_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_123_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_123_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_123_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_123_x.bin_output_4.bin"
+    ],
+    "27": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_124_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_124_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_124_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_124_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_124_x.bin_output_4.bin"
+    ],
+    "28": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_125_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_125_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_125_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_125_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_125_x.bin_output_4.bin"
+    ],
+    "29": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_126_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_126_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_126_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_126_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_126_x.bin_output_4.bin"
+    ],
+    "30": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_127_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_127_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_127_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_127_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_127_x.bin_output_4.bin"
+    ],
+    "31": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_128_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_128_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_128_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_128_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_128_x.bin_output_4.bin"
+    ],
+    "32": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_129_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_129_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_129_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_129_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_129_x.bin_output_4.bin"
+    ],
+    "33": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_12_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_12_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_12_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_12_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_12_x.bin_output_4.bin"
+    ],
+    "34": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_130_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_130_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_130_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_130_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_130_x.bin_output_4.bin"
+    ],
+    "35": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_131_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_131_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_131_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_131_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_131_x.bin_output_4.bin"
+    ],
+    "36": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_132_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_132_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_132_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_132_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_132_x.bin_output_4.bin"
+    ],
+    "37": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_133_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_133_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_133_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_133_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_133_x.bin_output_4.bin"
+    ],
+    "38": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_134_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_134_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_134_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_134_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_134_x.bin_output_4.bin"
+    ],
+    "39": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_135_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_135_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_135_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_135_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_135_x.bin_output_4.bin"
+    ],
+    "40": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_136_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_136_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_136_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_136_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_136_x.bin_output_4.bin"
+    ],
+    "41": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_137_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_137_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_137_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_137_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_137_x.bin_output_4.bin"
+    ],
+    "42": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_138_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_138_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_138_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_138_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_138_x.bin_output_4.bin"
+    ],
+    "43": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_139_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_139_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_139_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_139_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_139_x.bin_output_4.bin"
+    ],
+    "44": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_13_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_13_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_13_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_13_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_13_x.bin_output_4.bin"
+    ],
+    "45": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_140_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_140_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_140_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_140_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_140_x.bin_output_4.bin"
+    ],
+    "46": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_141_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_141_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_141_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_141_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_141_x.bin_output_4.bin"
+    ],
+    "47": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_142_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_142_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_142_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_142_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_142_x.bin_output_4.bin"
+    ],
+    "48": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_143_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_143_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_143_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_143_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_143_x.bin_output_4.bin"
+    ],
+    "49": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_144_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_144_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_144_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_144_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_144_x.bin_output_4.bin"
+    ],
+    "50": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_145_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_145_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_145_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_145_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_145_x.bin_output_4.bin"
+    ],
+    "51": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_146_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_146_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_146_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_146_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_146_x.bin_output_4.bin"
+    ],
+    "52": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_147_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_147_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_147_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_147_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_147_x.bin_output_4.bin"
+    ],
+    "53": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_148_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_148_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_148_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_148_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_148_x.bin_output_4.bin"
+    ],
+    "54": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_149_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_149_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_149_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_149_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_149_x.bin_output_4.bin"
+    ],
+    "55": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_14_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_14_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_14_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_14_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_14_x.bin_output_4.bin"
+    ],
+    "56": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_150_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_150_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_150_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_150_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_150_x.bin_output_4.bin"
+    ],
+    "57": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_151_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_151_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_151_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_151_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_151_x.bin_output_4.bin"
+    ],
+    "58": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_152_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_152_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_152_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_152_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_152_x.bin_output_4.bin"
+    ],
+    "59": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_153_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_153_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_153_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_153_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_153_x.bin_output_4.bin"
+    ],
+    "60": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_154_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_154_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_154_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_154_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_154_x.bin_output_4.bin"
+    ],
+    "61": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_155_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_155_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_155_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_155_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_155_x.bin_output_4.bin"
+    ],
+    "62": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_156_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_156_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_156_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_156_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_156_x.bin_output_4.bin"
+    ],
+    "63": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_157_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_157_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_157_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_157_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_157_x.bin_output_4.bin"
+    ],
+    "64": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_158_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_158_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_158_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_158_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_158_x.bin_output_4.bin"
+    ],
+    "65": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_159_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_159_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_159_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_159_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_159_x.bin_output_4.bin"
+    ],
+    "66": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_15_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_15_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_15_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_15_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_15_x.bin_output_4.bin"
+    ],
+    "67": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_160_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_160_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_160_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_160_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_160_x.bin_output_4.bin"
+    ],
+    "68": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_161_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_161_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_161_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_161_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_161_x.bin_output_4.bin"
+    ],
+    "69": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_162_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_162_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_162_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_162_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_162_x.bin_output_4.bin"
+    ],
+    "70": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_163_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_163_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_163_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_163_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_163_x.bin_output_4.bin"
+    ],
+    "71": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_164_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_164_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_164_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_164_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_164_x.bin_output_4.bin"
+    ],
+    "72": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_165_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_165_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_165_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_165_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_165_x.bin_output_4.bin"
+    ],
+    "73": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_166_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_166_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_166_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_166_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_166_x.bin_output_4.bin"
+    ],
+    "74": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_167_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_167_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_167_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_167_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_167_x.bin_output_4.bin"
+    ],
+    "75": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_168_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_168_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_168_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_168_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_168_x.bin_output_4.bin"
+    ],
+    "76": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_169_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_169_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_169_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_169_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_169_x.bin_output_4.bin"
+    ],
+    "77": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_16_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_16_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_16_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_16_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_16_x.bin_output_4.bin"
+    ],
+    "78": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_170_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_170_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_170_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_170_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_170_x.bin_output_4.bin"
+    ],
+    "79": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_171_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_171_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_171_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_171_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_171_x.bin_output_4.bin"
+    ],
+    "80": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_172_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_172_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_172_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_172_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_172_x.bin_output_4.bin"
+    ],
+    "81": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_173_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_173_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_173_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_173_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_173_x.bin_output_4.bin"
+    ],
+    "82": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_174_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_174_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_174_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_174_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_174_x.bin_output_4.bin"
+    ],
+    "83": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_175_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_175_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_175_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_175_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_175_x.bin_output_4.bin"
+    ],
+    "84": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_176_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_176_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_176_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_176_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_176_x.bin_output_4.bin"
+    ],
+    "85": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_177_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_177_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_177_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_177_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_177_x.bin_output_4.bin"
+    ],
+    "86": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_178_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_178_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_178_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_178_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_178_x.bin_output_4.bin"
+    ],
+    "87": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_179_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_179_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_179_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_179_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_179_x.bin_output_4.bin"
+    ],
+    "88": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_17_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_17_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_17_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_17_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_17_x.bin_output_4.bin"
+    ],
+    "89": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_180_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_180_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_180_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_180_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_180_x.bin_output_4.bin"
+    ],
+    "90": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_181_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_181_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_181_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_181_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_181_x.bin_output_4.bin"
+    ],
+    "91": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_182_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_182_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_182_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_182_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_182_x.bin_output_4.bin"
+    ],
+    "92": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_183_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_183_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_183_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_183_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_183_x.bin_output_4.bin"
+    ],
+    "93": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_184_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_184_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_184_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_184_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_184_x.bin_output_4.bin"
+    ],
+    "94": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_185_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_185_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_185_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_185_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_185_x.bin_output_4.bin"
+    ],
+    "95": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_186_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_186_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_186_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_186_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_186_x.bin_output_4.bin"
+    ],
+    "96": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_187_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_187_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_187_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_187_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_187_x.bin_output_4.bin"
+    ],
+    "97": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_188_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_188_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_188_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_188_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_188_x.bin_output_4.bin"
+    ],
+    "98": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_189_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_189_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_189_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_189_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_189_x.bin_output_4.bin"
+    ],
+    "99": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_18_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_18_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_18_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_18_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_18_x.bin_output_4.bin"
+    ],
+    "100": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_190_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_190_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_190_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_190_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_190_x.bin_output_4.bin"
+    ],
+    "101": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_191_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_191_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_191_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_191_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_191_x.bin_output_4.bin"
+    ],
+    "102": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_192_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_192_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_192_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_192_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_192_x.bin_output_4.bin"
+    ],
+    "103": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_193_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_193_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_193_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_193_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_193_x.bin_output_4.bin"
+    ],
+    "104": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_194_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_194_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_194_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_194_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_194_x.bin_output_4.bin"
+    ],
+    "105": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_195_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_195_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_195_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_195_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_195_x.bin_output_4.bin"
+    ],
+    "106": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_196_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_196_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_196_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_196_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_196_x.bin_output_4.bin"
+    ],
+    "107": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_197_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_197_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_197_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_197_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_197_x.bin_output_4.bin"
+    ],
+    "108": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_198_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_198_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_198_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_198_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_198_x.bin_output_4.bin"
+    ],
+    "109": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_199_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_199_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_199_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_199_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_199_x.bin_output_4.bin"
+    ],
+    "110": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_19_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_19_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_19_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_19_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_19_x.bin_output_4.bin"
+    ],
+    "111": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_1_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_1_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_1_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_1_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_1_x.bin_output_4.bin"
+    ],
+    "112": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_200_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_200_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_200_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_200_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_200_x.bin_output_4.bin"
+    ],
+    "113": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_201_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_201_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_201_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_201_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_201_x.bin_output_4.bin"
+    ],
+    "114": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_202_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_202_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_202_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_202_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_202_x.bin_output_4.bin"
+    ],
+    "115": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_203_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_203_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_203_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_203_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_203_x.bin_output_4.bin"
+    ],
+    "116": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_204_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_204_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_204_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_204_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_204_x.bin_output_4.bin"
+    ],
+    "117": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_205_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_205_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_205_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_205_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_205_x.bin_output_4.bin"
+    ],
+    "118": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_206_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_206_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_206_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_206_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_206_x.bin_output_4.bin"
+    ],
+    "119": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_207_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_207_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_207_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_207_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_207_x.bin_output_4.bin"
+    ],
+    "120": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_208_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_208_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_208_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_208_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_208_x.bin_output_4.bin"
+    ],
+    "121": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_209_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_209_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_209_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_209_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_209_x.bin_output_4.bin"
+    ],
+    "122": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_20_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_20_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_20_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_20_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_20_x.bin_output_4.bin"
+    ],
+    "123": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_210_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_210_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_210_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_210_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_210_x.bin_output_4.bin"
+    ],
+    "124": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_211_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_211_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_211_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_211_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_211_x.bin_output_4.bin"
+    ],
+    "125": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_212_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_212_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_212_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_212_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_212_x.bin_output_4.bin"
+    ],
+    "126": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_213_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_213_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_213_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_213_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_213_x.bin_output_4.bin"
+    ],
+    "127": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_214_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_214_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_214_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_214_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_214_x.bin_output_4.bin"
+    ],
+    "128": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_215_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_215_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_215_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_215_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_215_x.bin_output_4.bin"
+    ],
+    "129": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_216_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_216_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_216_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_216_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_216_x.bin_output_4.bin"
+    ],
+    "130": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_217_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_217_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_217_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_217_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_217_x.bin_output_4.bin"
+    ],
+    "131": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_218_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_218_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_218_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_218_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_218_x.bin_output_4.bin"
+    ],
+    "132": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_219_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_219_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_219_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_219_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_219_x.bin_output_4.bin"
+    ],
+    "133": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_21_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_21_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_21_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_21_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_21_x.bin_output_4.bin"
+    ],
+    "134": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_220_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_220_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_220_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_220_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_220_x.bin_output_4.bin"
+    ],
+    "135": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_221_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_221_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_221_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_221_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_221_x.bin_output_4.bin"
+    ],
+    "136": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_222_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_222_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_222_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_222_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_222_x.bin_output_4.bin"
+    ],
+    "137": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_223_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_223_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_223_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_223_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_223_x.bin_output_4.bin"
+    ],
+    "138": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_224_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_224_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_224_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_224_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_224_x.bin_output_4.bin"
+    ],
+    "139": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_225_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_225_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_225_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_225_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_225_x.bin_output_4.bin"
+    ],
+    "140": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_226_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_226_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_226_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_226_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_226_x.bin_output_4.bin"
+    ],
+    "141": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_227_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_227_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_227_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_227_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_227_x.bin_output_4.bin"
+    ],
+    "142": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_228_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_228_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_228_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_228_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_228_x.bin_output_4.bin"
+    ],
+    "143": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_229_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_229_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_229_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_229_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_229_x.bin_output_4.bin"
+    ],
+    "144": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_22_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_22_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_22_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_22_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_22_x.bin_output_4.bin"
+    ],
+    "145": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_230_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_230_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_230_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_230_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_230_x.bin_output_4.bin"
+    ],
+    "146": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_231_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_231_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_231_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_231_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_231_x.bin_output_4.bin"
+    ],
+    "147": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_232_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_232_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_232_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_232_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_232_x.bin_output_4.bin"
+    ],
+    "148": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_233_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_233_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_233_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_233_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_233_x.bin_output_4.bin"
+    ],
+    "149": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_234_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_234_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_234_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_234_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_234_x.bin_output_4.bin"
+    ],
+    "150": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_235_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_235_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_235_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_235_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_235_x.bin_output_4.bin"
+    ],
+    "151": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_236_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_236_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_236_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_236_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_236_x.bin_output_4.bin"
+    ],
+    "152": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_237_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_237_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_237_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_237_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_237_x.bin_output_4.bin"
+    ],
+    "153": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_238_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_238_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_238_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_238_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_238_x.bin_output_4.bin"
+    ],
+    "154": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_239_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_239_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_239_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_239_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_239_x.bin_output_4.bin"
+    ],
+    "155": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_23_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_23_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_23_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_23_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_23_x.bin_output_4.bin"
+    ],
+    "156": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_240_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_240_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_240_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_240_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_240_x.bin_output_4.bin"
+    ],
+    "157": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_241_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_241_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_241_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_241_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_241_x.bin_output_4.bin"
+    ],
+    "158": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_242_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_242_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_242_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_242_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_242_x.bin_output_4.bin"
+    ],
+    "159": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_243_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_243_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_243_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_243_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_243_x.bin_output_4.bin"
+    ],
+    "160": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_244_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_244_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_244_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_244_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_244_x.bin_output_4.bin"
+    ],
+    "161": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_245_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_245_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_245_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_245_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_245_x.bin_output_4.bin"
+    ],
+    "162": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_246_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_246_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_246_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_246_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_246_x.bin_output_4.bin"
+    ],
+    "163": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_247_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_247_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_247_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_247_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_247_x.bin_output_4.bin"
+    ],
+    "164": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_248_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_248_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_248_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_248_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_248_x.bin_output_4.bin"
+    ],
+    "165": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_249_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_249_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_249_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_249_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_249_x.bin_output_4.bin"
+    ],
+    "166": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_24_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_24_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_24_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_24_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_24_x.bin_output_4.bin"
+    ],
+    "167": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_25_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_25_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_25_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_25_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_25_x.bin_output_4.bin"
+    ],
+    "168": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_26_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_26_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_26_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_26_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_26_x.bin_output_4.bin"
+    ],
+    "169": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_27_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_27_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_27_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_27_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_27_x.bin_output_4.bin"
+    ],
+    "170": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_28_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_28_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_28_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_28_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_28_x.bin_output_4.bin"
+    ],
+    "171": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_29_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_29_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_29_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_29_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_29_x.bin_output_4.bin"
+    ],
+    "172": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_2_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_2_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_2_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_2_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_2_x.bin_output_4.bin"
+    ],
+    "173": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_30_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_30_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_30_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_30_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_30_x.bin_output_4.bin"
+    ],
+    "174": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_31_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_31_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_31_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_31_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_31_x.bin_output_4.bin"
+    ],
+    "175": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_32_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_32_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_32_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_32_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_32_x.bin_output_4.bin"
+    ],
+    "176": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_33_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_33_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_33_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_33_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_33_x.bin_output_4.bin"
+    ],
+    "177": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_34_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_34_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_34_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_34_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_34_x.bin_output_4.bin"
+    ],
+    "178": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_35_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_35_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_35_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_35_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_35_x.bin_output_4.bin"
+    ],
+    "179": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_36_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_36_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_36_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_36_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_36_x.bin_output_4.bin"
+    ],
+    "180": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_37_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_37_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_37_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_37_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_37_x.bin_output_4.bin"
+    ],
+    "181": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_38_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_38_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_38_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_38_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_38_x.bin_output_4.bin"
+    ],
+    "182": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_39_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_39_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_39_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_39_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_39_x.bin_output_4.bin"
+    ],
+    "183": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_3_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_3_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_3_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_3_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_3_x.bin_output_4.bin"
+    ],
+    "184": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_40_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_40_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_40_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_40_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_40_x.bin_output_4.bin"
+    ],
+    "185": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_41_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_41_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_41_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_41_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_41_x.bin_output_4.bin"
+    ],
+    "186": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_42_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_42_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_42_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_42_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_42_x.bin_output_4.bin"
+    ],
+    "187": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_43_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_43_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_43_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_43_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_43_x.bin_output_4.bin"
+    ],
+    "188": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_44_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_44_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_44_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_44_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_44_x.bin_output_4.bin"
+    ],
+    "189": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_45_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_45_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_45_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_45_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_45_x.bin_output_4.bin"
+    ],
+    "190": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_46_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_46_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_46_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_46_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_46_x.bin_output_4.bin"
+    ],
+    "191": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_47_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_47_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_47_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_47_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_47_x.bin_output_4.bin"
+    ],
+    "192": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_48_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_48_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_48_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_48_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_48_x.bin_output_4.bin"
+    ],
+    "193": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_49_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_49_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_49_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_49_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_49_x.bin_output_4.bin"
+    ],
+    "194": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_4_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_4_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_4_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_4_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_4_x.bin_output_4.bin"
+    ],
+    "195": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_50_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_50_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_50_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_50_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_50_x.bin_output_4.bin"
+    ],
+    "196": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_51_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_51_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_51_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_51_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_51_x.bin_output_4.bin"
+    ],
+    "197": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_52_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_52_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_52_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_52_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_52_x.bin_output_4.bin"
+    ],
+    "198": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_53_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_53_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_53_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_53_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_53_x.bin_output_4.bin"
+    ],
+    "199": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_54_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_54_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_54_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_54_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_54_x.bin_output_4.bin"
+    ],
+    "200": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_55_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_55_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_55_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_55_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_55_x.bin_output_4.bin"
+    ],
+    "201": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_56_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_56_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_56_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_56_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_56_x.bin_output_4.bin"
+    ],
+    "202": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_57_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_57_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_57_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_57_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_57_x.bin_output_4.bin"
+    ],
+    "203": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_58_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_58_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_58_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_58_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_58_x.bin_output_4.bin"
+    ],
+    "204": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_59_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_59_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_59_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_59_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_59_x.bin_output_4.bin"
+    ],
+    "205": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_5_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_5_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_5_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_5_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_5_x.bin_output_4.bin"
+    ],
+    "206": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_60_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_60_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_60_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_60_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_60_x.bin_output_4.bin"
+    ],
+    "207": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_61_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_61_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_61_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_61_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_61_x.bin_output_4.bin"
+    ],
+    "208": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_62_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_62_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_62_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_62_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_62_x.bin_output_4.bin"
+    ],
+    "209": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_63_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_63_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_63_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_63_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_63_x.bin_output_4.bin"
+    ],
+    "210": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_64_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_64_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_64_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_64_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_64_x.bin_output_4.bin"
+    ],
+    "211": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_65_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_65_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_65_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_65_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_65_x.bin_output_4.bin"
+    ],
+    "212": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_66_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_66_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_66_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_66_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_66_x.bin_output_4.bin"
+    ],
+    "213": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_67_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_67_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_67_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_67_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_67_x.bin_output_4.bin"
+    ],
+    "214": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_68_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_68_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_68_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_68_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_68_x.bin_output_4.bin"
+    ],
+    "215": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_69_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_69_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_69_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_69_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_69_x.bin_output_4.bin"
+    ],
+    "216": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_6_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_6_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_6_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_6_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_6_x.bin_output_4.bin"
+    ],
+    "217": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_70_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_70_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_70_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_70_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_70_x.bin_output_4.bin"
+    ],
+    "218": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_71_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_71_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_71_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_71_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_71_x.bin_output_4.bin"
+    ],
+    "219": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_72_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_72_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_72_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_72_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_72_x.bin_output_4.bin"
+    ],
+    "220": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_73_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_73_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_73_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_73_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_73_x.bin_output_4.bin"
+    ],
+    "221": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_74_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_74_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_74_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_74_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_74_x.bin_output_4.bin"
+    ],
+    "222": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_75_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_75_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_75_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_75_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_75_x.bin_output_4.bin"
+    ],
+    "223": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_76_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_76_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_76_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_76_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_76_x.bin_output_4.bin"
+    ],
+    "224": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_77_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_77_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_77_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_77_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_77_x.bin_output_4.bin"
+    ],
+    "225": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_78_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_78_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_78_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_78_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_78_x.bin_output_4.bin"
+    ],
+    "226": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_79_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_79_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_79_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_79_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_79_x.bin_output_4.bin"
+    ],
+    "227": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_7_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_7_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_7_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_7_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_7_x.bin_output_4.bin"
+    ],
+    "228": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_80_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_80_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_80_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_80_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_80_x.bin_output_4.bin"
+    ],
+    "229": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_81_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_81_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_81_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_81_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_81_x.bin_output_4.bin"
+    ],
+    "230": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_82_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_82_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_82_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_82_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_82_x.bin_output_4.bin"
+    ],
+    "231": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_83_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_83_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_83_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_83_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_83_x.bin_output_4.bin"
+    ],
+    "232": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_84_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_84_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_84_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_84_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_84_x.bin_output_4.bin"
+    ],
+    "233": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_85_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_85_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_85_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_85_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_85_x.bin_output_4.bin"
+    ],
+    "234": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_86_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_86_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_86_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_86_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_86_x.bin_output_4.bin"
+    ],
+    "235": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_87_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_87_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_87_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_87_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_87_x.bin_output_4.bin"
+    ],
+    "236": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_88_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_88_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_88_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_88_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_88_x.bin_output_4.bin"
+    ],
+    "237": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_89_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_89_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_89_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_89_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_89_x.bin_output_4.bin"
+    ],
+    "238": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_8_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_8_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_8_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_8_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_8_x.bin_output_4.bin"
+    ],
+    "239": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_90_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_90_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_90_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_90_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_90_x.bin_output_4.bin"
+    ],
+    "240": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_91_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_91_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_91_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_91_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_91_x.bin_output_4.bin"
+    ],
+    "241": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_92_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_92_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_92_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_92_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_92_x.bin_output_4.bin"
+    ],
+    "242": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_93_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_93_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_93_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_93_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_93_x.bin_output_4.bin"
+    ],
+    "243": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_94_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_94_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_94_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_94_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_94_x.bin_output_4.bin"
+    ],
+    "244": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_95_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_95_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_95_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_95_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_95_x.bin_output_4.bin"
+    ],
+    "245": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_96_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_96_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_96_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_96_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_96_x.bin_output_4.bin"
+    ],
+    "246": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_97_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_97_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_97_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_97_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_97_x.bin_output_4.bin"
+    ],
+    "247": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_98_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_98_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_98_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_98_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_98_x.bin_output_4.bin"
+    ],
+    "248": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_99_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_99_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_99_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_99_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_99_x.bin_output_4.bin"
+    ],
+    "249": [
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_9_x.bin_output_0.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_9_x.bin_output_1.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_9_x.bin_output_2.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_9_x.bin_output_3.bin",
+        "/group/dphi_software/win24_cpu_ep_golden/K1_golden/_9_x.bin_output_4.bin"
+    ]
+}

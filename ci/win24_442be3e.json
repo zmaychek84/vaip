@@ -1,0 +1,86 @@
+[
+    {
+        "id": "A3",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/A3/A3_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "f2e5a1c250a5e3870a619744c1a1fc60"
+    },
+    {
+        "id": "K2",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/K2/K2_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "e5714ac77d7d103fccd68fdb1eb1fbbe"
+    },
+    {
+        "id": "F2",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/F2/F2_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "353c2202a3602892bc14e4860176be72"
+    },
+    {
+        "id": "C1",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/C1/C1_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "8242bb65c9539be8860e7387ba5f3d8a"
+    },
+    {
+        "id": "U",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/U/U_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "f9274e49884de090766bb7011701ca1f"
+    },
+    {
+        "id": "N",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/N/N_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "e1885d6532c3310fc1d8a8b342aa4e06"
+    },
+    {
+        "id": "K1",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/K1/K1_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "61b4ca6577e13fc376309d685c3404b9"
+    },
+    {
+        "id": "C4",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/C4/C4_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "74034357110997ad5f31dadd533bb9bd"
+    },
+    {
+        "id": "J2",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/J2/J_v_0_2.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "dbacb9296c31778fe0e32b588871da4d"
+    },
+    {
+        "id": "C2",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/C2/C2_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "8df750db7653d56f1efe839a4a9a2af4"
+    },
+    {
+        "id": "F1",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/F1/F1_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "43a3a9388ef016d1c8efc4aa9aa8f32c"
+    },
+    {
+        "id": "J",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/J/J_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "09a07e937ac113793755b8fb0f7e665c"
+    },
+    {
+        "id": "V",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/V/V_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "263c38705255f828f72db9c75bbdcc4c"
+    },
+    {
+        "id": "E",
+        "onnx_model": "/group/dphi_software/win24-quantized-models-1.16.0+442be3e/E/E_v_0_1.qdq.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "50ec5ac9634b8e3a4f1dfb5dcdacc925"
+    }
+]

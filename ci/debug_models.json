@@ -1,0 +1,29 @@
+[
+    {
+        "id": "C4_S16S8-int16s",
+        "onnx_model": "/group/modelzoo/vai_q_onnx/WIN24_MEP/win24_best_accuracy_models/C4/C4_v_0_1_quantized_S16S8-int16s-AAWS-ADAROUND.onnx",
+        "float_onnx": "/group/modelzoo/vai_q_onnx/WIN24_MEP/MEP_Models/C4/C4_v_0_1.onnx",
+        "accuracy_input": "accuracy_input/C4_input.json",
+        "cos_target": "0.9998",
+        "psnr_target": "52.2",
+        "l2norm_target": "0.427",
+        "input": [
+            "/group/dphi_software/software/workspace/yanjunz/ipu_test/win24_models_input/C4_input_bin/test_input_121_generator_concat_0.bin"
+        ],
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "7810c4fc4fe7c82c4939d8b8a894d2e6"
+    },
+    {
+        "id": "lcnet_050.ra2_in1k",
+        "onnx_model": "/proj/rdi/staff/kewang/workspace/2022-work/modelzoo/timm_vaiq/root_path/lcnet_050.ra2_in1k/MobileNetV3_int.onnx",
+        "hostname": "xcdl190074.xilinx.com",
+        "md5sum": "9afbf61ef065231209c47f6aea801131"
+    },
+    {
+        "id": "densenet121",
+        "onnx_model": "/proj/ipu_models/hug_fc/small_set_0816_opt/densenet121/DenseNet_int.onnx",
+        "input": "/proj/xsjhdstaff4/yanjunz/hugging_face_models/densenet121/test_data_set_0",
+        "hostname": "xsjsda153.xilinx.com",
+        "md5sum": "5da2bcfb86a274aab28ac6276638a835"
+    }
+]

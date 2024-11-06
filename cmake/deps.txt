@@ -1,0 +1,16 @@
+## this GSL used by onnxruntime
+microsoft_gsl;https://github.com/microsoft/GSL/archive/refs/tags/v4.0.0.zip;cf368104cd22a87b4dd0c80228919bb2df3e2a14
+zlib;https://github.com/madler/zlib.git;v1.2.13
+glog;https://github.com/google/glog/archive/refs/tags/v0.6.0.zip;b9c4c032e79300665a92d8dbc25513a0ee7ea47c
+Boost;https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz;893b5203b862eb9bbd08553e24ff146a
+unilog;https://gitenterprise.xilinx.com/VitisAI/unilog.git;72a62522f2ceae19be1337f571b14f976b52d7aa
+xir;https://gitenterprise.xilinx.com/VitisAI/xir.git;9eeec647228eeec6d3635e1d5c58ef0d8d17a98e
+target_factory;https://gitenterprise.xilinx.com/VitisAI/target_factory.git;229edaa957793052e92562b02baedee4230e7b6f
+vart;https://gitenterprise.xilinx.com/VitisAI/vart.git;34f4714100934c63e34bec3359836ed8dcb0be42
+trace_logging;https://gitenterprise.xilinx.com/VitisAI/trace-logging.git;d61bf45b41be9886a3c2bcc3162522c4ed38b763
+graph_engine;https://gitenterprise.xilinx.com/VitisAI/graph-engine.git;cb8dc02f2da6cc18ef1202a464c6ab5d4168c65d
+spdlog;https://github.com/gabime/spdlog.git;v1.x
+GTest;https://github.com/google/googletest.git;main
+dod;https://gitenterprise.xilinx.com/VitisAI/DynamicDispatch.git;a3b94a92ad8b3b09ecdcb96fe3cc95e66fe8c299
+transformers;https://gitenterprise.xilinx.com/VitisAI/transformers.git;8267ef69aad88f94586adcd59ddc9a3931656408
+xaiengine;https://github.com/Xilinx/aie-rt.git;4a012d7932155217d2c9368a3588a3c41d2b9edb
