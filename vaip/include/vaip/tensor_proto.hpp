@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 /**
@@ -107,6 +78,30 @@ VAIP_DLL_SPEC TensorProtoPtr tensor_proto_new_fp16(
     const std::vector<int16_t>& data);
 #endif
 
+#if VAIP_ORT_API_MAJOR >= 13
+/**
+ * @brief Creates a new TensorProto with int4 data type.
+ * @param name The name of the tensor.
+ * @param shape The shape of the tensor.
+ * @param data The int4 data of the tensor.
+ * @return A pointer to the created TensorProto.
+ */
+VAIP_DLL_SPEC TensorProtoPtr
+tensor_proto_new_i4(const std::string& name, const std::vector<int64_t>& shape,
+                    const std::vector<int8_t>& data);
+
+/**
+ * @brief Creates a new TensorProto with uint4 data type.
+ * @param name The name of the tensor.
+ * @param shape The shape of the tensor.
+ * @param data The uint4 data of the tensor.
+ * @return A pointer to the created TensorProto.
+ */
+VAIP_DLL_SPEC TensorProtoPtr
+tensor_proto_new_u4(const std::string& name, const std::vector<int64_t>& shape,
+                    const std::vector<uint8_t>& data);
+
+#endif
 /**
  * @brief Creates a new TensorProto with int32 data type.
  * @param name The name of the tensor.
@@ -305,6 +300,33 @@ VAIP_DLL_SPEC int64_t tensor_proto_as_i64(const onnxruntime::Graph& graph,
  */
 VAIP_DLL_SPEC uint64_t tensor_proto_as_u64(const onnxruntime::Graph& graph,
                                            const TensorProto& tensor);
+
+/**
+ * @brief Extracts to int4 values from a TensorProto.
+ * @param tensor The TensorProto.
+ * @param graph The Graph.
+ * @return The int4 values extracted from the TensorProto.
+ */
+
+VAIP_DLL_SPEC
+int8_t get_int4_value(gsl::span<const int8_t> data, size_t idx);
+
+VAIP_DLL_SPEC
+uint8_t get_uint4_value(gsl::span<const uint8_t> data, size_t idx);
+
+VAIP_DLL_SPEC
+gsl::span<const int8_t> tensor_proto_as_i4s(const onnxruntime::Graph& graph,
+                                            const TensorProto& tensor);
+
+/**
+ * @brief Extracts to uint4 values from a TensorProto.
+ * @param tensor The TensorProto.
+ * @param graph The Graph.
+ * @return The uint4 values extracted from the TensorProto.
+ */
+VAIP_DLL_SPEC
+gsl::span<const uint8_t> tensor_proto_as_u4s(const onnxruntime::Graph& graph,
+                                             const TensorProto& tensor);
 
 /**
  * @brief Extracts to int8 values from a TensorProto.

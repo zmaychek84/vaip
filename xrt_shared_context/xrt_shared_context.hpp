@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #pragma once
 
@@ -247,11 +218,18 @@ public:
   // following link.
   // https://gitenterprise.xilinx.com/VitisAI/graph-engine/blob/c4e1132b0c9d05a47dab3175d9dc9d6ed878522b/src/graph-engine/graph_runner.hpp#L96-L108
   void update_qos(std::map<std::string, std::uint32_t> qos) {
-
-    if (!support_eff_mode_) {
-      qos.erase("perf_pref");
+    // Note (ltp): We need to filter out 'is_preemptible' in this interface
+    // to prevent runtime errors.
+    // - 'is_preemptible' is only supported during the hardware context
+    // construction phase.
+    // - HW context manager will explicitly set
+    // 'is_preemptible' when creating the hardware context, so there is no
+    // dependency on this in update_qos. Filtering it out from qos is safe and
+    // ensures stability.
+    auto it = qos.find("is_preemptible");
+    if (it != qos.end()) {
+      qos.erase(it);
     }
-
     merge_qos_ = qos;
     if (init_qos_) {
       latency_ = qos["latency"];
@@ -272,17 +250,6 @@ public:
       xrt_hw_context_->update_qos(merge_qos_);
     }
     return;
-  }
-
-  void update_qos_for_run_opt(const std::string& perf_pref_value) {
-    // Note(ltp): local copy to ensure thread safe.
-    // The overhead should be cheap.
-    // Note(xcl) if efficient model is supported in XRT driver, do nothing
-    if (support_eff_mode_) {
-      auto merge_qos = merge_qos_;
-      merge_qos["perf_pref"] = perf_pref_value == "Efficient" ? 1 : 0;
-      xrt_hw_context_->update_qos(merge_qos);
-    }
   }
 
 private:

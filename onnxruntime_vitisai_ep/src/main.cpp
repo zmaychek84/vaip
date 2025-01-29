@@ -1,19 +1,7 @@
 /*
- *  Copyright (C) 2022 Xilinx, Inc. All rights reserved.
  *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- **/
+ *  Licensed under the MIT License.
+ */
 // #include "symbols.hpp"
 
 // typedef void* void_ptr_t;
@@ -82,6 +70,18 @@ void initialize_onnxruntime_vitisai_ep_c(
           << "ret_domain applied for 100 in onnxruntime";
     }
   }
+  std::set<std::string> vitis_ep_custom_ops;
+  // todo
+  // for (const auto& domain : contrib_domains) {
+  //  for (const auto* op : domain->custom_ops_) {
+  //    vitis_ep_custom_ops.insert(domain->domain_ + "::" + op->GetName(op));
+  //  }
+  //}
+  vitis_ep_custom_ops.insert("::DequantizeLinear");
+  vitis_ep_custom_ops.insert("::QuantizeLinear");
+  vitis_ep_custom_ops.insert("com.microsoft::DequantizeLinear");
+  vitis_ep_custom_ops.insert("com.microsoft::QuantizeLinear");
+  vaip_core::set_vitis_ep_custom_ops(vitis_ep_custom_ops);
 }
 
 ONNXRUNTIME_VITISAI_EP_DLL_SPEC
@@ -92,5 +92,22 @@ compile_onnx_model_with_options_c(const std::string& model_path,
   auto json_config = vaip_core::get_config_json_str(options);
   return new std::vector<std::unique_ptr<vaip_core::ExecutionProvider>>(
       vaip_core::compile_onnx_model_3(model_path, graph, json_config.c_str()));
+}
+
+std::vector<std::unique_ptr<vaip_core::ExecutionProvider>>*
+compile_onnx_model_vitisai_ep_with_error_handling_c(
+    const std::string& model_path, const onnxruntime::Graph& graph,
+    const onnxruntime::ProviderOptions& options, void* status,
+    vaip_core::error_report_func func) {
+  // TODO
+  auto json_config = vaip_core::get_config_json_str(options);
+  return new std::vector<std::unique_ptr<vaip_core::ExecutionProvider>>(
+      vaip_core::compile_onnx_model_3(model_path, graph, json_config.c_str()));
+}
+
+ONNXRUNTIME_VITISAI_EP_DLL_SPEC
+void profiler_collect_c(std::vector<EventInfo>& api_events,
+                        std::vector<EventInfo>& kernel_events) {
+  // TODO
 }
 }

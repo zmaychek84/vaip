@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #pragma once
 #include "vaip/vaip.hpp"
@@ -53,6 +24,26 @@ struct MatmulQDQParams {
   int64_t shft_c2;
   int64_t matmul_shift;
 };
+struct MatmulQDQParams_3d {
+  std::vector<std::vector<int64_t>> c0_coeffs;
+  std::vector<int32_t> qdq_params;
+  int32_t c1;
+  int32_t c2;
+  int32_t c3_coeff_scale;
+  int64_t c2_coeff_prime;
+  int64_t c3_coeff_scale_shift;
+  int64_t shft_c2;
+  int64_t matmul_shift;
+};
+
+std::vector<int32_t> calculate_add_qdq_params(float a_sc, uint16_t a_zp,
+                                              float b_sc, uint16_t b_zp,
+                                              float o_sc, uint16_t o_zp);
+int32_t srs_int32_even_fast(int32_t inp, int shift);
+
+std::pair<int32_t, int16_t>
+find_closest_shifted_int32_with_max_shift(double float_val, int32_t max_value,
+                                          int32_t max_shift_val);
 
 std::pair<int32_t, int16_t> find_closest_shifted_int32(double float_val,
                                                        int32_t max_value);
@@ -79,6 +70,30 @@ MatmulQDQParams calculate_matmul_qdq_params_uint8_uint8(
 MatmulQDQParams calculate_matmul_qdq_params_uint16_uint8(
     const std::vector<std::vector<uint8_t>>& weights, float a_sc, uint16_t a_zp,
     float w_sc, uint16_t w_zp, float q_sc, uint16_t q_zp);
+
+MatmulQDQParams_3d calculate_matmul_3d_qdq_params_uint16_uint8(
+    const std::vector<std::vector<std::vector<uint8_t>>>& weights, float a_sc,
+    uint16_t a_zp, float w_sc, uint16_t w_zp, float q_sc, uint16_t q_zp);
+
+MatmulQDQParams calculate_matmuladd_qdq_params_uint8_uint8_b32(
+    const std::vector<std::vector<uint8_t>>& weights,
+    const std::vector<int32_t>& bias, float a_sc, uint16_t a_zp, float w_sc,
+    uint16_t w_zp, float b_sc, uint16_t b_zp, float q_sc, uint16_t q_zp);
+
+MatmulQDQParams calculate_matmuladd_qdq_params_uint16_uint8_b32(
+    const std::vector<std::vector<uint8_t>>& weights,
+    const std::vector<int32_t>& bias, float a_sc, uint16_t a_zp, float w_sc,
+    uint16_t w_zp, float b_sc, uint16_t b_zp, float q_sc, uint16_t q_zp);
+
+MatmulQDQParams calculate_matmuladd_qdq_params_uint8_uint8_b32(
+    const std::vector<std::vector<uint8_t>>& weights,
+    const std::vector<int32_t>& bias, float a_sc, uint16_t a_zp, float w_sc,
+    uint16_t w_zp, float b_sc, uint16_t b_zp, float q_sc, uint16_t q_zp);
+
+MatmulQDQParams calculate_matmuladd_qdq_params_uint16_uint8_b32(
+    const std::vector<std::vector<uint8_t>>& weights,
+    const std::vector<int32_t>& bias, float a_sc, uint16_t a_zp, float w_sc,
+    uint16_t w_zp, float b_sc, uint16_t b_zp, float q_sc, uint16_t q_zp);
 
 // Function to convert float to bfloat16
 uint16_t float_to_bfloat16(float value);
@@ -157,6 +172,17 @@ std::vector<int32_t> mha_channel_qdq_params_fill(
     std::tuple<int64_t, int64_t> qdq_mul_out, int64_t is_qkt_smv_int16,
     int64_t smv_swap = 0);
 
+std::vector<int32_t> DeMHA_qdq_params_fill(
+    std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t>
+        qkt_qdq,
+    std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t>
+        smv_qdq,
+    std::tuple<int64_t, int64_t> sm_qdq_before,
+    std::tuple<int64_t, int64_t> sm_qdq_after,
+    std::tuple<float, int16_t, float, int16_t, float, int16_t>
+        qdq_pos_con_add_in,
+    std::tuple<float, int16_t, float, int16_t, float, int16_t> qdq_att_mask,
+    int64_t is_qkt_smv_int16, int64_t smv_swap = 0);
 std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>
 dq_uint16A_uint8W_conv_q_param_gen(float in_s, uint16_t in_zp,
                                    gsl::span<const uint8_t> w, float w_s,
@@ -164,6 +190,20 @@ dq_uint16A_uint8W_conv_q_param_gen(float in_s, uint16_t in_zp,
                                    const std::vector<int64_t>& w_shape,
                                    gsl::span<const int32_t> b, float b_s,
                                    int32_t b_zp, float o_s, uint16_t o_zp);
+std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>
+dq_uint16A_int8W_conv_q_param_gen(float in_s, uint16_t in_zp,
+                                  gsl::span<const int8_t> w, float w_s,
+                                  int8_t w_zp,
+                                  const std::vector<int64_t>& w_shape,
+                                  gsl::span<const int32_t> b, float b_s,
+                                  int32_t b_zp, float o_s, uint16_t o_zp);
+std::tuple<std::vector<int64_t>, std::vector<int32_t>, std::vector<int32_t>,
+           int64_t, int64_t>
+dq_uint16A_int4W_conv_chwise_q_param_gen(
+    float in_s, uint16_t in_zp, const std::vector<int8_t>& w,
+    gsl::span<const float> w_s, const std::vector<int8_t>& w_zp,
+    const std::vector<int64_t>& w_shape, gsl::span<const int32_t> b, float b_s,
+    int32_t b_zp, float o_s, uint16_t o_zp);
 
 std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>
 dq_uint16A_uint16W_conv_q_param_gen(float in_s, uint16_t in_zp,

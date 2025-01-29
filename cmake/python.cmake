@@ -1,3 +1,7 @@
+#
+#  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+#  Licensed under the MIT License.
+#
 function(get_host_python)
     find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
     set(HOST_PYTHON_EXE ${Python3_EXECUTABLE} PARENT_SCOPE)

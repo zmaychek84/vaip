@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #pragma once
@@ -74,8 +45,31 @@ public:
   PassContextTimer();
   virtual ~PassContextTimer();
 };
+class CacheFileReader {
+public:
+  CacheFileReader() = default;
+  CacheFileReader(const CacheFileReader&) = delete;
+  virtual ~CacheFileReader() = default;
+  virtual size_t size() const = 0;
+  virtual void rewind() const = 0;
+  virtual std::size_t fread(void* buffer, std::size_t size) const = 0;
+};
+class CacheFileWriter {
+public:
+  CacheFileWriter() = default;
+  CacheFileWriter(const CacheFileWriter&) = delete;
+  virtual ~CacheFileWriter() = default;
+  virtual std::size_t fwrite(const void* buffer, std::size_t size) const = 0;
+};
+
+class QoSUpdateInterface {
+public:
+  virtual ~QoSUpdateInterface() = default;
+  virtual void update_qos(const std::string& perf_pref_value) = 0;
+};
 
 class PassContext {
+public:
 public:
   virtual ~PassContext() = default;
   /**
@@ -191,6 +185,14 @@ public:
   virtual std::string
   get_run_option(const std::string& option_name,
                  const std::string& default_value) const = 0;
+
+  virtual std::string
+  get_ep_dynamic_option(const std::string& option_name,
+                        const std::string& default_value) const = 0;
+
+  virtual void
+  add_QosUpdater(const std::shared_ptr<QoSUpdateInterface>& updater) const = 0;
+  virtual void update_all_qos(const std::string& workload_type) const = 0;
   /**
    * @brief Retrieves the configuration protobuf object.
    *
@@ -208,6 +210,7 @@ public:
   // @brief DO NOT USE THIS FUNCTION
   virtual std::shared_ptr<void>
   get_context_resource(const std::string& name) const = 0;
+
   /**
    * @brief Reads in-memory cache files into bytes
    *
@@ -222,6 +225,11 @@ public:
   virtual std::optional<std::vector<uint8_t>>
   read_file_u8(const std::string& filename) const = 0;
 
+  virtual std::unique_ptr<CacheFileReader>
+  open_file_for_read(const std::string& filename) const = 0;
+  virtual std::unique_ptr<CacheFileWriter>
+  open_file_for_write(const std::string& filename) = 0;
+
   virtual FILE* open_file(const std::string& filename) const = 0;
 
   /**
@@ -234,8 +242,10 @@ public:
    */
   virtual bool write_file(const std::string& filename,
                           gsl::span<const char> data) = 0;
-  virtual void write_tmpfile(const std::string& filename, FILE* file) = 0;
-
+  /**
+   * restore cache_files_ from saved file
+   */
+  virtual void restore_cache_files() = 0;
   /**
    * @brief Checks if a cache file with the given filename exists.
    *
@@ -263,6 +273,8 @@ public:
    */
   virtual bool
   cache_files_to_tar_file(const std::filesystem::path& tar_file) const = 0;
+
+  virtual bool cache_files_to_tar_file(FILE*) const = 0;
 
   /**
    * @brief Loads a tar file and save its content into in-memory cache files
@@ -293,21 +305,7 @@ public:
    *
    */
   virtual bool tar_mem_to_cache_files(const char* data, size_t size) = 0;
-
-  /**
-   * @brief Loads files from a directory and create in-memory cache files from
-   * them.
-   *
-   * @param dir The directory path.
-   */
-  virtual void directory_to_cache_files(const std::filesystem::path& dir) = 0;
-
-  /**
-   * @brief Saves in-memory cache files to the specified directory.
-   *
-   * @param dir The directory path.
-   */
-  virtual void cache_files_to_directory(const std::filesystem::path& dir) = 0;
+  virtual bool tar_file_to_cache_files(FILE*) = 0;
   /**
    * @brief Creates a new instance of PassContext.
    *
@@ -344,5 +342,7 @@ public:
   virtual void set_is_ep_context_model(bool is_ep_context_model) = 0;
 
   virtual bool get_is_ep_context_model() = 0;
+
+  virtual void on_custom_op_create_end() = 0;
 };
 } // namespace vaip_core

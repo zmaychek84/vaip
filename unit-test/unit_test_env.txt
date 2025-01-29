@@ -1,3 +1,7 @@
+#
+#  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+#  Licensed under the MIT License.
+#
 DEBUG_CONST_FOLDING=0
 DEBUG_VAIP_PY_EXT=0
 DEBUG_MERGE_ADD_INTO_CONV_BIAS=0

@@ -1,26 +1,6 @@
 #
-#   The Xilinx Vitis AI Vaip in this distribution are provided under the following free
-#   and permissive binary-only license, but are not provided in source code form.  While the following free
-#   and permissive license is similar to the BSD open source license, it is NOT the BSD open source license
-#   nor other OSI-approved open source license.
-#
-#    Copyright (C) 2022 Xilinx, Inc. All rights reserved.
-#    Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
-#
-#    Redistribution and use in binary form only, without modification, is permitted provided that the following conditions are met:
-#
-#    1. Redistributions must reproduce the above copyright notice, this list of conditions and the following disclaimer in
-#    the documentation and/or other materials provided with the distribution.
-#
-#    2. The name of Xilinx, Inc. may not be used to endorse or promote products redistributed with this software without specific
-#    prior written permission.
-#
-#    THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-#    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL XILINX, INC.
-#    BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-#    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
-#    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+#  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+#  Licensed under the MIT License.
 #
 
 
@@ -58,16 +38,18 @@ vai_add_library(
   src/HT_1_2/custom_op_ht_1_2.cpp
   src/HT_1_2/load_wts.h
   src/HT_1_2/load_wts.cpp
+  src/HT_1_2/elf_pkg_ht_1_2.hpp
+  src/HT_1_2/elf_pkg_ht_1_2.cpp
   src/HT_1_2/txn_pkg_ht_1_2.hpp
   src/HT_1_2/txn_pkg_ht_1_2.cpp
   src/common/vaiml_client.h
   src/common/hw_runner.h
   src/common/hw_runner.cpp
-  src/common/op_base.h
-  src/common/op_buf.hpp
-  src/common/op_defs.h
-  src/common/op_init.hpp
-  src/common/op_types.h
+  src/common/hw_elf_runner.h
+  src/common/hw_elf_runner.cpp
+  src/common/runner_common_def.h
+  src/common/transaction_op.h
+  src/common/transaction_op.cpp
   src/common/timer.h
   src/common/bf16_utils.h
   src/common/bf16_utils.cpp
@@ -80,6 +62,8 @@ vai_add_library(
   src/GT/GT_1_2/custom_op_gt_1_2.cpp
   src/GT/GT_1_3/custom_op_gt_1_3.hpp
   src/GT/GT_1_3/custom_op_gt_1_3.cpp
+  src/GT/GT_1_3/elf_pkg_gt_1_3.cpp
+  src/GT/GT_1_3/elf_pkg_gt_1_3.hpp
   src/GT/GT_1_3/txn_pkg_gt_1_3.cpp
   src/GT/GT_1_3/txn_pkg_gt_1_3.hpp
   )

@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include <assert.h>
 // #include <onnxruntime_cxx_api.h>
@@ -94,9 +66,9 @@ void writeResToFile(std::map<int, std::string> res) {
 std::tuple<dd::label_map, dd::Graph, std::map<int, std::string>,
            std::map<dd::node_ind_t, std::string>>
 partition_onnx_model(onnxruntime::Graph& graph) {
-
   std::vector<std::string> supported_ops = {"QMatMul",
                                             "QMatMulAddGelu",
+                                            "QGemmvGelu",
                                             "QMatMulAdd",
                                             "QLayerNorm",
                                             "QEltWiseAdd",
@@ -117,6 +89,7 @@ partition_onnx_model(onnxruntime::Graph& graph) {
                                             "DQAdd",
                                             "mzdk5MHA",
                                             "QSilu",
+                                            "SILU",
                                             "QGelu",
                                             "QMatMulDynamic",
                                             "QMatMulDynamicSoftmax",
@@ -124,23 +97,35 @@ partition_onnx_model(onnxruntime::Graph& graph) {
                                             "xcom-conv2d",
                                             "QBroadcastAdd",
                                             "Mladfsoftmax",
+                                            "MLADFADD",
                                             "QuantOP",
                                             "QResize",
                                             "DeQuantOP",
                                             "QConv2MatMul",
                                             "QSigmoid",
+                                            "MLADFRMSNORM",
                                             "AttentionMaskPrePro",
+                                            "AttentionMaskPrePro_win25",
                                             "Mladfelwmul",
+                                            "ELWMUL",
                                             "MLADFMATMULA16A16",
                                             "DPS",
+                                            "MladfMatMul",
+                                            "FlatMLP",
                                             "Qtanh_lpnorm",
                                             "QL2norm",
+                                            "L2_Norm",
                                             "QReduceSum",
                                             "QActConstAdd",
                                             "QEltWiseDiv",
                                             "QExpand",
-                                            "Qbias_add"};
-
+                                            "Qbias_add",
+                                            "QDeMHA",
+                                            "QGatherDivAdd",
+                                            "QIntEltwiseAdd",
+                                            "QIntEltwiseMul",
+                                            "QConv2MatMulSilu",
+                                            "QBatchMatMul"};
   std::map<std::string, std::string> excluded_op_names = {};
 
   std::string filename = ENV_PARAM(DD_SUPPORTED_OPS_JSON);
@@ -204,8 +189,8 @@ partition_onnx_model(onnxruntime::Graph& graph) {
       adjacency_list[(int32_t)node_idx] = successors;
     }
   }
-  writeAdjacencyListToFile(adjacency_list, "mdsqr_adj.txt");
-  writeResToFile(idx_node_map);
+  // writeAdjacencyListToFile(adjacency_list, "mdsqr_adj.txt");
+  // writeResToFile(idx_node_map);
 
   dd::label_map subgraphs =
       dd::partition_graph(adjacency_list, property, "L1", nodes);

@@ -1,39 +1,11 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include "hw_runner.h"
 #include "experimental/xrt_ini.h"
-#include "op_buf.hpp"
 #include "timer.h"
+#include "transaction_op.h"
 #include "utils.h"
 #include <iostream>
 #include <windows.h>
@@ -229,15 +201,12 @@ void hw_runner::load_txn_bin(const std::string& txnbin) {
 
 void hw_runner::load_txn_bin(const std::vector<std::string>& txnbins) {
   for (const auto& txnbin : txnbins) {
-    op_buf instr_buf;
-    instr_buf.clear();
-    uint8_t* txn_ptr = (uint8_t*)txnbin.data();
-    instr_buf.addOP(transaction_op(txn_ptr));
-    instr_bo_vec_.emplace_back(context_->get_device(), instr_buf.size(),
-                               XCL_BO_FLAGS_CACHEABLE,
-                               context_->get_kernel().group_id(1));
+    auto instr_buf = vaip_vaiml_custom_op::transaction_op(txnbin);
+    instr_bo_vec_.emplace_back(
+        context_->get_device(), instr_buf.get_txn_instr_size(),
+        XCL_BO_FLAGS_CACHEABLE, context_->get_kernel().group_id(1));
 
-    instr_bo_vec_.back().write(instr_buf.data());
+    instr_bo_vec_.back().write(instr_buf.get_txn_op().data());
     instr_bo_vec_.back().sync(XCL_BO_SYNC_BO_TO_DEVICE);
   }
 }

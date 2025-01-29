@@ -1,3 +1,7 @@
+/*
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
+ */
 #include "txn_pkg_gt_1_3.hpp"
 #include <string>
 #include <zlib.h>

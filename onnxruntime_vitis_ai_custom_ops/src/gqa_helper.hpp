@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #pragma once
 #if defined(_WIN32)
@@ -298,6 +269,32 @@ static void fill_attn_mask_impl(uint16_t* attn_mask, int S) {
   }
 }
 
+static void fill_attn_mask_3d(uint16_t* attn_mask, int S, int S_pad, int past_S,
+                              int kv_len) {
+  const int all_sequence_length = past_S + kv_len;
+
+  std::memset(attn_mask, 0, S_pad * all_sequence_length * sizeof(uint16_t));
+  const uint16_t neg_inf_ui16 = float_to_bfloat16(-3.389e38f);
+  for (int i = 0; i < S; i++) {
+    uint16_t* start_ptr = attn_mask + i * all_sequence_length + i + 1 + past_S;
+    size_t count = all_sequence_length - (i + 1 + past_S);
+#ifdef _WIN32
+    __stosw(start_ptr, neg_inf_ui16, count);
+#else
+    std::fill(start_ptr, start_ptr + count, neg_inf_ui16);
+#endif
+  }
+  if (S < S_pad) {
+    uint16_t* start_ptr = attn_mask + S * all_sequence_length;
+#ifdef _WIN32
+    __stosw(start_ptr, neg_inf_ui16, ((S_pad - S) * all_sequence_length));
+#else
+    std::fill(start_ptr, start_ptr + ((S_pad - S) * all_sequence_length),
+              neg_inf_ui16);
+#endif
+  }
+}
+
 /*
 Note(chuanliang & ltp):
 This is LUT constructor for attentation mask.
@@ -350,4 +347,53 @@ private:
 
   AttnMaskLUTSingleton(const AttnMaskLUTSingleton&) = delete;
   void operator=(const AttnMaskLUTSingleton&) = delete;
+};
+
+class AttnMask3DLUTSingleton {
+
+private:
+  // Add more in the future if required.
+  static std::set<int32_t> get_seqs() {
+    return {64, 128, 192, 256, 320, 384, 448, 512};
+  }
+
+public:
+  static AttnMask3DLUTSingleton& getInstance(int32_t chunk_size) {
+    static AttnMask3DLUTSingleton instance(chunk_size);
+    return instance;
+  }
+
+  bool hasLut(int32_t S) { return idx_map_.count(S) != 0; }
+
+  /// Should use const.
+  uint16_t* getLut(int32_t S) {
+    if (!hasLut(S)) {
+      throw std::invalid_argument("There is not LUT for " + std::to_string(S));
+    }
+
+    auto idx = idx_map_.at(S);
+    return attn_masks_lut_[idx].data();
+  }
+
+private:
+  AttnMask3DLUTSingleton(int32_t chunk_size) {
+    // construct the LUT
+    auto seqs = get_seqs();
+    int32_t idx = 0;
+    for (auto& s : seqs) {
+      std::vector<uint16_t> lut;
+      lut.resize(chunk_size * s);
+      fill_attn_mask_3d(lut.data(), chunk_size, chunk_size, s - chunk_size,
+                        chunk_size);
+      attn_masks_lut_.emplace_back(std::move(lut));
+      idx_map_[s] = idx++;
+    }
+  }
+
+  // index for LUT given a S
+  std::unordered_map<uint16_t, int32_t> idx_map_;
+  std::vector<std::vector<uint16_t>> attn_masks_lut_;
+
+  AttnMask3DLUTSingleton() = delete;
+  void operator=(const AttnMask3DLUTSingleton&) = delete;
 };

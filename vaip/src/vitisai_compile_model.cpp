@@ -1,37 +1,9 @@
 /*
- *      The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
+#define _CRT_SECURE_NO_WARNINGS
 #include <cstdint>
 #include <glog/logging.h>
 
@@ -49,11 +21,13 @@
 #include "vaip/model.hpp"
 #include "vaip/util.hpp"
 #include "vaip/vaip.hpp"
+#include "vaip/vaip_io.hpp"
 #include "vaip/vaip_plugin.hpp"
 #include "vitis/ai/env_config.hpp"
 #include "vitis/ai/profiling.hpp"
 #include "vitis/ai/weak.hpp"
 #include <codecvt>
+#include <errno.h>
 #include <google/protobuf/util/json_util.h>
 #include <ios>
 #include <limits>
@@ -61,6 +35,7 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <stdexcept>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string>
 #include <xir/graph/graph.hpp>
@@ -177,15 +152,9 @@ static void update_pass_context_from_context_json_in_cache(
   auto log_dir = context->get_log_dir();
   auto context_json_path = log_dir / "context.json";
   auto context_context_json = context->read_file_c8("context.json");
-  if (context_context_json) {
-    auto context_context_json_text = dos2unix(*context_context_json);
-    pass_context_update_context_json(*context, context_context_json_text);
-  } else if (std::filesystem::exists(context_json_path)) {
-    auto json_str = slurp(context_json_path);
-    pass_context_update_context_json(*context, json_str);
-  } else {
-    LOG(FATAL) << "cannot find context.json in the cache object.";
-  }
+  auto context_context_json_text = dos2unix(*context_context_json);
+  pass_context_update_context_json(*context, context_context_json_text);
+  context->restore_cache_files();
 }
 
 static ContextProto load_context_json_2(PassContextImp& context) {
@@ -407,7 +376,10 @@ find_signature_in_meptabel(const ConfigProto& proto,
                 << "model_name :  " << mep.model_name() << " " //
                 << "md5sum_in_memory : " << mep.md5sum_in_memory();
       return std::make_pair(md5_in_memory_a, &mep);
-    } else if (md5_in_memory_b == mep.md5sum_in_memory_with_io()) {
+    }
+  }
+  for (auto& mep : proto.mep_table()) {
+    if (md5_in_memory_b == mep.md5sum_in_memory_with_io()) {
       MY_LOG(1) << "find signature in meptable : "             //
                 << "model_name :  " << mep.model_name() << " " //
                 << "md5sum_in_memory_with_io : "
@@ -418,8 +390,10 @@ find_signature_in_meptabel(const ConfigProto& proto,
       if ((!mep.has_node_count()) || (node_count == mep.node_count())) {
         return std::make_pair(md5_in_memory_b, &mep);
       }
-    } else if (!md5_file_base.empty() &&
-               md5_file_base == mep.md5sum_on_disk()) {
+    }
+  }
+  for (auto& mep : proto.mep_table()) {
+    if (!md5_file_base.empty() && md5_file_base == mep.md5sum_on_disk()) {
       MY_LOG(1) << "find signature in meptable : "             //
                 << "model_name :  " << mep.model_name() << " " //
                 << "md5sum_on_disk : " << mep.md5sum_on_disk();
@@ -529,6 +503,15 @@ initialize_context(const std::string& model_path, const Graph& onnx_graph,
     context->context_proto.mutable_config()->mutable_provider_options()->insert(
         {"model_variant", model_variant});
 
+    std::string is_preemptible = "false";
+    if (mep_table->has_is_preemptible()) {
+      is_preemptible = mep_table->is_preemptible() ? "true" : "false";
+
+      context->context_proto.mutable_config()
+          ->mutable_provider_options()
+          ->insert({"is_preemptible", is_preemptible});
+    }
+
     std::string qos_priority = "";
     if (mep_table->has_qos_priority()) {
       qos_priority = mep_table->qos_priority();
@@ -571,22 +554,35 @@ static std::string get_provider_option(const PassContextImp& context,
   }
   return ret;
 }
+static std::string get_session_config_option(const PassContextImp& context,
+                                             const std::string& key,
+                                             const std::string& default_value) {
+  auto& options = context.context_proto.config().session_configs();
+  auto it = options.find(key);
+  auto ret = std::string();
+  if (it == options.end()) {
+    ret = default_value;
+  } else {
+    ret = it->second;
+  }
+  return ret;
+}
 
 static std::string get_ep_cache_context_embed_mode(PassContextImp& context) {
   auto measure_get_ep_cache_context_embed_mode =
       context.measure("get_ep_cache_context_embed_mode");
-  bool is_in_mem = context.cache_in_mem();
-  if (!is_in_mem) {
-    context.directory_to_cache_files(context.log_dir);
-  }
   auto bytes = context.cache_files_to_tar_mem();
   if (ENV_PARAM(XLNX_EP_CONTEXT_ENABLE_COMPRESSION)) {
     auto measure_compression = context.measure("vaip_core::compress");
     LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
         << " start compressing ep context " << bytes.size() << " bytes";
-    bytes = vaip_core::compress(bytes);
+    std::vector<char> out;
+    auto src = IStreamReader::from_bytes(bytes);
+    auto dst = IStreamWriter::from_bytes(out);
+    vaip_core::compress(src.get(), dst.get()); // TODO: StringStreamWriter
     LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-        << " ep context is " << bytes.size() << " bytes after compression";
+        << " ep context is " << out.size() << " bytes after compression";
+    return std::string(out.begin(), out.end());
   }
   LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
       << "embed mode = 1, load cache directory  to tar memory " << bytes.size()
@@ -599,7 +595,7 @@ static std::string get_ep_cache_context_nonembed_mode(PassContextImp& context) {
       context.measure("get_ep_cache_context_nonembed_mode");
   auto model_path = context.model_path;
   auto OrtSessionOptionEpContextFilePath = std::filesystem::path(
-      get_provider_option(context, "ep_context_file_path", ""));
+      get_session_config_option(context, "ep.context_file_path", ""));
   if (OrtSessionOptionEpContextFilePath.empty()) {
     OrtSessionOptionEpContextFilePath = model_path;
     OrtSessionOptionEpContextFilePath += "_ctx.onnx";
@@ -609,23 +605,30 @@ static std::string get_ep_cache_context_nonembed_mode(PassContextImp& context) {
       << OrtSessionOptionEpContextFilePath.filename();
   auto OrtSessionOptionEpContextFilePath_binay =
       OrtSessionOptionEpContextFilePath.replace_extension(".bin");
-  bool is_in_mem = context.cache_in_mem();
-  if (!is_in_mem) {
-    context.directory_to_cache_files(context.log_dir);
-  }
   LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
       << "embed mode = 0, save cache directory to tar file "
       << OrtSessionOptionEpContextFilePath_binay.filename();
-  auto bytes = context.cache_files_to_tar_mem();
+
   if (ENV_PARAM(XLNX_EP_CONTEXT_ENABLE_COMPRESSION)) {
+    FILE* temp_file = tmpfile();
+    context.cache_files_to_tar_file(temp_file);
+    rewind(temp_file);
     auto measure_compression = context.measure("vaip_core::compress");
     LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-        << " start compressing ep context " << bytes.size() << " bytes";
-    bytes = vaip_core::compress(bytes);
-    LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-        << " ep context is " << bytes.size() << " bytes after compression";
+        << " start compressing ep context ";
+    FILE* file =
+        fopen(OrtSessionOptionEpContextFilePath_binay.string().c_str(), "wb");
+    auto src = IStreamReader::from_FILE(temp_file);
+    auto dst = IStreamWriter::from_FILE(file);
+    vaip_core::compress(src.get(), dst.get());
+    fclose(file);
+    fclose(temp_file);
+  } else {
+    FILE* file =
+        fopen(OrtSessionOptionEpContextFilePath_binay.string().c_str(), "wb");
+    context.cache_files_to_tar_file(file);
+    fclose(file);
   }
-  vaip_core::dump_binary(OrtSessionOptionEpContextFilePath_binay, bytes);
   return OrtSessionOptionEpContextFilePath.filename().u8string();
 }
 
@@ -694,7 +697,9 @@ create_ep_context_node(vaip_core::ExecutionProviderConcrete* ep) {
   int64_t main_context = index == 0 ? 1 : 0;
   attrs.add("main_context", main_context);
   int64_t embed_mode =
-      get_provider_option(context, "ep_context_embed_mode", "1") == "1" ? 1 : 0;
+      get_session_config_option(context, "ep.context_embed_mode", "1") == "1"
+          ? 1
+          : 0;
   attrs.add("embed_mode", embed_mode);
   attrs.add("source", std::string("VitisAIExecutionProvider"));
   attrs.add("log_dir", context.log_dir.u8string());
@@ -818,72 +823,64 @@ static std::optional<vaip_cxx::NodeConstRef> get_main_ep_context_node(
       << count_main_context << " main EPContext nodes.";
   return ret;
 }
+
 static void
 store_cache_directory_from_main_node(PassContextImp& context,
                                      vaip_cxx::NodeConstRef main_node) {
-
   CHECK(main_node.has_attr("ep_cache_context"))
       << " main EPContext has not ep_cache_context attr";
-  auto ep_cache_context = main_node.get_attr_string("ep_cache_context");
-  int64_t enable_compression =
-      main_node.has_attr("enable_compression")
-          ? main_node.get_attr_int("enable_compression")
-          : 0;
-  int64_t ep_embed_mode = 1; // default embed_mode = 1
-  if (main_node.has_attr("embed_mode")) {
-    ep_embed_mode = main_node.get_attr_int("embed_mode");
-  }
+  auto ep_cache_context =
+      main_node.release_attr_string("ep_cache_context").to_ptr();
+  auto ep_context_size = ep_cache_context->size();
+
+  int64_t ep_embed_mode = main_node.get_attr_int("embed_mode", 1);
+  FILE* ep_context_file = nullptr;
   if (ep_embed_mode) {
+    ep_context_file = tmpfile();
+    CHECK(ep_context_file != nullptr) << "cannot create tmp file";
+    auto write_size = std::fwrite(ep_cache_context->data(), 1, ep_context_size,
+                                  ep_context_file);
+    CHECK_EQ((size_t)write_size, ep_context_size);
+    auto status = std::fseek(ep_context_file, 0, SEEK_SET);
     LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-        << "embed mode = 1, load ep context " << ep_cache_context.size()
-        << " bytes";
-    auto tar_mem = std::vector<char>();
-    auto tar_mem_span = gsl::span<const char>();
-    if (enable_compression) {
-      LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-          << " uncompressed ep context, " << ep_cache_context.size()
-          << " bytes";
-      tar_mem = vaip_core::uncompress(gsl::span<const char>(
-          ep_cache_context.data(), ep_cache_context.size()));
-      tar_mem_span = tar_mem;
-      LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-          << " ep context is " << tar_mem.size()
-          << " bytes after uncompression";
-    } else {
-      tar_mem_span = gsl::span<const char>(ep_cache_context.data(),
-                                           ep_cache_context.size());
-    }
-    tar_mem = vaip_core::uncompress(
-        gsl::span<const char>(tar_mem_span.data(), tar_mem_span.size()));
-    context.tar_mem_to_cache_files(tar_mem.data(), tar_mem.size());
+        << "embed mode = 1, load ep context " << ep_context_size << " bytes";
   } else {
     auto ep_context_binary_file = std::filesystem::path();
-    if (context.model_path.empty()) {
-      ep_context_binary_file = ep_cache_context;
+    auto session_ep_context_path = std::filesystem::path(
+        get_session_config_option(context, "ep.context_file_path", ""));
+    if (session_ep_context_path != "") {
+      ep_context_binary_file =
+          session_ep_context_path.parent_path() / *ep_cache_context;
+    } else if (context.model_path.empty()) {
+      ep_context_binary_file = *ep_cache_context;
     } else {
       ep_context_binary_file =
-          context.model_path.parent_path() / ep_cache_context;
+          context.model_path.parent_path() / *ep_cache_context;
     }
-    auto tar_mem = vaip_core::slurp_binary_c8(ep_context_binary_file);
-    LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-        << " read ep context, " << tar_mem.size() << " bytes from "
-        << ep_context_binary_file;
-    if (enable_compression) {
-      LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-          << " start to uncompress, " << tar_mem.size() << " bytes ";
-      tar_mem = vaip_core::uncompress(tar_mem);
-      LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
-          << " ep context is " << tar_mem.size()
-          << " bytes after uncompression";
+    ep_context_file = fopen(ep_context_binary_file.string().c_str(), "rb+");
+    if (!ep_context_file) { // this could happen if the model is loaded into
+                            // memory
+      LOG(FATAL) << "Failed to open ep_context_binary_file "
+                 << ep_context_binary_file.string() << " because "
+                 << strerror(errno);
     }
-    context.tar_mem_to_cache_files(tar_mem.data(), tar_mem.size());
   }
+  ep_cache_context.reset();
+
+  int64_t enable_compression = main_node.get_attr_int("enable_compression", 0);
+  if (enable_compression) {
+    FILE* temp_file = std::tmpfile();
+    auto src = IStreamReader::from_FILE(ep_context_file);
+    auto dst = IStreamWriter::from_FILE(temp_file);
+    vaip_core::uncompress(src.get(), dst.get());
+    fclose(ep_context_file);
+    ep_context_file = temp_file;
+    rewind(ep_context_file);
+  }
+  context.tar_file_to_cache_files(ep_context_file);
+  fclose(ep_context_file);
   LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
       << " extract memory cache files to  " << context.get_log_dir();
-  bool is_in_mem = context.cache_in_mem();
-  if (!is_in_mem) {
-    context.cache_files_to_directory(context.get_log_dir());
-  }
 }
 
 static int64_t get_ep_context_index(const vaip_cxx::NodeConstRef& node) {
@@ -1040,6 +1037,9 @@ static bool is_cpu_only_inference(const PassContextImp& context) {
 std::vector<std::unique_ptr<ExecutionProvider>>
 compile_onnx_model_3(const std::string& model_path, const Graph& onnx_graph,
                      const char* json_config) {
+#ifdef _WIN32
+  _setmaxstdio(1024);
+#endif
   if (ENV_PARAM(XLNX_ENABLE_SKIP_FATAL)) {
     // clang warning: cannot initialize a parameter of type
     // 'google::logging_fail_func_t' (aka 'void (*)()
@@ -1422,6 +1422,9 @@ void restore_compilation_cache(const std::string& cache_dir,
                                const std::string& cache_data,
                                const std::string& model_path) {}
 thread_local const void* g_state = nullptr;
+thread_local vaip_core::DllSafe<std::string> (*g_get_config_entry)(
+    const void* state, const char* entry_name) = nullptr;
+
 int vitisai_ep_on_run_start(
     const std::vector<std::unique_ptr<vaip_core::ExecutionProvider>>& eps,
     const void* state,
@@ -1436,16 +1439,28 @@ int vitisai_ep_on_run_start(
       dynamic_cast<vaip_core::PassContextImp*>(ep->get_context().get());
   CHECK(p_context != nullptr);
   g_state = state;
-  p_context->get_run_options_ =
-      [get_config_entry](
-          const std::string& name) -> std::optional<std::string> {
-    auto dll_string = get_config_entry(g_state, name.data());
-    auto ret = std::optional<std::string>();
-    if (dll_string.get() != nullptr) {
-      ret = std::string(*dll_string);
-    }
-    return ret;
-  };
+  g_get_config_entry = get_config_entry;
+  return 0;
+}
+
+int vitisai_ep_set_ep_dynamic_options(
+    const std::vector<std::unique_ptr<vaip_core::ExecutionProvider>>& eps,
+    const char* const* keys, const char* const* values, size_t kv_len) {
+  if (eps.empty()) {
+    return 1;
+  }
+  auto ep =
+      dynamic_cast<vaip_core::ExecutionProviderConcrete*>(eps.front().get());
+  auto p_context =
+      dynamic_cast<vaip_core::PassContextImp*>(ep->get_context().get());
+  CHECK(p_context != nullptr);
+  std::lock_guard<std::mutex> lock(p_context->ep_dynamic_options_lock);
+  for (auto i = 0; i < kv_len; i++) {
+    auto key = std::string(keys[i]);
+    auto value = std::string(values[i]);
+    if (key == "ep.dynamic.workload_type")
+      p_context->update_all_qos(value);
+  }
   return 0;
 }
 } // namespace vaip_core
@@ -1461,6 +1476,6 @@ extern "C" VAIP_DLL_SPEC int vitisai_ep_on_run_start_c(
 extern "C" VAIP_DLL_SPEC int vitisai_ep_set_ep_dynamic_options_c(
     const std::vector<std::unique_ptr<vaip_core::ExecutionProvider>>& eps,
     const char* const* keys, const char* const* values, size_t kv_len) {
-  LOG(WARNING) << "not support set_ep_dynamic_options yet";
-  return 0;
+  return vaip_core::vitisai_ep_set_ep_dynamic_options(eps, keys, values,
+                                                      kv_len);
 }

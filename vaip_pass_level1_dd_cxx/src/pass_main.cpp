@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 // clang-format off
 #include "vaip/vaip.hpp"
@@ -189,7 +161,6 @@ struct Level1DynamicDispatch {
     auto [node_subgraph_labels, subgraph_node_cluster, target_label,
           idx_node_map] = dd::partition_onnx_model(cloned_graph);
 
-    bool in_mem = local_context->cache_in_mem();
     // LOG(DEBUG) << "Subgraph Node Cluster ";
     for (auto x : subgraph_node_cluster) {
       std::ostringstream str;
@@ -274,12 +245,18 @@ struct Level1DynamicDispatch {
       CHECK(meta_def_proto != nullptr)
           << "cannot fuse subgraph:" << error.comments;
 
+      // reading preemptible from the from provider options.
+      std::string is_preemptible = "false";
+      if (session_option.find("is_preemptible") != session_option.end())
+        is_preemptible = session_option.find("is_preemptible")->second;
+
       std::string qos_priority = "";
       if (session_option.find("qos_priority") != session_option.end())
         qos_priority = session_option.find("qos_priority")->second;
 
       dd::prepare_metadef_context_json_from_subgraph3(
-          cloned_graph, meta_def_proto.get(), model_category, qos_priority);
+          cloned_graph, meta_def_proto.get(), model_category, qos_priority,
+          is_preemptible);
 
       auto& generic_param = *meta_def_proto->mutable_generic_param();
       generic_param["meta_json"] = meta_json_name;
@@ -304,15 +281,8 @@ struct Level1DynamicDispatch {
           dd::graph_prepare_metadata(subgraph, model_dir);
       auto json_str =
           dd::save_tensors_to_json(op_list, new_tensors, new_tensors_map);
-      if (in_mem) {
-        std::vector<char> vec(json_str.begin(), json_str.end());
-        local_context->write_file(meta_json_path.filename().string(), vec);
-      } else {
-        CHECK(std::ofstream(meta_json_path)
-                  .write(&json_str[0], json_str.size())
-                  .good())
-            << "failed to write json";
-      }
+      std::vector<char> vec(json_str.begin(), json_str.end());
+      local_context->write_file(meta_json_path.filename().string(), vec);
       // Fusion Runtime Compilation and Saving Metastate
       { // this bracket reduces peak memory
         OpsFusion::FusionRuntime fusion_rt;
@@ -336,12 +306,20 @@ struct Level1DynamicDispatch {
         fusion_rt.compile(meta, dod_txn_root, cfg, std::move(const_db));
         LOG(INFO) << "COMPILE DONE";
         save_function func = nullptr;
-        if (in_mem) {
-          func = [&local_context](const std::string& path, FILE* file) {
-            auto filename = std::filesystem::path(path).filename().string();
-            local_context->write_tmpfile(filename, file);
-          };
-        }
+        func = [&local_context](const std::string& path, FILE* file) {
+          auto filename = std::filesystem::path(path).filename().string();
+          auto writer = local_context->open_file_for_write(filename);
+          fseek64(file, 0, SEEK_END);
+          auto size = ftell64(file);
+          fseek64(file, 0, SEEK_SET);
+          size_t buffer_size = 4096;
+          auto buffer = std::vector<char>(buffer_size);
+          size_t read_count = 0;
+          while ((read_count =
+                      std::fread(buffer.data(), 1, buffer_size, file)) > 0) {
+            writer->fwrite(buffer.data(), read_count);
+          }
+        };
         fusion_rt.save_state(meta_state_name.string(), func);
         LOG(INFO) << "SAVE_STATE DONE";
       }
@@ -350,7 +328,7 @@ struct Level1DynamicDispatch {
       auto& dummy_fused_node2 = self_.fuse(graph, std::move(*meta_def_proto));
       auto& dummy_subgraph2 =
           VAIP_ORT_API(node_get_function_body)(dummy_fused_node2);
-      if (write_debug_files) {
+      if (false) {
         VAIP_ORT_API(graph_save)
         (dummy_subgraph2, subgraph_path + ".orig.onnx",
          subgraph_name + ".orig.dat", 128u);

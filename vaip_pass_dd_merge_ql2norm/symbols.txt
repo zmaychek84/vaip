@@ -1,2 +1,3 @@
 vaip_pass_dd_merge_ql2norm__hook
 vaip_pass_dd_merge_qlpnorm__hook
+vaip_pass_dd_merge_qlpnorm_3__hook

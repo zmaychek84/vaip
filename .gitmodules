@@ -1,3 +1,0 @@
-[submodule "3rd-party/tar"]
-	path = 3rd-party/tar
-	url = https://github.com/Distrotech/tar.git

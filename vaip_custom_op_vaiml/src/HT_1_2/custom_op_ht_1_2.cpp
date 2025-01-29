@@ -1,39 +1,13 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 – 2023 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include "onnxruntime_api.hpp"
 
+#include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <codecvt>
 #include <deque>
 #include <filesystem>
@@ -61,57 +35,19 @@ std::map<std::string, std::vector<char>> MyCustomOpHT1_2::node_cache;
 SUBGRAPH_ID
 MyCustomOpHT1_2::IdentifySubgraph(
     const std::shared_ptr<MetaDefProto>& meta_def) {
-  // use with caution, this function identifies sg using the node name
-  VAIML_DEBUG_PRINT("IdentifySubgraph sg_name=", sg_name_,
-                    " meta_def size=", meta_def->nodes().size());
   VAIML_DEBUG_PRINT("IdentifySubgraph sg_name=", sg_name_,
                     " meta_def size=", meta_def->nodes().size());
   SUBGRAPH_ID sg = SUBGRAPH_ID::UNKNOWN;
-  // EPContext based subgraphs
-  if (meta_def->nodes().size() == 1) {
-    // All nodes in a subgraph becomes a EPContext node
-    VAIML_DEBUG_PRINT("    EPContext model_version_=", model_version_,
-                      " sg_name_=", sg_name_);
-    if (model_version_ == "HT_v1.2") {
-      if (sg_name_ == "vaiml_par_0") {
-        sg = SUBGRAPH_ID::HT_LN_SG_LSTM;
-      } else if (sg_name_ == "vaiml_par_1") {
-        sg = SUBGRAPH_ID::HT_SLICE;
-      } else if (sg_name_ == "vaiml_par_2") {
-        sg = SUBGRAPH_ID::HT_CONCAT;
-      }
-    }
+  // works for both EPContext graph and normal onnx graph
+  if (sg_name_ == "ht_000_main") {
+    sg = SUBGRAPH_ID::HT_LN_SG_LSTM;
+  } else if (sg_name_ == "ht_001_slice") {
+    sg = SUBGRAPH_ID::HT_SLICE;
+  } else if (sg_name_ == "ht_002_concat") {
+    sg = SUBGRAPH_ID::HT_CONCAT;
   } else {
-    // Normal ONNX model based subgraphs
-    for (auto& node : meta_def->nodes()) {
-      if (node.rfind("/linear_k", 0) != std::string::npos) {
-        // vaiml_par_0 subgraph_000
-        sg = SUBGRAPH_ID::GT_TRANSFORMER_BLOCK;
-        break;
-      } else if (node.rfind("/lin_dec/fc/", 0) != std::string::npos) {
-        sg = SUBGRAPH_ID::HT_LN_SG_LSTM;
-        break;
-      } else if (node.rfind("/norm_k", 0) != std::string::npos) {
-        // GT vaiml_par_1
-        // sg = SUBGRAPH_ID::GT_NORM_K;
-        // break;
-      } else if (node.rfind("oup_cache_frames", 0) != std::string::npos) {
-        // GT vaiml_par_4 subgraph_147
-        sg = SUBGRAPH_ID::GT_CACHE_FRAMES_SLICE;
-        break;
-      } else if (node.rfind("h0_QuantizeLinear", 0) != std::string::npos) {
-        sg = SUBGRAPH_ID::HT_SLICE;
-        break;
-      } else if (node.rfind("c1_QuantizeLinear", 0) != std::string::npos) {
-        sg = SUBGRAPH_ID::HT_CONCAT;
-      }
-    }
-  }
-
-  if (sg == SUBGRAPH_ID::UNKNOWN) {
     throw std::runtime_error("Cannot identify subgraph ID for " + sg_name_);
   }
-
   return sg;
 }
 
@@ -139,9 +75,25 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
                                  onnxruntime::Model* model)
     : CustomOpImp(context, meta_def, model) {
   auto& session_option = context->get_config_proto().provider_options();
+  // FIXME: remove polymorphism when preemption is by default
+  if (session_option.at("enable_preemption") == "1") {
+    runner_ = std::make_unique<vaiml_elf_runner::hw_elf_runner>();
+  } else {
+    runner_ = std::make_unique<hw_runner>();
+  }
   model_version_ = session_option.at("model_name");
   sg_name_ = meta_def->vaiml_param().vaiml_model_path();
   subgraph_id_ = IdentifySubgraph(meta_def);
+
+  auto initializer_map_c8 =
+      context->read_file_c8("ht_init_map.proto.bin").value();
+  MetaDefProto global_initializer_map;
+  global_initializer_map.ParseFromString(
+      std::string(initializer_map_c8.begin(), initializer_map_c8.end()));
+  initializer_map_ = std::unordered_map<std::string, std::string>(
+      global_initializer_map.generic_param().begin(),
+      global_initializer_map.generic_param().end());
+
   TIMER(CONSTRUCTOR_TOP, sg_name_ + " MyCustomOpHT1_2 constructor total ")
   VAIML_DEBUG_PRINT("MyCustomOpHT1_2::MyCustomOpHT1_2 ", sg_name_,
                     " id: ", subgraph_id_, " model_version=", model_version_);
@@ -194,13 +146,7 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
   // retrieve wts file from the cache directory to populate wts_
   std::vector<char> wts_file;
   auto wts_file_opt = context->read_file_c8(constants_file_name_);
-  if (wts_file_opt.has_value()) {
-    wts_file = wts_file_opt.value();
-  } else {
-    std::filesystem::path wtsFileFullName =
-        context->get_log_dir() / constants_file_name_;
-    wts_file = vaip_core::slurp_binary_c8(wtsFileFullName);
-  }
+  wts_file = wts_file_opt.value();
 
   auto const_info = meta_def->vaiml_param().const_data_info();
   wts_buffers_.resize(const_info.size());
@@ -210,8 +156,8 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
   // Following constants are preformatted for HT model, so they need to be
   // excluded
   std::vector<std::string> ht_weight_names_preformat = {
-      ht_lstm_wts_name_[48], ht_lstm_wts_name_[49], ht_lstm_wts_name_[50],
-      ht_lstm_wts_name_[51], ht_lstm_wts_name_[52], ht_lstm_wts_name_[53]};
+      Alias("lstm320_h_wts"),  Alias("lstm320_x_wts"),  Alias("lstm320_bias"),
+      Alias("lstm1024_h_wts"), Alias("lstm1024_x_wts"), Alias("lstm1024_bias")};
 
   for (auto it = const_info.begin(); it != const_info.end(); ++it) {
     flexmlrt::client::ErtIoTypeNew wts_vec;
@@ -273,7 +219,7 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
   }
 
   VAIML_DEBUG_PRINT("Total constants loaded: ", wts_vec_idx);
-
+  // FIXME: remove load txn/ctrl bin when preemption is by default
   std::string xclbinFileName;
   std::string txnBinFile_front;
   std::string txnBinFile;
@@ -281,6 +227,7 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
   std::string ctrlPktBinFile;
   std::vector<std::string> ctrlPktbins;
   std::vector<XRTRunOffset> xrt_offset;
+  std::vector<std::stringstream> v_elf_istream;
   xclbinFileName = get_xclbin_fullpath(context, session_option.at("xclbin"));
   // xclbinFileName = vaiml_model_path_ + '/' + "design.xclbin";
 
@@ -300,11 +247,13 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
   // All configuration below are version specific
   if (model_version_ == "HT_v1.2") {
     wts_size = WTS_SIZE_HT;
-    ifm_size = IFM_SIZE_HT;
+    ifm_size = IFM_SIZE_HT + 128; // additional 128 bytes for MM and Add RTP,
+                                  // placed after LSTM-1024 h0/c0
     ofm_size = OFM_SIZE_HT;
     tmp_size = TMP_SIZE_HT;
     txnBinFile = getHt_binaries_ml_txn(model_version_);
-    g.set_bo_order_vec({
+    v_elf_istream.emplace_back(getElf_ht(model_version_));
+    runner_->set_bo_order_vec({
         BO_ORDER::ODR_HT,
     });
     txnbins.push_back(txnBinFile);
@@ -315,19 +264,21 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
     auto read_xclbin = context->read_xclbin(xclbinFileName);
     auto xclbin = std::vector<char>(read_xclbin.value().begin(),
                                     read_xclbin.value().end());
-    g.load_xclbin(xclbin);
+    runner_->load_xclbin(xclbin);
 
     VAIML_DEBUG_PRINT("load xclbin done");
-    g.load_txn_bin(txnbins);
+    runner_->load_txn_bin(txnbins);
+    runner_->load_elf(v_elf_istream);
+
     VAIML_DEBUG_PRINT("load txn done");
     if (ctrlPktbins.size() != 0) {
       // not used by HT
-      g.load_ctrl_pkt_bin(ctrlPktbins);
+      runner_->load_ctrl_pkt_bin(ctrlPktbins);
     }
     VAIML_DEBUG_PRINT("load ctrl pkt done");
-    g.hw_runner_init(ifm_size, wts_size, ofm_size, tmp_size, gt_mode_,
-                     xrt_offset, kernel_indices);
-    g.get_bo_ptrs(ifm_ptr_, wts_ptr_, ofm_ptr_);
+    runner_->hw_runner_init(ifm_size, wts_size, ofm_size, tmp_size, gt_mode_,
+                            xrt_offset, kernel_indices);
+    runner_->get_bo_ptrs(ifm_ptr_, wts_ptr_, ofm_ptr_);
   }
 
   TIMER(CONSTRUCTOR_WEIGHTS_FROMAT, "    " + sg_name_ + " weight format total ")
@@ -342,7 +293,7 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
   // read_file_c8(wts_ptr_, vaiml_model_path_ + '/' + "wts32.txt", wts_size);
 
   if (subgraph_id_ < GT_CPU_OR_CONSTANT) {
-    g.pre_run_bo_sync();
+    runner_->pre_run_bo_sync();
   }
   VAIML_DEBUG_PRINT("DEBUG: MyCustomOpHT1_2 created for ", sg_name_);
 }
@@ -363,18 +314,16 @@ bool MyCustomOpHT1_2::InitHtWeight(
   {
     auto start = std::chrono::steady_clock::now();
     // Layernorm
-    double scale_bias = 8.486513252137229e-05;
-    int64_t zp_bias = 0;
-    double scale_weight = 0.027066929265856743;
-    int64_t zp_weight = 0;
-    double scale_ifm = 0.0031353808008134365;
-    int64_t zp_ifm = 0;
-    double scale_ofm = 0.05285676568746567;
-    int64_t zp_ofm = -4;
-    int8_t* ln_w_ptr =
-        (int8_t*)(wts_["decoder_embedding.embed_lnorm.weight_quantized"].data);
-    int32_t* ln_b_ptr =
-        (int32_t*)(wts_["decoder_embedding.embed_lnorm.bias_quantized"].data);
+    double scale_bias = *((float*)(wts_.at(Alias("lnorm_0_bias_s")).data));
+    int64_t zp_bias = *((int32_t*)(wts_.at(Alias("lnorm_0_bias_zp")).data));
+    double scale_weight = *((float*)(wts_.at(Alias("lnorm_0_wts_s")).data));
+    int64_t zp_weight = *((int8_t*)(wts_.at(Alias("lnorm_0_wts_zp")).data));
+    double scale_ifm = *((float*)(wts_.at(Alias("lnorm_0_x_s")).data));
+    int64_t zp_ifm = *((int8_t*)(wts_.at(Alias("lnorm_0_x_zp")).data));
+    double scale_ofm = *((float*)(wts_.at(Alias("lnorm_0_y_s")).data));
+    int64_t zp_ofm = *((int8_t*)(wts_.at(Alias("lnorm_0_y_zp")).data));
+    int8_t* ln_w_ptr = (int8_t*)(wts_.at(Alias("lnorm_0_wts")).data);
+    int32_t* ln_b_ptr = (int32_t*)(wts_.at(Alias("lnorm_0_bias")).data);
     std::vector<uint16_t> ln_part1_weight_vec = wts_gen_layernorm(
         ln_b_ptr, ln_w_ptr, 320, scale_bias, zp_bias, scale_weight, zp_weight,
         scale_ifm, zp_ifm, scale_ofm, zp_ofm);
@@ -394,10 +343,10 @@ bool MyCustomOpHT1_2::InitHtWeight(
     auto start = std::chrono::steady_clock::now();
 #endif
     // Sigmoid
-    double scale_ifm = 0.05285676568746567;
-    int64_t zp_ifm = -4;
-    double scale_ofm = 0.00391764659434557;
-    int64_t zp_ofm = -128;
+    double scale_ifm = *((float*)(wts_.at(Alias("Sigmoid_input_0_s")).data));
+    int64_t zp_ifm = *((int8_t*)(wts_.at(Alias("Sigmoid_input_0_zp")).data));
+    double scale_ofm = *((float*)(wts_.at(Alias("Sigmoid_output_0_s")).data));
+    int64_t zp_ofm = *((int8_t*)(wts_.at(Alias("Sigmoid_output_0_zp")).data));
     std::vector<uint16_t> sigmoid_part1_weight_vec =
         wts_gen_sigmoid(scale_ifm, zp_ifm, scale_ofm, zp_ofm);
     memcpy(wts_ptr + wts_ptr_offset, (int8_t*)(sigmoid_part1_weight_vec.data()),
@@ -410,13 +359,15 @@ bool MyCustomOpHT1_2::InitHtWeight(
 #endif
   }
   {
-    lstm_init_wts lstm_in;
+    lstm_init_wts lstm_in{};
 #ifdef VAIP_CUSTOM_OP_VAIML_PROFILING
     auto start1 = std::chrono::steady_clock::now();
 #endif
 
     // ht_wts_gen_lstm_b2b loads preforamted weights from cache_dir_
     std::vector<uint8_t> wts = ht_wts_gen_lstm_b2b(lstm_in, context);
+    memcpy(lstm_320_rtp, lstm_in.lstm_320_rtp, 64);
+    memcpy(lstm_1024_rtp, lstm_in.lstm_1024_rtp, 64);
 
 #ifdef VAIP_CUSTOM_OP_VAIML_PROFILING
     auto end1 = std::chrono::steady_clock::now();
@@ -433,18 +384,16 @@ bool MyCustomOpHT1_2::InitHtWeight(
 #ifdef VAIP_CUSTOM_OP_VAIML_PROFILING
     auto start = std::chrono::steady_clock::now();
 #endif
-    double scale_bias = 0.00016038943431340158;
-    int64_t zp_bias = 0;
-    double scale_weight = 0.021807333454489708;
-    int64_t zp_weight = 0;
-    double scale_ifm = 0.007354839239269495;
-    int64_t zp_ifm = 6;
-    double scale_ofm = 0.13684865832328796;
-    int64_t zp_ofm = 103;
-    int8_t* ln_w_ptr =
-        (int8_t*)(wts_["decoder.lnorm_layer.weight_quantized"].data);
-    int32_t* ln_b_ptr =
-        (int32_t*)(wts_["decoder.lnorm_layer.bias_quantized"].data);
+    double scale_bias = *((float*)(wts_.at(Alias("lnorm_1_bias_s")).data));
+    int64_t zp_bias = *((int32_t*)(wts_.at(Alias("lnorm_1_bias_zp")).data));
+    double scale_weight = *((float*)(wts_.at(Alias("lnorm_1_wts_s")).data));
+    int64_t zp_weight = *((int8_t*)(wts_.at(Alias("lnorm_1_wts_zp")).data));
+    double scale_ifm = *((float*)(wts_.at(Alias("lnorm_1_x_s")).data));
+    int64_t zp_ifm = *((int8_t*)(wts_.at(Alias("lnorm_1_x_zp")).data));
+    double scale_ofm = *((float*)(wts_.at(Alias("lnorm_1_y_s")).data));
+    int64_t zp_ofm = *((int8_t*)(wts_.at(Alias("lnorm_1_y_zp")).data));
+    int8_t* ln_w_ptr = (int8_t*)(wts_.at(Alias("lnorm_1_wts")).data);
+    int32_t* ln_b_ptr = (int32_t*)(wts_.at(Alias("lnorm_1_bias")).data);
     std::vector<uint16_t> ln_part3_weight_vec = wts_gen_layernorm(
         ln_b_ptr, ln_w_ptr, 1024, scale_bias, zp_bias, scale_weight, zp_weight,
         scale_ifm, zp_ifm, scale_ofm, zp_ofm, 1, 1.0 / 64);
@@ -463,12 +412,18 @@ bool MyCustomOpHT1_2::InitHtWeight(
 #ifdef VAIP_CUSTOM_OP_VAIML_PROFILING
     auto start = std::chrono::steady_clock::now();
 #endif
-    float scale_matA = 0.13684865832328796;
-    int64_t zp_matA = 103;
-    float scale_matB = 0.010765256360173225;
-    int64_t zp_matB = 0;
-    float scale_matC = 0.10935667157173157;
-    int64_t zp_matC = -8;
+    float scale_matA =
+        *((float*)(wts_.at(Alias("lin_dec_fc_matmul_in_1_s")).data));
+    int64_t zp_matA =
+        *((int8_t*)(wts_.at(Alias("lin_dec_fc_matmul_in_1_zp")).data));
+    float scale_matB =
+        *((float*)(wts_.at(Alias("lin_dec_fc_matmul_in_2_s")).data));
+    int64_t zp_matB =
+        *((int8_t*)(wts_.at(Alias("lin_dec_fc_matmul_in_2_zp")).data));
+    float scale_matC =
+        *((float*)(wts_.at(Alias("lin_dec_fc_matmul_out_s")).data));
+    int64_t zp_matC =
+        *((int8_t*)(wts_.at(Alias("lin_dec_fc_matmul_out_zp")).data));
 
     uint32_t M = 1;
     uint32_t K = 1024;
@@ -477,11 +432,11 @@ bool MyCustomOpHT1_2::InitHtWeight(
     uint32_t sv_K = 128;
     uint32_t sv_N = 64;
 
-    int8_t* B_ptr =
-        (int8_t*)(wts_["/lin_dec/fc/Transpose_output_0_quantized"].data);
+    int8_t* B_ptr = (int8_t*)(wts_.at(Alias("lin_dec_fc_matmul_in_2")).data);
+
     std::vector<uint8_t> mm_weight_vec = wts_gen_matmul(
         B_ptr, M, K, N, sv_M, sv_K, sv_N, scale_matA, zp_matA, scale_matB,
-        zp_matB, scale_matC, zp_matC, 1.0 / 64, 1.0 / 64);
+        zp_matB, scale_matC, zp_matC, 1.0 / 64, 1.0 / 64, mm_add_rtp);
     memcpy(wts_ptr + wts_ptr_offset, (int8_t*)(mm_weight_vec.data()),
            mm_weight_vec.size() * sizeof(uint8_t));
     wts_ptr_offset += mm_weight_vec.size() * sizeof(uint8_t);
@@ -498,13 +453,24 @@ bool MyCustomOpHT1_2::InitHtWeight(
     auto start = std::chrono::steady_clock::now();
 #endif
     int8_t* B_ptr =
-        (int8_t*)(wts_["joint_network.lin_dec.fc.bias_quantized"].data);
+        (int8_t*)(wts_.at(Alias("joint_network_lin_dec_fc_bias")).data);
+
     for (int i = 0; i < 512; ++i) {
       ((uint16_t*)(wts_ptr + wts_ptr_offset))[i] =
-          uint16_t(((int8_t*)B_ptr)[i]) + 128;
+          uint16_t(((int8_t*)B_ptr)[i] + 128);
     }
     wts_ptr_offset += 512 * sizeof(uint16_t);
-
+    float scale_matA = *((float*)(wts_.at(Alias("lin_dec_fc_add_in_s")).data));
+    int64_t zp_matA = *((int8_t*)(wts_.at(Alias("lin_dec_fc_add_in_zp")).data));
+    float scale_matB =
+        *((float*)(wts_.at(Alias("joint_network_lin_dec_fc_bias_s")).data));
+    int64_t zp_matB =
+        *((int8_t*)(wts_.at(Alias("joint_network_lin_dec_fc_bias_zp")).data));
+    float scale_matC = *((float*)(wts_.at(Alias("lin_dec_fc_add_out_s")).data));
+    int64_t zp_matC =
+        *((int8_t*)(wts_.at(Alias("lin_dec_fc_add_out_zp")).data));
+    rtp_gen_add(scale_matA, zp_matA, scale_matB, zp_matB, scale_matC, zp_matC,
+                1.0 / 64, 1.0 / 64, mm_add_rtp + 16);
 #ifdef VAIP_CUSTOM_OP_VAIML_PROFILING
     auto end = std::chrono::steady_clock::now();
     double time_sec = std::chrono::duration<double>(end - start).count();
@@ -515,18 +481,17 @@ bool MyCustomOpHT1_2::InitHtWeight(
 #ifdef VAIP_CUSTOM_OP_VAIML_PROFILING
     auto start = std::chrono::steady_clock::now();
 #endif
-    double scale_bias = 0.013724899850785732;
-    int64_t zp_bias = 0;
-    double scale_weight = 0.12746062874794006;
-    int64_t zp_weight = 0;
-    double scale_ifm = 0.10767952352762222;
-    int64_t zp_ifm = -10;
-    double scale_ofm = 0.8831167221069336;
-    int64_t zp_ofm = -54;
-    int8_t* ln_w_ptr =
-        (int8_t*)(wts_["joint_network.lin_dec.Lnorm.weight_quantized"].data);
-    int32_t* ln_b_ptr =
-        (int32_t*)(wts_["joint_network.lin_dec.Lnorm.bias_quantized"].data);
+    double scale_bias = *((float*)(wts_.at(Alias("lnorm_2_bias_s")).data));
+    int64_t zp_bias = *((int32_t*)(wts_.at(Alias("lnorm_2_bias_zp")).data));
+    double scale_weight = *((float*)(wts_.at(Alias("lnorm_2_wts_s")).data));
+    int64_t zp_weight = *((int8_t*)(wts_.at(Alias("lnorm_2_wts_zp")).data));
+    double scale_ifm = *((float*)(wts_.at(Alias("lnorm_2_x_s")).data));
+    int64_t zp_ifm = *((int8_t*)(wts_.at(Alias("lnorm_2_x_zp")).data));
+    double scale_ofm = *((float*)(wts_.at(Alias("lnorm_2_y_s")).data));
+    int64_t zp_ofm = *((int8_t*)(wts_.at(Alias("lnorm_2_y_zp")).data));
+    int8_t* ln_w_ptr = (int8_t*)(wts_.at(Alias("lnorm_2_wts")).data);
+    int32_t* ln_b_ptr = (int32_t*)(wts_.at(Alias("lnorm_2_bias")).data);
+
     std::vector<uint16_t> ln_part3_weight_vec = wts_gen_layernorm(
         ln_b_ptr, ln_w_ptr, 512, scale_bias, zp_bias, scale_weight, zp_weight,
         scale_ifm, zp_ifm, scale_ofm, zp_ofm, 1.0 / 64, 1);
@@ -561,7 +526,7 @@ int32_t MyCustomOpHT1_2::GetInputDataAndSet(Ort::KernelContext& ctx, int index,
     inputsize = inputs_dim[j] * inputsize;
   }
   for (int i = 0; i < inputsize; ++i) {
-    ((uint16_t*)ifm_ptr)[i] = uint16_t(((int8_t*)input)[i]) + 128;
+    ((uint16_t*)ifm_ptr)[i] = uint16_t(((int8_t*)input)[i] + 128);
   }
 
   // VAIML_DEBUG_PRINT("    input ", index, " dim size: ", inputsize);
@@ -647,11 +612,17 @@ int32_t MyCustomOpHT1_2::SliceCompute_HT(Ort::KernelContext& ctx) const {
       ctx.GetOutput(3, output_shapes[3].data(), output_shapes[3].size())
           .GetTensorMutableData<int8_t>();
 
-  q_int8(c0, slice_13, 0.018779641017317772, 13, 1024);
-  q_int8(c0 + 1024, slice_27, 0.017122190445661545, 33, 1024);
+  q_int8(c0, slice_13, *((float*)(wts_.at(Alias("Slice_13_output_0_s")).data)),
+         *((int8_t*)(wts_.at(Alias("Slice_13_output_0_zp")).data)), 1024);
+  q_int8(c0 + 1024, slice_27,
+         *((float*)(wts_.at(Alias("Slice_27_output_0_s")).data)),
+         *((int8_t*)(wts_.at(Alias("Slice_27_output_0_zp")).data)), 1024);
 
-  q_int8(h0, slice_12, 0.007369006518274546, 6, 1024);
-  q_int8(h0 + 1024, slice_26, 0.007312173489481211, 5, 1024);
+  q_int8(h0, slice_12, *((float*)(wts_.at(Alias("Slice_12_output_0_s")).data)),
+         *((int8_t*)(wts_.at(Alias("Slice_12_output_0_zp")).data)), 1024);
+  q_int8(h0 + 1024, slice_26,
+         *((float*)(wts_.at(Alias("Slice_26_output_0_s")).data)),
+         *((int8_t*)(wts_.at(Alias("Slice_26_output_0_zp")).data)), 1024);
 
   return 2 * 1024 * 2 * sizeof(int8_t);
 }
@@ -668,12 +639,23 @@ int32_t MyCustomOpHT1_2::ConcatCompute_HT(Ort::KernelContext& ctx) const {
                   .GetTensorMutableData<float>();
   float* c1 = ctx.GetOutput(1, output_shapes[1].data(), output_shapes[1].size())
                   .GetTensorMutableData<float>();
+  // dq_int8(lstm_0_1, h1, 0.0073768566362559795, 6, 1024);
+  // dq_int8(lstm_1_1, h1 + 1024, 0.007354839239269495, 6, 1024);
+  //
+  // dq_int8(lstm_0_2, c1, 0.02116578258574009, 18, 1024);
+  // dq_int8(lstm_1_2, c1 + 1024, 0.02068982645869255, 36, 1024);
 
-  dq_int8(lstm_0_1, h1, 0.0073768566362559795, 6, 1024);
-  dq_int8(lstm_1_1, h1 + 1024, 0.007354839239269495, 6, 1024);
+  dq_int8(lstm_0_1, h1, *((float*)(wts_.at(Alias("lstm320_output_1_s")).data)),
+          *((int8_t*)(wts_.at(Alias("lstm320_output_1_zp")).data)), 1024);
+  dq_int8(lstm_1_1, h1 + 1024,
+          *((float*)(wts_.at(Alias("lstm1024_output_1_s")).data)),
+          *((int8_t*)(wts_.at(Alias("lstm1024_output_1_zp")).data)), 1024);
 
-  dq_int8(lstm_0_2, c1, 0.02116578258574009, 18, 1024);
-  dq_int8(lstm_1_2, c1 + 1024, 0.02068982645869255, 36, 1024);
+  dq_int8(lstm_0_2, c1, *((float*)(wts_.at(Alias("lstm320_output_2_s")).data)),
+          *((int8_t*)(wts_.at(Alias("lstm320_output_2_zp")).data)), 1024);
+  dq_int8(lstm_1_2, c1 + 1024,
+          *((float*)(wts_.at(Alias("lstm1024_output_2_s")).data)),
+          *((int8_t*)(wts_.at(Alias("lstm1024_output_2_zp")).data)), 1024);
   return 2 * 1024 * 2 * sizeof(float);
 }
 void MyCustomOpHT1_2::Compute(const OrtApi* api,
@@ -764,12 +746,16 @@ void MyCustomOpHT1_2::Compute(const OrtApi* api,
     ifm_offset += lstm_lut.size() * sizeof(int16_t);
     ifm_offset += GetInputDataAndSet(ctx, 0, ifm_ptr_ + ifm_offset); // h0
     ifm_offset += GetInputDataAndSet(ctx, 1, ifm_ptr_ + ifm_offset); // c0
+    memcpy(ifm_ptr_ + ifm_offset, lstm_320_rtp, 64);
     ifm_offset += 64;
     memcpy(ifm_ptr_ + ifm_offset, (int8_t*)lstm_lut.data(),
            lstm_lut.size() * sizeof(int16_t));                       // lstm_lut
     ifm_offset += lstm_lut.size() * sizeof(int16_t);
     ifm_offset += GetInputDataAndSet(ctx, 2, ifm_ptr_ + ifm_offset); // h0-lstm1
     ifm_offset += GetInputDataAndSet(ctx, 3, ifm_ptr_ + ifm_offset); // c0-lstm1
+    memcpy(ifm_ptr_ + ifm_offset, lstm_1024_rtp, 64);
+    ifm_offset += 64;
+    memcpy(ifm_ptr_ + ifm_offset, mm_add_rtp, 128);
   }
 
   // write_file((uint32_t*)ifm_ptr_, ifm_offset, vaiml_model_path_ +
@@ -777,8 +763,8 @@ void MyCustomOpHT1_2::Compute(const OrtApi* api,
 
   auto output_shapes = ort_output_shapes_;
   VAIML_DEBUG_PRINT("    outputs number: ", output_shapes.size());
-  auto err_status = const_cast<hw_runner&>(g).run(
-      (void*)ifm_ptr_, (void*)wts_ptr_, (void*)ofm_ptr_);
+  auto err_status =
+      runner_->run((void*)ifm_ptr_, (void*)wts_ptr_, (void*)ofm_ptr_);
 
   int32_t ofm_offset = 0;
   if (model_version_ == "GT_v1.2") {

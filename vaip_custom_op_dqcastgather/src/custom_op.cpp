@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include "./custom_op.hpp"
@@ -57,28 +28,18 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
       std::filesystem::path(data_file).filename().string());
   auto zp_file_opt =
       context->read_file_c8(std::filesystem::path(zp_file).filename().string());
-  if (data_file_opt.has_value() && zp_file_opt.has_value()) {
-    auto file = data_file_opt.value();
-    in_data.resize(file.size() / sizeof(int8_t));
-    memcpy(in_data.data(), file.data(), file.size());
-
-    auto file_zp = zp_file_opt.value();
-    zp = *reinterpret_cast<const int8_t*>(file_zp.data());
-  } else {
-    std::ifstream file(data_file, std::ios::binary);
-    file.seekg(0, std::ios::end);
-    std::streamsize size = file.tellg();
-    file.seekg(0, std::ios::beg);
-    in_data.resize(size / sizeof(int8_t));
-    if (!file.read(reinterpret_cast<char*>(in_data.data()), size)) {
-      std::cerr << "Error reading file!" << std::endl;
-    }
-    file.close();
-
-    std::ifstream file_zp(zp_file, std::ios::binary);
-    file_zp.read(reinterpret_cast<char*>(&zp), sizeof(zp));
-    file_zp.close();
+  if (!data_file_opt.has_value()) {
+    std::cerr << "Error reading file: " << data_file << std::endl;
   }
+  if (!zp_file_opt.has_value()) {
+    std::cerr << "Error reading file: " << zp_file << std::endl;
+  }
+  auto file = data_file_opt.value();
+  in_data.resize(file.size() / sizeof(int8_t));
+  memcpy(in_data.data(), file.data(), file.size());
+
+  auto file_zp = zp_file_opt.value();
+  zp = *reinterpret_cast<const int8_t*>(file_zp.data());
 
   size_t input_size = ifm_dim_0 * ifm_dim_1;
   in_dq.resize(input_size);

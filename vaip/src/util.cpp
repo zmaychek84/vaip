@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include "vaip/util.hpp"
 #include <cstdio>
@@ -364,11 +335,11 @@ template <typename T> struct zlib {
     CHECK_EQ((size_t)status, data.size()) << "gzwrite error";
     status = gzflush(gzfile, Z_FINISH);
     CHECK_EQ(status, 0) << "gzflush error";
-    status = std::fseek(tmp_file, 0, SEEK_END);
+    status = fseek64(tmp_file, 0, SEEK_END);
     CHECK(status == 0) << "fseek error";
-    auto size = std::ftell(tmp_file);
+    auto size = ftell64(tmp_file);
     CHECK_NE(size, -1) << "ftell error";
-    status = std::fseek(tmp_file, 0, SEEK_SET);
+    status = fseek64(tmp_file, 0, SEEK_SET);
     auto output_buffer = std::vector<char_type>((size_t)size);
     auto read_size =
         std::fread(output_buffer.data(), 1, output_buffer.size(), tmp_file);
@@ -390,7 +361,7 @@ template <typename T> struct zlib {
     auto write_size = std::fwrite(data.data(), 1, data.size(), tmp_file);
     CHECK_EQ((size_t)write_size, data.size());
     err = fflush(tmp_file);
-    auto status = std::fseek(tmp_file, 0, SEEK_SET);
+    auto status = fseek64(tmp_file, 0, SEEK_SET);
     CHECK_EQ(status, 0) << "fseek error";
     CHECK_EQ(err, 0) << "fflush error";
 #if _WIN32
@@ -434,4 +405,102 @@ std::vector<int8_t> uncompress(gsl::span<const int8_t> data) {
 std::vector<char> uncompress(gsl::span<const char> data) {
   return zlib<char>::uncompress(data);
 }
+
+void compress(IStreamReader* src, IStreamWriter* dst, int compress_level) {
+  CHECK(compress_level > -1 && compress_level < 10)
+      << "Invalid compression level. Must be between 0 and 9";
+  const int CHUNK = 1024;
+  z_stream strm;
+  memset(&strm, 0, sizeof(strm));
+
+  int ret = deflateInit(&strm, compress_level);
+  CHECK(ret == Z_OK) << "Failed to initialize deflate.";
+  char in[CHUNK];
+  char out[CHUNK];
+  int flush;
+  size_t bytes_read;
+
+  do {
+    bytes_read = src->read(in, CHUNK);
+    if (bytes_read < 0) {
+      deflateEnd(&strm);
+      LOG(FATAL) << "Failed to read from source stream.";
+      return;
+    }
+    flush = (bytes_read == 0) ? Z_FINISH : Z_NO_FLUSH;
+    strm.avail_in = bytes_read;
+    strm.next_in = reinterpret_cast<Bytef*>(in);
+    do {
+      strm.avail_out = CHUNK;
+      strm.next_out = reinterpret_cast<Bytef*>(out);
+
+      ret = deflate(&strm, flush);
+      if (ret == Z_STREAM_ERROR) {
+        deflateEnd(&strm);
+        LOG(FATAL) << "Stream error during compression.";
+        return;
+      }
+      size_t have = CHUNK - strm.avail_out;
+      if (dst->write(out, have) != have) {
+        deflateEnd(&strm);
+        LOG(FATAL) << "Failed to write to destination stream.";
+        return;
+      }
+    } while (strm.avail_out == 0);
+  } while (flush != Z_FINISH);
+
+  if (ret != Z_STREAM_END) {
+    deflateEnd(&strm);
+    LOG(FATAL) << "Compression ended prematurely.";
+  }
+  deflateEnd(&strm);
+}
+
+void uncompress(IStreamReader* src, IStreamWriter* dst) {
+  const int CHUNK = 1024;
+
+  z_stream strm;
+  memset(&strm, 0, sizeof(strm));
+
+  int ret = inflateInit(&strm);
+  CHECK(ret == Z_OK) << "Failed to initialize deflate.";
+  char in[CHUNK];
+  char out[CHUNK];
+  size_t bytes_read;
+  do {
+    bytes_read = src->read(in, CHUNK);
+    if (bytes_read < 0) {
+      LOG(FATAL) << "Failed to read from source stream.";
+      inflateEnd(&strm);
+      return;
+    }
+    strm.avail_in = bytes_read;
+    if (strm.avail_in == 0) {
+      break;
+    }
+    strm.next_in = reinterpret_cast<Bytef*>(in);
+    do {
+      strm.avail_out = CHUNK;
+      strm.next_out = reinterpret_cast<Bytef*>(out);
+
+      ret = inflate(&strm, Z_NO_FLUSH);
+      if (ret == Z_STREAM_ERROR || ret == Z_DATA_ERROR || ret == Z_MEM_ERROR) {
+        inflateEnd(&strm);
+        LOG(FATAL) << "Error during decompression: " << ret;
+        return;
+      }
+      size_t have = CHUNK - strm.avail_out;
+      if (dst->write(out, have) != have) {
+        inflateEnd(&strm);
+        LOG(FATAL) << "Failed to write to destination stream.";
+        return;
+      }
+    } while (strm.avail_out == 0);
+  } while (ret != Z_STREAM_END);
+  inflateEnd(&strm);
+  if (ret != Z_STREAM_END) {
+    LOG(FATAL) << "Incomplete decompression.";
+  }
+}
+
 } // namespace vaip_core

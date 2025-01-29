@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include "./to_xir_ops_pass.hpp"
@@ -47,8 +18,6 @@
 #include "vitis/ai/env_config.hpp"
 DEF_ENV_PARAM(DEBUG_TO_XIR_PASS, "0")
 DEF_ENV_PARAM(XLNX_ENABLE_CONV1D, "0")
-DEF_ENV_PARAM(XLNX_ENABLE_OLD_QDQ, "0")
-DEF_ENV_PARAM(XLNX_ENABLE_PY3_ROUND, "0")
 DEF_ENV_PARAM(VAIP_ALIGNMENT_TO_ORT_SKIP_CONCAT, "0")
 DEF_ENV_PARAM(VAIP_ALIGNMENT_TO_ORT_SKIP_RESIZE, "0")
 DEF_ENV_PARAM(VAIP_SKIP_MATMUL_DIMS_NOT_EQUAL_4, "0")
@@ -366,7 +335,9 @@ ToXirRule& ToXirRule::set_shape_1_for_scalar() {
 static ToXirRule::action_t convert_quant_dequant() {
   return [](ToXirRule* self, const Graph& graph, const Node& node,
             NodeAttributesBuilder& attrs) -> bool {
-    if (ENV_PARAM(XLNX_ENABLE_OLD_QDQ) != 1) {
+    if (self->pass_.get_context()
+            ->get_provider_option("xlnx_enable_old_qdq")
+            .value() != "1") {
       return false;
     }
     auto builder = PatternBuilder();
@@ -441,7 +412,9 @@ static ToXirRule::action_t convert_quant_dequant() {
       return false;
     }
     auto round_mode = "DPU_ROUND";
-    if (ENV_PARAM(XLNX_ENABLE_PY3_ROUND)) {
+    if (self->pass_.get_context()
+            ->get_provider_option("xlnx_enable_py3_round")
+            .value() == "1") {
       round_mode = "PY3_ROUND";
     }
     attrs.add("fix_point", static_cast<int64_t>(fix_point))
@@ -454,11 +427,15 @@ static ToXirRule::action_t convert_quant_dequant() {
 static ToXirRule::action_t convert_qdq() {
   return [](ToXirRule* self, const Graph& graph, const Node& node,
             NodeAttributesBuilder& attrs) -> bool {
-    if (ENV_PARAM(XLNX_ENABLE_OLD_QDQ) == 1) {
+    if (self->pass_.get_context()
+            ->get_provider_option("xlnx_enable_old_qdq")
+            .value() == "1") {
       return false;
     }
     auto round_mode = "DPU_ROUND";
-    if (ENV_PARAM(XLNX_ENABLE_PY3_ROUND)) {
+    if (self->pass_.get_context()
+            ->get_provider_option("xlnx_enable_py3_round")
+            .value() == "1") {
       round_mode = "PY3_ROUND";
     }
     attrs.add("round_mode", round_mode);
@@ -504,7 +481,9 @@ static ToXirRule::action_t convert_fixneuron() {
       return false;
     }
     auto round_mode = "DPU_ROUND";
-    if (ENV_PARAM(XLNX_ENABLE_PY3_ROUND)) {
+    if (self->pass_.get_context()
+            ->get_provider_option("xlnx_enable_py3_round")
+            .value() == "1") {
       round_mode = "PY3_ROUND";
     }
     attrs.add("fix_point", static_cast<int64_t>(fix_point))
@@ -1352,15 +1331,20 @@ void to_xir_ops_pass(IPass& pass, Graph& graph) {
   rules.push_back(std::make_unique<ToXirRule>("Squeeze", "squeeze", pass));
   auto ptr = [](ToXirRule* self, const Node& node) {
     auto inputs = node_get_inputs(node);
+    auto input_shape_ptr = node_arg_get_shape_i64(*inputs[0].node_arg);
     if (inputs.size() == 2) {
       auto input_arg = inputs[1];
       CHECK(input_arg.node != nullptr);
       CHECK_EQ(node_op_type(*input_arg.node), "const");
       auto axes = self->pass_.get_const_data<int64_t>(*input_arg.node);
       auto axis = std::vector<int64_t>(axes.begin(), axes.end());
+      for (int i = 0; i < axis.size(); i++) {
+        if (axis[i] < 0) {
+          axis[i] = axis[i] + input_shape_ptr->size();
+        }
+      }
       return attr_proto_new_ints("axis", axis);
     }
-    auto input_shape_ptr = node_arg_get_shape_i64(*inputs[0].node_arg);
     CHECK(input_shape_ptr != nullptr)
         << node_arg_as_string(*inputs[0].node_arg) << " shape absent";
     auto input_shape = *input_shape_ptr;

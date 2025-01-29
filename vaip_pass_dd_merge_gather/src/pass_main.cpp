@@ -1,33 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include <glog/logging.h>
 
@@ -114,21 +87,13 @@ struct Dd_merge_gather {
                      name.end());
           std::replace(name.begin(), name.end(), ' ', '_');
           std::string data_bin = name + ".bin";
-          bool in_mem = self_.get_context()->cache_in_mem();
           auto path = log_dir / data_bin;
           std::string data_file{path.u8string()};
-          if (in_mem) {
-            auto char_data = gsl::span<const char>(
-                reinterpret_cast<const char*>(in_data.data()),
-                in_data.size() * sizeof(uint8_t));
-            self_.get_context()->write_file(data_bin, char_data);
-          } else {
-            std::ofstream file(data_file, std::ios::binary);
-            file.write(reinterpret_cast<const char*>(in_data.data()),
-                       in_data.size() * sizeof(uint8_t));
+          auto char_data = gsl::span<const char>(
+              reinterpret_cast<const char*>(in_data.data()),
+              in_data.size() * sizeof(uint8_t));
+          self_.get_context()->write_file(data_bin, char_data);
 
-            file.close();
-          }
           std::string idata_file;
           if (is_const) {
             auto in_indeces = node_arg_get_const_data_as_i64s(
@@ -146,19 +111,10 @@ struct Dd_merge_gather {
                        name.end());
             std::replace(name.begin(), name.end(), ' ', '_');
             data_bin = name + ".bin";
-            if (in_mem) {
-              auto char_data = gsl::span<const char>(
-                  reinterpret_cast<const char*>(in_indeces.data()),
-                  in_indeces.size() * sizeof(int64_t));
-              self_.get_context()->write_file(data_bin, char_data);
-            } else {
-              auto path = log_dir / data_bin;
-              idata_file = path.u8string();
-              std::ofstream ifile(idata_file, std::ios::binary);
-              ifile.write(reinterpret_cast<const char*>(in_indeces.data()),
-                          in_indeces.size() * sizeof(int64_t));
-              ifile.close();
-            }
+            char_data = gsl::span<const char>(
+                reinterpret_cast<const char*>(in_indeces.data()),
+                in_indeces.size() * sizeof(int64_t));
+            self_.get_context()->write_file(data_bin, char_data);
           }
 
           std::vector<std::string> inputs = {

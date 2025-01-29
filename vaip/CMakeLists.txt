@@ -1,27 +1,7 @@
 
 #
-#   The Xilinx Vitis AI Vaip in this distribution are provided under the following free
-#   and permissive binary-only license, but are not provided in source code form.  While the following free
-#   and permissive license is similar to the BSD open source license, it is NOT the BSD open source license
-#   nor other OSI-approved open source license.
-#
-#    Copyright (C) 2022 Xilinx, Inc. All rights reserved.
-#    Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
-#
-#    Redistribution and use in binary form only, without modification, is permitted provided that the following conditions are met:
-#
-#    1. Redistributions must reproduce the above copyright notice, this list of conditions and the following disclaimer in
-#    the documentation and/or other materials provided with the distribution.
-#
-#    2. The name of Xilinx, Inc. may not be used to endorse or promote products redistributed with this software without specific
-#    prior written permission.
-#
-#    THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-#    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL XILINX, INC.
-#    BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-#    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
-#    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+#  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+#  Licensed under the MIT License.
 #
 
 
@@ -220,9 +200,12 @@ vai_add_library(
   include/vaip/dd/coeffs.hpp
   src/dd/coeffs.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/version.c
-  ${vaip_lib_file})
+  ${vaip_lib_file}
+  include/vaip/vaip_io.hpp
+  src/vaip_io.cpp
+  )
 
-target_include_directories (core PRIVATE ${xir_SOURCE_DIR} ${zlib_SOURCE_DIR} ${zlib_BINARY_DIR})
+target_include_directories (core PRIVATE ${xir_SOURCE_DIR} ${zlib_SOURCE_DIR} ${zlib_BINARY_DIR} ${tar_SOURCE_DIR}/bin/pax/)
 check_include_file(dlfcn.h DLFCN_H_FOUND)
 if(DLFCN_H_FOUND)
   target_sources(core PRIVATE src/util_linux.cpp)
@@ -272,8 +255,12 @@ else(MSVC)
 endif(MSVC)
 
 if(XRT_FOUND)
-	target_compile_definitions(core PRIVATE ENABLE_XRT)
-    target_include_directories(core PRIVATE ${XRT_INCLUDE_DIRS})
+  target_compile_definitions(core PRIVATE ENABLE_XRT)
+  target_include_directories(core PRIVATE ${XRT_INCLUDE_DIRS})
+  # this file could be moved
+  file(GLOB_RECURSE xrt_version_header "${XRT_INCLUDE_DIRS}/version.h")
+  get_filename_component(xrt_version_heaer_dir ${xrt_version_header} DIRECTORY)
+  target_include_directories(core PRIVATE ${xrt_version_heaer_dir})
 endif(XRT_FOUND)
 
 if(GRAPH_ENGINE_HASH)
@@ -304,7 +291,7 @@ else(MSVC)
 endif(MSVC)
 
 vai_add_debug_command(core
-    COMMAND "$ENV{PREFIX}\\bin\\test_onnx_runner.exe"
-    ARGUMENTS "C:\\Users\\$ENV{USERNAME}\\build\\vaip_regression\\K1\\K1_v_0_1_quantized_nhwc.onnx"
+    COMMAND "${CMAKE_INSTALL_PREFIX}\\bin\\test_onnx_runner.exe"
+    ARGUMENTS "${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\test_onnx_runner\\data\\pt_resnet50.onnx"
     ENVIRONMENT DEBUG_DD_MERGE_QMHAGRPB=1
   )

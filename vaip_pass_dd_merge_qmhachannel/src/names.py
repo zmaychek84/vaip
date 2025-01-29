@@ -1,3 +1,7 @@
+##
+##  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+##  Licensed under the MIT License.
+##
 {
     "Reshape1_allowzero": 0,
     "Transpose4_perm": [2, 0, 1, 3],

@@ -1,36 +1,7 @@
 
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include "onnxruntime_api.hpp"
@@ -64,51 +35,14 @@ MyCustomOpGT1_2::IdentifySubgraph(
   VAIML_DEBUG_PRINT("IdentifySubgraph sg_name=", sg_name_,
                     " meta_def size=", meta_def->nodes().size());
   SUBGRAPH_ID sg = SUBGRAPH_ID::UNKNOWN;
-  // EPContext based subgraphs
-  if (meta_def->nodes().size() == 1) {
-    // All nodes in a subgraph becomes a EPContext node
-    VAIML_DEBUG_PRINT("    EPContext model_version_=", model_version_,
-                      " sg_name_=", sg_name_);
-    if (model_version_ == "GT_v1.2") {
-      if (sg_name_ == "vaiml_par_0") {
-        sg = SUBGRAPH_ID::GT_TRANSFORMER_BLOCK;
-      } else if (sg_name_ == "vaiml_par_1") {
-        sg = SUBGRAPH_ID::GT_CACHE_FRAMES_SLICE;
-      } else {
-        printf("unknown cache name: %s", sg_name_.data());
-      }
-    }
+  // works for both EPContext graph and normal onnx graph
+  if (sg_name_ == "gt_000_main") {
+    sg = SUBGRAPH_ID::GT_TRANSFORMER_BLOCK;
+  } else if (sg_name_ == "gt_001_cache_frame_slice") {
+    sg = SUBGRAPH_ID::GT_CACHE_FRAMES_SLICE;
   } else {
-    // Normal ONNX model based subgraphs
-    for (auto& node : meta_def->nodes()) {
-      if (node.rfind("/linear_k", 0) != std::string::npos) {
-        // vaiml_par_0 subgraph_000
-        sg = SUBGRAPH_ID::GT_TRANSFORMER_BLOCK;
-        break;
-      } else if (node.rfind("/lin_dec/fc/", 0) != std::string::npos) {
-        sg = SUBGRAPH_ID::HT_LN_SG_LSTM;
-        break;
-      } else if (node.rfind("/norm_k", 0) != std::string::npos) {
-        // GT vaiml_par_1
-        // sg = SUBGRAPH_ID::GT_NORM_K;
-        // break;
-      } else if (node.rfind("oup_cache_frames", 0) != std::string::npos) {
-        // GT vaiml_par_4 subgraph_147
-        sg = SUBGRAPH_ID::GT_CACHE_FRAMES_SLICE;
-        break;
-      } else if (node.rfind("h0_QuantizeLinear", 0) != std::string::npos) {
-        sg = SUBGRAPH_ID::HT_SLICE;
-        break;
-      } else if (node.rfind("c1_QuantizeLinear", 0) != std::string::npos) {
-        sg = SUBGRAPH_ID::HT_CONCAT;
-      }
-    }
-  }
-
-  if (sg == SUBGRAPH_ID::UNKNOWN) {
     throw std::runtime_error("Cannot identify subgraph ID for " + sg_name_);
   }
-
   return sg;
 }
 
@@ -192,13 +126,7 @@ MyCustomOpGT1_2::MyCustomOpGT1_2(std::shared_ptr<const PassContext> context,
 
   std::vector<char> wts_file;
   auto wts_file_opt = context->read_file_c8(constants_file_name_);
-  if (wts_file_opt.has_value()) {
-    wts_file = wts_file_opt.value();
-  } else {
-    std::filesystem::path wtsFileFullName =
-        context->get_log_dir() / constants_file_name_;
-    wts_file = vaip_core::slurp_binary_c8(wtsFileFullName);
-  }
+  wts_file = wts_file_opt.value();
 
   auto const_info = meta_def->vaiml_param().const_data_info();
   wts_buffers_.resize(const_info.size());

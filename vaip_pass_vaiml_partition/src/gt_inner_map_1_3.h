@@ -1,3 +1,7 @@
+/*
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
+ */
 const std::map<std::string, std::vector<std::string>> gt_inner_map_1_3 = {
     {"subgraph_000",
      {

@@ -1,8 +1,0 @@
-[
-    {
-        "hostname": "xcdl190074.xilinx.com",
-        "id": "PSA",
-        "onnx_model": "/proj/xcdhdstaff1/zhenzew/build/vaip_regression/PSA/Model_PSA_v6.1.quant.onnx",
-        "md5sum": "ea21d5df7c783d7e3dca71ec45d7c20c"
-    }
-]

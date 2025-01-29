@@ -1,41 +1,14 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include "vaip/dd/coeffs.hpp"
 #include "vaip/dd/dd_utils.hpp"
 #include "vaip/pattern_zoo.hpp"
 #include "vaip/vaip.hpp"
-
+DEF_ENV_PARAM(DEBUG_DD_PATTERN, "0")
+#define MY_LOG(n) LOG_IF(INFO, ENV_PARAM(DEBUG_DD_PATTERN) >= n)
 namespace {
 using namespace vaip_core;
 
@@ -163,6 +136,70 @@ static void add_node_attr_qgemmv(NodeBuilder& building_node,
   building_node.add("nodes", nodes);
 }
 
+static std::tuple<float, uint16_t, std::string>
+get_concat_qparams_conv(onnxruntime::Graph* graph, const NodeInput& out_node,
+                        float conv_outq_scale, uint16_t conv_outq_zero_point,
+                        std::string concat_in_child) {
+  // if (graph_get_consumer_nodes(*graph,node_arg_get_name(*out_node.node_arg
+  // )).size() == 1) {
+  std::vector<const Node*> final_quant_node_nextnodes =
+      graph_get_consumer_nodes(*graph, node_arg_get_name(*out_node.node_arg));
+  for (auto consumer : final_quant_node_nextnodes) {
+    std::string dq_before_concat_node_name =
+        node_get_first_output_name(*consumer);
+    auto dq_before_concat_node_arg =
+        VAIP_ORT_API(graph_get_node_arg)(*graph, dq_before_concat_node_name);
+
+    if (graph_get_consumer_nodes(*graph,
+                                 node_arg_get_name(*dq_before_concat_node_arg))
+            .size() == 1) {
+      std::vector<const Node*> dq_before_concat_next_nodes =
+          graph_get_consumer_nodes(
+              *graph, node_arg_get_name(*dq_before_concat_node_arg));
+      std::string concat_node_name =
+          node_get_first_output_name(*dq_before_concat_next_nodes[0]);
+      auto concat_node_arg =
+          VAIP_ORT_API(graph_get_node_arg)(*graph, concat_node_name);
+
+      auto concat_node_op_type =
+          VAIP_ORT_API(node_op_type)(*dq_before_concat_next_nodes[0]);
+
+      if (concat_node_op_type == "Concat") {
+        if (graph_get_consumer_nodes(*graph,
+                                     node_arg_get_name(*concat_node_arg))
+                .size() == 1) {
+          std::vector<const Node*> concat_node_nextnodes =
+              graph_get_consumer_nodes(*graph,
+                                       node_arg_get_name(*concat_node_arg));
+          std::string Q_node_after_concat_name =
+              node_get_first_output_name(*concat_node_nextnodes[0]);
+          auto Q_node_input_node_args =
+              node_get_input_node_args(*concat_node_nextnodes[0]);
+
+          auto Q_node_output_arg =
+              node_get_output_node_args(*concat_node_nextnodes[0]);
+          std::string q_node_arg_name =
+              node_arg_get_name(*Q_node_output_arg[0]);
+
+          if (q_node_arg_name !=
+              "/up_blocks.2/cats.2/Concat_output_0_QuantizeLinear_Output") {
+
+            concat_in_child = "true";
+            conv_outq_scale = node_arg_get_const_data_as_float(
+                *graph, *Q_node_input_node_args[1]);
+            conv_outq_zero_point =
+                vaip::dd::get_zp_from_node(*graph, *Q_node_input_node_args[2]);
+          } else {
+            MY_LOG(1) << "Found the staturation point of concat update, so not "
+                         "updating the parent ICONV";
+          }
+        }
+      }
+    }
+  }
+  return std::make_tuple(conv_outq_scale, conv_outq_zero_point,
+                         concat_in_child);
+}
 static void modify_inputs(NodeBuilder& building_node, const NodeInput& gemm,
                           onnxruntime::Graph* graph, float op_scale,
                           uint16_t op_zp) {
@@ -285,8 +322,26 @@ struct MergeQGemmv {
           }
           add_common_attr(new_node);
           add_node_attr_qgemmv(new_node, graph, &binder);
+          /// Check if concat is in child for PSW
+          std::string concat_in_child = "false";
+          auto concat_params = get_concat_qparams_conv(
+              graph, out_node, output_scale, output_zp, concat_in_child);
+
+          if (std::get<2>(concat_params) == "true") {
+            output_scale = std::get<0>(concat_params);
+            output_zp = std::get<1>(concat_params);
+            concat_in_child = std::get<2>(concat_params);
+          }
+          // just to check if params are updated in this op
+          if (std::get<0>(concat_params) != output_scale) {
+            MY_LOG(1) << "IConv output qparams are updated with its consumer "
+                         "concat's output q params ";
+          }
           modify_inputs(new_node, binder["Gemm_0"], graph, output_scale,
                         output_zp);
+          // modify_inputs(new_node, binder["Gemm_0"], graph,
+          // (float)0.0007384087657555938,
+          //             (uint16_t) 23307 );
           new_node.set_op_type("QConv2MatMul", "com.xilinx");
           new_node.set_anchor_point1(*output.node);
           std::vector<std::string> in_dtypes = {"uint16", "uint8", "int64",
@@ -295,7 +350,8 @@ struct MergeQGemmv {
           new_node.add("in_dtypes", in_dtypes);
           new_node.add("out_dtypes", out_dtypes);
           new_node.add("input_shape", *act_in_shape);
-          // new_node.add("weight_shape", *kernel_shape);
+          // new_node.add("design_param", "4x4");
+          //  new_node.add("weight_shape", *kernel_shape);
           new_node.add("output_shape", *out_shape);
           new_node.add("from_gemmv", "true");
           new_node.build();

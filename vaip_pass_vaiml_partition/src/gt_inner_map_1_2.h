@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 const std::map<std::string, std::vector<std::string>> gt_inner_map_1_2 = {
-    {"subgraph_000",
+    {"gt_000_main",
      {"/Add", "/Add_10", "/Add_100", "/Add_100_output_0_DequantizeLinear",
       "/Add_100_output_0_QuantizeLinear", "/Add_102",
       "/Add_102_output_0_DequantizeLinear/duplicated",
@@ -5003,6 +5003,6 @@ const std::map<std::string, std::vector<std::string>> gt_inner_map_1_2 = {
       "joint_network.lin_enc.Lnorm.weight_DequantizeLinear",
       "joint_network.lin_enc.Lnorm.bias_DequantizeLinear",
       "hidden_state_QuantizeLinear"}},
-    {"subgraph_147",
+    {"gt_001_cache_frame_slice",
      {"cache_frames_DequantizeLinear/duplicated", "/Slice_144",
       "oup_cache_frames_QuantizeLinear", "oup_cache_frames_DequantizeLinear"}}};

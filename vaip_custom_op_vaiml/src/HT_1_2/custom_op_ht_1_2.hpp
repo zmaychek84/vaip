@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 – 2023 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 /*
@@ -47,9 +19,11 @@
 #define TMP_SIZE_HT 11904
 #define TRANSFORMER_BLOCK_NUM 36
 // #include "gt_txn_pkg.hpp"
+#include "../common/hw_elf_runner.h"
 #include "../common/hw_runner.h"
 #include "../common/utils.h"
 #include "../common/vaiml_client.h"
+#include "elf_pkg_ht_1_2.hpp"
 #include "load_wts.h"
 #include "onnxruntime_api.hpp"
 #include "txn_pkg_ht_1_2.hpp"
@@ -103,6 +77,12 @@ private:
 
   SUBGRAPH_ID IdentifySubgraph(const std::shared_ptr<MetaDefProto>& meta_def);
 
+  std::string Alias(const std::string& alias_initializer_name) const {
+    return this->initializer_map_.at(alias_initializer_name);
+  }
+  // from developer designed alias to names in model
+  std::unordered_map<std::string, std::string> initializer_map_;
+
   SUBGRAPH_ID subgraph_id_ = SUBGRAPH_ID::UNKNOWN;
 
   std::string sg_name_;
@@ -112,9 +92,9 @@ private:
   std::string vaiml_model_path_ = "vaiml_par_0";
   std::string device_name_ = "phx";
   std::string config_filename_ = "";
-  std::shared_ptr<flexmlrt::client::Model> runner_;
+  // std::shared_ptr<flexmlrt::client::Model> runner_;
   VaimlShapeVec ort_output_shapes_;
-  hw_runner g;
+  std::unique_ptr<hw_runner_base> runner_;
   int8_t* wts_ptr_front_;
   int8_t* ifm_ptr_front_;
   int8_t* ofm_ptr_front_;
@@ -127,61 +107,11 @@ private:
   std::map<int, int> datatype_to_size;
   std::map<int, std::string> datatype_to_string;
   std::string model_version_;
-  std::vector<std::string> ht_lstm_wts_name_ = {
-      // scale: float[24]
-      "c0_scale", "/decoder/rnn/Slice_13_output_0_scale",
-      "/decoder/rnn/Slice_27_output_0_scale", "h0_scale",
-      "/decoder/rnn/Slice_12_output_0_scale",
-      "/decoder/rnn/Slice_26_output_0_scale",
-      "decoder_embedding.embed.weight_scale",
-      "decoder_embedding.embed_lnorm.weight_scale",
-      "/decoder_embedding/embed_lnorm/Add_1_output_0_scale",
-      "/decoder_embedding/sigmoid/Sigmoid_output_0_scale",
-      "/decoder/rnn/Unsqueeze_output_0_scale",
-      "/decoder/rnn/Unsqueeze_1_output_0_scale",
-      "/decoder/rnn/Unsqueeze_2_output_0_scale",
-      "/decoder/rnn/LSTM_output_0_scale", "/decoder/rnn/LSTM_output_1_scale",
-      "/decoder/rnn/LSTM_output_2_scale",
-      "/decoder/rnn/Unsqueeze_3_output_0_scale",
-      "/decoder/rnn/Unsqueeze_4_output_0_scale",
-      "/decoder/rnn/Unsqueeze_5_output_0_scale",
-      "/decoder/rnn/LSTM_1_output_0_scale",
-      "/decoder/rnn/LSTM_1_output_1_scale",
-      "/decoder/rnn/LSTM_1_output_2_scale", "h1_scale", "c1_scale",
-      // zp: int8[24]
-      "c0_zero_point", "/decoder/rnn/Slice_13_output_0_zero_point",
-      "/decoder/rnn/Slice_27_output_0_zero_point", "h0_zero_point",
-      "/decoder/rnn/Slice_12_output_0_zero_point",
-      "/decoder/rnn/Slice_26_output_0_zero_point",
-      "decoder_embedding.embed.weight_zero_point",
-      "decoder_embedding.embed_lnorm.weight_zero_point",
-      "/decoder_embedding/embed_lnorm/Add_1_output_0_zero_point",
-      "/decoder_embedding/sigmoid/Sigmoid_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_1_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_2_output_0_zero_point",
-      "/decoder/rnn/LSTM_output_0_zero_point",
-      "/decoder/rnn/LSTM_output_1_zero_point",
-      "/decoder/rnn/LSTM_output_2_zero_point",
-      "/decoder/rnn/Unsqueeze_3_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_4_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_5_output_0_zero_point",
-      "/decoder/rnn/LSTM_1_output_0_zero_point",
-      "/decoder/rnn/LSTM_1_output_1_zero_point",
-      "/decoder/rnn/LSTM_1_output_2_zero_point", "h1_zero_point",
-      "c1_zero_point",
-      // lstm0_h_wts
-      "/decoder/rnn/Unsqueeze_1_output_0_quantized",
-      // lstm0_x_wts
-      "/decoder/rnn/Unsqueeze_output_0_quantized",
-      // lstm0_bias
-      "/decoder/rnn/Unsqueeze_2_output_0_quantized",
-      // lstm1_h_wts
-      "/decoder/rnn/Unsqueeze_4_output_0_quantized",
-      // lstm1_x_wts
-      "/decoder/rnn/Unsqueeze_3_output_0_quantized",
-      // lstm1_bias
-      "/decoder/rnn/Unsqueeze_5_output_0_quantized"};
+
+  uint32_t lstm_320_rtp[16] = {};
+  uint32_t lstm_1024_rtp[16] = {};
+  uint32_t mm_add_rtp[32] = {};
+
   const std::vector<uint16_t> lstm_lut = {
       1025,  14651, 57420, 14675, 2318,  14704, 63217, 14727, 1667,  14746,
       31387, 14766, 41960, 14789, 56724, 14815, 36512, 14845, 38315, 14863,

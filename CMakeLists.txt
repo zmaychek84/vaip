@@ -1,33 +1,6 @@
 #
-# The Xilinx Vitis AI Vaip in this distribution are provided under the following
-# free and permissive binary-only license, but are not provided in source code
-# form.  While the following free and permissive license is similar to the BSD
-# open source license, it is NOT the BSD open source license nor other
-# OSI-approved open source license.
-#
-# Copyright (C) 2022 Xilinx, Inc. All rights reserved.
-# Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
-#
-# Redistribution and use in binary form only, without modification, is permitted
-# provided that the following conditions are met:
-#
-# 1. Redistributions must reproduce the above copyright notice, this list of
-#   conditions and the following disclaimer in the documentation and/or other
-#   materials provided with the distribution.
-#
-# 1. The name of Xilinx, Inc. may not be used to endorse or promote products
-#   redistributed with this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR IMPLIED
-# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-# EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE
+#  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+#  Licensed under the MIT License.
 #
 
 cmake_minimum_required(VERSION 3.24)
@@ -64,6 +37,8 @@ include_directories(
 include_directories(
   "${GSL_SOURCE_DIR}/include"
 )
+include_directories("${CMAKE_INSTALL_PREFIX}/include/utils")
+include_directories("${CMAKE_INSTALL_PREFIX}/include/xrt_context")
 
 option(WITH_XCOMPILER "include xcompiler or not" OFF)
 option(EN_LLM_DOD_OPS "enable llm dod ops or not" ON)
@@ -120,7 +95,10 @@ add_subdirectory(vaip_custom_op_nms)
 add_subdirectory(vaip_custom_op_dqsoftmax)
 add_subdirectory(vaip_custom_op_gather)
 add_subdirectory(vaip_custom_op_gather_add)
+if (WIN32)
 add_subdirectory(vaip_custom_op_qdq_op)
+endif()
+add_subdirectory(vaip_custom_op_concat)
 add_subdirectory(vaip_custom_op_identity)
 add_subdirectory(vaip_custom_op_dqcastgather)
 add_subdirectory(vaip_custom_op_resize_norm)
@@ -128,9 +106,11 @@ add_subdirectory(vaip_custom_op_softmax)
 add_subdirectory(vaip_custom_op_topk)
 add_subdirectory(vaip_custom_op_decode_filter_boxes)
 add_subdirectory(vaip_pass_matmul_nbits)
+add_subdirectory(vaip_pass_gqa)
 add_subdirectory(vaip_pass_mladf_mlp)
 
-# add_subdirectory(vaip_op_def_qdq)
+add_subdirectory(vaip_op_def_qdq)
+
 
 if(EN_LLM_DOD_OPS)
   if(WIN32)
@@ -140,7 +120,9 @@ if(EN_LLM_DOD_OPS)
     add_subdirectory(vaip_pass_dd_merge_qeltwise_add)
     add_subdirectory(vaip_pass_dd_merge_qeltwise_div)
     add_subdirectory(vaip_pass_dd_merge_qmhagrpb)
+    add_subdirectory(vaip_pass_dd_merge_flatmlp)
     add_subdirectory(vaip_pass_dd_merge_mzdk5mha)
+    add_subdirectory(vaip_pass_dd_merge_qdemha)
     add_subdirectory(vaip_pass_dd_merge_qmatmul)
     add_subdirectory(vaip_pass_dd_merge_qmatmul_add)
     add_subdirectory(vaip_pass_dd_merge_qmatmul_add_gelu)
@@ -156,30 +138,38 @@ if(EN_LLM_DOD_OPS)
     add_subdirectory(vaip_pass_dd_merge_identity)
     add_subdirectory(vaip_pass_dd_merge_qconcat)
     add_subdirectory(vaip_pass_dd_merge_qsilu)
+    add_subdirectory(vaip_pass_dd_merge_silu)
+    add_subdirectory(vaip_pass_dd_merge_mlp)
     add_subdirectory(vaip_pass_dd_merge_gather)
     add_subdirectory(vaip_pass_dd_merge_dqsoftmax) # TODO: Add vaip cpu ops under a different macro(not in EN_LLM_DOD_OPS)
     add_subdirectory(vaip_pass_dd_merge_reduce_sum) # TODO: Add vaip cpu ops under a different macro(not in EN_LLM_DOD_OPS)
     add_subdirectory(vaip_pass_dd_merge_qgelu)
     add_subdirectory(vaip_pass_dd_merge_qgemmv)
+    add_subdirectory(vaip_pass_dd_merge_mladfadd)
+    add_subdirectory(vaip_pass_dd_merge_slrn)
     add_subdirectory(vaip_pass_dd_merge_dps)
     add_subdirectory(vaip_pass_dd_merge_tanh_lpnorm)
     add_subdirectory(vaip_pass_dd_merge_qbroadcastadd)
     add_subdirectory(vaip_pass_dd_merge_ql2norm)
+    add_subdirectory(vaip_pass_dd_merge_ql2norm_2)
     add_subdirectory(vaip_pass_dd_merge_qsigmoid)
-    #add_subdirectory(vaip_custom_op_gemm)
+    add_subdirectory(vaip_pass_dd_merge_elwemul)
     add_subdirectory(vaip_custom_op_dod)
-    #add_subdirectory(vaip_custom_op_gemm_dynamic)
-    #add_subdirectory(vaip_custom_op_matmul_integer)
-    #add_subdirectory(vaip_custom_op_gmatmul_integer)
-    #add_subdirectory(vaip_custom_op_matmul_nbits)
+   #  add_subdirectory(vaip_custom_op_gemm)
+   #  add_subdirectory(vaip_custom_op_gemm_dynamic)
+   #  add_subdirectory(vaip_custom_op_matmul_integer)
+   #  add_subdirectory(vaip_custom_op_gmatmul_integer)
+    add_subdirectory(vaip_custom_op_matmul_nbits)
     add_subdirectory(vaip_custom_op_norm_k)
     add_subdirectory(vaip_custom_op_mlp)
+    add_subdirectory(vaip_custom_op_gqa)
     if(ENABLE_VITIS_AI_CUSTOM_OP)
       add_subdirectory(onnxruntime_vitis_ai_custom_ops)
     endif(ENABLE_VITIS_AI_CUSTOM_OP)
     else()
     add_subdirectory(vaip_custom_op_matmul_nbits)
     add_subdirectory(vaip_custom_op_mlp)
+    add_subdirectory(vaip_custom_op_gqa)
     if(ENABLE_VITIS_AI_CUSTOM_OP)
       add_subdirectory(onnxruntime_vitis_ai_custom_ops)
     endif(ENABLE_VITIS_AI_CUSTOM_OP)
@@ -206,6 +196,10 @@ option(ENABLE_VAIP_PASS_DD_MERGE_QMHACHANNEL
 if(ENABLE_VAIP_PASS_DD_MERGE_QMHACHANNEL)
   add_subdirectory(vaip_pass_dd_merge_qmhachannel)
 endif(ENABLE_VAIP_PASS_DD_MERGE_QMHACHANNEL)
+option(ENABLE_VAIP_PASS_DD_MERGE_MATMULNBITS "enable vaip_pass_dd_merge_matmul_nbits or not " ON)
+if(ENABLE_VAIP_PASS_DD_MERGE_MATMULNBITS)
+   add_subdirectory(vaip_pass_dd_merge_matmul_nbits)
+endif(ENABLE_VAIP_PASS_DD_MERGE_MATMULNBITS)
 option(ENABLE_VAIP_PASS_DD_MERGE_QRESHAPE_TRANSPOSE "enable vaip_pass_dd_merge_qreshape_transpose or not " ON)
 if(ENABLE_VAIP_PASS_DD_MERGE_QRESHAPE_TRANSPOSE)
    add_subdirectory(vaip_pass_dd_merge_qreshape_transpose)

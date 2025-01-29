@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include <glog/logging.h>
@@ -38,21 +9,42 @@
 #include "GT/GT_1_3/custom_op_gt_1_3.hpp"
 #include "HT_1_2/custom_op_ht_1_2.hpp"
 #include "vaip/vaip.hpp"
+#include <iostream>
 
 static vaip_core::ExecutionProvider* create_execution_provider_imp(
     std::shared_ptr<const vaip_core::PassContext> context,
     const vaip_core::MetaDefProto& meta_def) {
 
   auto& session_option = context->get_config_proto().provider_options();
+  // FIXME: fix this section of xclbin path patch once preemption mode is in
+  // default.
+  {
+    auto* mutable_session =
+        const_cast<vaip_core::ConfigProto&>(context->get_config_proto())
+            .mutable_provider_options();
+    std::string xclbin_path = session_option.at("xclbin");
+    std::string preempt_xclbin = "4x4_gt_ht_03";
+    std::string non_preempt_xclbin = "4x4_gt_ht_04";
+    std::size_t found = xclbin_path.find(non_preempt_xclbin);
+    if (!context->get_provider_option("enable_preemption").has_value()) {
+      (*mutable_session)["enable_preemption"] = "0";
+    }
+    if ((session_option.at("enable_preemption") == "1") &&
+        found != std::string::npos) {
+      xclbin_path.replace(found, non_preempt_xclbin.size(),
+                          preempt_xclbin); // replace to preempt xclbin
+    }
+    (*mutable_session)["xclbin"] = xclbin_path;
+  }
+
   auto model_version_ = session_option.at("model_name");
-  printf("entered custom op creation");
   if (model_version_ == "GT_v1.2") {
     return new vaip_core::ExecutionProviderImp<
         vaip_vaiml_custom_op::MyCustomOpGT1_2>(context, meta_def);
   } else if (model_version_ == "HT_v1.2") {
     return new vaip_core::ExecutionProviderImp<
         vaip_vaiml_custom_op::MyCustomOpHT1_2>(context, meta_def);
-  } else if (model_version_ == "GT_v1.3") {
+  } else if (model_version_ == "GT_v1.3" || model_version_ == "GTC_v1.0") {
     return new vaip_core::ExecutionProviderImp<
         vaip_vaiml_custom_op::MyCustomOpGT1_3>(context, meta_def);
   } else {

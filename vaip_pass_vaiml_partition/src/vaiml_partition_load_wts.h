@@ -1,3 +1,7 @@
+/*
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
+ */
 
 #include <vector>
 
@@ -415,6 +419,8 @@ private:
 struct lstm_init_wts {
   double scale[24];
   uint8_t zp[24];
+  uint32_t lstm_320_rtp[16];
+  uint32_t lstm_1024_rtp[16];
   int8_t* lstm0_h_wts; //[1*4096*1024];
   int8_t* lstm0_x_wts; //[1*4096*320];
   int8_t* lstm0_bias;  //[1*8192];
@@ -448,83 +454,12 @@ public:
     num_row = 4;
     k_iter = len_kp / sv_k;
     n_iter_sv = len_n / sv_n0;
-    // ---- Qdq settings, will be set in input_generate() ----
-    Sx = 0;
-    Zx = 0;
-    Sw = 0;
-    Zw = 0;
-    Sr = 0;
-    Zr = 0;
-    Sb = 0;
-    Zb = 0;
-    Sh = 0;
-    Zh = 0;
-    Sc = 0;
-    Zc = 0;
-    Sy0 = 0;
-    Zy0 = 0;
-    Sy1 = 0;
-    Zy1 = 0;
-    Sy2 = 0;
-    Zy2 = 0;
-    Sg = 0;
-    Zg = 0;
     if (layer == 320) {
       layer_name = "lstm_320";
       len_x = 320; // 64; // dim k
-      // ---- QDQ params for lstm320 layer ----
-      xw_shift = 0;
-      hr_shift = 0;
-      xwq_shift = 12;
-      hrq_shift = 12;
-      xs_shift = 12;
-      hs_shift = 12;
-      nonlinear_in_shift = 18;
-      nonlinear_out_h_shift = 0;
-      nonlinear_out_c_shift = 0;
-      output_h_shift = 20;
-      output_c_shift = 20;
-      c_shift0 = 0;
-      c_shift1 = 20;
-      c_shift2 = 0;
-      qx_scale = 29160;
-      qh_scale = 125700;
-      qa_scale = 3732477;
-      qb_scale = 16089607;
-      output_h_scale = 7735;
-      output_h_zp = 134;
-      output_c_scale = 22194;
-      output_c_zp = 146;
-      c_scale = 19692;
-      c_zp = 141;
     } else if (layer == 1024) {
       layer_name = "lstm_1024";
       len_x = 1024; // 64; // dim k
-      // ---- QDQ params for lstm1024 layer ----
-      xw_shift = 0;
-      hr_shift = 0;
-      xwq_shift = 13;
-      hrq_shift = 13;
-      xs_shift = 13;
-      hs_shift = 13;
-      nonlinear_in_shift = 17;
-      nonlinear_out_h_shift = 0;
-      nonlinear_out_c_shift = 0;
-      output_h_shift = 20;
-      output_c_shift = 20;
-      c_shift0 = 0;
-      c_shift1 = 20;
-      c_shift2 = 0;
-      qx_scale = 99948;
-      qh_scale = 191141;
-      qa_scale = 12793403;
-      qb_scale = 24466034;
-      output_h_scale = 7712;
-      output_h_zp = 134;
-      output_c_scale = 22195;
-      output_c_zp = 164;
-      c_scale = 17954;
-      c_zp = 161;
     }
   }
 
@@ -550,50 +485,4 @@ public:
   int num_row;
   int k_iter;
   int n_iter_sv;
-  // ---- Qdq settings, will be set in input_generate() ----
-  int Sx;
-  int Zx;
-  int Sw;
-  int Zw;
-  int Sr;
-  int Zr;
-  int Sb;
-  int Zb;
-  int Sh;
-  int Zh;
-  int Sc;
-  int Zc;
-  int Sy0;
-  int Zy0;
-  int Sy1;
-  int Zy1;
-  int Sy2;
-  int Zy2;
-  int Sg;
-  int Zg;
-  // ---- QDQ params for lstm320 layer ----
-  int xw_shift;
-  int hr_shift;
-  int xwq_shift;
-  int hrq_shift;
-  int xs_shift;
-  int hs_shift;
-  int nonlinear_in_shift;
-  int nonlinear_out_h_shift;
-  int nonlinear_out_c_shift;
-  int output_h_shift;
-  int output_c_shift;
-  int c_shift0;
-  int c_shift1;
-  int c_shift2;
-  int qx_scale;
-  int qh_scale;
-  int qa_scale;
-  int qb_scale;
-  int output_h_scale;
-  int output_h_zp;
-  int output_c_scale;
-  int output_c_zp;
-  int c_scale;
-  int c_zp;
 };

@@ -1,33 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include <glog/logging.h>
 
@@ -99,6 +72,46 @@ get_qlinear_param(const Graph& graph, const Node* qslice_node) {
   }
   return ret;
 }
+
+static std::vector<const Node*> get_all_parent_nodes(const Node* cnode) {
+  auto node_inputs = node_get_inputs(*cnode);
+  std::vector<const Node*> ret;
+  for (const auto& ni : node_inputs) {
+    if (ni.node != nullptr) {
+      ret.emplace_back(ni.node);
+    }
+  }
+  return ret;
+}
+
+static bool check_no_op_parent(Graph& g, const Node* a,
+                               NodeArg*& updated_node_arg,
+                               std::string no_op_name) {
+  auto inputs = get_all_parent_nodes(a);
+  if (inputs.size() == 0)
+    return false;
+  auto x = inputs[0];
+  auto parent_op_type = VAIP_ORT_API(node_op_type)(*x);
+  if (parent_op_type != no_op_name)
+    return false;
+  else {
+    inputs = get_all_parent_nodes(x);
+    if (inputs.size() == 0)
+      return false;
+    x = inputs[0];
+    parent_op_type = VAIP_ORT_API(node_op_type)(*x);
+    if (parent_op_type != "DequantizeLinear")
+      return false;
+  }
+  auto input_node_args = node_get_input_node_args(*x);
+  for (auto ni : input_node_args) {
+    if (!node_arg_is_constant(g, *ni)) {
+      updated_node_arg = const_cast<NodeArg*>(ni);
+      continue;
+    }
+  }
+  return true;
+}
 static std::pair<float, uint16_t> get_scale_zp_with_ancestor_check(
     onnxruntime::Graph* graph, binder_t& binder, vaip_core::NodeInput& a,
     vaip_core::NodeInput& as_node, vaip_core::NodeInput& az_node) {
@@ -133,6 +146,7 @@ struct Dd_merge_qelwemul {
     return Rule::create_rule(
         com_microsoft_QuantizeLinear_0,
         [=](onnxruntime::Graph* graph, binder_t& binder) -> bool {
+          auto out_node = binder["com_microsoft_QuantizeLinear_0"];
           auto in_node_0 = binder["input_1"];
           auto in_0_scale_node = binder["constant_2"];
           auto in_0_zp_node = binder["constant_3"];
@@ -140,7 +154,6 @@ struct Dd_merge_qelwemul {
               graph, binder, in_node_0, in_0_scale_node, in_0_zp_node);
           auto in_0_scale = r.first;
           auto in_0_zp = r.second;
-
           auto in_node_1 = binder["input_0"];
           auto in_1_scale_node = binder["constant_0"];
           auto in_1_zp_node = binder["constant_1"];
@@ -156,7 +169,7 @@ struct Dd_merge_qelwemul {
 
           auto out_scale_node = binder["constant_4"];
           auto out_zp_node = binder["constant_5"];
-          auto out_node = binder["com_microsoft_QuantizeLinear_0"];
+
           auto out_scale = node_arg_get_const_data_as_float(
               *graph, *out_scale_node.node_arg);
           auto out_zp =
@@ -164,12 +177,6 @@ struct Dd_merge_qelwemul {
           auto out_shape = node_arg_get_shape_i64(*out_node.node_arg);
 
           std::vector<std::string> ns = vaip::dd::get_node_names(graph, binder);
-          //   MY_LOG(1) << "found match at " << ns.front();
-          //   auto [success, modified_b_input_scale, modified_b_input_zp] =
-          //       get_qlinear_param(*graph, in_node_0.node);
-          //   if (!success) {
-          //     MY_LOG(1) << "parameters for modified b input not found";
-          //   }
 
           std::vector<float> input_q_params{in_0_scale, float(in_0_zp),
                                             in_1_scale, float(in_1_zp)};
@@ -181,46 +188,91 @@ struct Dd_merge_qelwemul {
           auto [final_out_scale, final_out_zp] =
               vaip::dd::qmatmulcalc::calc_lrn_coeff(1 / out_scale, out_zp);
 
+          // Code for dmacompiler/qdq_mul
+          std::string op_name = "QELWEMUL_qdq";
           int32_t amat_uint16 = 0; // is_matA_uint16
           int32_t cmat_uint16 = 1; // is_matC_uint16
-
-          std::vector<int32_t> elt_coeffs(16, 0);
-          elt_coeffs[0] = b_scale;
-          elt_coeffs[1] = b_zp;
-          elt_coeffs[2] = a_scale;
-          elt_coeffs[3] = a_zp;
-          elt_coeffs[4] = final_out_scale;
-          elt_coeffs[5] = final_out_zp;
-          elt_coeffs[6] = amat_uint16;
-          elt_coeffs[7] = cmat_uint16;
-          auto node_name = node_arg_get_name(*out_node.node_arg);
-          std::string elt_coeff_name = std::string(node_name + "_qdq_");
-          auto& elt_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
-              graph, elt_coeff_name, elt_coeffs,
-              std::vector({(int64_t)elt_coeffs.size()}));
-
-          // hard code for mzdk5, may need to change
           std::vector<std::string> input_types{"bfloat16", "uint16", "int32"};
           std::vector<std::string> output_types{"uint16"};
+          std::vector<int32_t> elt_coeffs(16, 0);
+          bool intmul = false;
 
-          // input order is changed
-          NodeBuilder(*graph, *self)
-              .set_input_node_args(
-                  {in_node_1.node_arg, in_node_0.node_arg, &elt_arg})
-              .set_op_type("QELWEMUL_qdq", "com.xilinx")
-              .add("nodes", ns)
-              .add("input_shape", *out_shape) // same as python
-              .add("orig_output_shape", *out_shape)
-              .add("input_q_params", input_q_params)
-              .add("output_q_params", output_q_params)
-              //   .add("modified_b_input_scale",
-              //        std::to_string(modified_b_input_scale))
-              //   .add("modified_b_input_zp",
-              //   std::to_string(modified_b_input_zp))
-              .add("in_dtypes", input_types)
-              .add("out_dtypes", output_types)
-              .set_anchor_point1(*out_node.node)
-              .build();
+          auto node_name = node_arg_get_name(*out_node.node_arg);
+
+          auto args = self->get_pass_proto().args();
+          if (!args.empty()) {
+            std::vector<std::string> arg;
+            for (const auto& str : args) {
+              arg.push_back(str);
+            }
+            if (arg[0] == "intmul")
+              intmul = true;
+          }
+          if (intmul == true) {
+            op_name = "QIntEltwiseMul";
+            input_types[0] = "uint16";
+            elt_coeffs[1] = final_out_scale;
+            elt_coeffs[0] = final_out_zp;
+            NodeArg* no_op_node_arg = nullptr;
+            std::string elt_coeff_name_mul = std::string(node_name + "_qdq_");
+            auto& elt_arg_mul = vaip::dd::insert_named_tensor_in_graph<int32_t>(
+                graph, elt_coeff_name_mul, elt_coeffs,
+                std::vector({(int64_t)elt_coeffs.size()}));
+            // input order is changed
+            bool no_op_in_parent = check_no_op_parent(
+                *graph, in_node_1.node, no_op_node_arg, "Unsqueeze");
+            NodeBuilder(*graph, *self)
+                .set_input_node_args(
+                    {in_node_0.node_arg, no_op_node_arg, &elt_arg_mul})
+                .set_op_type(op_name, "com.xilinx")
+                .add("nodes", ns)
+                .add("input_shape", *out_shape)
+                .add("orig_output_shape", *out_shape)
+                .add("input_q_params", input_q_params)
+                .add("output_q_params", output_q_params)
+                .add("in_dtypes", input_types)
+                .add("out_dtypes", output_types)
+                .set_anchor_point1(*out_node.node)
+                .build();
+
+          } else {
+            amat_uint16 = 0; // is_matA_uint16
+            cmat_uint16 = 1; // is_matC_uint16
+            op_name = "QELWEMUL_qdq";
+
+            elt_coeffs[0] = b_scale;
+            elt_coeffs[1] = b_zp;
+            elt_coeffs[2] = a_scale;
+            elt_coeffs[3] = a_zp;
+            elt_coeffs[4] = final_out_scale;
+            elt_coeffs[5] = final_out_zp;
+            elt_coeffs[6] = amat_uint16;
+            elt_coeffs[7] = cmat_uint16;
+
+            std::string elt_coeff_name = std::string(node_name + "_qdq_");
+            auto& elt_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
+                graph, elt_coeff_name, elt_coeffs,
+                std::vector({(int64_t)elt_coeffs.size()}));
+            // hard code for mzdk5, may need to change
+            // input order is changed
+            NodeBuilder(*graph, *self)
+                .set_input_node_args(
+                    {in_node_1.node_arg, in_node_0.node_arg, &elt_arg})
+                .set_op_type(op_name, "com.xilinx")
+                .add("nodes", ns)
+                .add("input_shape", *out_shape)
+                .add("orig_output_shape", *out_shape)
+                .add("input_q_params", input_q_params)
+                .add("output_q_params", output_q_params)
+                //   .add("modified_b_input_scale",
+                //        std::to_string(modified_b_input_scale))
+                //   .add("modified_b_input_zp",
+                //   std::to_string(modified_b_input_zp))
+                .add("in_dtypes", input_types)
+                .add("out_dtypes", output_types)
+                .set_anchor_point1(*out_node.node)
+                .build();
+          }
           return true;
         });
   }

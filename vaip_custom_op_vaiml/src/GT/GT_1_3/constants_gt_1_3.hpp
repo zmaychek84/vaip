@@ -1,3 +1,7 @@
+/*
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
+ */
 namespace vaip_vaiml_custom_op {
 const uint32_t conv0_lp[16] = {0x08010105, 0x02010303, 0x020d0201, 0x00340009,
                                0x00001c00, 0x01800010, 0x00200180, 0x00100300,

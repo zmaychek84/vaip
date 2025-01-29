@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include <fstream>
 #include <iostream>
@@ -58,8 +30,8 @@ union uint64_uint8 {
 };
 
 // pad WTS if ic dim is less than 8, data format must be (oc, ic, kh, kw)
-void pad_wts_ic_dim(uint8_t* wts_data, uint8_t* pad_wts_data, uint32_t kh,
-                    uint32_t kw, uint32_t ic, uint32_t oc) {
+inline void pad_wts_ic_dim(uint8_t* wts_data, uint8_t* pad_wts_data,
+                           uint32_t kh, uint32_t kw, uint32_t ic, uint32_t oc) {
   uint32_t idx_orig = 0;
   uint32_t idx_pad = 0;
   for (int i = 0; i < oc; i++) {
@@ -85,9 +57,10 @@ void pad_wts_ic_dim(uint8_t* wts_data, uint8_t* pad_wts_data, uint32_t kh,
 // kh, kw) to (depth_iter_oc, depth_iter_ic, ocg, icg, kh, kw, ic_tile,
 // oc_tile), equivalent of above code is:
 //     wts = np.transpose(wts, (0, 3, 1, 4, 6, 7, 5, 2))
-void transpose_wts(uint8_t* wts_data, uint8_t* trans_wts_data, uint32_t kh,
-                   uint32_t kw, uint32_t ic, uint32_t oc, uint32_t ic_tile,
-                   uint32_t icg, uint32_t oc_tile, uint32_t ocg) {
+inline void transpose_wts(uint8_t* wts_data, uint8_t* trans_wts_data,
+                          uint32_t kh, uint32_t kw, uint32_t ic, uint32_t oc,
+                          uint32_t ic_tile, uint32_t icg, uint32_t oc_tile,
+                          uint32_t ocg) {
 
   uint32_t depth_iter_ic = ic / (ic_tile * icg);
   uint32_t depth_iter_oc = oc / (oc_tile * ocg);
@@ -135,7 +108,7 @@ void transpose_wts(uint8_t* wts_data, uint8_t* trans_wts_data, uint32_t kh,
 }
 
 // append layer parameters for each sub-volume
-void append_lp(std::vector<uint64_t>& res, uint32_t* lp_data) {
+inline void append_lp(std::vector<uint64_t>& res, uint32_t* lp_data) {
   uint64_uint32 cvt;
   for (int i = 0; i < (LP_bytes / sizeof(uint32_t)) /
                           (sizeof(uint64_t) / sizeof(uint32_t));
@@ -148,8 +121,8 @@ void append_lp(std::vector<uint64_t>& res, uint32_t* lp_data) {
 }
 
 // append sub-volume of c0 for each sub-volume
-void append_c0(std::vector<uint64_t>& res, int64_t* c0_data, uint32_t idx,
-               uint32_t coeff_gran) {
+inline void append_c0(std::vector<uint64_t>& res, int64_t* c0_data,
+                      uint32_t idx, uint32_t coeff_gran) {
   uint64_int64 cvt;
   for (int i = 0; i < coeff_gran; i++) {
     cvt.I64 = c0_data[idx * coeff_gran + i];
@@ -158,8 +131,8 @@ void append_c0(std::vector<uint64_t>& res, int64_t* c0_data, uint32_t idx,
 }
 
 // append sub-volume of WTS for each sub-volume
-void append_wts(std::vector<uint64_t>& res, uint8_t* wts_data, uint32_t idx,
-                uint32_t wts_gran) {
+inline void append_wts(std::vector<uint64_t>& res, uint8_t* wts_data,
+                       uint32_t idx, uint32_t wts_gran) {
   uint64_uint8 cvt;
   for (int i = 0; i < wts_gran / (sizeof(uint64_t) * sizeof(uint8_t)); i++) {
     for (int j = 0; j < sizeof(uint64_t) / sizeof(uint8_t); j++) {
@@ -171,12 +144,12 @@ void append_wts(std::vector<uint64_t>& res, uint8_t* wts_data, uint32_t idx,
 }
 
 // pointer-to-pointer WTS generator for GT conv
-std::vector<uint64_t> wts_gen_conv(uint32_t* lp_data, int64_t* c0_data,
-                                   uint8_t* wts_data, uint32_t kh, uint32_t kw,
-                                   uint32_t ic,
-                                   uint32_t oc, // original wts shape
-                                   uint32_t ic_tile, uint32_t icg,
-                                   uint32_t oc_tile, uint32_t ocg) {
+inline std::vector<uint64_t> wts_gen_conv(uint32_t* lp_data, int64_t* c0_data,
+                                          uint8_t* wts_data, uint32_t kh,
+                                          uint32_t kw, uint32_t ic,
+                                          uint32_t oc, // original wts shape
+                                          uint32_t ic_tile, uint32_t icg,
+                                          uint32_t oc_tile, uint32_t ocg) {
 
   int32_t padded_ic = ic < aligned_ic_size ? aligned_ic_size : ic;
   uint8_t* pad_wts_data = new uint8_t[kh * kw * padded_ic * oc];

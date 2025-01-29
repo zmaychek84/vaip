@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #pragma once
 #define gt_min(a, b) ((a < b) ? a : b)
@@ -1763,92 +1735,9 @@ const std::map<std::string, std::map<std::string, float>> scale_maps = {
       {"/out/MatMul_output_0_scale", 0.00020969474280718714f},
       {"encoder.embed.out.bias_scale", 0.00001832125781220384f},
       {"/out/Add_output_0_scale", 0.0002087922766804695f},
-      {"encoder_embedding.global_mean_scale", 0.00023770694679114968f}}},
-    {"GT_v1.3",
-     {
-         {"/linear_v_1/Add_output_0_scale", 5.7390399888390675e-05f},
-         {"/linear_k_2/Add_output_0_scale", 0.00015126689686439931f},
-         {"/Add_10_output_0_scale", 0.0003153705329168588f},
-         {"/linear_v_3/Add_output_0_scale", 5.797009725938551e-05f},
-         {"/Add_15_output_0_scale", 0.0004203662683721632f},
-         {"/linear_v_4/Add_output_0_scale", 9.15368291316554e-05f},
-         {"/feed_forward/w_1_4/Add_output_0_scale", 4.521796290646307e-05f},
-         {"/linear_v_5/Add_output_0_scale", 8.400284423260018e-05f},
-         {"/feed_forward/w_1_5/Add_output_0_scale", 2.0706900613731705e-05f},
-         {"/feed_forward/w_1_6/Add_output_0_scale", 4.325677946326323e-05f},
-         {"/linear_k_7/Add_output_0_scale", 0.00010842722258530557f},
-         {"/linear_v_7/Add_output_0_scale", 0.00010055218444904312f},
-         {"/Add_40_output_0_scale", 0.0007967538549564779f},
-         {"/feed_forward/w_1_10/Add_output_0_scale", 0.000247709802351892f},
-         {"/linear_k_11/Add_output_0_scale", 0.0001298295974265784f},
-         {"/Add_55_output_0_scale", 0.0003709339944180101f},
-         {"/linear_v_12/Add_output_0_scale", 0.00012057026469847187f},
-         {"/linear_out_12/Add_output_0_scale", 0.000245864997850731f},
-         {"/feed_forward/w_1_12/Add_output_0_scale", 0.00035843157093040645f},
-         {"/linear_k_13/Add_output_0_scale", 0.00020893629698548466f},
-         {"/linear_v_13/Add_output_0_scale", 0.00014176784316077828f},
-         {"/Add_65_output_0_scale", 0.0005015784990973771f},
-         {"/linear_out_13/Add_output_0_scale", 0.0001812376722227782f},
-         {"/linear_k_14/Add_output_0_scale", 0.00013713070075027645f},
-         {"/linear_k_15/Add_output_0_scale", 0.00015266769332811236f},
-         {"/feed_forward/w_1_15/Add_output_0_scale", 0.00029738727607764304f},
-         {"/Add_80_output_0_scale", 0.0003636154578998685f},
-         {"/linear_out_16/Add_output_0_scale", 9.637001494411379e-05f},
-         {"/linear_v_17/Add_output_0_scale", 0.00010422258492326364f},
-         {"/feed_forward/w_1_17/Add_output_0_scale", 0.0001407218660460785f},
-         {"_v_3482_scale", 0.004505591467022896f},
-         {"/Add_90_output_0_scale", 0.0004418293829075992f},
-         {"/linear_v_19/Add_output_0_scale", 0.0001669663324719295f},
-         {"/linear_out_19/Add_output_0_scale", 0.00011886633728863671f},
-         {"/feed_forward/w_1_20/Add_output_0_scale", 5.3904463129583746e-05f},
-         {"/linear_v_21/Add_output_0_scale", 0.00013221449626144022f},
-         {"encoder.encoders.21.norm2.weight_scale", 0.0011431525927037f},
-         {"/feed_forward/w_1_22/Add_output_0_scale", 4.2428411688888445e-05f},
-         {"/feed_forward/w_2_22/Transpose_output_0_scale",
-          0.00721890339627862f},
-         {"/linear_out_23/Add_output_0_scale", 0.0001348105724900961f},
-         {"/Add_120_output_0_scale", 0.0005828705034218729f},
-         {"/linear_out_24/Add_output_0_scale", 0.00011019537487300113f},
-         {"/feed_forward/w_1_24/Add_output_0_scale", 6.059462612029165e-05f},
-         {"/linear_v_25/Add_output_0_scale", 0.00012806574522983283f},
-         {"/feed_forward/w_2_25/Transpose_output_0_scale",
-          0.006678921636193991f},
-         {"/linear_v_26/Add_output_0_scale", 0.00012909749057143927f},
-         {"/Add_130_output_0_scale", 0.0005276660667732358f},
-         {"/Mul_134_output_0_scale", 0.00038994548958726227f},
-         {"encoder.encoders.27.feed_forward.w_1.bias_scale",
-          5.396165306592593e-06f},
-         {"/feed_forward/w_1_27/Add_output_0_scale", 7.310536602744833e-05f},
-         {"/linear_out_28/Add_output_0_scale", 0.00015308371803257614f},
-         {"/linear_k_29/Add_output_0_scale", 0.00017693304107524455f},
-         {"/linear_v_29/Add_output_0_scale", 0.00014799372002016753f},
-         {"/feed_forward/w_2_29/Add_output_0_scale", 0.0002493120264261961f},
-         {"/Add_150_output_0_scale", 0.0006606124807149172f},
-         {"/linear_out_30/Add_output_0_scale", 0.00023812492145225406f},
-         {"/linear_k_31/Add_output_0_scale", 0.00020513652998488396f},
-         {"/Add_155_output_0_scale", 0.0005603681202046573f},
-         {"/feed_forward/w_1_31/Add_output_0_scale", 0.00018796311633195728f},
-         {"/feed_forward/w_2_31/Add_output_0_scale", 0.0004512810264714062f},
-         {"/linear_k_32/Add_output_0_scale", 0.00021692643349524587f},
-         {"/Add_160_output_0_scale", 0.000738317146897316f},
-         {"/feed_forward/w_2_32/Add_output_0_scale", 0.000527961237821728f},
-         {"/linear_k_33/Add_output_0_scale", 0.00025845569325610995f},
-         {"/linear_v_33/Add_output_0_scale", 0.0002661219914443791f},
-         {"/Add_167_output_0_scale", 0.0005631460808217525f},
-         {"/linear_out_33/Add_output_0_scale", 0.0005388965364545584f},
-         {"/feed_forward/w_1_33/Add_output_0_scale", 0.0003057799185626209f},
-         {"/feed_forward/w_2_33/Add_output_0_scale", 0.0007436106097884476f},
-         {"/linear_v_34/Add_output_0_scale", 0.0003029277140740305f},
-         {"/Add_170_output_0_scale", 0.0005495756631717086f},
-         {"/linear_out_34/Add_output_0_scale", 0.0008561450522392988f},
-         {"/feed_forward/w_1_34/Add_output_0_scale", 0.00028066252707503736f},
-         {"/feed_forward/w_2_34/Add_output_0_scale", 0.000882672262378037f},
-         {"/feed_forward/w_1_35/Add_output_0_scale", 0.0005071598570793867f},
-         {"/conv/conv.1/Relu_output_0_scale", 2.4485694666509517e-05f},
-         {"/conv/conv.3/Relu_output_0_scale", 2.396428862994071e-05f},
-     }}};
+      {"encoder_embedding.global_mean_scale", 0.00023770694679114968f}}}};
 // mm wts
-int64_t rnd_to_even(float float_val) {
+inline int64_t rnd_to_even(float float_val) {
   float float_val_frac = float_val - std::floor(float_val);
   int64_t float_val_rnd = (int64_t)std::round(float_val);
   int64_t res = float_val_rnd;
@@ -1857,8 +1746,8 @@ int64_t rnd_to_even(float float_val) {
   }
   return res;
 }
-void binary_op_wts_write(const std::vector<uint8_t>& wts_vec, int8_t*& wts_ptr,
-                         int8_t*& rtp_ptr) {
+inline void binary_op_wts_write(const std::vector<uint8_t>& wts_vec,
+                                int8_t*& wts_ptr, int8_t*& rtp_ptr) {
   if (rtp_ptr == nullptr) {
     memcpy(wts_ptr, wts_vec.data(), wts_vec.size());
     wts_ptr += wts_vec.size();
@@ -1957,7 +1846,7 @@ std::vector<uint8_t> mm_wts_write(weight_type* weights, int64_t c2, int64_t c1,
   return result;
 }
 
-std::pair<int64_t, int64_t> find_closest_shifted_int16(float float_val) {
+inline std::pair<int64_t, int64_t> find_closest_shifted_int16(float float_val) {
   int64_t int16_max = 32767;
   double prev_rel_err = 1e9;
   double curr_float_val = float_val;
@@ -2081,7 +1970,7 @@ std::vector<uint8_t> fused_matmul_bias_A16W16_generate_wts(
   return res_uint8;
 }
 
-std::vector<uint8_t> matmul_A16W16_generate_wts(
+inline std::vector<uint8_t> matmul_A16W16_generate_wts(
     uint16_t* weights, float ifm1_scale, int64_t ifm1_zero_point,
     float ifm2_scale, int64_t ifm2_zero_point, float ofm_scale,
     int64_t ofm_zero_point, uint32_t gemm_m, uint32_t gemm_k, uint32_t gemm_n,
@@ -2155,9 +2044,9 @@ struct AddQDQParams {
   int zero_point_shift;
   int ofm_shift;
 };
-AddQDQParams add_calc_qdq_params(double ifm1_scale, int ifm1_zero_point,
-                                 double ifm2_scale, int ifm2_zero_point,
-                                 double ofm_scale, int ofm_zero_point) {
+inline AddQDQParams add_calc_qdq_params(double ifm1_scale, int ifm1_zero_point,
+                                        double ifm2_scale, int ifm2_zero_point,
+                                        double ofm_scale, int ofm_zero_point) {
   AddQDQParams params;
   int64_t ifm1_shift = std::floor(-std::log2(ifm1_scale / ofm_scale) + 30);
   int64_t ifm2_shift = std::floor(-std::log2(ifm2_scale / ofm_scale) + 30);
@@ -2189,7 +2078,8 @@ AddQDQParams add_calc_qdq_params(double ifm1_scale, int ifm1_zero_point,
   return params;
 }
 
-std::vector<uint8_t> add_get_RTP(int tensor_size, const AddQDQParams& params) {
+inline std::vector<uint8_t> add_get_RTP(int tensor_size,
+                                        const AddQDQParams& params) {
   std::vector<uint8_t> RTP(64, 0);
   RTP[0] = tensor_size & 0xFF;
   RTP[1] = (tensor_size >> 8) & 0xFF;
@@ -2219,11 +2109,10 @@ std::vector<uint8_t> add_get_RTP(int tensor_size, const AddQDQParams& params) {
   return RTP;
 }
 
-std::vector<uint8_t> add_generate_wts(uint16_t* wts_ptr, size_t output_size,
-                                      size_t wts_size, float ifm1_scale,
-                                      int ifm1_zero_point, float ifm2_scale,
-                                      int ifm2_zero_point, float ofm_scale,
-                                      int ofm_zero_point) {
+inline std::vector<uint8_t>
+add_generate_wts(uint16_t* wts_ptr, size_t output_size, size_t wts_size,
+                 float ifm1_scale, int ifm1_zero_point, float ifm2_scale,
+                 int ifm2_zero_point, float ofm_scale, int ofm_zero_point) {
   std::vector<uint16_t> vector_wts(wts_ptr, wts_ptr + wts_size);
 
   AddQDQParams params =
@@ -2268,7 +2157,7 @@ inline void get_s_zp(
   }
 };
 
-size_t GT_MMB_WTS_convert_raw_ptr(
+inline size_t GT_MMB_WTS_convert_raw_ptr(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, int8_t* mmb_w_ptr,
     const std::string& mmb_i_scale_name, const std::string& mmb_i_zp_name,
@@ -2316,7 +2205,7 @@ size_t GT_MMB_WTS_convert_raw_ptr(
   return mmb_wts.size();
 }
 
-size_t GT_MMB_WTS_convert_ptr(
+inline size_t GT_MMB_WTS_convert_ptr(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mmb_i_scale_name,
     const std::string& mmb_i_zp_name, const std::string& mmb_w_scale_name,
@@ -2364,9 +2253,7 @@ size_t GT_MMB_WTS_convert_ptr(
     const size_t dim2 = 19;
     const size_t dim3 = 512;
     const size_t new_dim2 = 20;
-    w_padded.resize(dim1 * new_dim2 * dim3,
-                    (weight_type)130); // we are using w8 and zp is set to 130,
-                                       // hard coded, schedule so tight, sorry
+    w_padded.resize(dim1 * new_dim2 * dim3, mmb_w_zp);
     for (int i = 0; i < dim1; ++i) {
       for (int j = 0; j < dim2; ++j) {
         // dim3 elem (of size int8) each time
@@ -2387,7 +2274,7 @@ size_t GT_MMB_WTS_convert_ptr(
 }
 
 // helper function for InitGtWeight
-size_t GT_MM_WTS_convert(
+inline size_t GT_MM_WTS_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mm_i_scale_name,
     const std::string& mm_i_zp_name, const std::string& mm_w_scale_name,
@@ -2420,7 +2307,7 @@ size_t GT_MM_WTS_convert(
 }
 
 // helper function for InitGtWeight
-size_t GT_MM_WTS_convert_ptr(
+inline size_t GT_MM_WTS_convert_ptr(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     uint16_t* wts_ptr_pad, int32_t gemm_m, int32_t gemm_k, int32_t gemm_n,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mm_i_scale_name,
@@ -2445,8 +2332,8 @@ size_t GT_MM_WTS_convert_ptr(
 }
 
 // transpose from (oc,ic,hw) to (hw, ic, oc)
-std::vector<uint8_t> transpose_conv_weight(uint8_t* wts_ptr, int oc, int ic,
-                                           int hw) {
+inline std::vector<uint8_t> transpose_conv_weight(uint8_t* wts_ptr, int oc,
+                                                  int ic, int hw) {
   std::vector<uint8_t> output(hw * ic * oc);
 
   for (std::size_t o = 0; o < oc; ++o) {
@@ -2460,12 +2347,119 @@ std::vector<uint8_t> transpose_conv_weight(uint8_t* wts_ptr, int oc, int ic,
   return output;
 }
 
-std::vector<uint64_t>
-conv_generate_wts(uint16_t* weights, uint16_t* bias, float ifm_scale,
+struct Float_Shifted_Int32 {
+  int32_t best_int;
+  uint16_t best_shift_val;
+};
+inline Float_Shifted_Int32 find_closest_shifted_int32(float float_val) {
+  Float_Shifted_Int32 result;
+  const int TMP_INT32_MAX = 8388607;
+  float prev_rel_err = 1e9;
+  float curr_float_val = float_val;
+  float best_float_val = 0;
+  uint16_t shift_val = 0;
+  int32_t best_int;
+  int32_t closest_curr_int;
+  uint16_t best_shift_val;
+  float cur_rel_err;
+  while (curr_float_val <= TMP_INT32_MAX) {
+    closest_curr_int = std::round(curr_float_val);
+    cur_rel_err =
+        std::abs(float_val - closest_curr_int / std::pow(2.0, shift_val)) /
+        float_val;
+    if (cur_rel_err < prev_rel_err) {
+      prev_rel_err = cur_rel_err;
+      best_float_val = static_cast<double>(closest_curr_int >> shift_val);
+      best_shift_val = shift_val;
+      best_int = closest_curr_int;
+    }
+    curr_float_val *= 2;
+    shift_val += 1;
+  }
+  result.best_int = best_int;
+  result.best_shift_val = best_shift_val;
+  return result;
+}
+
+inline void lp_c0_patch(uint32_t* lp, uint32_t* c0, uint32_t* lp_out,
+                        uint32_t* c0_out, uint8_t* weights,
+                        int32_t weights_out_ch, int32_t weights_in_ch,
+                        int32_t weights_ky, int32_t weights_kx, int32_t* bias,
+                        float a_dq_xscale, int64_t a_dq_xzero_pt,
+                        float w_dq_xscale, int64_t w_dq_xzero_pt,
+                        float a_q_yscale, int64_t a_q_yzero_pt) {
+  // get matmul_shift
+  int tmp_product =
+      std::ceil(std::log2(weights_in_ch * weights_ky * weights_kx));
+  int tmp_value = 25 + tmp_product - 32;
+  tmp_value = max(tmp_value, 0);
+  int matmul_shift = min(tmp_value, 7);
+
+  // c2 calculation
+  float c2_coeff = (a_dq_xscale * w_dq_xscale) / a_q_yscale;
+
+  Float_Shifted_Int32 tmp = find_closest_shifted_int32(c2_coeff);
+  int64_t c2_coeff_prime = (int64_t)tmp.best_int;
+  uint16_t shft_c2 = tmp.best_shift_val;
+
+  // c3 calculation
+  int64_t num_weights_unrolled = weights_ky * weights_kx * weights_in_ch;
+  int64_t c3_coeff_offset = (int64_t)(-a_dq_xzero_pt * num_weights_unrolled);
+  int64_t c3_coeff_scale = (int64_t)(-c2_coeff_prime * (int64_t)w_dq_xzero_pt);
+
+  // c1 calculation
+  std::vector<int64_t> c1_coeff(weights_out_ch);
+  for (int axis_0 = 0; axis_0 < weights_out_ch; axis_0++) {
+    int64_t tmp_sum = 0;
+    for (int axis_1 = 0; axis_1 < weights_in_ch; axis_1++)
+      for (int axis_2 = 0; axis_2 < weights_ky; axis_2++)
+        for (int axis_3 = 0; axis_3 < weights_kx; axis_3++) {
+          // tmp_sum +=(uint64_t)weights[axis_0][axis_1][axis_2][axis_3];
+          int tmp_idx = axis_0 * (weights_in_ch * weights_ky * weights_kx) +
+                        axis_1 * (weights_ky * weights_kx) +
+                        axis_2 * (weights_kx) + axis_3;
+          uint16_t tmp_data =
+              (weights[axis_0 * (weights_in_ch * weights_ky * weights_kx) +
+                       axis_1 * (weights_ky * weights_kx) +
+                       axis_2 * (weights_kx) + axis_3]);
+          tmp_sum += (uint64_t)tmp_data;
+        }
+    c1_coeff[axis_0] = ((double)(-a_dq_xzero_pt)) * c2_coeff_prime * tmp_sum +
+                       c2_coeff_prime * bias[axis_0] +
+                       ((int64_t)a_q_yzero_pt << shft_c2);
+  }
+
+  // C0, C1, C2
+  std::vector<int64_t> C0(weights_out_ch);
+  for (int i = 0; i < weights_out_ch; i++) {
+    C0[i] = c3_coeff_scale * c3_coeff_offset + c1_coeff[i];
+    uint32_t tmp_data_c0 = static_cast<uint32_t>(C0[i] & 0xFFFFFFFF);
+    c0_out[2 * i] = tmp_data_c0;
+    tmp_data_c0 = static_cast<uint32_t>((C0[i] >> 32) & 0xFFFFFFFF);
+    c0_out[2 * i + 1] = tmp_data_c0;
+  }
+  int64_t C1 = c3_coeff_scale;
+  int64_t C2 = c2_coeff_prime << matmul_shift;
+  int64_t shift_conv = matmul_shift;
+  int64_t shift_final = shft_c2;
+
+  for (int i = 0; i < 16; i++) {
+    lp_out[i] = lp[i];
+  }
+  lp_out[4] = (lp_out[4] & 0xFFFF0000) | ((shift_final & 0xFF) << 8) |
+              (shift_conv & 0xFF);
+  lp_out[11] = C1;
+  lp_out[12] = C2;
+}
+
+inline std::vector<uint64_t>
+conv_generate_wts(uint8_t* weights, int32_t* bias, float ifm_scale,
                   int64_t ifm_zero_point, float w_scale, int64_t w_zero_point,
                   float b_scale, int64_t b_zero_point, float ofm_scale,
                   int64_t ofm_zero_point, int32_t oc, int32_t ic, int32_t h,
-                  int32_t w, int32_t sv_ic, uint32_t* c0, uint32_t* lp) {
+                  int32_t w, int32_t sv_ic, uint32_t* c0, uint32_t* lp,
+                  std::string model_version = "GT_v1.2") {
+
   std::vector<uint8_t> result(64); // for wts zero padding
   uint8_t* w_ptr = (uint8_t*)weights;
   int32_t ICP = 8;
@@ -2476,12 +2470,29 @@ conv_generate_wts(uint16_t* weights, uint16_t* bias, float ifm_scale,
   int32_t sv_oc = 16;        // sub-volume OFM C dimension
   int32_t oc_tile = OCP;     // OFM tile C dimension granularity
   int32_t ocg = sv_oc / OCP; // OFM tile C dimension group
-  auto wts_data = wts_gen_conv(lp, (int64_t*)c0, w_ptr, h, w, ic, oc, ic_tile,
-                               icg, oc_tile, ocg);
-  return wts_data;
+  if (model_version == "GT_v1.3") {
+    int32_t weights_out_ch = oc;
+    int32_t weights_in_ch = ic;
+    int32_t weights_ky = h;
+    int32_t weights_kx = w;
+    uint32_t* c0_out = new uint32_t[weights_out_ch * 2];
+    uint32_t* lp_out = new uint32_t[16];
+    lp_c0_patch(lp, c0, lp_out, c0_out, w_ptr, weights_out_ch, weights_in_ch,
+                weights_ky, weights_kx, bias, ifm_scale, ifm_zero_point,
+                w_scale, w_zero_point, ofm_scale, ofm_zero_point);
+    auto wts_data = wts_gen_conv(lp_out, (int64_t*)c0_out, w_ptr, h, w, ic, oc,
+                                 ic_tile, icg, oc_tile, ocg);
+    delete[] c0_out;
+    delete[] lp_out;
+    return wts_data;
+  } else {
+    auto wts_data = wts_gen_conv(lp, (int64_t*)c0, w_ptr, h, w, ic, oc, ic_tile,
+                                 icg, oc_tile, ocg);
+    return wts_data;
+  }
 }
 
-size_t GT_CONV_WTS_convert(
+inline size_t GT_CONV_WTS_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, const std::string& conv_i_scale_name,
     const std::string& conv_i_zp_name, const std::string& conv_w_scale_name,
@@ -2496,8 +2507,8 @@ size_t GT_CONV_WTS_convert(
   float conv_b_scale = 1.0;
   float conv_o_scale = 1.0;
   uint16_t conv_i_zp = 0;
-  uint16_t conv_w_zp = 0;
-  uint16_t conv_b_zp = 0;
+  uint8_t conv_w_zp = 0;
+  int32_t conv_b_zp = 0;
   uint16_t conv_o_zp = 0;
   get_s_zp(conv_i_scale_name, conv_i_scale, conv_i_zp_name, conv_i_zp, wts_,
            model_version);
@@ -2507,22 +2518,22 @@ size_t GT_CONV_WTS_convert(
            model_version);
   get_s_zp(conv_o_scale_name, conv_o_scale, conv_o_zp_name, conv_o_zp, wts_,
            model_version);
-  uint16_t* conv_w_ptr = (uint16_t*)(wts_.at(conv_w_name).data);
-  uint16_t* conv_b_ptr = (uint16_t*)(wts_.at(conv_b_name).data);
+  uint8_t* conv_w_ptr = (uint8_t*)(wts_.at(conv_w_name).data);
+  int32_t* conv_b_ptr = (int32_t*)(wts_.at(conv_b_name).data);
   auto conv_w_shape = wts_.at(conv_w_name).shape;
   auto conv_b_shape = wts_.at(conv_b_name).shape;
 
-  std::vector<uint64_t> conv_wts =
-      conv_generate_wts(conv_w_ptr, conv_b_ptr, conv_i_scale, conv_i_zp,
-                        conv_w_scale, conv_w_zp, conv_b_scale, conv_b_zp,
-                        conv_o_scale, conv_o_zp, oc, ic, h, w, sv_ic, c0, lp);
+  std::vector<uint64_t> conv_wts = conv_generate_wts(
+      conv_w_ptr, conv_b_ptr, conv_i_scale, conv_i_zp, conv_w_scale, conv_w_zp,
+      conv_b_scale, conv_b_zp, conv_o_scale, conv_o_zp, oc, ic, h, w, sv_ic, c0,
+      lp, model_version);
   memcpy(wts_ptr, (int8_t*)(conv_wts.data()),
          conv_wts.size() * sizeof(uint64_t));
   wts_ptr += conv_wts.size() * sizeof(uint64_t);
   return conv_wts.size() * sizeof(uint64_t);
 }
 
-size_t GT_ADD_WTS_convert(
+inline size_t GT_ADD_WTS_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& add_i_scale_name,
     const std::string& add_i_zp_name, const std::string& add_w_scale_name,
@@ -2553,7 +2564,7 @@ size_t GT_ADD_WTS_convert(
   return add_wts.size();
 }
 
-size_t GT_ADD_WTS_QDQ_convert(
+inline size_t GT_ADD_WTS_QDQ_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& add_i_scale_name,
     const std::string& add_i_zp_name, const std::string& add_w_scale_name,
@@ -2592,9 +2603,9 @@ struct MulQDQParams {
   int ifm2_zp;
 };
 
-MulQDQParams mul_calc_qdq_params(double ifm1_scale, int ifm1_zero_point,
-                                 double ifm2_scale, int ifm2_zero_point,
-                                 double ofm_scale, int ofm_zero_point) {
+inline MulQDQParams mul_calc_qdq_params(double ifm1_scale, int ifm1_zero_point,
+                                        double ifm2_scale, int ifm2_zero_point,
+                                        double ofm_scale, int ofm_zero_point) {
   MulQDQParams params;
   auto fp_bits_to_i32 = [](float f) {
     return (*reinterpret_cast<int*>(&f)) & 0x7fffffff;
@@ -2618,8 +2629,9 @@ MulQDQParams mul_calc_qdq_params(double ifm1_scale, int ifm1_zero_point,
   return params;
 }
 
-std::vector<uint8_t> mul_get_RTP(int tensor_size, int eff_dim, int pad_dim,
-                                 const MulQDQParams& params) {
+inline std::vector<uint8_t> mul_get_RTP(int tensor_size, int eff_dim,
+                                        int pad_dim,
+                                        const MulQDQParams& params) {
   std::vector<uint8_t> RTP(64, 0);
   RTP[0] = tensor_size & 0xFF;
   RTP[1] = (tensor_size >> 8) & 0xFF;
@@ -2660,11 +2672,10 @@ std::vector<uint8_t> mul_get_RTP(int tensor_size, int eff_dim, int pad_dim,
   return RTP;
 }
 
-std::vector<uint8_t> mul_generate_wts(uint16_t* wts_ptr,
-                                      const std::vector<size_t>& wts_shape,
-                                      float ifm1_scale, int ifm1_zero_point,
-                                      float ifm2_scale, int ifm2_zero_point,
-                                      float ofm_scale, int ofm_zero_point) {
+inline std::vector<uint8_t>
+mul_generate_wts(uint16_t* wts_ptr, const std::vector<size_t>& wts_shape,
+                 float ifm1_scale, int ifm1_zero_point, float ifm2_scale,
+                 int ifm2_zero_point, float ofm_scale, int ofm_zero_point) {
   size_t wts_size = std::accumulate(wts_shape.begin(), wts_shape.end(), 1,
                                     std::multiplies<size_t>());
 
@@ -2705,7 +2716,7 @@ std::vector<uint8_t> mul_generate_wts(uint16_t* wts_ptr,
   }
   return result;
 }
-size_t GT_MUL_WTS_convert(
+inline size_t GT_MUL_WTS_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mul_i_scale_name,
     const std::string& mul_i_zp_name, const std::string& mul_w_scale_name,
@@ -2736,8 +2747,8 @@ size_t GT_MUL_WTS_convert(
   return mul_wts.size();
 }
 
-std::vector<uint8_t> front_sub_get_RTP(int tensor_size, int w,
-                                       const AddQDQParams& params) {
+inline std::vector<uint8_t> front_sub_get_RTP(int tensor_size, int w,
+                                              const AddQDQParams& params) {
   std::vector<uint8_t> RTP(64, 0);
   RTP[0] = 1;
   RTP[1] = 1;
@@ -2779,8 +2790,8 @@ std::vector<uint8_t> front_sub_get_RTP(int tensor_size, int w,
   return RTP;
 }
 
-std::vector<uint8_t> front_mul_get_RTP(int tensor_size,
-                                       const MulQDQParams& params) {
+inline std::vector<uint8_t> front_mul_get_RTP(int tensor_size,
+                                              const MulQDQParams& params) {
   std::vector<uint8_t> RTP(64, 0);
   RTP[0] = (560) & 0xFF;
   RTP[1] = (560 >> 8) & 0xFF;
@@ -2822,7 +2833,7 @@ std::vector<uint8_t> front_mul_get_RTP(int tensor_size,
   return RTP;
 }
 
-std::vector<uint8_t> sub_mul_generate_wts(
+inline std::vector<uint8_t> sub_mul_generate_wts(
     uint16_t* sub_wts_ptr, const std::vector<size_t>& sub_wts_shape,
     float sub_ifm1_scale, int sub_ifm1_zero_point, float sub_ifm2_scale,
     int sub_ifm2_zero_point, float sub_ofm_scale, int sub_ofm_zero_point,
@@ -2854,7 +2865,7 @@ std::vector<uint8_t> sub_mul_generate_wts(
   return result;
 }
 
-size_t GT_SUB_MUL_WTS_convert(
+inline size_t GT_SUB_MUL_WTS_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, const std::string& sub_i_scale_name,
     const std::string& sub_i_zp_name, const std::string& sub_w_scale_name,
@@ -2907,7 +2918,7 @@ size_t GT_SUB_MUL_WTS_convert(
   return mul_wts.size();
 }
 
-size_t GT_MUL_WTS_QDQ_convert(
+inline size_t GT_MUL_WTS_QDQ_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mul_i_scale_name,
     const std::string& mul_i_zp_name, const std::string& mul_w_scale_name,
@@ -2938,7 +2949,7 @@ size_t GT_MUL_WTS_QDQ_convert(
   return RTP.size();
 }
 
-std::vector<uint8_t> batch_matmul_A16A16_generate_wts(
+inline std::vector<uint8_t> batch_matmul_A16A16_generate_wts(
     float ifm1_scale, int64_t ifm1_zero_point, float ifm2_scale,
     int64_t ifm2_zero_point, float ofm_scale, int64_t ofm_zero_point,
     uint32_t gemm_m, uint32_t gemm_k, uint32_t gemm_n, bool transpose_b,
@@ -3003,7 +3014,9 @@ std::vector<uint8_t> batch_matmul_A16A16_generate_wts(
   return res_uint8;
 }
 
-size_t GT_BMM_WTS_convert(
+// default uint16_t wts dtype to for gt1.2
+template <typename wts_dtype = uint16_t>
+inline size_t GT_BMM_WTS_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mm_i_scale_name,
     const std::string& mm_i_zp_name, const std::string& mm_w_scale_name,
@@ -3017,7 +3030,7 @@ size_t GT_BMM_WTS_convert(
   float mm_w_scale = 1.0;
   float mm_o_scale = 1.0;
   uint16_t mm_i_zp = 0;
-  uint16_t mm_w_zp = 0;
+  wts_dtype mm_w_zp = 0;
   uint16_t mm_o_zp = 0;
   get_s_zp(mm_i_scale_name, mm_i_scale, mm_i_zp_name, mm_i_zp, wts_,
            model_version);
@@ -3025,17 +3038,6 @@ size_t GT_BMM_WTS_convert(
            model_version);
   get_s_zp(mm_o_scale_name, mm_o_scale, mm_o_zp_name, mm_o_zp, wts_,
            model_version);
-  if (model_version == "GT_v1.3" &&
-      mm_w_zp_name == "/Transpose_6_output_0_zero_point") { // to workaround the
-                                                            // bug in get_s_zp
-    mm_w_zp = 128;
-  }
-  // std::cout << mm_i_scale << ", " << mm_w_scale << ", " << mm_w_scale << ", "
-  //           << mm_i_zp << ", " << mm_w_zp << "," << mm_o_zp;
-
-  // if (wts_.find(mm_w_name) == wts_.end()) {
-  //    std::cout << mm_w_name <<  " not found "<<std::endl;
-  //}
 
   std::vector<uint8_t> mm_wts = batch_matmul_A16A16_generate_wts(
       mm_i_scale, mm_i_zp, mm_w_scale, mm_w_zp, mm_o_scale, mm_o_zp, gemm_M,
@@ -3047,7 +3049,7 @@ size_t GT_BMM_WTS_convert(
   return mm_wts.size();
 }
 
-std::vector<uint8_t>
+inline std::vector<uint8_t>
 softmax_generate_wts(float ifm_scale, int64_t ifm_zero_point, float ofm_scale,
                      int64_t ofm_zero_point, uint32_t K, uint32_t K_valid) {
   const size_t BF16_BYTES = 2;
@@ -3130,7 +3132,7 @@ softmax_generate_wts(float ifm_scale, int64_t ifm_zero_point, float ofm_scale,
   return res_uint8;
 }
 
-size_t GT_SOFTMAX_WTS_convert(
+inline size_t GT_SOFTMAX_WTS_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, const std::string& sm_i_scale_name,
     const std::string& sm_i_zp_name, const std::string& sm_o_scale_name,
@@ -3154,11 +3156,11 @@ size_t GT_SOFTMAX_WTS_convert(
   return softmax_wts.size();
 }
 
-std::vector<uint8_t> ln_generate_wts(uint8_t* s, int32_t* b, size_t K,
-                                     float ifm1_scale, int64_t ifm1_zero_point,
-                                     float s_scale, int64_t s_zero_point,
-                                     float b_scale, int64_t b_zero_point,
-                                     float ofm_scale, int64_t ofm_zero_point) {
+inline std::vector<uint8_t>
+ln_generate_wts(uint8_t* s, int32_t* b, size_t K, float ifm1_scale,
+                int64_t ifm1_zero_point, float s_scale, int64_t s_zero_point,
+                float b_scale, int64_t b_zero_point, float ofm_scale,
+                int64_t ofm_zero_point) {
   union U {
     float f;
     uint16_t ui16[2];
@@ -3222,7 +3224,7 @@ std::vector<uint8_t> ln_generate_wts(uint8_t* s, int32_t* b, size_t K,
   return res_uint8;
 }
 
-size_t GT_LN_WTS_convert(
+inline size_t GT_LN_WTS_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, const std::string& ln_i_s_name,
     const std::string& ln_i_zp_name, const std::string& ln_scale_s_name,
@@ -3259,7 +3261,7 @@ size_t GT_LN_WTS_convert(
   return ln_wts.size();
 }
 
-size_t GT_QDQ_convert(
+inline size_t GT_QDQ_convert(
     const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
     int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& i_s_name,
     const std::string& i_zp_name, const std::string& o_s_name,

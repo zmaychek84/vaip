@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include "vaip/pass.hpp"
@@ -157,20 +128,26 @@ const Node& NodeBuilder::build() {
       description_, input_args_, output_args, std::move(attrs_), domain_);
 
   if (domain_ == "com.xilinx") {
-    CHECK_EQ(num_of_outputs_, 1u)
-        << "XIR only support single outputs. TODO: we need to register new "
-           "set "
-           "of ops in the upstream ORT to support multiple output "
-           "ops.";
-    attrs_builder_.add("data_type", data_type_[0]);
-    if (!shape_[0].empty()) {
-      // now, all xilinx.com op support scalar.
-      // to support scalar, from ort there is no different between non
-      // existant attr and empty vector.
-      attrs_builder_.add("shape", shape_[0]);
+    if (num_of_outputs_ == 1u) {
+      attrs_builder_.add("data_type", data_type_[0]);
+      if (!shape_[0].empty()) {
+        // now, all xilinx.com op support scalar.
+        // to support scalar, from ort there is no different between non
+        // existant attr and empty vector.
+        attrs_builder_.add("shape", shape_[0]);
+      } else {
+        // xilinx op shape exist but value is empty to support scalar
+        attrs_builder_.add("shape", std::vector<int64_t>{});
+      }
     } else {
-      // xilinx op shape exist but value is empty to support scalar
-      attrs_builder_.add("shape", std::vector<int64_t>{});
+      for (auto i = 0u; i < num_of_outputs_; i++) {
+        if (!shape_[i].empty()) {
+          attrs_builder_.add(std::string("data_type_") + std::to_string(i),
+                             data_type_[i]);
+          attrs_builder_.add(std::string("shape_") + std::to_string(i),
+                             shape_[i]);
+        }
+      }
     }
   }
   attrs_builder_.merge_into(newly_added_node);
@@ -296,29 +273,11 @@ NodeBuilder& NodeBuilder::set_data_type(const std::string& data_type) {
 NodeBuilder& NodeBuilder::set_anchor_point1(const Node& node1) {
   auto node = vaip_cxx::NodeConstRef::from_node(graph_, node1);
   auto args = node.outputs();
-  num_of_outputs_ = args.size();
-  data_type_.reserve(args.size());
-  data_type_.clear();
-  shape_.reserve(args.size());
-  shape_.clear();
-  anchor_node_arg_.reserve(args.size());
-  anchor_node_arg_.clear();
   for (auto i = 0u; i < args.size(); ++i) {
-    anchor_node_arg_.emplace_back(args[i]);
     if (args[i].has_value()) {
-      anchor_point_.emplace_back(
-          AnchorPoint::identity(*pass_, args[i].value()));
-      data_type_.emplace_back(
-          data_type_to_string(args[i].value().element_type()));
-      auto shape = args[i].value().shape();
-      CHECK(shape != nullptr)
-          << "do not support unknown shape: " << args[i].value();
-      shape_.emplace_back(*shape);
+      set_anchor_point1(args[i].value());
     } else {
-      anchor_point_.emplace_back(nullptr);
-      anchor_node_arg_.emplace_back(std::nullopt);
-      data_type_.emplace_back("");
-      shape_.emplace_back();
+      skip_optional_output();
     }
   }
   return *this;

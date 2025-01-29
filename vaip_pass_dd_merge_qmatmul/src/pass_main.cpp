@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
-# Copyright (C) 2022 Xilinx, Inc.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #ifdef __GNUC__
@@ -118,51 +89,104 @@ struct MergeQMatMul {
           std::vector<std::string> ns = vaip::dd::get_node_names(graph, binder);
 
           auto node_name = node_arg_get_name(*q_node.node_arg);
-          vaip::dd::qmatmulcalc::MatmulQDQParams qdq_params;
-          if (out_dtype == (int)ONNX_NAMESPACE::TensorProto_DataType_UINT8) {
-            qdq_params =
-                vaip::dd::qmatmulcalc::calculate_matmul_qdq_params_uint8_uint8(
-                    vaip::dd::fold2D<uint8_t>(w_data, *(w_shape.get())), a_sc,
-                    a_zp, w_sc, w_zp, q_sc, q_zp);
-          } else if (out_dtype ==
-                     (int)ONNX_NAMESPACE::TensorProto_DataType_UINT16) {
-            qdq_params =
-                vaip::dd::qmatmulcalc::calculate_matmul_qdq_params_uint16_uint8(
-                    vaip::dd::fold2D<uint8_t>(w_data, *(w_shape.get())), a_sc,
-                    a_zp, w_sc, w_zp, q_sc, q_zp);
-          } else {
-            LOG(FATAL) << "Unknown Data Type";
+
+          if ((*(w_shape.get())).size() == 2) {
+            vaip::dd::qmatmulcalc::MatmulQDQParams qdq_params;
+            if (out_dtype == (int)ONNX_NAMESPACE::TensorProto_DataType_UINT8) {
+              qdq_params = vaip::dd::qmatmulcalc::
+                  calculate_matmul_qdq_params_uint8_uint8(
+                      vaip::dd::fold2D<uint8_t>(w_data, *(w_shape.get())), a_sc,
+                      a_zp, w_sc, w_zp, q_sc, q_zp);
+            } else if (out_dtype ==
+                       (int)ONNX_NAMESPACE::TensorProto_DataType_UINT16) {
+              qdq_params = vaip::dd::qmatmulcalc::
+                  calculate_matmul_qdq_params_uint16_uint8(
+                      vaip::dd::fold2D<uint8_t>(w_data, *(w_shape.get())), a_sc,
+                      a_zp, w_sc, w_zp, q_sc, q_zp);
+            } else {
+              LOG(FATAL) << "Unknown Data Type";
+            }
+
+            // TODO auto activation_zp = node_arg_get_const_data_as_u8(*graph,
+            // *az_node.node_arg);
+
+            auto c0_coeffs =
+                qdq_params.c0_coeffs; // get_initialized_vector(768);
+            std::string c0_initializer_name = std::string(node_name + "_c0_");
+            auto& c0_arg = vaip::dd::insert_named_tensor_in_graph<int64_t>(
+                graph, c0_initializer_name, c0_coeffs,
+                std::vector({(int64_t)c0_coeffs.size()}));
+
+            auto qdq_coeffs =
+                qdq_params.qdq_params; // get_initialized_vector(768);
+            std::string qdq_name = std::string(node_name + "_qdq_");
+            auto& qdq_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
+                graph, qdq_name, qdq_coeffs,
+                std::vector({(int64_t)qdq_coeffs.size()}));
+
+            NodeBuilder(*graph, *self)
+                .set_input_node_args(
+                    {a_node.node_arg, w_node.node_arg, &c0_arg, &qdq_arg})
+                .set_op_type("QMatMul", "com.xilinx")
+                .clone_attrs(*q_node.node)
+                .add("nodes", ns)
+                .set_anchor_point1(*q_node.node)
+                .add("in_dtypes",
+                     change_inputs(*a_node.node_arg, *w_node.node_arg))
+                .add("out_dtypes", change_outputs(*q_node.node_arg))
+                .add("input_shape", *(a_shape.get()))
+                .add("output_shape", *(q_shape.get()))
+                .build();
+
+          } else if ((*(w_shape.get())).size() == 3) {
+            vaip::dd::qmatmulcalc::MatmulQDQParams_3d qdq_params;
+
+            if (out_dtype == (int)ONNX_NAMESPACE::TensorProto_DataType_UINT16) {
+              qdq_params = vaip::dd::qmatmulcalc::
+                  calculate_matmul_3d_qdq_params_uint16_uint8(
+                      vaip::dd::fold3D<uint8_t>(w_data, *(w_shape.get())), a_sc,
+                      a_zp, w_sc, w_zp, q_sc, q_zp);
+            } else {
+              LOG(FATAL) << "Unknown Data Type";
+            }
+
+            // TODO auto activation_zp = node_arg_get_const_data_as_u8(*graph,
+            // *az_node.node_arg);
+            int c0_rows = qdq_params.c0_coeffs.size();
+            int c0_cols = qdq_params.c0_coeffs[0].size();
+            std::vector<int64_t> c0_coeffs_vec(c0_rows * c0_cols);
+
+            for (auto m = 0; m < c0_rows; m++) {
+              for (auto n = 0; n < c0_cols; n++) {
+                c0_coeffs_vec[m * c0_cols + n] = qdq_params.c0_coeffs[m][n];
+              }
+            }
+            std::string c0_initializer_name = std::string(node_name + "_c0_");
+            auto& c0_arg = vaip::dd::insert_named_tensor_in_graph<int64_t>(
+                graph, c0_initializer_name, c0_coeffs_vec,
+                std::vector({(int64_t)c0_rows, (int64_t)c0_cols}));
+
+            auto qdq_coeffs =
+                qdq_params.qdq_params; // get_initialized_vector(768);
+            std::string qdq_name = std::string(node_name + "_qdq_");
+            auto& qdq_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
+                graph, qdq_name, qdq_coeffs,
+                std::vector({(int64_t)qdq_coeffs.size()}));
+
+            NodeBuilder(*graph, *self)
+                .set_input_node_args(
+                    {a_node.node_arg, w_node.node_arg, &c0_arg, &qdq_arg})
+                .set_op_type("QBatchMatMul", "com.xilinx")
+                .clone_attrs(*q_node.node)
+                .add("nodes", ns)
+                .set_anchor_point1(*q_node.node)
+                .add("in_dtypes",
+                     change_inputs(*a_node.node_arg, *w_node.node_arg))
+                .add("out_dtypes", change_outputs(*q_node.node_arg))
+                .add("input_shape", *(a_shape.get()))
+                .add("output_shape", *(q_shape.get()))
+                .build();
           }
-
-          // TODO auto activation_zp = node_arg_get_const_data_as_u8(*graph,
-          // *az_node.node_arg);
-
-          auto c0_coeffs = qdq_params.c0_coeffs; // get_initialized_vector(768);
-          std::string c0_initializer_name = std::string(node_name + "_c0_");
-          auto& c0_arg = vaip::dd::insert_named_tensor_in_graph<int64_t>(
-              graph, c0_initializer_name, c0_coeffs,
-              std::vector({(int64_t)c0_coeffs.size()}));
-
-          auto qdq_coeffs =
-              qdq_params.qdq_params; // get_initialized_vector(768);
-          std::string qdq_name = std::string(node_name + "_qdq_");
-          auto& qdq_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
-              graph, qdq_name, qdq_coeffs,
-              std::vector({(int64_t)qdq_coeffs.size()}));
-
-          NodeBuilder(*graph, *self)
-              .set_input_node_args(
-                  {a_node.node_arg, w_node.node_arg, &c0_arg, &qdq_arg})
-              .set_op_type("QMatMul", "com.xilinx")
-              .clone_attrs(*q_node.node)
-              .add("nodes", ns)
-              .set_anchor_point1(*q_node.node)
-              .add("in_dtypes",
-                   change_inputs(*a_node.node_arg, *w_node.node_arg))
-              .add("out_dtypes", change_outputs(*q_node.node_arg))
-              .add("input_shape", *(a_shape.get()))
-              .add("output_shape", *(q_shape.get()))
-              .build();
           return true;
         });
   }

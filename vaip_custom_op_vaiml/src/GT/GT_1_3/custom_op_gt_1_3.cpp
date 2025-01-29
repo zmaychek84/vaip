@@ -1,14 +1,19 @@
+/*
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
+ */
 #include "custom_op_gt_1_3.hpp"
 #include "../../common/bf16_utils.h"
+#include "../GT_1_2/gen_gt_wts.h"
 #include "constants_gt_1_3.hpp"
+#include "elf_pkg_gt_1_3.hpp"
 #include "txn_pkg_gt_1_3.hpp"
-#define GT_1_3_TF_NUM 36
 // #define GT_FRONT_SZ 16480 + 552960
 #define GT_FRONT_SZ 0
-
+#include <cstdlib>
+#include <sstream>
 #include <vaip/util.hpp>
 #include <vaip/vaip.hpp>
-
 namespace vaip_vaiml_custom_op {
 constexpr unsigned conv_ifm_size = 16480;
 constexpr unsigned conv_ofm_size = 552960;
@@ -23,105 +28,6 @@ constexpr unsigned transformer_wts_size =
 constexpr unsigned transformer_tmp_size =
     102400 + 576000 + 499200; // same as 1.2
 constexpr unsigned rtp_skip_size = 1472;
-extern size_t GT_SUB_MUL_WTS_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, const std::string& sub_i_scale_name,
-    const std::string& sub_i_zp_name, const std::string& sub_w_scale_name,
-    const std::string& sub_w_zp_name, const std::string& sub_o_scale_name,
-    const std::string& sub_o_zp_name, const std::string& sub_w_name,
-    const std::string& mul_i_scale_name, const std::string& mul_i_zp_name,
-    const std::string& mul_w_scale_name, const std::string& mul_w_zp_name,
-    const std::string& mul_o_scale_name, const std::string& mul_o_zp_name,
-    const std::string& mul_w_name, std::string model_name);
-
-extern size_t GT_CONV_WTS_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, const std::string& conv_i_scale_name,
-    const std::string& conv_i_zp_name, const std::string& conv_w_scale_name,
-    const std::string& conv_w_zp_name, const std::string& conv_b_scale_name,
-    const std::string& conv_b_zp_name, const std::string& conv_o_scale_name,
-    const std::string& conv_o_zp_name, const std::string& conv_w_name,
-    const std::string& conv_b_name, int32_t oc, int32_t ic, int32_t h,
-    int32_t w, int32_t sv_ic, uint32_t* c0, uint32_t* lp,
-    std::string model_name);
-
-size_t GT_MMB_WTS_convert_ptr(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mmb_i_scale_name,
-    const std::string& mmb_i_zp_name, const std::string& mmb_w_scale_name,
-    const std::string& mmb_w_zp_name, const std::string& mmb_b_scale_name,
-    const std::string& mmb_b_zp_name, const std::string& mmb_o_scale_name,
-    const std::string& mmb_o_zp_name, const std::string& mmb_w_name,
-    const std::string& bias_name, uint32_t gemm_m, uint32_t gemm_k,
-    uint32_t gemm_n, uint32_t bias_broadcast_num, uint32_t sv_M, uint32_t sv_K,
-    uint32_t sv_N, bool pad_w, std::string model_name);
-
-size_t GT_LN_WTS_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, const std::string& ln_i_s_name,
-    const std::string& ln_i_zp_name, const std::string& ln_scale_s_name,
-    const std::string& ln_scale_zp_name, const std::string& ln_bias_s_name,
-    const std::string& ln_bias_zp_name, const std::string& ln_o_s_name,
-    const std::string& ln_o_zp_name, const std::string& ln_scale_name,
-    const std::string& ln_bias_name, std::string model_name);
-
-size_t GT_MMB_WTS_convert_raw_ptr(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, int8_t*& rtp_ptr, int8_t* mmb_w_ptr,
-    const std::string& mmb_i_scale_name, const std::string& mmb_i_zp_name,
-    const std::string& mmb_w_scale_name, const std::string& mmb_w_zp_name,
-    const std::string& mmb_b_scale_name, const std::string& mmb_b_zp_name,
-    const std::string& mmb_o_scale_name, const std::string& mmb_o_zp_name,
-    const std::string& bias_name, uint32_t gemm_m, uint32_t gemm_k,
-    uint32_t gemm_n, uint32_t bias_broadcast_num, uint32_t sv_M, uint32_t sv_K,
-    uint32_t sv_N, const std::string model_version);
-
-size_t GT_MUL_WTS_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mul_i_scale_name,
-    const std::string& mul_i_zp_name, const std::string& mul_w_scale_name,
-    const std::string& mul_w_zp_name, const std::string& mul_o_scale_name,
-    const std::string& mul_o_zp_name, const std::string& mul_w_name,
-    const std::string model_version);
-
-size_t GT_BMM_WTS_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mm_i_scale_name,
-    const std::string& mm_i_zp_name, const std::string& mm_w_scale_name,
-    const std::string& mm_w_zp_name, const std::string& mm_o_scale_name,
-    const std::string& mm_o_zp_name, const std::string& mm_w_name,
-    bool transpose_b, uint32_t gemm_M, uint32_t gemm_K, uint32_t gemm_N,
-    uint32_t sv_M, uint32_t sv_K, uint32_t sv_N,
-    const std::string model_version);
-
-size_t GT_QDQ_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& i_s_name,
-    const std::string& i_zp_name, const std::string& o_s_name,
-    const std::string& o_zp_name, const std::string model_version);
-
-size_t GT_ADD_WTS_QDQ_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& add_i_scale_name,
-    const std::string& add_i_zp_name, const std::string& add_w_scale_name,
-    const std::string& add_w_zp_name, const std::string& add_o_scale_name,
-    const std::string& add_o_zp_name, const std::string& add_w_name,
-    const int32_t tensor_size, const std::string model_version);
-
-size_t GT_MUL_WTS_QDQ_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, int8_t*& rtp_ptr, const std::string& mul_i_scale_name,
-    const std::string& mul_i_zp_name, const std::string& mul_w_scale_name,
-    const std::string& mul_w_zp_name, const std::string& mul_o_scale_name,
-    const std::string& mul_o_zp_name, const std::string& mul_w_name,
-    const int32_t tensor_size, const std::string model_version);
-
-size_t GT_SOFTMAX_WTS_convert(
-    const std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t*& wts_ptr, const std::string& sm_i_scale_name,
-    const std::string& sm_i_zp_name, const std::string& sm_o_scale_name,
-    const std::string& sm_o_zp_name, uint32_t K, uint32_t K_valid,
-    const std::string model_version);
 
 inline std::string
 get_xclbin_fullpath(std::shared_ptr<const PassContext> context,
@@ -146,36 +52,22 @@ std::map<std::string, std::vector<char>> MyCustomOpGT1_3::node_cache;
 SUBGRAPH_ID
 MyCustomOpGT1_3::IdentifySubgraphVector(
     const std::shared_ptr<MetaDefProto>& meta_def) {
-  // EPContext based subgraphs
-  if (meta_def->nodes().size() == 1) {
-    // All nodes in a subgraph becomes a EPContext node
-    VAIML_DEBUG_PRINT("    EPContext model_version_=", model_version_,
-                      " sg_name_=", sg_name_);
-    std::map<std::string, SUBGRAPH_ID> pattern_to_id = {
-        {"vaiml_par_0", GT_FRONT},
-        {"vaiml_par_1", GT_FRONT_MM},
-        {"vaiml_par_2", GT_TRANSFORMER_BLOCK},
-        {"vaiml_par_3", GT_LN_MATMUL_ADD_LN},
-        {"vaiml_par_4", GT_CACHE_FRAMES_SLICE}};
-    return pattern_to_id.at(sg_name_);
+  SUBGRAPH_ID sg = SUBGRAPH_ID::UNKNOWN;
+  // works for both EPContext graph and normal onnx graph
+  if (sg_name_ == "gt_000_front_conv") {
+    sg = SUBGRAPH_ID::GT_FRONT;
+  } else if (sg_name_ == "gt_001_front_mm") {
+    sg = SUBGRAPH_ID::GT_FRONT_MM;
+  } else if (sg_name_ == "gt_002_transformer") {
+    sg = SUBGRAPH_ID::GT_TRANSFORMER_BLOCK;
+  } else if (sg_name_ == "gt_003_tail") {
+    sg = SUBGRAPH_ID::GT_LN_MATMUL_ADD_LN;
+  } else if (sg_name_ == "gt_004_cache_frame_slice") {
+    sg = SUBGRAPH_ID::GT_CACHE_FRAMES_SLICE;
   } else {
-    std::vector<std::pair<std::string, SUBGRAPH_ID>> v_pattern_to_id = {
-        {"/conv/conv.0/Conv", GT_FRONT},
-        {"/Reshape_2_output_0_DequantizeLinear", GT_FRONT_MM},
-        {"/lin_enc/fc/MatMul", GT_LN_MATMUL_ADD_LN},
-        {"/Unsqueeze_26_output_0_QuantizeLinear", GT_TRANSFORMER_BLOCK},
-        {"oup_cache_frames", GT_CACHE_FRAMES_SLICE}};
-    std::vector<SUBGRAPH_ID> v_res;
-    for (const auto& node : meta_def->nodes()) {
-      for (const auto& pattern_to_id : v_pattern_to_id) {
-        if (node.rfind(pattern_to_id.first, 0) != std::string::npos) {
-          return pattern_to_id.second;
-        }
-      }
-    }
+    throw std::runtime_error("Cannot identify subgraph ID for " + sg_name_);
   }
-
-  return SUBGRAPH_ID::UNKNOWN;
+  return sg;
 }
 
 std::vector<std::vector<uint8_t>> SplitTransformerHeadMMWts(
@@ -201,27 +93,48 @@ MyCustomOpGT1_3::MyCustomOpGT1_3(std::shared_ptr<const PassContext> context,
     : CustomOpImp(context, meta_def, model),
       model_version_(
           context->get_config_proto().provider_options().at("model_name")) {
+  if (model_version_ == "GTC_v1.0") {
+    model_version_ = "GT_v1.3"; // to reuse txn bins and wts functions
+  }
+
   auto& session_option = context->get_config_proto().provider_options();
+  // FIXME: remove polymorphism when preemption is by default
+  if (session_option.at("enable_preemption") == "1") {
+    runner_ = std::make_unique<vaiml_elf_runner::hw_elf_runner>();
+  } else {
+    runner_ = std::make_unique<hw_runner>();
+  }
   sg_name_ = meta_def->vaiml_param().vaiml_model_path();
   LoadConstantsToWts(context, meta_def);
   subgraph_id_ = IdentifySubgraphVector(meta_def);
-  // transformer_block_id_ = subgraph_id_ == SUBGRAPH_ID::GT_TRANSFORMER_BLOCK ?
-  // GetTransformerBlockId(meta_def) : -1;
-
+  auto initializer_map_c8 =
+      context->read_file_c8("gt_init_map.proto.bin").value();
+  MetaDefProto global_initializer_map;
+  global_initializer_map.ParseFromString(
+      std::string(initializer_map_c8.begin(), initializer_map_c8.end()));
+  initializer_map_ = std::unordered_map<std::string, std::string>(
+      global_initializer_map.generic_param().begin(),
+      global_initializer_map.generic_param().end());
+  transformer_block_num_ =
+      std::stoi(initializer_map_.at("__TRANSFORMER_NUM__"));
+  oup_lid_idx_ = std::stoi(initializer_map_.at("__OUP_LID_IDX__"));
+  // FIXME: remove load txn/ctrl bin when preemption is by default
   std::vector<std::string> v_txn_bins;
   std::vector<std::string> v_ctrl_pkt_bins;
   std::vector<XRTRunOffset> xrt_offset;
   std::vector<KERNEL_NM> v_kernel_indices;
   std::vector<BO_ORDER> v_bo_order;
+  std::vector<std::stringstream> v_elf_istream;
   size_t wts_size, ifm_size, ofm_size, tmp_size;
   // setting output_shapes to be used by getting output from onnx
   for (auto& vaiml_shapes : meta_def->vaiml_param().output_shapes()) {
     ort_output_shapes_.emplace_back(vaiml_shapes.shapes().begin(),
                                     vaiml_shapes.shapes().end());
   }
-  PrepareHwRunner(v_txn_bins, v_ctrl_pkt_bins, xrt_offset, v_kernel_indices,
-                  v_bo_order, ifm_size, ofm_size, wts_size, tmp_size);
-  g.set_bo_order_vec(v_bo_order);
+  PrepareHwRunner(v_txn_bins, v_ctrl_pkt_bins, v_elf_istream, xrt_offset,
+                  v_kernel_indices, v_bo_order, ifm_size, ofm_size, wts_size,
+                  tmp_size);
+  runner_->set_bo_order_vec(v_bo_order);
 
   if (subgraph_id_ < GT_CPU_OR_CONSTANT) {
     std::string xclbinFileName =
@@ -229,29 +142,30 @@ MyCustomOpGT1_3::MyCustomOpGT1_3(std::shared_ptr<const PassContext> context,
     auto read_xclbin = context->read_xclbin(xclbinFileName);
     auto xclbin = std::vector<char>(read_xclbin.value().begin(),
                                     read_xclbin.value().end());
-    g.load_xclbin(xclbin);
+    runner_->load_xclbin(xclbin);
     VAIML_DEBUG_PRINT("load xclbin done at ", xclbinFileName);
-    g.load_txn_bin(v_txn_bins);
+    runner_->load_txn_bin(v_txn_bins);
     VAIML_DEBUG_PRINT("load txn done");
-    g.load_ctrl_pkt_bin(v_ctrl_pkt_bins);
+    runner_->load_ctrl_pkt_bin(v_ctrl_pkt_bins);
+    runner_->load_elf(v_elf_istream);
     VAIML_DEBUG_PRINT("load ctrl pkt done");
-    g.hw_runner_init(ifm_size, wts_size, ofm_size, tmp_size, true /*gt_mode*/,
-                     xrt_offset, v_kernel_indices);
+    runner_->hw_runner_init(ifm_size, wts_size, ofm_size, tmp_size,
+                            true /*gt_mode*/, xrt_offset, v_kernel_indices);
     VAIML_DEBUG_PRINT("hw runner init done");
-    g.get_bo_ptrs(ifm_ptr_, wts_ptr_, ofm_ptr_);
+    runner_->get_bo_ptrs(ifm_ptr_, wts_ptr_, ofm_ptr_);
   }
 
   VAIML_DEBUG_PRINT("Begin wts format for ", model_version_);
   InitWeights();
 }
 
-void MyCustomOpGT1_3::PrepareHwRunner(std::vector<std::string>& v_txn_bins,
-                                      std::vector<std::string>& v_ctrl_pkt_bins,
-                                      std::vector<XRTRunOffset>& xrt_offset,
-                                      std::vector<KERNEL_NM>& v_kernel_indices,
-                                      std::vector<BO_ORDER>& v_bo_order,
-                                      size_t& ifm_size, size_t& ofm_size,
-                                      size_t& wts_size, size_t& tmp_size) {
+void MyCustomOpGT1_3::PrepareHwRunner(
+    std::vector<std::string>& v_txn_bins,
+    std::vector<std::string>& v_ctrl_pkt_bins,
+    std::vector<std::stringstream>& v_elf_istream,
+    std::vector<XRTRunOffset>& xrt_offset,
+    std::vector<KERNEL_NM>& v_kernel_indices, std::vector<BO_ORDER>& v_bo_order,
+    size_t& ifm_size, size_t& ofm_size, size_t& wts_size, size_t& tmp_size) {
   if (subgraph_id_ == GT_FRONT) {
     ifm_size = 16480 /*conv input*/ + 552960 /*conv output*/;
     wts_size = 2501056 /*conv weights*/;
@@ -260,6 +174,7 @@ void MyCustomOpGT1_3::PrepareHwRunner(std::vector<std::string>& v_txn_bins,
     /// xrt_offset.push_back({.ifm_offset = 0, .ofm_offset = 16480, .wts_offset
     /// = 0, .tmp_offset=0});
     xrt_offset.emplace_back(0, 0, 16480, 0);
+    v_elf_istream.emplace_back(getElf_front_sub(model_version_));
     v_txn_bins.push_back(getBins_front_sub_ml_txn_1_3(model_version_));
     v_ctrl_pkt_bins.push_back(
         getBins_out_matmul_bias_ctrl_pkt_1_3(model_version_));
@@ -273,6 +188,7 @@ void MyCustomOpGT1_3::PrepareHwRunner(std::vector<std::string>& v_txn_bins,
     tmp_size = 2129920;
     xrt_offset.emplace_back(16480 /*input offset*/, 2501056 /*wts offset*/,
                             16480 + 552960 /*ofm offset*/, 0);
+    v_elf_istream.emplace_back(getElf_out_matmul_bias(model_version_));
     v_txn_bins.push_back(getBins_out_matmul_bias_ml_txn_1_3(model_version_));
     v_ctrl_pkt_bins.push_back(
         getBins_out_matmul_bias_ctrl_pkt_1_3(model_version_));
@@ -284,18 +200,19 @@ void MyCustomOpGT1_3::PrepareHwRunner(std::vector<std::string>& v_txn_bins,
     ofm_size = 0;
     tmp_size = 51200;
     xrt_offset.emplace_back(0 /*input offset*/, 0 /*wts offset*/,
-                            25600 /*ofm offset*/, 0);
+                            25600 /*ofm offset*/, 0); // ofm offset should be 0?
+    v_elf_istream.emplace_back(getElf_ln_matmul_bias_ln(model_version_));
     v_txn_bins.push_back(getBins_ln_matmul_bias_ln_ml_txn_1_3(model_version_));
     v_ctrl_pkt_bins.push_back(
         getBins_ln_matmul_bias_ln_ctrl_pkt_1_3(model_version_));
     v_kernel_indices.push_back(KERNEL_NM::GT_MM);
     v_bo_order.push_back(BO_ORDER::ODR_GT_TAIL);
   } else if (subgraph_id_ == GT_TRANSFORMER_BLOCK) {
-    ifm_size = 4300800 * GT_1_3_TF_NUM + 25600;
-    wts_size = 11608064 * GT_1_3_TF_NUM;
+    ifm_size = 4300800 * transformer_block_num_ + 25600;
+    wts_size = 11608064 * transformer_block_num_;
     ofm_size = 0;
     tmp_size = 1536000;
-    for (int i = 0; i < GT_1_3_TF_NUM; i++) {
+    for (int i = 0; i < transformer_block_num_; i++) {
       size_t inout_base_ddr = i * 4300800 + GT_FRONT_SZ;
       size_t wts_base_ddr = i * 11608064;
       xrt_offset.emplace_back(inout_base_ddr /*input offset*/,
@@ -308,6 +225,8 @@ void MyCustomOpGT1_3::PrepareHwRunner(std::vector<std::string>& v_txn_bins,
       v_kernel_indices.push_back(KERNEL_NM::GT_MM);
       v_bo_order.push_back(BO_ORDER::ODR_GT_TRANSFORMER);
     }
+    v_elf_istream.emplace_back(
+        getElf_transformer_layers(model_version_)); // avoid creating same elf
   }
 }
 
@@ -316,12 +235,7 @@ void MyCustomOpGT1_3::LoadConstantsToWts(
     const std::shared_ptr<MetaDefProto>& meta_def) {
   std::vector<char> wts_file;
   auto wts_file_opt = context->read_file_c8("wts.bin");
-  if (wts_file_opt.has_value()) {
-    wts_file = wts_file_opt.value();
-  } else {
-    std::filesystem::path wtsFileFullName = context->get_log_dir() / "wts.bin";
-    wts_file = vaip_core::slurp_binary_c8(wtsFileFullName);
-  }
+  wts_file = wts_file_opt.value();
   auto const_info = meta_def->vaiml_param().const_data_info();
   wts_buffers_.resize(const_info.size());
   VAIML_DEBUG_PRINT("const_info.size(): ", const_info.size());
@@ -377,57 +291,90 @@ void MyCustomOpGT1_3::InitWeights() {
   size_t total_wts_bytes = 0;
 
   if (subgraph_id_ == SUBGRAPH_ID::GT_FRONT) {
+    // SUB
     int8_t* wts_ptr_front = wts_ptr_;
-    ifm_s_name = "cache_frames_scale";
-    ifm_z_name = "cache_frames_zero_point";
-    wts_s_name = "encoder_embedding.global_mean_scale";
-    wts_z_name = "encoder_embedding.global_mean_zero_point";
-    ofm_s_name = "/encoder_embedding/Sub_output_0_scale";
-    ofm_z_name = "/encoder_embedding/Sub_output_0_zero_point";
-    wts_w_name = "encoder_embedding.global_mean_quantized";
-
+    ifm_s_name = Alias("front_sub_in_s");  //"cache_frames_scale";
+    ifm_z_name = Alias("front_sub_in_zp"); //"cache_frames_zero_point";
+    wts_s_name =
+        Alias("front_sub_wts_s");  //"encoder_embedding.global_mean_scale";
+    wts_z_name =
+        Alias("front_sub_wts_zp"); //"encoder_embedding.global_mean_zero_point";
+    ofm_s_name =
+        Alias("front_sub_out_s");  //"/encoder_embedding/Sub_output_0_scale";
+    ofm_z_name = Alias(
+        "front_sub_out_zp");    //"/encoder_embedding/Sub_output_0_zero_point";
+    wts_w_name =
+        Alias("front_sub_wts"); //"encoder_embedding.global_mean_quantized";
+    // MUL
     std::string ifm_s_name1, ifm_z_name1, wts_s_name1, wts_z_name1, ofm_s_name1,
         ofm_z_name1, wts_w_name1;
-    ifm_s_name1 = "/encoder_embedding/Sub_output_0_scale";
-    ifm_z_name1 = "/encoder_embedding/Sub_output_0_zero_point";
-    wts_s_name1 = "encoder_embedding.global_invstd_scale";
-    wts_z_name1 = "encoder_embedding.global_invstd_zero_point";
-    ofm_s_name1 = "/encoder_embedding/Mul_output_0_scale";
-    ofm_z_name1 = "/encoder_embedding/Mul_output_0_zero_point";
-    wts_w_name1 = "encoder_embedding.global_invstd_quantized";
+    ifm_s_name1 =
+        Alias("front_mul_in_s"); //"/encoder_embedding/Sub_output_0_scale";
+    ifm_z_name1 = Alias(
+        "front_mul_in_zp");      //"/encoder_embedding/Sub_output_0_zero_point";
+    wts_s_name1 =
+        Alias("front_mul_wts_s"); //"encoder_embedding.global_invstd_scale";
+    wts_z_name1 = Alias(
+        "front_mul_wts_zp"); //"encoder_embedding.global_invstd_zero_point";
+    ofm_s_name1 =
+        Alias("front_mul_out_s"); //"/encoder_embedding/Mul_output_0_scale";
+    ofm_z_name1 = Alias(
+        "front_mul_out_zp");    //"/encoder_embedding/Mul_output_0_zero_point";
+    wts_w_name1 =
+        Alias("front_mul_wts"); //"encoder_embedding.global_invstd_quantized";
     total_wts_bytes += GT_SUB_MUL_WTS_convert(
         wts_, wts_ptr_front, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, ifm_s_name1, ifm_z_name1,
         wts_s_name1, wts_z_name1, ofm_s_name1, ofm_z_name1, wts_w_name1,
         model_version_);
-
+    // CONV1
     std::string bias_s_name, bias_z_name, bias_w_name;
-    ifm_s_name = "/encoder_embedding/Mul_output_0_scale";
-    ifm_z_name = "/encoder_embedding/Mul_output_0_zero_point";
-    wts_s_name = "encoder.embed.conv.0.weight_scale";
-    wts_z_name = "encoder.embed.conv.0.weight_zero_point";
-    bias_s_name = "encoder.embed.conv.0.bias_quantized_scale";
-    bias_z_name = "encoder.embed.conv.0.bias_quantized_zero_point";
-    ofm_s_name = "/conv/conv.1/Relu_output_0_scale";
-    ofm_z_name = "/conv/conv.1/Relu_output_0_zero_point";
-    wts_w_name = "encoder.embed.conv.0.weight_quantized";
-    bias_w_name = "encoder.embed.conv.0.bias_quantized";
+    ifm_s_name =
+        Alias("front_conv1_in_s"); //"/encoder_embedding/Mul_output_0_scale";
+    ifm_z_name = Alias(
+        "front_conv1_in_zp"); //"/encoder_embedding/Mul_output_0_zero_point";
+    wts_s_name =
+        Alias("front_conv1_wts_s");  //"encoder.embed.conv.0.weight_scale";
+    wts_z_name =
+        Alias("front_conv1_wts_zp"); //"encoder.embed.conv.0.weight_zero_point";
+    bias_s_name = Alias(
+        "front_conv1_bias_s"); //"encoder.embed.conv.0.bias_quantized_scale";
+    bias_z_name = Alias(
+        "front_conv1_bias_zp"); //"encoder.embed.conv.0.bias_quantized_zero_point";
+    ofm_s_name =
+        Alias("front_conv1_out_s");  //"/conv/conv.1/Relu_output_0_scale";
+    ofm_z_name =
+        Alias("front_conv1_out_zp"); //"/conv/conv.1/Relu_output_0_zero_point";
+    wts_w_name =
+        Alias("front_conv1_wts");    //"encoder.embed.conv.0.weight_quantized";
+    bias_w_name =
+        Alias("front_conv1_bias");   //"encoder.embed.conv.0.bias_quantized";
     total_wts_bytes += GT_CONV_WTS_convert(
         wts_, wts_ptr_front, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         bias_s_name, bias_z_name, ofm_s_name, ofm_z_name, wts_w_name,
         bias_w_name, 512, 1, 3, 3, 8, const_cast<uint32_t*>(conv0_c0),
         const_cast<uint32_t*>(conv0_lp), model_version_);
-
-    ifm_s_name = "/conv/conv.1/Relu_output_0_scale";
-    ifm_z_name = "/conv/conv.1/Relu_output_0_zero_point";
-    wts_s_name = "encoder.embed.conv.2.weight_scale";
-    wts_z_name = "encoder.embed.conv.2.weight_zero_point";
-    bias_s_name = "encoder.embed.conv.2.bias_quantized_scale";
-    bias_z_name = "encoder.embed.conv.2.bias_quantized_zero_point";
-    ofm_s_name = "/conv/conv.3/Relu_output_0_scale";
-    ofm_z_name = "/conv/conv.3/Relu_output_0_zero_point";
-    wts_w_name = "encoder.embed.conv.2.weight_quantized";
-    bias_w_name = "encoder.embed.conv.2.bias_quantized";
+    // CONV2
+    ifm_s_name =
+        Alias("front_conv2_in_s");   //"/conv/conv.1/Relu_output_0_scale";
+    ifm_z_name =
+        Alias("front_conv2_in_zp");  //"/conv/conv.1/Relu_output_0_zero_point";
+    wts_s_name =
+        Alias("front_conv2_wts_s");  //"encoder.embed.conv.2.weight_scale";
+    wts_z_name =
+        Alias("front_conv2_wts_zp"); //"encoder.embed.conv.2.weight_zero_point";
+    bias_s_name = Alias(
+        "front_conv2_bias_s"); //"encoder.embed.conv.2.bias_quantized_scale";
+    bias_z_name = Alias(
+        "front_conv2_bias_zp"); //"encoder.embed.conv.2.bias_quantized_zero_point";
+    ofm_s_name =
+        Alias("front_conv2_out_s");  //"/conv/conv.3/Relu_output_0_scale";
+    ofm_z_name =
+        Alias("front_conv2_out_zp"); //"/conv/conv.3/Relu_output_0_zero_point";
+    wts_w_name =
+        Alias("front_conv2_wts");    //"encoder.embed.conv.2.weight_quantized";
+    bias_w_name =
+        Alias("front_conv2_bias");   //"encoder.embed.conv.2.bias_quantized";
     total_wts_bytes += GT_CONV_WTS_convert(
         wts_, wts_ptr_front, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         bias_s_name, bias_z_name, ofm_s_name, ofm_z_name, wts_w_name,
@@ -437,16 +384,16 @@ void MyCustomOpGT1_3::InitWeights() {
         "Finish to format WTS for front subgraph CONV, total bytes: ",
         total_wts_bytes);
   } else if (subgraph_id_ == SUBGRAPH_ID::GT_FRONT_MM) {
-    std::string i_s_name = "/conv/conv.3/Relu_output_0_scale";
-    std::string i_z_name = "/conv/conv.3/Relu_output_0_zero_point";
-    std::string w_s_name = "/out/Transpose_output_0_scale";
-    std::string w_z_name = "/out/Transpose_output_0_zero_point";
-    std::string b_s_name = "encoder.embed.out.bias_scale";
-    std::string b_z_name = "encoder.embed.out.bias_zero_point";
-    std::string o_s_name = "/out/Add_output_0_scale";
-    std::string o_z_name = "/out/Add_output_0_zero_point";
-    std::string w_name = "/out/Transpose_output_0_quantized";
-    std::string b_name = "encoder.embed.out.bias_quantized";
+    std::string i_s_name = Alias("front_mmb_in_s");
+    std::string i_z_name = Alias("front_mmb_in_zp");
+    std::string w_s_name = Alias("front_mmb_wts_s");
+    std::string w_z_name = Alias("front_mmb_wts_zp");
+    std::string b_s_name = Alias("front_mmb_bias_s");
+    std::string b_z_name = Alias("front_mmb_bias_zp");
+    std::string o_s_name = Alias("front_mmb_out_s");
+    std::string o_z_name = Alias("front_mmb_out_zp");
+    std::string w_name = Alias("front_mmb_wts");
+    std::string b_name = Alias("front_mmb_bias");
     int8_t* wts_ptr_linear_out =
         (int8_t*)(wts_ptr_ + 2501056 + 1472); // leave space for rtp
     int8_t* rtp_ptr =
@@ -463,77 +410,49 @@ void MyCustomOpGT1_3::InitWeights() {
     int8_t* wts_ptr = wts_ptr_ + 1472; // leave space for rtp
     int8_t* rtp_ptr = wts_ptr_ + gt_global_rtp_offset_.at(subgraph_id_);
     total_wts_bytes += GT_LN_WTS_convert(
-        wts_, wts_ptr, "/Add_179_output_0_scale",
-        "/Add_179_output_0_zero_point",         // in scale, in zp
-        "encoder.after_norm.weight_scale",
-        "encoder.after_norm.weight_zero_point", // scale scale, scale zp
-        "encoder.after_norm.bias_quantized_scale",
-        "encoder.encoders.6.norm2.bias_quantized_zero_point", // bias scale,
-                                                              // bias zp
-        "/after_norm/Add_1_output_0_scale",
-        "/after_norm/Add_1_output_0_zero_point", // out scale, out zp
-        "encoder.after_norm.weight_quantized",
-        "encoder.after_norm.bias_quantized",     // scale, bias
-        model_version_);
+        wts_, wts_ptr, Alias("lin_enc_ln_0_in_s"), Alias("lin_enc_ln_0_in_zp"),
+        Alias("lin_enc_ln_0_wts_s"), Alias("lin_enc_ln_0_wts_zp"),
+        Alias("lin_enc_ln_0_bias_s"), Alias("lin_enc_ln_0_bias_zp"),
+        Alias("lin_enc_ln_0_out_s"), Alias("lin_enc_ln_0_out_zp"),
+        Alias("lin_enc_ln_0_wts"), Alias("lin_enc_ln_0_bias"), model_version_);
     total_wts_bytes += GT_MMB_WTS_convert_ptr(
-        wts_, wts_ptr, rtp_ptr, "/after_norm/Add_1_output_0_scale",
-        "/after_norm/Add_1_output_0_zero_point",     // in scale, in zp
-        "/lin_enc/fc/Transpose_output_0_scale",
-        "/lin_enc/fc/Transpose_output_0_zero_point", // wts scale , wts zp
-        "joint_network.lin_enc.fc.bias_scale",
-        "joint_network.lin_enc.fc.bias_zero_point",  // add bias scale, add bias
-                                                     // zp
-        "/lin_enc/fc/Add_output_0_scale",
-        "/lin_enc/fc/Add_output_0_zero_point",       // out scale, out zp
-        "/lin_enc/fc/Transpose_output_0_quantized",
-        "joint_network.lin_enc.fc.bias_quantized",   // wts, bias
-        25, 512, 512, 25 /*bias broadcast*/, 32, 64, 16 /*sv_N changed to 16*/,
-        false /*performs padding*/, model_version_);
+        wts_, wts_ptr, rtp_ptr, Alias("lin_enc_mmb_in_s"),
+        Alias("lin_enc_mmb_in_zp"), Alias("lin_enc_mmb_wts_s"),
+        Alias("lin_enc_mmb_wts_zp"), Alias("lin_enc_mmb_bias_s"),
+        Alias("lin_enc_mmb_bias_zp"), Alias("lin_enc_mmb_out_s"),
+        Alias("lin_enc_mmb_out_zp"), Alias("lin_enc_mmb_wts"),
+        Alias("lin_enc_mmb_bias"), 25, 512, 512, 25 /*bias broadcast*/, 32, 64,
+        16 /*sv_N changed to 16*/, false /*performs padding*/, model_version_);
     wts_ptr = wts_ptr_ + 588288;
     total_wts_bytes += GT_LN_WTS_convert(
-        wts_, wts_ptr, "/lin_enc/fc/Add_output_0_scale",
-        "/lin_enc/fc/Add_output_0_zero_point",           // in scale, in zp
-        "joint_network.lin_enc.Lnorm.weight_scale",
-        "joint_network.lin_enc.Lnorm.weight_zero_point", // scale scale, scale
-                                                         // zp
-        "joint_network.lin_enc.Lnorm.bias_quantized_scale",
-        "encoder.encoders.6.norm2.bias_quantized_zero_point", // bias scale,
-                                                              // bias zp
-        "hidden_state_scale", "hidden_state_zero_point", // out scale, out zp
-        "joint_network.lin_enc.Lnorm.weight_quantized",
-        "joint_network.lin_enc.Lnorm.bias_quantized",    // scale, bias
-        model_version_);
+        wts_, wts_ptr, Alias("lin_enc_ln_1_in_s"), Alias("lin_enc_ln_1_in_zp"),
+        Alias("lin_enc_ln_1_wts_s"), Alias("lin_enc_ln_1_wts_zp"),
+        Alias("lin_enc_ln_1_bias_s"), Alias("lin_enc_ln_1_bias_zp"),
+        Alias("lin_enc_ln_1_out_s"), Alias("lin_enc_ln_1_out_zp"),
+        Alias("lin_enc_ln_1_wts"), Alias("lin_enc_ln_1_bias"), model_version_);
     VAIML_DEBUG_PRINT("Finish formatting wts for tail, total bytes: ",
                       total_wts_bytes);
     // std::string out_filename("gt_tail_dump_wts32.txt");
     // to_file(out_filename, 590400, wts_ptr_ );
   } else if (subgraph_id_ == SUBGRAPH_ID::GT_TRANSFORMER_BLOCK) {
     // set wts from onnx model
-    for (int i = 0; i < GT_1_3_TF_NUM; i++) {
+    for (int i = 0; i < transformer_block_num_; i++) {
       size_t wts_base = 11608064 * i;
       subgraph_id_ = SUBGRAPH_ID::GT_QKV;
-      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base);
+      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base, i);
       subgraph_id_ = SUBGRAPH_ID::GT_MATMUL_REDUCE;
-      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base + 1783296);
+      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base + 1783296, i);
       subgraph_id_ = SUBGRAPH_ID::GT_SM_LINEAR_OUT_FEED_FORWARD;
-      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base + 1843712);
+      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base + 1843712, i);
     }
     subgraph_id_ = SUBGRAPH_ID::GT_TRANSFORMER_BLOCK;
 
-    // to_file("wts_tf_gen.bin", 11608064, wts_ptr_);
-
-    {
-        // TODO(zhonnian): wts for 1st tf block, to be removed for code merge
-        //   std::ifstream ifs("C:\\tf_wts.bin", std::ios::in |
-        //   std::ios::binary);
-        //   printf("finish reading wts from file\n");
-        //   ifs.read(reinterpret_cast<char*>(wts_ptr_), 11608064);
-        //   ifs.close();
-    }
+    // to_file("wts_tf_gen.bin", 11608064 * transformer_block_num_, wts_ptr_);
 
     { // q-bmm wts
-      uint8_t* bmm_wts =
-          (uint8_t*)wts_.at("/Transpose_6_output_0_quantized").data;
+      uint8_t* bmm_wts = (uint8_t*)wts_.at(Alias("tf_0_q_bmm_0_in_1")).data;
+      uint8_t bmm_wts_zp =
+          *(uint8_t*)wts_.at(Alias("tf_0_q_bmm_0_in_1_zp")).data;
       auto cache_iter = node_cache.find("BMM_IFM2");
       if (cache_iter == node_cache.end()) {
         std::vector<char> bmm_ifm2_cache(25 * 64 * 480 * sizeof(uint16_t), 0);
@@ -544,21 +463,21 @@ void MyCustomOpGT1_3::InitWeights() {
             bmm_ifm2[i * 480 + j] = bmm_wts[i * 475 + j];
           }
           for (int j = 0; j < 5; j++) {
-            bmm_ifm2[i * 480 + 475 + j] = 128; // zp padding
+            bmm_ifm2[i * 480 + 475 + j] = bmm_wts_zp; // zp padding
           }
         }
         node_cache.emplace("BMM_IFM2", std::move(bmm_ifm2_cache));
       }
     }
+  } else if (subgraph_id_ == SUBGRAPH_ID::GT_CACHE_FRAMES_SLICE) {
+    cache_frame_s_ = *((float*)(wts_.at(Alias("cache_frame_s")).data));
+    cache_frame_zp_ = *((uint16_t*)(wts_.at(Alias("cache_frame_zp")).data));
   }
 }
 
 void MyCustomOpGT1_3::InitTransformerBlockWeights(
     std::unordered_map<std::string, flexmlrt::client::ErtIoTypeNew>& wts_,
-    int8_t* wts_ptr) {
-  static int subgraph_index_linear_out_feed_forward = 0;
-  static int subgraph_index_qkv = 0;
-  static int subgraph_index_matmul_reduce = 0;
+    int8_t* wts_ptr, int tf_idx) {
   int8_t* ori_wts_ptr = wts_ptr;
   int8_t* rtp_ptr = nullptr;
   if (subgraph_id_ == SUBGRAPH_ID::GT_QKV ||
@@ -576,429 +495,155 @@ void MyCustomOpGT1_3::InitTransformerBlockWeights(
       bias_name;
   size_t total_wts_bytes = 0, wts_sz_loaded = 0;
   if (subgraph_id_ == SUBGRAPH_ID::GT_SM_LINEAR_OUT_FEED_FORWARD) {
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      // 2, 5, 8, 11, ..., 107
-      ifm_s_name =
-          "/MatMul_" +
-          std::to_string(3 * subgraph_index_linear_out_feed_forward + 2) +
-          "_output_0_scale";
-      ifm_z_name =
-          "/MatMul_" +
-          std::to_string(3 * subgraph_index_linear_out_feed_forward + 2) +
-          "_output_0_zero_point";
-      wts_s_name = "/linear_out_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_scale";
-      wts_z_name = "/linear_out_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_zero_point";
-      wts_w_name = "/linear_out_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_quantized";
-    } else {
-      ifm_s_name = "/MatMul_2_output_0_scale";
-      ifm_z_name = "/MatMul_2_output_0_zero_point";
-      wts_s_name = "/linear_out/Transpose_output_0_scale";
-      wts_z_name = "/linear_out/Transpose_output_0_zero_point";
-      wts_w_name = "/linear_out/Transpose_output_0_quantized";
-    }
-    // we will be using bias name, scale factor and zp for MMB, also ofm name
-    // shall using that from add
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      bias_s_name = "encoder.encoders." +
-                    std::to_string(subgraph_index_linear_out_feed_forward) +
-                    ".self_attn.linear_out.bias_scale";
-      bias_z_name = "encoder.encoders." +
-                    std::to_string(subgraph_index_linear_out_feed_forward) +
-                    ".self_attn.linear_out.bias_zero_point";
-      if (subgraph_index_linear_out_feed_forward == 18) {
-        ofm_s_name = "/linear_out_" +
-                     std::to_string(subgraph_index_linear_out_feed_forward) +
-                     "/MatMul_output_0_scale";
-      } else {
-        ofm_s_name = "/linear_out_" +
-                     std::to_string(subgraph_index_linear_out_feed_forward) +
-                     "/Add_output_0_scale";
-      }
-      ofm_z_name = "/linear_out_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_zero_point";
-      bias_name = "encoder.encoders." +
-                  std::to_string(subgraph_index_linear_out_feed_forward) +
-                  ".self_attn.linear_out.bias_quantized";
-    } else {
-      bias_s_name = "encoder.encoders.0.self_attn.linear_out.bias_scale";
-      bias_z_name = "encoder.encoders.0.self_attn.linear_out.bias_zero_point";
-      ofm_s_name = "/linear_out/Add_output_0_scale";
-      ofm_z_name = "/linear_out/Add_output_0_zero_point";
-      bias_name = "encoder.encoders.0.self_attn.linear_out.bias_quantized";
-    }
-
+    ifm_s_name = Alias(str_fmt("tf_%d_linear_out_mmb_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_linear_out_mmb_in_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_linear_out_mmb_wts_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_linear_out_mmb_wts_zp", tf_idx));
+    wts_w_name = Alias(str_fmt("tf_%d_linear_out_mmb_wts", tf_idx));
+    bias_s_name = Alias(str_fmt("tf_%d_linear_out_mmb_bias_s", tf_idx));
+    bias_z_name = Alias(str_fmt("tf_%d_linear_out_mmb_bias_zp", tf_idx));
+    bias_name = Alias(str_fmt("tf_%d_linear_out_mmb_bias", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_linear_out_mmb_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_linear_out_mmb_out_zp", tf_idx));
     wts_sz_loaded = GT_MMB_WTS_convert_ptr(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         bias_s_name, bias_z_name, ofm_s_name, ofm_z_name, wts_w_name, bias_name,
         25, 512, 512, 25, 32, 64, 16, false, model_version_);
     VAIML_DEBUG_PRINT(
-        "Finish to format WTS for linear_out_feed_forward subgraph-",
-        subgraph_index_linear_out_feed_forward, "-> MM ", wts_sz_loaded,
-        "loaded", " , rtp offset: ", rtp_ptr - rtp_ptr_start);
+        "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
+        "-> MM ", wts_sz_loaded, "loaded",
+        " , rtp offset: ", rtp_ptr - rtp_ptr_start);
     // update wts ptr position
     wts_ptr += 584704 - wts_sz_loaded + 64;
     rtp_ptr += 64;
 
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      if (subgraph_index_linear_out_feed_forward == 18) {
-        ifm_s_name = "/linear_out_" +
-                     std::to_string(subgraph_index_linear_out_feed_forward) +
-                     "/MatMul_output_0_scale";
-      } else {
-        ifm_s_name = "/linear_out_" +
-                     std::to_string(subgraph_index_linear_out_feed_forward) +
-                     "/Add_output_0_scale";
-      }
-      ifm_z_name = "/linear_out_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_zero_point";
-      // out, 4, 9, 14, ... 174
-      wts_s_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward - 1) +
-          "_output_0_scale";
-      wts_z_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward - 1) +
-          "_output_0_zero_point";
-      // 3, 8, 13, 18, ... 178
-      ofm_s_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 3) +
-          "_output_0_scale";
-      ofm_z_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 3) +
-          "_output_0_zero_point";
-      wts_w_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward - 1) +
-          "_output_0_QuantizeLinear_Output";
-    } else {
-      ifm_s_name = "/linear_out/Add_output_0_scale";
-      ifm_z_name = "/linear_out/Add_output_0_zero_point";
-      wts_s_name = "/out/Add_output_0_scale";
-      wts_z_name = "/out/Add_output_0_zero_point";
-      ofm_s_name = "/Add_3_output_0_scale";
-      ofm_z_name = "/Add_3_output_0_zero_point";
-      wts_w_name = "/out/Add_output_0_QuantizeLinear_Output";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_linear_out_add_in_0_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_linear_out_add_in_0_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_linear_out_add_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_linear_out_add_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_linear_out_add_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_linear_out_add_out_zp", tf_idx));
+    wts_w_name = "";
     // no wts name change for add in middle
     wts_sz_loaded = GT_ADD_WTS_QDQ_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, 25 * 512, model_version_);
     VAIML_DEBUG_PRINT(
-        "Finish to format WTS for linear_out_feed_forward subgraph-",
-        subgraph_index_linear_out_feed_forward, "-> ADD3", wts_sz_loaded,
+        "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
+        "-> ADD3", wts_sz_loaded,
         "loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
 
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      // 3, 8, 13, ..., 178
-      ifm_s_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 3) +
-          "_output_0_scale";
-      ifm_z_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 3) +
-          "_output_0_zero_point";
-      scale_s_name = "encoder.encoders." +
-                     std::to_string(subgraph_index_linear_out_feed_forward) +
-                     ".norm2.weight_scale";
-      scale_z_name = "encoder.encoders." +
-                     std::to_string(subgraph_index_linear_out_feed_forward) +
-                     ".norm2.weight_zero_point";
-      bias_s_name = "encoder.encoders." +
-                    std::to_string(subgraph_index_linear_out_feed_forward) +
-                    ".norm2.bias_quantized_scale";
-      bias_z_name = "encoder.encoders.6.norm2.bias_quantized_zero_point";
-      ofm_s_name = "/norm2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_1_output_0_scale";
-      ofm_z_name = "/norm2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_1_output_0_zero_point";
-      scale_name = "encoder.encoders." +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   ".norm2.weight_quantized";
-      bias_name = "encoder.encoders." +
-                  std::to_string(subgraph_index_linear_out_feed_forward) +
-                  ".norm2.bias_quantized";
-    } else {
-      ifm_s_name = "/Add_3_output_0_scale";
-      ifm_z_name = "/Add_3_output_0_zero_point";
-      scale_s_name = "encoder.encoders.0.norm2.weight_scale";
-      scale_z_name = "encoder.encoders.0.norm2.weight_zero_point";
-      bias_s_name = "encoder.encoders.0.norm2.bias_quantized_scale";
-      bias_z_name = "encoder.encoders.6.norm2.bias_quantized_zero_point";
-      ofm_s_name = "/norm2/Add_1_output_0_scale";
-      ofm_z_name = "/norm2/Add_1_output_0_zero_point";
-      scale_name = "encoder.encoders.0.norm2.weight_quantized";
-      bias_name = "encoder.encoders.0.norm2.bias_quantized";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_ln_1_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_ln_1_in_zp", tf_idx));
+    scale_s_name = Alias(str_fmt("tf_%d_ln_1_wts_s", tf_idx));
+    scale_z_name = Alias(str_fmt("tf_%d_ln_1_wts_zp", tf_idx));
+    bias_s_name = Alias(str_fmt("tf_%d_ln_1_bias_s", tf_idx));
+    bias_z_name = Alias(str_fmt("tf_%d_ln_1_bias_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_ln_1_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_ln_1_out_zp", tf_idx));
+    scale_name = Alias(str_fmt("tf_%d_ln_1_wts", tf_idx));
+    bias_name = Alias(str_fmt("tf_%d_ln_1_bias", tf_idx));
     wts_sz_loaded =
         GT_LN_WTS_convert(wts_, wts_ptr, ifm_s_name, ifm_z_name, scale_s_name,
                           scale_z_name, bias_s_name, bias_z_name, ofm_s_name,
                           ofm_z_name, scale_name, bias_name, model_version_);
     VAIML_DEBUG_PRINT(
-        "Finish to format WTS for linear_out_feed_forward subgraph-",
-        subgraph_index_linear_out_feed_forward, "-> LN", wts_sz_loaded);
+        "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
+        "-> LN", wts_sz_loaded);
 
     // feed forward, first part from matmul, second from add
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      ifm_s_name = "/norm2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_1_output_0_scale";
-      ifm_z_name = "/norm2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_1_output_0_zero_point";
-      wts_s_name = "/feed_forward/w_1_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_scale";
-      wts_z_name = "/feed_forward/w_1_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_zero_point";
-      wts_w_name = "/feed_forward/w_1_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_quantized";
-    } else {
-      ifm_s_name = "/norm2/Add_1_output_0_scale";
-      ifm_z_name = "/norm2/Add_1_output_0_zero_point";
-      wts_s_name = "/feed_forward/w_1/Transpose_output_0_scale";
-      wts_z_name = "/feed_forward/w_1/Transpose_output_0_zero_point";
-      wts_w_name = "/feed_forward/w_1/Transpose_output_0_quantized";
-    }
-
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      bias_s_name = "encoder.encoders." +
-                    std::to_string(subgraph_index_linear_out_feed_forward) +
-                    ".feed_forward.w_1.bias_scale";
-      bias_z_name = "encoder.encoders." +
-                    std::to_string(subgraph_index_linear_out_feed_forward) +
-                    ".feed_forward.w_1.bias_zero_point";
-      ofm_s_name = "/feed_forward/w_1_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_scale";
-      ofm_z_name = "/feed_forward/w_1_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_zero_point";
-      bias_name = "encoder.encoders." +
-                  std::to_string(subgraph_index_linear_out_feed_forward) +
-                  ".feed_forward.w_1.bias_quantized";
-    } else {
-      bias_s_name = "encoder.encoders.0.feed_forward.w_1.bias_scale";
-      bias_z_name = "encoder.encoders.0.feed_forward.w_1.bias_zero_point";
-      ofm_s_name = "/feed_forward/w_1/Add_output_0_scale";
-      ofm_z_name = "/feed_forward/w_1/Add_output_0_zero_point";
-      bias_name = "encoder.encoders.0.feed_forward.w_1.bias_quantized";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_in_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_wts_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_wts_zp", tf_idx));
+    wts_w_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_wts", tf_idx));
+    bias_s_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_bias_s", tf_idx));
+    bias_z_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_bias_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_out_zp", tf_idx));
+    bias_name = Alias(str_fmt("tf_%d_feed_forward_0_mmb_bias", tf_idx));
     wts_sz_loaded = GT_MMB_WTS_convert_ptr(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         bias_s_name, bias_z_name, ofm_s_name, ofm_z_name, wts_w_name, bias_name,
         25, 512, 4096, 25, 32, 64, 16, false, model_version_);
     VAIML_DEBUG_PRINT(
-        "Finish to format WTS for linear_out_feed_forward subgraph-",
-        subgraph_index_linear_out_feed_forward, "-> MM_W1", wts_sz_loaded,
+        "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
+        "-> MM_W1", wts_sz_loaded,
         "loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
     wts_ptr += 4677632 - wts_sz_loaded + 64;
     rtp_ptr += 64;
 
-    // first come from MM second from Add
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      ifm_s_name = "/feed_forward/w_1_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_scale";
-      ifm_z_name = "/feed_forward/act_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Relu_output_0_zero_point";
-      wts_s_name = "/feed_forward/w_2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_scale";
-      wts_z_name = "/feed_forward/w_2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_zero_point";
-      wts_w_name = "/feed_forward/w_2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Transpose_output_0_quantized";
-    } else {
-      ifm_s_name = "/feed_forward/w_1/Add_output_0_scale";
-      ifm_z_name = "/feed_forward/act/Relu_output_0_zero_point";
-      wts_s_name = "/feed_forward/w_2/Transpose_output_0_scale";
-      wts_z_name = "/feed_forward/w_2/Transpose_output_0_zero_point";
-      wts_w_name = "/feed_forward/w_2/Transpose_output_0_quantized";
-    }
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      bias_s_name = "encoder.encoders." +
-                    std::to_string(subgraph_index_linear_out_feed_forward) +
-                    ".feed_forward.w_2.bias_scale";
-      bias_z_name = "encoder.encoders." +
-                    std::to_string(subgraph_index_linear_out_feed_forward) +
-                    ".feed_forward.w_2.bias_zero_point";
-      ofm_s_name = "/feed_forward/w_2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_scale";
-      ofm_z_name = "/feed_forward/w_2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_zero_point";
-      bias_name = "encoder.encoders." +
-                  std::to_string(subgraph_index_linear_out_feed_forward) +
-                  ".feed_forward.w_2.bias_quantized";
-    } else {
-      bias_s_name = "encoder.encoders.0.feed_forward.w_2.bias_scale";
-      bias_z_name = "encoder.encoders.0.feed_forward.w_2.bias_zero_point";
-      ofm_s_name = "/feed_forward/w_2/Add_output_0_scale";
-      ofm_z_name = "/feed_forward/w_2/Add_output_0_zero_point";
-      bias_name = "encoder.encoders.0.feed_forward.w_2.bias_quantized";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_in_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_wts_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_wts_zp", tf_idx));
+    wts_w_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_wts", tf_idx));
+    bias_s_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_bias_s", tf_idx));
+    bias_z_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_bias_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_out_zp", tf_idx));
+    bias_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_bias", tf_idx));
     wts_sz_loaded = GT_MMB_WTS_convert_ptr(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         bias_s_name, bias_z_name, ofm_s_name, ofm_z_name, wts_w_name, bias_name,
         25, 4096, 512, 25, 32, 64, 16, false, model_version_);
     VAIML_DEBUG_PRINT(
-        "Finish to format WTS for linear_out_feed_forward subgraph-",
-        subgraph_index_linear_out_feed_forward, "-> MM_W2 ", wts_sz_loaded,
+        "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
+        "-> MM_W2 ", wts_sz_loaded,
         " loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
     wts_ptr += 4498432 - wts_sz_loaded + 64;
     rtp_ptr += 64;
 
-    if (subgraph_index_linear_out_feed_forward > 0) {
-      ifm_s_name = "/feed_forward/w_2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_scale";
-      ifm_z_name = "/feed_forward/w_2_" +
-                   std::to_string(subgraph_index_linear_out_feed_forward) +
-                   "/Add_output_0_zero_point";
-      // 3, 8, 13, 18, ..., 178
-      wts_s_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 3) +
-          "_output_0_scale";
-      wts_z_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 3) +
-          "_output_0_zero_point";
-      // 4, 9, 14, 19, ..., 179
-      ofm_s_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 4) +
-          "_output_0_scale";
-      ofm_z_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 4) +
-          "_output_0_zero_point";
-      wts_w_name =
-          "/Add_" +
-          std::to_string(5 * subgraph_index_linear_out_feed_forward + 3) +
-          "_output_0_QuantizeLinear_Output";
-    } else {
-      ifm_s_name = "/feed_forward/w_2/Add_output_0_scale";
-      ifm_z_name = "/feed_forward/w_2/Add_output_0_zero_point";
-      wts_s_name = "/Add_3_output_0_scale";
-      wts_z_name = "/Add_3_output_0_zero_point";
-      ofm_s_name = "/Add_4_output_0_scale";
-      ofm_z_name = "/Add_4_output_0_zero_point";
-      wts_w_name = "/Add_3_output_0_QuantizeLinear_Output";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_feed_forward_add_in_0_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_feed_forward_add_in_0_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_feed_forward_add_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_feed_forward_add_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_feed_forward_add_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_feed_forward_add_out_zp", tf_idx));
+    wts_w_name = "";
     wts_sz_loaded = GT_ADD_WTS_QDQ_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, 25 * 512, model_version_);
     VAIML_DEBUG_PRINT(
-        "Finish to format WTS for linear_out_feed_forward subgraph-",
-        subgraph_index_linear_out_feed_forward, "-> ADD4", wts_sz_loaded,
+        "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
+        "-> ADD4", wts_sz_loaded,
         " loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
-    subgraph_index_linear_out_feed_forward++;
   } else if (subgraph_id_ == SUBGRAPH_ID::GT_QKV) {
-    if (subgraph_index_qkv > 0) {
-      ifm_s_name =
-          str_fmt("/Add_%d_output_0_scale", subgraph_index_qkv * 5 - 1);
-      ifm_z_name =
-          str_fmt("/Add_%d_output_0_zero_point", subgraph_index_qkv * 5 - 1);
-      scale_s_name =
-          str_fmt("encoder.encoders.%d.norm1.weight_scale", subgraph_index_qkv);
-      scale_z_name = str_fmt("encoder.encoders.%d.norm1.weight_zero_point",
-                             subgraph_index_qkv);
-      bias_s_name = str_fmt("encoder.encoders.%d.norm1.bias_quantized_scale",
-                            subgraph_index_qkv);
-      bias_z_name = "encoder.encoders.6.norm2.bias_quantized_zero_point";
-      ofm_s_name =
-          str_fmt("/norm1_%d/Add_1_output_0_scale", subgraph_index_qkv);
-      ofm_z_name =
-          str_fmt("/norm1_%d/Add_1_output_0_zero_point", subgraph_index_qkv);
-      scale_name = str_fmt("encoder.encoders.%d.norm1.weight_quantized",
-                           subgraph_index_qkv);
-      bias_name = str_fmt("encoder.encoders.%d.norm1.bias_quantized",
-                          subgraph_index_qkv);
-    } else {
-      ifm_s_name = "/out/Add_output_0_scale";
-      ifm_z_name = "/out/Add_output_0_zero_point";
-      scale_s_name = "encoder.encoders.0.norm1.weight_scale";
-      scale_z_name = "encoder.encoders.0.norm1.weight_zero_point";
-      bias_s_name = "encoder.encoders.0.norm1.bias_quantized_scale";
-      bias_z_name = "encoder.encoders.6.norm2.bias_quantized_zero_point";
-      ofm_s_name = "/norm1/Add_1_output_0_scale";
-      ofm_z_name = "/norm1/Add_1_output_0_zero_point";
-      scale_name = "encoder.encoders.0.norm1.weight_quantized";
-      bias_name = "encoder.encoders.0.norm1.bias_quantized";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_ln_0_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_ln_0_in_zp", tf_idx));
+    scale_s_name = Alias(str_fmt("tf_%d_ln_0_wts_s", tf_idx));
+    scale_z_name = Alias(str_fmt("tf_%d_ln_0_wts_zp", tf_idx));
+    bias_s_name = Alias(str_fmt("tf_%d_ln_0_bias_s", tf_idx));
+    bias_z_name = Alias(str_fmt("tf_%d_ln_0_bias_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_ln_0_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_ln_0_out_zp", tf_idx));
+    scale_name = Alias(str_fmt("tf_%d_ln_0_wts", tf_idx));
+    bias_name = Alias(str_fmt("tf_%d_ln_0_bias", tf_idx));
     wts_sz_loaded =
         GT_LN_WTS_convert(wts_, wts_ptr, ifm_s_name, ifm_z_name, scale_s_name,
                           scale_z_name, bias_s_name, bias_z_name, ofm_s_name,
                           ofm_z_name, scale_name, bias_name, model_version_);
-    VAIML_DEBUG_PRINT("Finish to format WTS for qkv subgraph-",
-                      subgraph_index_qkv, "-> LN ", wts_sz_loaded, " loaded");
-    std::string qkv_mm_wts_name =
-        subgraph_index_qkv == 0
-            ? "_v_3392_quantized"
-            : str_fmt("_v_%d_quantized", subgraph_index_qkv * 5 + 3392);
+    VAIML_DEBUG_PRINT("Finish to format WTS for qkv subgraph-", tf_idx,
+                      "-> LN ", wts_sz_loaded, " loaded");
+    std::string qkv_mm_wts_name = Alias(str_fmt("tf_%d_kqv_mm_wts", tf_idx));
     auto wts_mmb_splitted = SplitTransformerHeadMMWts(qkv_mm_wts_name, wts_);
     int fan_id = 0;
     for (std::string fanout : std::vector<std::string>({"q", "k", "v"})) {
-      if (subgraph_index_qkv > 0) {
-        ifm_s_name =
-            str_fmt("/norm1_%d/Add_1_output_0_scale", subgraph_index_qkv);
-        ifm_z_name =
-            str_fmt("/norm1_%d/Add_1_output_0_zero_point", subgraph_index_qkv);
-        wts_s_name = str_fmt("_v_%d_scale", subgraph_index_qkv * 5 + 3392);
-        wts_z_name = str_fmt("_v_%d_zero_point", subgraph_index_qkv * 5 + 3392);
-        bias_s_name =
-            str_fmt("encoder.encoders.%d.self_attn.linear_%s.bias_scale",
-                    subgraph_index_qkv, fanout.c_str());
-        bias_z_name =
-            str_fmt("encoder.encoders.%d.self_attn.linear_%s.bias_zero_point",
-                    subgraph_index_qkv, fanout.c_str());
-        ofm_s_name = str_fmt("/linear_%s_%d/Add_output_0_scale", fanout.c_str(),
-                             subgraph_index_qkv);
-        ;
-        ofm_z_name = str_fmt("/linear_%s_%d/Add_output_0_zero_point",
-                             fanout.c_str(), subgraph_index_qkv);
-        bias_name =
-            str_fmt("encoder.encoders.%d.self_attn.linear_%s.bias_quantized",
-                    subgraph_index_qkv, fanout.c_str());
-      } else {
-        ifm_s_name = "/norm1/Add_1_output_0_scale";
-        ifm_z_name = "/norm1/Add_1_output_0_zero_point";
-        wts_s_name = "_v_3392_scale";
-        wts_z_name = "_v_3392_zero_point";
-        bias_s_name =
-            str_fmt("encoder.encoders.0.self_attn.linear_%s.bias_scale",
-                    fanout.c_str());
-        bias_z_name =
-            str_fmt("encoder.encoders.0.self_attn.linear_%s.bias_zero_point",
-                    fanout.c_str());
-        ofm_s_name = str_fmt("/linear_%s/Add_output_0_scale", fanout.c_str());
-        ofm_z_name =
-            str_fmt("/linear_%s/Add_output_0_zero_point", fanout.c_str());
-        bias_name =
-            str_fmt("encoder.encoders.0.self_attn.linear_%s.bias_quantized",
-                    fanout.c_str());
-      }
+      ifm_s_name = Alias(str_fmt("tf_%d_kqv_mm_in_s", tf_idx));
+      ifm_z_name = Alias(str_fmt("tf_%d_kqv_mm_in_zp", tf_idx));
+      wts_s_name = Alias(str_fmt("tf_%d_kqv_mm_wts_s", tf_idx));
+      wts_z_name = Alias(str_fmt("tf_%d_kqv_mm_wts_zp", tf_idx));
+      bias_s_name =
+          Alias(str_fmt("tf_%d_kqv_mm_bias_%s_s", tf_idx, fanout.c_str()));
+      bias_z_name =
+          Alias(str_fmt("tf_%d_kqv_mm_bias_%s_zp", tf_idx, fanout.c_str()));
+      ofm_s_name =
+          Alias(str_fmt("tf_%d_kqv_mm_out_%s_s", tf_idx, fanout.c_str()));
+      ofm_z_name =
+          Alias(str_fmt("tf_%d_kqv_mm_out_%s_zp", tf_idx, fanout.c_str()));
+      bias_name =
+          Alias(str_fmt("tf_%d_kqv_mm_bias_%s", tf_idx, fanout.c_str()));
+
       wts_sz_loaded = GT_MMB_WTS_convert_raw_ptr(
           wts_, wts_ptr, rtp_ptr, (int8_t*)wts_mmb_splitted[fan_id].data(),
           ifm_s_name, ifm_z_name, wts_s_name, wts_z_name, bias_s_name,
@@ -1007,41 +652,27 @@ void MyCustomOpGT1_3::InitTransformerBlockWeights(
       ++fan_id;
       wts_ptr += 584704 - wts_sz_loaded + 64;
       rtp_ptr += 64;
-      VAIML_DEBUG_PRINT("Finish to format WTS for qkv subgraph-",
-                        subgraph_index_qkv, "-> MMB ", fanout, ", ",
-                        wts_sz_loaded, "loaded, rtp offset",
-                        rtp_ptr - rtp_ptr_start);
+      VAIML_DEBUG_PRINT("Finish to format WTS for qkv subgraph-", tf_idx,
+                        "-> MMB ", fanout, ", ", wts_sz_loaded,
+                        "loaded, rtp offset", rtp_ptr - rtp_ptr_start);
     } // end of qkv matmul + add
 
     // skip linear_v reshape + transpose + concat don't have weights
 
     VAIML_DEBUG_PRINT("Finish loading wts for qkv MMB");
     // start of linear_q reshape + transpose + mul + reshape + transpose + bmm
-    if (subgraph_index_qkv > 0) {
-      ifm_s_name =
-          str_fmt("/linear_q_%d/Add_output_0_scale", subgraph_index_qkv);
-      ifm_z_name =
-          str_fmt("/linear_q_%d/Add_output_0_zero_point", subgraph_index_qkv);
-      wts_s_name = "/Constant_15_output_0_scale";
-      wts_z_name = "/Constant_15_output_0_zero_point";
-      ofm_s_name = str_fmt("/Mul_%d_output_0_scale", subgraph_index_qkv * 5);
-      ofm_z_name =
-          str_fmt("/Mul_%d_output_0_zero_point", subgraph_index_qkv * 5);
-      wts_w_name = "/Constant_15_output_0_quantized";
-    } else {
-      ifm_s_name = "/linear_q/Add_output_0_scale";
-      ifm_z_name = "/linear_q/Add_output_0_zero_point";
-      wts_s_name = "/Constant_15_output_0_scale";
-      wts_z_name = "/Constant_15_output_0_zero_point";
-      ofm_s_name = "/Mul_output_0_scale";
-      ofm_z_name = "/Mul_output_0_zero_point";
-      wts_w_name = "/Constant_15_output_0_quantized";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_q_mul_0_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_q_mul_0_in_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_q_mul_0_wts_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_q_mul_0_wts_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_q_mul_0_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_q_mul_0_out_zp", tf_idx));
+    wts_w_name = Alias(str_fmt("tf_%d_q_mul_0_wts", tf_idx));
     wts_sz_loaded = GT_MUL_WTS_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, model_version_);
-    VAIML_DEBUG_PRINT2("Finish to format WTS for qkv subgraph-",
-                       subgraph_index_qkv, "-> Mul ", wts_sz_loaded,
+    VAIML_DEBUG_PRINT2("Finish to format WTS for qkv subgraph-", tf_idx,
+                       "-> Mul ", wts_sz_loaded,
                        "loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
     rtp_ptr += 64; // shall skip 64 bytes to continue concat related param
 
@@ -1050,276 +681,161 @@ void MyCustomOpGT1_3::InitTransformerBlockWeights(
     // skip linear_k reshape + transpose + concat don't have weights
 
     // qdq rtps for k,v gather-concat
-    wts_sz_loaded = GT_QDQ_convert(
-        wts_, wts_ptr, rtp_ptr, v_unsqueeze_scale_[subgraph_index_qkv],
-        v_unsqueeze_zp_[subgraph_index_qkv],
-        v_concat_slice_scale_[subgraph_index_qkv],
-        v_concat_slice_zp_[subgraph_index_qkv], model_version_);
-    VAIML_DEBUG_PRINT2("Finish to format WTS for qkv subgraph-",
-                       subgraph_index_qkv, "-> v concat QDQ ", wts_sz_loaded,
+    ifm_s_name = Alias(str_fmt("tf_%d_v_cache_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_v_cache_in_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_v_cache_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_v_cache_out_zp", tf_idx));
+    wts_sz_loaded =
+        GT_QDQ_convert(wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name,
+                       ofm_s_name, ofm_z_name, model_version_);
+    VAIML_DEBUG_PRINT2("Finish to format WTS for qkv subgraph-", tf_idx,
+                       "-> v concat QDQ ", wts_sz_loaded,
                        "loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
 
-    wts_sz_loaded = GT_QDQ_convert(
-        wts_, wts_ptr, rtp_ptr, k_unsqueeze_scale_[subgraph_index_qkv],
-        k_unsqueeze_zp_[subgraph_index_qkv],
-        k_concat_slice_scale_[subgraph_index_qkv],
-        k_concat_slice_zp_[subgraph_index_qkv], model_version_);
-    VAIML_DEBUG_PRINT2("Finish to format WTS for qkv subgraph-",
-                       subgraph_index_qkv, "-> k concat QDQ ", wts_sz_loaded,
+    ifm_s_name = Alias(str_fmt("tf_%d_k_cache_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_k_cache_in_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_k_cache_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_k_cache_out_zp", tf_idx));
+    wts_sz_loaded =
+        GT_QDQ_convert(wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name,
+                       ofm_s_name, ofm_z_name, model_version_);
+    VAIML_DEBUG_PRINT2("Finish to format WTS for qkv subgraph-", tf_idx,
+                       "-> k concat QDQ ", wts_sz_loaded,
                        "loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
-    subgraph_index_qkv++;
   } else if (subgraph_id_ == SUBGRAPH_ID::GT_MATMUL_REDUCE) {
     // now bmm_1 moved to matmul_reduce
-    if (subgraph_index_matmul_reduce > 0) {
-      ifm_s_name =
-          str_fmt("/Mul_%d_output_0_scale", subgraph_index_matmul_reduce * 5);
-      ifm_z_name = str_fmt("/Mul_%d_output_0_zero_point",
-                           subgraph_index_matmul_reduce * 5);
-      wts_s_name = "/Transpose_6_output_0_scale";
-      wts_z_name = "/Transpose_6_output_0_zero_point";
-      ofm_s_name = str_fmt("/MatMul_%d_output_0_scale",
-                           subgraph_index_matmul_reduce * 3 + 1);
-      ofm_z_name = str_fmt("/MatMul_%d_output_0_zero_point",
-                           subgraph_index_matmul_reduce * 3 + 1);
-    } else {
-      ifm_s_name = "/Mul_output_0_scale";
-      ifm_z_name = "/Mul_output_0_zero_point";
-      wts_s_name = "/Transpose_6_output_0_scale";
-      wts_z_name = "/Transpose_6_output_0_zero_point";
-      ofm_s_name = "/MatMul_1_output_0_scale";
-      ofm_z_name = "/MatMul_1_output_0_zero_point";
-    }
-    wts_sz_loaded = GT_BMM_WTS_convert(
+    ifm_s_name = Alias(str_fmt("tf_%d_q_bmm_0_in_0_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_q_bmm_0_in_0_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_q_bmm_0_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_q_bmm_0_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_q_bmm_0_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_q_bmm_0_out_zp", tf_idx));
+    wts_sz_loaded = GT_BMM_WTS_convert<uint8_t /*wts dtype*/>(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, false, 8, 64, 512, 16, 64, 32,
         model_version_); // 8 64 475,  N / row / col
     VAIML_DEBUG_PRINT2("Finish to format WTS for matmul_reduce subgraph-",
-                       subgraph_index_matmul_reduce, "-> BMM ", wts_sz_loaded,
+                       tf_idx, "-> BMM ", wts_sz_loaded,
                        "loaded, rtp_offset: ", rtp_ptr - rtp_ptr_start);
-#define NAME_CONCAT(name1, beta, scale, name2)                                 \
-  name1 + std::to_string(beta + subgraph_index_matmul_reduce * scale) + name2;
-    if (subgraph_index_matmul_reduce > 0) {
-      ifm_s_name = NAME_CONCAT("/Mul_", 0, 5, "_output_0_scale");
-      ifm_z_name = NAME_CONCAT("/Mul_", 0, 5, "_output_0_zero_point");
-      wts_s_name = bmm_scale_wts_prefix_.at(subgraph_index_matmul_reduce);
-      wts_z_name = NAME_CONCAT("/Concat_", 114, 8, "_output_0_zero_point");
-      ofm_s_name = NAME_CONCAT("/MatMul_", 0, 3, "_output_0_scale");
-      ofm_z_name = NAME_CONCAT("/MatMul_", 0, 3, "_output_0_zero_point");
-    } else {
-      ifm_s_name = "/Mul_output_0_scale";
-      ifm_z_name = "/Mul_output_0_zero_point";
-      wts_s_name = "/linear_k/Add_output_0_scale";
-      wts_z_name = "/Concat_6_output_0_zero_point";
-      ofm_s_name = "/MatMul_output_0_scale";
-      ofm_z_name = "/MatMul_output_0_zero_point";
-    }
+
+    ifm_s_name = Alias(str_fmt("tf_%d_k_bmm_in_0_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_k_bmm_in_0_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_k_bmm_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_k_bmm_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_k_bmm_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_k_bmm_out_zp", tf_idx));
     wts_sz_loaded = GT_BMM_WTS_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, "", true, 25, 64, 512, 32, 64, 32,
         model_version_); // 25 64 475, N / row / col
     VAIML_DEBUG_PRINT2("Finish to format WTS for Matmul-Reduce subgraph-",
-                       subgraph_index_matmul_reduce, "-> BMM", wts_sz_loaded,
+                       tf_idx, "-> BMM", wts_sz_loaded,
                        "loaded, rtp_offset: ", rtp_ptr - rtp_ptr_start);
 
-    if (subgraph_index_matmul_reduce > 0) {
-      ifm_s_name = NAME_CONCAT("/MatMul_", 0, 3, "_output_0_scale");
-      ifm_z_name = NAME_CONCAT("/MatMul_", 0, 3, "_output_0_zero_point");
-      wts_s_name = NAME_CONCAT("/MatMul_", 1, 3, "_output_0_scale");
-      wts_z_name = NAME_CONCAT("/MatMul_", 1, 3, "_output_0_zero_point");
-      ofm_s_name = NAME_CONCAT("/Add_", 0, 5, "_output_0_scale");
-      ofm_z_name = NAME_CONCAT("/Add_", 0, 5, "_output_0_zero_point");
-      wts_w_name = "";
-    } else {
-      ifm_s_name = "/MatMul_output_0_scale";
-      ifm_z_name = "/MatMul_output_0_zero_point";
-      wts_s_name = "/MatMul_1_output_0_scale";
-      wts_z_name = "/MatMul_1_output_0_zero_point";
-      ofm_s_name = "/Add_output_0_scale";
-      ofm_z_name = "/Add_output_0_zero_point";
-      wts_w_name = "";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_q_add_0_in_0_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_q_add_0_in_0_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_q_add_0_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_q_add_0_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_q_add_0_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_q_add_0_out_zp", tf_idx));
+    wts_w_name = "";
     wts_sz_loaded = GT_ADD_WTS_QDQ_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, 8 * 25 * 475, model_version_);
     VAIML_DEBUG_PRINT2("Finish to format WTS for Matmul-Reduce subgraph-",
-                       subgraph_index_matmul_reduce, "-> ADD", wts_sz_loaded,
+                       tf_idx, "-> ADD", wts_sz_loaded,
                        " loaded, rtp offset: ", rtp_ptr - rtp_ptr_start,
                        "rtp_ptr absolute offset: ", rtp_ptr - wts_ptr_);
-
-    if (subgraph_index_matmul_reduce > 0) {
-      ifm_s_name = mul_ifm_scale.at(subgraph_index_matmul_reduce);
-      ifm_z_name = NAME_CONCAT("/Add_", 0, 5, "_output_0_zero_point");
-      wts_s_name = "/Softmax_13_output_0_scale";
-      wts_z_name = "/Slice_1_output_0_zero_point";
-      ofm_s_name = mul_output_scale.at(subgraph_index_matmul_reduce);
-      ofm_z_name = NAME_CONCAT("/Mul_", 3, 5, "_output_0_zero_point");
-      wts_w_name = "/Slice_1_output_0_QuantizeLinear_Output";
-    } else {
-      ifm_s_name = "/Add_output_0_scale";
-      ifm_z_name = "/Add_output_0_zero_point";
-      wts_s_name = "/Softmax_13_output_0_scale";
-      wts_z_name = "/Slice_1_output_0_zero_point";
-      ofm_s_name = "/Mul_3_output_0_scale";
-      ofm_z_name = "/Mul_3_output_0_zero_point";
-      wts_w_name = "";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_q_mul_1_in_0_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_q_mul_1_in_0_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_q_mul_1_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_q_mul_1_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_q_mul_1_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_q_mul_1_out_zp", tf_idx));
+    wts_w_name = "";
     wts_sz_loaded = GT_MUL_WTS_QDQ_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, 8 * 25 * 480, model_version_);
     VAIML_DEBUG_PRINT2("Finish to format WTS for Matmul-Reduce subgraph-",
-                       subgraph_index_matmul_reduce, "-> Mul ", wts_sz_loaded,
+                       tf_idx, "-> Mul ", wts_sz_loaded,
                        " loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
     // Mul-4
-    if (subgraph_index_matmul_reduce > 0) {
-      ifm_s_name = NAME_CONCAT("/Add_", 0, 5, "_output_0_scale");
-      // mul2_scale.at(subgraph_index_matmul_reduce);
-      ifm_z_name = NAME_CONCAT("/Mul_", 3, 5, "_output_0_zero_point");
-      wts_s_name = "/Softmax_13_output_0_scale";
-      wts_z_name = "/Slice_output_0_zero_point";
-      ofm_s_name = mul2_scale.at(subgraph_index_matmul_reduce);
-      ofm_z_name = NAME_CONCAT("/Mul_", 4, 5, "_output_0_zero_point");
-      wts_w_name = "";
-    } else {
-      ifm_s_name = "/Add_output_0_scale";
-      ifm_z_name = "/Mul_3_output_0_zero_point";
-      wts_s_name = "/Softmax_13_output_0_scale";
-      wts_z_name = "/Slice_output_0_zero_point";
-      ofm_s_name = "/Mul_4_output_0_scale";
-      ofm_z_name = "/Mul_4_output_0_zero_point";
-      wts_w_name = "";
-    }
+    // if (subgraph_index_matmul_reduce > 0) {
+    //   ifm_s_name = NAME_CONCAT("/Add_", 0, 5, "_output_0_scale");
+    //   // mul2_scale.at(subgraph_index_matmul_reduce);
+    //   ifm_z_name = NAME_CONCAT("/Mul_", 3, 5, "_output_0_zero_point");
+    //   wts_s_name = "/Softmax_13_output_0_scale";
+    //   wts_z_name = "/Slice_output_0_zero_point";
+    //   ofm_s_name = mul2_scale.at(subgraph_index_matmul_reduce);
+    //   ofm_z_name = NAME_CONCAT("/Mul_", 4, 5, "_output_0_zero_point");
+    //   wts_w_name = "";
+    // } else {
+    //   ifm_s_name = "/Add_output_0_scale";
+    //   ifm_z_name = "/Mul_3_output_0_zero_point";
+    //   wts_s_name = "/Softmax_13_output_0_scale";
+    //   wts_z_name = "/Slice_output_0_zero_point";
+    //   ofm_s_name = "/Mul_4_output_0_scale";
+    //   ofm_z_name = "/Mul_4_output_0_zero_point";
+    //   wts_w_name = "";
+    // }
+    // FIXME should be q_mul_1_out_s
+    // ifm_s_name = Alias(str_fmt("tf_%d_q_add_0_out_s", tf_idx));
+    ifm_s_name = Alias(str_fmt("tf_%d_q_mul_1_out_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_q_mul_1_out_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_q_mul_2_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_q_mul_2_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_q_mul_2_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_q_mul_2_out_zp", tf_idx));
     wts_sz_loaded = GT_MUL_WTS_QDQ_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, 8 * 25 * 480, model_version_);
     VAIML_DEBUG_PRINT2("Finish to format WTS for Matmul-Reduce subgraph-",
-                       subgraph_index_matmul_reduce, "-> Mul ", wts_sz_loaded,
+                       tf_idx, "-> Mul ", wts_sz_loaded,
                        "loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
 
-    if (subgraph_index_matmul_reduce > 0) {
-      ifm_s_name = add_scale.at(subgraph_index_matmul_reduce);
-      ifm_z_name = NAME_CONCAT("/Mul_", 3, 5, "_output_0_zero_point");
-      wts_s_name = mul2_scale.at(subgraph_index_matmul_reduce);
-      wts_z_name = NAME_CONCAT("/Mul_", 4, 5, "_output_0_zero_point");
-      ofm_s_name = add_scale.at(subgraph_index_matmul_reduce);
-      ofm_z_name = NAME_CONCAT("/Add_", 2, 5, "_output_0_zero_point");
-      wts_w_name = "";
-    } else {
-      ifm_s_name = "/Mul_3_output_0_scale";
-      ifm_z_name = "/Mul_3_output_0_zero_point";
-      wts_s_name = "/Mul_4_output_0_scale";
-      wts_z_name = "/Mul_4_output_0_zero_point";
-      ofm_s_name = "/Mul_3_output_0_scale";
-      ofm_z_name = "/Add_2_output_0_zero_point";
-      wts_w_name = "";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_q_add_1_in_0_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_q_add_1_in_0_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_q_add_1_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_q_add_1_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_q_add_1_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_q_add_1_out_zp", tf_idx));
     wts_sz_loaded = GT_ADD_WTS_QDQ_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, 8 * 25 * 480, model_version_);
     VAIML_DEBUG_PRINT2("Finish to format WTS for Matmul-Reduce subgraph-",
-                       subgraph_index_matmul_reduce, "-> ADD", wts_sz_loaded,
+                       tf_idx, "-> ADD", wts_sz_loaded,
                        "loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
-#undef NAME_CONCAT
-#define NAME_CONCAT(name1, beta, scale, name2)                                 \
-  name1 + std::to_string(beta + subgraph_index_matmul_reduce * scale) + name2;
+
     // softmax and bmm2 is also in matmul reduce now
-    if (subgraph_index_matmul_reduce > 0) {
-      ifm_s_name = softmax_ifm_prefix_.at(subgraph_index_matmul_reduce);
-      ifm_z_name = NAME_CONCAT("/Add_", 2, 5, "_output_0_zero_point");
-      ofm_s_name = "/Softmax_13_output_0_scale";
-      ofm_z_name = "/Softmax_" + std::to_string(subgraph_index_matmul_reduce) +
-                   "_output_0_zero_point";
-    } else {
-      ifm_s_name = "/Mul_3_output_0_scale";
-      ifm_z_name = "/Add_2_output_0_zero_point";
-      ofm_s_name = "/Softmax_13_output_0_scale";
-      ofm_z_name = "/Softmax_output_0_zero_point";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_q_softmax_in_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_q_softmax_in_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_q_softmax_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_q_softmax_out_zp", tf_idx));
     // softmax shall take only wts size and no rtp will be used
     wts_sz_loaded = GT_SOFTMAX_WTS_convert(
         wts_, wts_ptr, ifm_s_name, ifm_z_name, ofm_s_name, ofm_z_name,
         480 /*K*/, 475 /*K_valid*/, model_version_);
     VAIML_DEBUG_PRINT2("Finish to format WTS for matmul_reduce subgraph-",
-                       subgraph_index_matmul_reduce, "-> Softmax",
-                       wts_sz_loaded, "loaded, rtp offset",
-                       rtp_ptr - rtp_ptr_start);
+                       tf_idx, "-> Softmax", wts_sz_loaded,
+                       "loaded, rtp offset", rtp_ptr - rtp_ptr_start);
 
-    if (subgraph_index_matmul_reduce > 0) {
-      std::set<int> set_slice = {
-          3, 5, 7, 8, 9, 14, 20, 21, 23, 28, 34,
-      };
-      std::set<int> set_concat = {1,  2,  4,  12, 13, 16, 17, 18,
-                                  19, 25, 26, 29, 31, 32, 33, 35};
-      std::set<int> set_linear_v = {
-          10, 11, 15, 22, 24, 30,
-      };
-      std::set<int> set_unsqueeze = {
-          6,
-          27,
-      };
-      if (set_slice.find(subgraph_index_matmul_reduce) != set_slice.end()) {
-        // 3, 7, 11, 15, 18, ..., 143
-        wts_s_name = "/Slice_" +
-                     std::to_string(4 * subgraph_index_matmul_reduce + 3) +
-                     "_output_0_scale";
-      } else if (set_concat.find(subgraph_index_matmul_reduce) !=
-                 set_concat.end()) {
-        wts_s_name = "/Concat_" +
-                     std::to_string(8 * subgraph_index_matmul_reduce + 115) +
-                     "_output_0_scale";
-      } else if (set_linear_v.find(subgraph_index_matmul_reduce) !=
-                 set_linear_v.end()) {
-        wts_s_name = "/linear_v_" +
-                     std::to_string(subgraph_index_matmul_reduce) +
-                     "/Add_output_0_scale";
-      } else if (set_unsqueeze.find(subgraph_index_matmul_reduce) !=
-                 set_unsqueeze.end()) {
-        wts_s_name = "/Unsqueeze_" +
-                     std::to_string(25 * subgraph_index_matmul_reduce + 385) +
-                     "_output_0_scale";
-      }
-      // 7, 123, 131, 139, 147, ..., 395
-      wts_z_name = "/Concat_" +
-                   std::to_string(8 * subgraph_index_matmul_reduce + 115) +
-                   "_output_0_zero_point";
-      // 2, 5, 8, 11, 14, 107
-      ofm_s_name = "/MatMul_" +
-                   std::to_string(3 * subgraph_index_matmul_reduce + 2) +
-                   "_output_0_scale";
-      ofm_z_name = "/MatMul_" +
-                   std::to_string(3 * subgraph_index_matmul_reduce + 2) +
-                   "_output_0_zero_point";
-      wts_w_name = "/Concat_" +
-                   std::to_string(8 * subgraph_index_matmul_reduce + 115) +
-                   "_output_0_QuantizeLinear_Output";
-
-      ifm_s_name = "/Softmax_13_output_0_scale";
-      ifm_z_name = "/Softmax_" + std::to_string(subgraph_index_matmul_reduce) +
-                   "_output_0_zero_point";
-    } else {
-      ifm_s_name = "/Softmax_13_output_0_scale";
-      ifm_z_name = "/Softmax_output_0_zero_point";
-      wts_s_name = "/linear_v/Add_output_0_scale";
-      wts_z_name = "/Concat_7_output_0_zero_point";
-      ofm_s_name = "/MatMul_2_output_0_scale";
-      ofm_z_name = "/MatMul_2_output_0_zero_point";
-      wts_w_name = "/Concat_7_output_0_QuantizeLinear_Output";
-    }
+    ifm_s_name = Alias(str_fmt("tf_%d_q_bmm_1_in_0_s", tf_idx));
+    ifm_z_name = Alias(str_fmt("tf_%d_q_bmm_1_in_0_zp", tf_idx));
+    wts_s_name = Alias(str_fmt("tf_%d_q_bmm_1_in_1_s", tf_idx));
+    wts_z_name = Alias(str_fmt("tf_%d_q_bmm_1_in_1_zp", tf_idx));
+    ofm_s_name = Alias(str_fmt("tf_%d_q_bmm_1_out_s", tf_idx));
+    ofm_z_name = Alias(str_fmt("tf_%d_q_bmm_1_out_zp", tf_idx));
     wts_sz_loaded = GT_BMM_WTS_convert(
         wts_, wts_ptr, rtp_ptr, ifm_s_name, ifm_z_name, wts_s_name, wts_z_name,
         ofm_s_name, ofm_z_name, wts_w_name, false, 25, 512, 64, 16, 128, 16,
         model_version_); // this will be the last bmm in our, padding occurs!
     VAIML_DEBUG_PRINT(
-        "Finish to format WTS for linear_out_feed_forward subgraph-",
-        subgraph_index_matmul_reduce, "-> MM2 ", wts_sz_loaded,
+        "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
+        "-> MM2 ", wts_sz_loaded,
         ", loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
     // note we are not using up all available wts buffer, the pointer is updated
     // upon next enter with subgraph_id_ == sm_feed_forward
-    subgraph_index_matmul_reduce++;
-#undef NAME_CONCAT
   }
-  std::string out_filename(vaiml_model_path_ + '/' + sg_name_ +
-                           "_dump_wts32.txt");
-  // write_file((uint32_t*)(ori_wts_ptr), 10697152, out_filename);
 
   if (subgraph_id_ == SUBGRAPH_ID::GT_QKV) {
     // rtp layer k, q, v
@@ -1330,27 +846,6 @@ void MyCustomOpGT1_3::InitTransformerBlockWeights(
     memcpy(ori_wts_ptr, ori_wts_ptr + 128, 128);
     memcpy(ori_wts_ptr + 128, swap_buffer, 128);
   }
-  // std::string out_filename(vaiml_model_path_ +
-  // '/'+sg_name_+"_dump_wts32.txt");
-  // write_file((uint32_t*)(wts_ptr -
-  // total_wts_bytes), total_wts_bytes, out_filename);
-  // if (subgraph_id_ == SUBGRAPH_ID::GT_QKV) {
-  //   write_file_binary((uint32_t*)(ori_wts_ptr), 1783296,
-  //   vaiml_model_path_ +
-  //   '/'+sg_name_+"_" +std::to_string(subgraph_id_) + "_dump_wts32.txt");
-  // } else if (subgraph_id_ == SUBGRAPH_ID::GT_MATMUL_REDUCE) {
-  //   write_file_binary((uint32_t*)(ori_wts_ptr), 1472,
-  //   vaiml_model_path_ +
-  //   '/'+sg_name_+"_" +std::to_string(subgraph_id_) + "_dump_wts32.txt");
-  // } else if (subgraph_id_ == SUBGRAPH_ID::GT_SM_LINEAR_OUT_FEED_FORWARD) {
-  //   write_file_binary((uint32_t*)(ori_wts_ptr), 9823296,
-  //   vaiml_model_path_ +
-  //   '/'+sg_name_+"_" +std::to_string(subgraph_id_) + "_dump_wts32.txt");
-  // } else if (subgraph_id_ == SUBGRAPH_ID::GT_LN_MATMUL_ADD_LN) {
-  //   write_file_binary((uint32_t*)(ori_wts_ptr), 590400,
-  //   vaiml_model_path_ +
-  //   '/'+sg_name_+"_" +std::to_string(subgraph_id_) + "_dump_wts32.txt");
-  // }
 }
 
 int32_t MyCustomOpGT1_3::Slice144Compute_GT(Ort::KernelContext& ctx) const {
@@ -1360,8 +855,8 @@ int32_t MyCustomOpGT1_3::Slice144Compute_GT(Ort::KernelContext& ctx) const {
   auto& output_shape = output_shapes[0];
   auto ortvalue = ctx.GetOutput(0, output_shape.data(), output_shape.size());
   void* output = ortvalue.GetTensorMutableRawData();
-  int zp = 0;
-  float scale = 0.00042341125663369894;
+  int zp = cache_frame_zp_;
+  float scale = cache_frame_s_;
   for (int i = 0; i < 3 * 80; i++) {
     ((float*)output)[i] = (((const uint16_t*)input)[100 * 80 + i] - zp) * scale;
   }
@@ -1370,17 +865,17 @@ int32_t MyCustomOpGT1_3::Slice144Compute_GT(Ort::KernelContext& ctx) const {
 
 int32_t MyCustomOpGT1_3::MainBlockInputs(Ort::KernelContext& ctx) const {
   /* onnx order:
-        /Reshape_1_output_0 inp_cache_v (v-gather)
-        /Reshape_output_0 inp_cache_k (k-gather)
-        /Slice_1_output_0_QuantizeLinear_Output mul before reduce min
-        /Slice_output_0_QuantizeLinear_Output mul after reduce min
-        /out/Add_output_0_QuantizeLinear_Output add-ln
-
+  --- GT
       "/out/Add_output_0_QuantizeLinear_Output",
       "inp_cache_k",
       "inp_cache_v",
-      "mask_DequantizeLinear_Output",
-      "mask_DequantizeLinear_Output/duplicated"
+      "mask_QuantizeLinear_Output"
+  --- GTC
+      "/out/Add_output_0_QuantizeLinear_Output",
+      "inp_cache_k",
+      "inp_cache_v",
+      "mask_q_to_dq",
+      "mask_q_to_dq_token_240" (not used)
     txn order:
       add-ln, bmm, v gather, k gather,
       |mul after reducemin(0:475 of mask), mul before reducemin(475:950 of
@@ -1398,7 +893,7 @@ int32_t MyCustomOpGT1_3::MainBlockInputs(Ort::KernelContext& ctx) const {
     memcpy(ifm_ptr_, input, 25 * 512 * sizeof(uint16_t));
   }
 
-  for (int tf_iter = 0; tf_iter < GT_1_3_TF_NUM; tf_iter++) {
+  for (int tf_iter = 0; tf_iter < transformer_block_num_; tf_iter++) {
     size_t base_ddr = tf_iter * 4300800;
     { // bmm
       int8_t* bmm_input = ifm_ptr_ + GT_FRONT_SZ + base_ddr + 25600;
@@ -1469,15 +964,21 @@ int32_t MyCustomOpGT1_3::MainBlockInputs(Ort::KernelContext& ctx) const {
     node_cache.erase("Slice");
     node_cache.erase("Slice_1");
   }
+  return 0;
 }
 
 int32_t MyCustomOpGT1_3::MainBlockOutputs(Ort::KernelContext& ctx) const {
   /*
    onnx order:
-        oup_lid_QuantizeLinear_Output
-        oup_cache_v
-        oup_cache_k
-        /Add_179_output_0_QuantizeLinear_Output
+   --- GT
+      "oup_lid_QuantizeLinear_Output",
+      "oup_cache_v",
+      "oup_cache_k",
+      "/Add_179_output_0_QuantizeLinear_Output"
+  --- GTC
+      "oup_cache_v",
+      "oup_cache_k",
+      "/Add_159_output_0_QuantizeLinear_Output"
    */
   auto get_ort_pointer = [&ctx, this](size_t idx) {
     auto output_shapes = this->ort_output_shapes_;
@@ -1487,14 +988,15 @@ int32_t MyCustomOpGT1_3::MainBlockOutputs(Ort::KernelContext& ctx) const {
     return ortvalue.GetTensorMutableRawData();
   };
 
+  bool has_oup_lid = (oup_lid_idx_ > 0);
   // for (auto split_idx : {1,2}) {
   //   void* data = get_ort_pointer(split_idx);
   //   bool is_v_split = (split_idx == 1);
   for (auto split_idx : {1, 2}) {
-    void* data = get_ort_pointer(split_idx);
+    void* data = get_ort_pointer(split_idx - !has_oup_lid);
     bool is_v_split = (split_idx == 1);
     size_t xrt_offset_kv = is_v_split ? 1561600 : 2048000;
-    for (int tf_iter = 0; tf_iter < GT_1_3_TF_NUM; tf_iter++) {
+    for (int tf_iter = 0; tf_iter < transformer_block_num_; tf_iter++) {
       size_t xrt_base_ddr = tf_iter * 4300800 + xrt_offset_kv + GT_FRONT_SZ;
       size_t ort_base_ddr = tf_iter * 8 * 450 * 64;
       for (int i = 0; i < 8; i++) {
@@ -1507,16 +1009,17 @@ int32_t MyCustomOpGT1_3::MainBlockOutputs(Ort::KernelContext& ctx) const {
 
   {
     // Add_179_output_0_QuantizeLinear_Output
-    void* data = get_ort_pointer(3);
-    memcpy(data, ofm_ptr_ + GT_FRONT_SZ + GT_1_3_TF_NUM * 4300800,
+    void* data = get_ort_pointer(3 - !has_oup_lid);
+    memcpy(data, ofm_ptr_ + GT_FRONT_SZ + transformer_block_num_ * 4300800,
            25 * 512 * sizeof(uint16_t));
   }
-  {
+  if (has_oup_lid) {
     // oup_lid
     void* data = get_ort_pointer(0);
-    memcpy(data, ofm_ptr_ + GT_FRONT_SZ + 15 * 4300800,
+    memcpy(data, ofm_ptr_ + GT_FRONT_SZ + oup_lid_idx_ * 4300800,
            25 * 512 * sizeof(uint16_t));
   }
+  return 0;
 }
 
 void MyCustomOpGT1_3::Compute(const OrtApi* api,
@@ -1583,8 +1086,8 @@ void MyCustomOpGT1_3::Compute(const OrtApi* api,
   // hardware run
   auto output_shapes = ort_output_shapes_;
   VAIML_DEBUG_PRINT("    outputs number: ", output_shapes.size());
-  auto err_status = const_cast<hw_runner&>(g).run(
-      (void*)ifm_ptr_, (void*)wts_ptr_, (void*)ofm_ptr_);
+  auto err_status =
+      runner_->run((void*)ifm_ptr_, (void*)wts_ptr_, (void*)ofm_ptr_);
 
   if (subgraph_id_ == GT_FRONT) {
     {

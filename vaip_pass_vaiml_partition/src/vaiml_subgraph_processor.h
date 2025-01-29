@@ -63,7 +63,10 @@ struct IndexedSubGraph {
   VaimlShapeVec input_shapes;
   VaimlShapeVec output_shapes;
 };
-
+struct PartitionInfo {
+  std::vector<size_t> partition_nodes;
+  std::string partition_name;
+};
 struct NodeWithNodeArg {
   const onnxruntime::Node* node;
   const onnxruntime::NodeArg* nodeArg;
@@ -79,7 +82,7 @@ public:
   ~VaimlSubgraphProcessor(){
 
   };
-  std::vector<std::vector<size_t>> GetSupportedNodes(const Graph& graph) const;
+  std::vector<PartitionInfo> GetSupportedNodes(const Graph& graph) const;
   // partition function: generate subgraphs supported VAIML
   std::vector<std::unique_ptr<IndexedSubGraph>>
   GetPartitions(const Graph& graph) const;
@@ -110,14 +113,17 @@ public:
   void setMsigOpsMap();
 
   int saveMemoryToCache(const char* mem, size_t mem_size,
-                        std::filesystem::path cache_dir, std::string filename);
-  void loadAdd128(std::vector<uint8_t>& dst, int8_t* src, int size);
+                        std::filesystem::path cache_dir,
+                        std::string filename) const;
+  void loadAdd128(std::vector<uint8_t>& dst, int8_t* src, int size) const;
   int htGenerateLstmInput(const LstmSettings& s,
                           const struct lstm_init_wts& lstm_in, uint8_t* result,
-                          std::filesystem::path cache_dir);
-  std::vector<uint8_t> ht_wts_gen_lstm_b2b(const lstm_init_wts& param,
-                                           std::filesystem::path cache_dir);
-  void InitHtLstmWeights();
+                          std::filesystem::path cache_dir) const;
+  std::vector<uint8_t>
+  ht_wts_gen_lstm_b2b(const lstm_init_wts& param,
+                      std::filesystem::path cache_dir) const;
+  void InitHtLstmWeights(const std::unordered_map<std::string, std::string>&
+                             initializer_map) const;
 
 private:
   Graph& graph_;
@@ -162,66 +168,10 @@ private:
   std::string constants_file_name_ = "wts.bin";
   std::unordered_map<std::string, ConstantInfo> constants_map_;
   std::string full_model_hash_;
-  std::map<std::string, std::map<std::string, std::vector<std::string>>>
+  mutable std::map<std::string, std::map<std::string, std::vector<std::string>>>
       msig_ops_map_;
 
   std::filesystem::path cache_dir_;
-  std::unordered_map<std::string, char*> ht_weights_preformat_;
-  std::vector<std::string> ht_lstm_wts_name_ = {
-      // scale: float[24]
-      "c0_scale", "/decoder/rnn/Slice_13_output_0_scale",
-      "/decoder/rnn/Slice_27_output_0_scale", "h0_scale",
-      "/decoder/rnn/Slice_12_output_0_scale",
-      "/decoder/rnn/Slice_26_output_0_scale",
-      "decoder_embedding.embed.weight_scale",
-      "decoder_embedding.embed_lnorm.weight_scale",
-      "/decoder_embedding/embed_lnorm/Add_1_output_0_scale",
-      "/decoder_embedding/sigmoid/Sigmoid_output_0_scale",
-      "/decoder/rnn/Unsqueeze_output_0_scale",
-      "/decoder/rnn/Unsqueeze_1_output_0_scale",
-      "/decoder/rnn/Unsqueeze_2_output_0_scale",
-      "/decoder/rnn/LSTM_output_0_scale", "/decoder/rnn/LSTM_output_1_scale",
-      "/decoder/rnn/LSTM_output_2_scale",
-      "/decoder/rnn/Unsqueeze_3_output_0_scale",
-      "/decoder/rnn/Unsqueeze_4_output_0_scale",
-      "/decoder/rnn/Unsqueeze_5_output_0_scale",
-      "/decoder/rnn/LSTM_1_output_0_scale",
-      "/decoder/rnn/LSTM_1_output_1_scale",
-      "/decoder/rnn/LSTM_1_output_2_scale", "h1_scale", "c1_scale",
-      // zp: int8[24]
-      "c0_zero_point", "/decoder/rnn/Slice_13_output_0_zero_point",
-      "/decoder/rnn/Slice_27_output_0_zero_point", "h0_zero_point",
-      "/decoder/rnn/Slice_12_output_0_zero_point",
-      "/decoder/rnn/Slice_26_output_0_zero_point",
-      "decoder_embedding.embed.weight_zero_point",
-      "decoder_embedding.embed_lnorm.weight_zero_point",
-      "/decoder_embedding/embed_lnorm/Add_1_output_0_zero_point",
-      "/decoder_embedding/sigmoid/Sigmoid_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_1_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_2_output_0_zero_point",
-      "/decoder/rnn/LSTM_output_0_zero_point",
-      "/decoder/rnn/LSTM_output_1_zero_point",
-      "/decoder/rnn/LSTM_output_2_zero_point",
-      "/decoder/rnn/Unsqueeze_3_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_4_output_0_zero_point",
-      "/decoder/rnn/Unsqueeze_5_output_0_zero_point",
-      "/decoder/rnn/LSTM_1_output_0_zero_point",
-      "/decoder/rnn/LSTM_1_output_1_zero_point",
-      "/decoder/rnn/LSTM_1_output_2_zero_point", "h1_zero_point",
-      "c1_zero_point",
-      // lstm0_h_wts 48
-      "/decoder/rnn/Unsqueeze_1_output_0_quantized",
-      // lstm0_x_wts 49
-      "/decoder/rnn/Unsqueeze_output_0_quantized",
-      // lstm0_bias 50
-      "/decoder/rnn/Unsqueeze_2_output_0_quantized",
-      // lstm1_h_wts 51
-      "/decoder/rnn/Unsqueeze_4_output_0_quantized",
-      // lstm1_x_wts 52
-      "/decoder/rnn/Unsqueeze_3_output_0_quantized",
-      // lstm1_bias 53
-      "/decoder/rnn/Unsqueeze_5_output_0_quantized"};
 };
 
 } // namespace vaip_vaiml_subgraph_processor

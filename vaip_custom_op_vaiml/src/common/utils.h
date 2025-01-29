@@ -1,3 +1,7 @@
+/*
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
+ */
 #pragma once
 
 #ifdef _WIN32
@@ -101,7 +105,7 @@ inline void q_int8(const float* in, int8_t* out, float scale, int8_t zp,
   float inv_scale = 1.0f / scale;
   for (int i = 0; i < size; i++) {
     float temp = in[i] * inv_scale + zp;
-    temp = temp > 255 ? 255 : temp < -128 ? -128 : temp;
+    temp = temp > 127 ? 127 : temp < -128 ? -128 : temp;
     out[i] = static_cast<int8_t>(temp);
   }
 }

@@ -1,3 +1,8 @@
+##
+##  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+##  Licensed under the MIT License.
+##
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
@@ -87,7 +92,7 @@ def pass_main_cpp_content(name):
  * to the BSD open source license, it is NOT the BSD open source license nor
  * other OSI-approved open source license.
  *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved. 
+ *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
  *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
  * reserved.
  *
@@ -156,7 +161,7 @@ struct {struct_name} {{
    // apply the rule
    void process(IPass& self, Graph& graph) {{
       MY_LOG(1) << self_.get_pass_proto().name() << "[" << self_.get_pass_proto().plugin() << "] start processing graph";
-      create_rule(&self)->apply(&graph); 
+      create_rule(&self)->apply(&graph);
       MY_LOG(1) << self_.get_pass_proto().name() << "[" << self_.get_pass_proto().plugin() << "] finish processing graph";
     }}
 

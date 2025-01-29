@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include "./custom_op.hpp"
@@ -61,45 +32,23 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
   auto data_file = dd_cache_dir / meta_def->generic_param().at("data_file");
   auto data_file_opt = context->read_file_c8(
       std::filesystem::path(data_file).filename().string());
-  if (data_file_opt.has_value()) {
-    auto file = data_file_opt.value();
-    in_data_.resize(file.size() / sizeof(uint8_t));
-    memcpy(in_data_.data(), file.data(), file.size());
-
-  } else {
-    std::ifstream file(data_file.u8string(), std::ios::binary);
-    file.seekg(0, std::ios::end);
-    std::streamsize size = file.tellg();
-    file.seekg(0, std::ios::beg);
-    in_data_.resize(size / sizeof(uint8_t));
-
-    if (!file.read(reinterpret_cast<char*>(in_data_.data()), size)) {
-      std::cerr << "Error reading data file!" << std::endl;
-    }
-    file.close();
+  if (!data_file_opt.has_value()) {
+    std::cerr << "Error reading file: " << data_file << std::endl;
   }
+  auto file = data_file_opt.value();
+  in_data_.resize(file.size() / sizeof(uint8_t));
+  memcpy(in_data_.data(), file.data(), file.size());
 
   auto wts_file = dd_cache_dir / meta_def->generic_param().at("wts_file");
   std::vector<uint8_t> wts_data_tmp;
   std::streamsize sizew;
   auto wts_data_opt = context->read_file_u8(
       std::filesystem::path(wts_file).filename().string());
-  if (wts_data_opt.has_value()) {
-    wts_data_tmp = wts_data_opt.value();
-    sizew = wts_data_tmp.size();
-  } else {
-    std::ifstream filew(wts_file.u8string(), std::ios::binary);
-    filew.seekg(0, std::ios::end);
-    sizew = filew.tellg();
-    filew.seekg(0, std::ios::beg);
-    std::vector<uint8_t> wts_data_tmp;
-    wts_data_tmp.resize(sizew / sizeof(uint8_t));
-
-    if (!filew.read(reinterpret_cast<char*>(wts_data_tmp.data()), sizew)) {
-      std::cerr << "Error reading data file!" << std::endl;
-    }
-    filew.close();
+  if (!wts_data_opt.has_value()) {
+    std::cerr << "Error reading file: " << wts_file << std::endl;
   }
+  wts_data_tmp = wts_data_opt.value();
+  sizew = wts_data_tmp.size();
   wts_data_.resize(sizew / sizeof(uint8_t));
   for (int i = 0; i < sizew; i++)
     wts_data_[i] = ((float)wts_data_tmp[i] - wt_zp_) * wt_scale_;

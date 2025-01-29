@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include <cstdint>
 #include <fstream>
@@ -85,83 +57,12 @@ public:
     num_row = 4;
     k_iter = len_kp / sv_k;
     n_iter_sv = len_n / sv_n0;
-    // ---- Qdq settings, will be set in input_generate() ----
-    Sx = 0;
-    Zx = 0;
-    Sw = 0;
-    Zw = 0;
-    Sr = 0;
-    Zr = 0;
-    Sb = 0;
-    Zb = 0;
-    Sh = 0;
-    Zh = 0;
-    Sc = 0;
-    Zc = 0;
-    Sy0 = 0;
-    Zy0 = 0;
-    Sy1 = 0;
-    Zy1 = 0;
-    Sy2 = 0;
-    Zy2 = 0;
-    Sg = 0;
-    Zg = 0;
     if (layer == 320) {
       layer_name = "lstm_320";
       len_x = 320; // 64; // dim k
-      // ---- QDQ params for lstm320 layer ----
-      xw_shift = 0;
-      hr_shift = 0;
-      xwq_shift = 12;
-      hrq_shift = 12;
-      xs_shift = 12;
-      hs_shift = 12;
-      nonlinear_in_shift = 18;
-      nonlinear_out_h_shift = 0;
-      nonlinear_out_c_shift = 0;
-      output_h_shift = 20;
-      output_c_shift = 20;
-      c_shift0 = 0;
-      c_shift1 = 20;
-      c_shift2 = 0;
-      qx_scale = 29160;
-      qh_scale = 125700;
-      qa_scale = 3732477;
-      qb_scale = 16089607;
-      output_h_scale = 7735;
-      output_h_zp = 134;
-      output_c_scale = 22194;
-      output_c_zp = 146;
-      c_scale = 19692;
-      c_zp = 141;
     } else if (layer == 1024) {
       layer_name = "lstm_1024";
       len_x = 1024; // 64; // dim k
-      // ---- QDQ params for lstm1024 layer ----
-      xw_shift = 0;
-      hr_shift = 0;
-      xwq_shift = 13;
-      hrq_shift = 13;
-      xs_shift = 13;
-      hs_shift = 13;
-      nonlinear_in_shift = 17;
-      nonlinear_out_h_shift = 0;
-      nonlinear_out_c_shift = 0;
-      output_h_shift = 20;
-      output_c_shift = 20;
-      c_shift0 = 0;
-      c_shift1 = 20;
-      c_shift2 = 0;
-      qx_scale = 99948;
-      qh_scale = 191141;
-      qa_scale = 12793403;
-      qb_scale = 24466034;
-      output_h_scale = 7712;
-      output_h_zp = 134;
-      output_c_scale = 22195;
-      output_c_zp = 164;
-      c_scale = 17954;
-      c_zp = 161;
     }
   }
 
@@ -187,52 +88,6 @@ public:
   int num_row;
   int k_iter;
   int n_iter_sv;
-  // ---- Qdq settings, will be set in input_generate() ----
-  int Sx;
-  int Zx;
-  int Sw;
-  int Zw;
-  int Sr;
-  int Zr;
-  int Sb;
-  int Zb;
-  int Sh;
-  int Zh;
-  int Sc;
-  int Zc;
-  int Sy0;
-  int Zy0;
-  int Sy1;
-  int Zy1;
-  int Sy2;
-  int Zy2;
-  int Sg;
-  int Zg;
-  // ---- QDQ params for lstm320 layer ----
-  int xw_shift;
-  int hr_shift;
-  int xwq_shift;
-  int hrq_shift;
-  int xs_shift;
-  int hs_shift;
-  int nonlinear_in_shift;
-  int nonlinear_out_h_shift;
-  int nonlinear_out_c_shift;
-  int output_h_shift;
-  int output_c_shift;
-  int c_shift0;
-  int c_shift1;
-  int c_shift2;
-  int qx_scale;
-  int qh_scale;
-  int qa_scale;
-  int qb_scale;
-  int output_h_scale;
-  int output_h_zp;
-  int output_c_scale;
-  int output_c_zp;
-  int c_scale;
-  int c_zp;
 };
 
 template <class dtype>
@@ -704,6 +559,8 @@ private:
 struct lstm_init_wts {
   double scale[24];
   uint8_t zp[24];
+  uint32_t lstm_320_rtp[16];
+  uint32_t lstm_1024_rtp[16];
   int8_t* lstm0_h_wts; //[1*4096*1024];
   int8_t* lstm0_x_wts; //[1*4096*320];
   int8_t* lstm0_bias;  //[1*8192];
@@ -713,16 +570,19 @@ struct lstm_init_wts {
 };
 
 void loadAdd128(std::vector<uint8_t>& dst, int8_t* src, int size);
-int htGenerateLstmInput(const LstmSettings& s,
-                        const struct lstm_init_wts& lstm_in, uint8_t* result,
-                        const vaip_core::PassContext& context);
+int htGenerateLstmInput(const LstmSettings& s, struct lstm_init_wts& lstm_in,
+                        uint8_t* result, const vaip_core::PassContext& context);
 
-std::vector<uint8_t> ht_wts_gen_lstm_b2b(const lstm_init_wts& param,
+std::vector<uint8_t> ht_wts_gen_lstm_b2b(lstm_init_wts& param,
                                          const vaip_core::PassContext& context);
 
 std::vector<uint8_t>
 wts_gen_matmul(int8_t* mat_B, uint32_t M, uint32_t K, uint32_t N, uint32_t sv_M,
                uint32_t sv_K, uint32_t sv_N, float s_matA, int64_t zp_matA,
                float s_matB, int64_t zp_matB, float s_matC, int64_t zp_matC,
-               float ifm_scale_refactor = 1.0, float ofm_scale_refactor = 1.0);
+               float ifm_scale_refactor, float ofm_scale_refactor,
+               uint32_t* mm_add_rtp);
+void rtp_gen_add(double s_matA, int64_t zp_matA, double s_matB, int64_t zp_matB,
+                 double s_matC, int64_t zp_matC, float ifm_scale_refactor,
+                 float ofm_scale_refactor, uint32_t* mm_add_rtp);
 } // namespace vaip_vaiml_custom_op

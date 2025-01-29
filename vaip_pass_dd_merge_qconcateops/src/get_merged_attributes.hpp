@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
-# Copyright (C) 2022 Xilinx, Inc.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #pragma once
 #include "nlohmann/json.hpp"
@@ -209,7 +180,7 @@ void handle_last_lstm(const onnxruntime::Graph& graph,
 // utils.py
 void get_merged_attributes(NodeBuilder& building_node, NodeInput input,
                            NodeInput output, onnxruntime::Graph* graph,
-                           binder_t* binder) {
+                           binder_t* binder, std::string model_variant) {
   int64_t width = 0;
   std::vector<std::string> list_wt_name;
   std::vector<std::string> list_QDQ;
@@ -504,13 +475,24 @@ void get_merged_attributes(NodeBuilder& building_node, NodeInput input,
 
       auto out_scale = node_arg_get_const_data_as_float(*graph, *output_scale);
       auto out_zero_point = node_arg_get_const_data_as_u16(*graph, *output_zp);
+      std::map<std::string, std::vector<int>> mswbjvw_qdq_srs_shifts_08 = {
+          {"80", {7, 7, 7}},    {"160", {7, 7, 7}},    {"320", {10, 10, 9}},
+          {"640", {10, 10, 9}}, {"1280", {10, 10, 9}}, {"2560", {10, 10, 9}},
+          {"5120", {8, 8, 7}},  {"8000", {8, 8, 7}},
+      };
       std::map<std::string, std::vector<int>> mswbjvw_qdq_srs_shifts = {
           {"80", {7, 7, 7}},   {"160", {7, 7, 7}},  {"320", {7, 7, 7}},
           {"640", {8, 8, 8}},  {"1280", {9, 9, 9}}, {"2560", {8, 8, 8}},
           {"5120", {8, 8, 7}}, {"8000", {8, 8, 7}},
       };
       std::string graphID = std::to_string(width);
-      std::vector<int> shifts = mswbjvw_qdq_srs_shifts[graphID];
+      std::vector<int> shifts;
+      std::string mv = model_variant.substr(0, 2);
+      if (mv == "08")
+        shifts = mswbjvw_qdq_srs_shifts_08[graphID];
+      else
+        shifts = mswbjvw_qdq_srs_shifts[graphID];
+
       auto [C0, C1, C2, conv_shift, shft_c2, mat_shift] =
           vaip::dd::qmatmulcalc::dq_uint16A_uint16W_bias_matmul_q_param_gen(
               in_scale, in_zero_point, weight_tensor, w_scale, w_zero_point,

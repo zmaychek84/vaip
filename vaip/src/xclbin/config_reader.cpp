@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include "config_reader.hpp"
 #include "nlohmann/json.hpp"
@@ -44,9 +16,7 @@
 
 DEF_ENV_PARAM_2(XLNX_VART_FIRMWARE, "", std::string)
 DEF_ENV_PARAM_2(DEBUG_LOG_LEVEL, "error", std::string)
-DEF_ENV_PARAM(XLNX_ENABLE_OLD_QDQ, "1")
 DEF_ENV_PARAM(XLNX_ENABLE_BATCH, "0")
-DEF_ENV_PARAM(XLNX_ENABLE_PY3_ROUND, "0")
 DEF_ENV_PARAM(NUM_OF_DPU_RUNNERS, "1")
 
 namespace vaip_core {
@@ -78,25 +48,6 @@ update_enable_batch(const onnxruntime::ProviderOptions& session_option) {
 }
 
 static void
-update_enable_old_qdq(const onnxruntime::ProviderOptions& session_option) {
-  if (session_option.find("xlnx_enable_old_qdq") != session_option.end()) {
-    std::string enable_old_qdq = session_option.at("xlnx_enable_old_qdq");
-    if (enable_old_qdq == "1") {
-      ENV_PARAM(XLNX_ENABLE_OLD_QDQ) = 1;
-    } else if (enable_old_qdq == "0") {
-      ENV_PARAM(XLNX_ENABLE_OLD_QDQ) = 0;
-    } else {
-      ENV_PARAM(XLNX_ENABLE_OLD_QDQ) = 1;
-    }
-#ifdef _WIN32
-    _putenv_s("XLNX_ENABLE_OLD_QDQ", enable_old_qdq.c_str());
-#else
-    setenv("XLNX_ENABLE_OLD_QDQ", enable_old_qdq.c_str(), 1);
-#endif
-  }
-}
-
-static void
 update_num_dpu_runners(const onnxruntime::ProviderOptions& session_option) {
   int num_of_dpu_runners = 1;
   if (session_option.find("num_of_dpu_runners") != session_option.end()) {
@@ -110,24 +61,6 @@ update_num_dpu_runners(const onnxruntime::ProviderOptions& session_option) {
     _putenv_s("NUM_OF_DPU_RUNNERS", std::to_string(num_of_dpu_runners).c_str());
 #else
     setenv("NUM_OF_DPU_RUNNERS", std::to_string(num_of_dpu_runners).c_str(), 1);
-#endif
-  }
-}
-
-static void
-update_py3_round(const onnxruntime::ProviderOptions& session_option) {
-  if (session_option.find("xlnx_enable_py3_round") != session_option.end()) {
-    std::string py3_round = session_option.at("xlnx_enable_py3_round");
-    if (py3_round == "1") {
-      ENV_PARAM(XLNX_ENABLE_PY3_ROUND) = 1;
-    } else {
-      py3_round = std::string("0");
-      ENV_PARAM(XLNX_ENABLE_PY3_ROUND) = 0;
-    }
-#ifdef _WIN32
-    _putenv_s("XLNX_ENABLE_PY3_ROUND", py3_round.c_str());
-#else
-    setenv("XLNX_ENABLE_PY3_ROUND", py3_round.c_str(), 1);
 #endif
   }
 }
@@ -181,9 +114,7 @@ get_config_json(const onnxruntime::ProviderOptions& options) {
   nlohmann::json ret;
   update_log_level(options);
   update_enable_batch(options);
-  update_enable_old_qdq(options);
   update_num_dpu_runners(options);
-  update_py3_round(options);
   bool config_set = options.find("config_file") != options.end();
   if (config_set) {
     ret = get_config_json_str_from_config_file(options.at("config_file"));

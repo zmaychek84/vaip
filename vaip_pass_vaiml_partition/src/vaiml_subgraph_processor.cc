@@ -19,9 +19,10 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 
+#include "gt_initializer_mapping_subpass.h"
+#include "ht_initializer_mapping_subpass.h"
 #include "vaiml_subgraph_processor.h"
 #include "vaip/vaip.hpp"
-
 #ifdef _WIN32
 #  pragma warning(disable : 4244)
 // #pragma warning(disable : 4840)
@@ -323,11 +324,7 @@ void VaimlSubgraphProcessor::setMsigOpsMap() {
   // Use separate header files for each model and version to make it more
   // managable
 #include "gt_inner_map_1_2.h"
-#include "gt_inner_map_1_3.h"
-#include "ht_inner_map_1_2.h"
-  msig_ops_map_.insert(std::make_pair("HT_v1.2", ht_inner_map_1_2));
   msig_ops_map_.insert(std::make_pair("GT_v1.2", gt_inner_map_1_2));
-  msig_ops_map_.insert(std::make_pair("GT_v1.3", gt_inner_map_1_3));
 }
 
 VaimlSubgraphProcessor::VaimlSubgraphProcessor(Graph& graph, IPass& self)
@@ -449,7 +446,7 @@ size_t getInputEdgesCount(const Node* node) {
   return ret;
 }
 
-std::vector<std::vector<size_t>>
+std::vector<PartitionInfo>
 VaimlSubgraphProcessor::GetSupportedNodes(const Graph& graph) const {
   // check if the partition needs to be recompiled based on original model
   // signature
@@ -511,19 +508,20 @@ VaimlSubgraphProcessor::GetSupportedNodes(const Graph& graph) const {
   }
   opsFile.close();
 
-  std::vector<std::vector<size_t>> node_groups;
+  std::vector<PartitionInfo> node_groups;
 
   for (auto kv : subgraphNodesMap) {
     std::vector<size_t> supported_node_vec;
+    std::string partition_name = kv.first;
     for (auto nodeName : kv.second) {
       if (nodename_index_map.find(nodeName) != nodename_index_map.end()) {
         supported_node_vec.push_back(nodename_index_map[nodeName]);
       } else {
-        LOG(INFO) << "ERRORS:: nodeName " << nodeName
-                  << " can not be found in graph";
+        LOG(INFO) << "WARNING:: nodeName " << nodeName
+                  << " can not be found in graph, skipping";
       }
     }
-    node_groups.push_back(supported_node_vec);
+    node_groups.push_back({supported_node_vec, partition_name});
   }
 
   return node_groups;
@@ -531,28 +529,15 @@ VaimlSubgraphProcessor::GetSupportedNodes(const Graph& graph) const {
 
 int VaimlSubgraphProcessor::saveMemoryToCache(const char* mem, size_t mem_size,
                                               std::filesystem::path cache_dir,
-                                              std::string filename) {
-  bool in_mem = self_.get_context()->cache_in_mem();
-  auto filepath = cache_dir / (filename + ".bin");
-  if (in_mem) {
-    self_.get_context()->write_file(filename + ".bin",
-                                    gsl::span<const char>(mem, mem_size));
-  } else {
-    std::ofstream ofsFile(filepath, std::ios::binary);
-    if (!ofsFile) {
-      std::cerr << "Error opening file for writing." << std::endl;
-      return 1;
-    }
-    ofsFile.write(mem, mem_size);
-    ofsFile.close();
-  }
-
-  VAIML_DEBUG_PRINT(mem_size, " bytes of memory saved to cache ", filepath);
+                                              std::string filename) const {
+  self_.get_context()->write_file(filename + ".bin",
+                                  gsl::span<const char>(mem, mem_size));
+  VAIML_DEBUG_PRINT(mem_size, " bytes of memory saved to cache ", filename);
   return 0;
 }
 
 void VaimlSubgraphProcessor::loadAdd128(std::vector<uint8_t>& dst, int8_t* src,
-                                        int size) {
+                                        int size) const {
   for (int i = 0; i < size; i++) {
     dst.push_back(static_cast<uint8_t>(src[i] + 128));
   }
@@ -561,7 +546,7 @@ void VaimlSubgraphProcessor::loadAdd128(std::vector<uint8_t>& dst, int8_t* src,
 
 int VaimlSubgraphProcessor::htGenerateLstmInput(
     const LstmSettings& s, const struct lstm_init_wts& lstm_in, uint8_t* result,
-    std::filesystem::path cache_dir) {
+    std::filesystem::path cache_dir) const {
   VAIML_DEBUG_PRINT("htGenerateLstmInput layer ", s.layer_name);
   auto cachFilepath = cache_dir / (s.layer_name + ".bin");
   if (std::filesystem::exists(cachFilepath)) {
@@ -575,6 +560,8 @@ int VaimlSubgraphProcessor::htGenerateLstmInput(
   int Zx, Zw, Zr, Zb, Zh, Zc, Zy1, Zy2;
   int Sg = 1;
   int Zg = 0;
+  char* lstm_rpt_ptr{};
+  uint8_t nonlinear_in_shift{};
   if (s.layer_id == 320) {
     Sx = lstm_in.scale[9];
     Zx = lstm_in.zp[9];
@@ -592,6 +579,8 @@ int VaimlSubgraphProcessor::htGenerateLstmInput(
     Zy1 = lstm_in.zp[14];
     Sy2 = lstm_in.scale[15];
     Zy2 = lstm_in.zp[15];
+    lstm_rpt_ptr = (char*)(lstm_in.lstm_320_rtp);
+    nonlinear_in_shift = *((uint8_t*)(lstm_rpt_ptr + 16));
   } else if (s.layer_id == 1024) {
     Sx = lstm_in.scale[13];
     Zx = lstm_in.zp[13];
@@ -609,6 +598,8 @@ int VaimlSubgraphProcessor::htGenerateLstmInput(
     Zy1 = lstm_in.zp[20];
     Sy2 = lstm_in.scale[21];
     Zy2 = lstm_in.zp[21];
+    lstm_rpt_ptr = (char*)(lstm_in.lstm_1024_rtp);
+    nonlinear_in_shift = *((uint8_t*)(lstm_rpt_ptr + 16));
   }
 
   int8_t* x_wts_p;
@@ -684,7 +675,7 @@ int VaimlSubgraphProcessor::htGenerateLstmInput(
   // Qc_7.print("Qc_7: ", PARTIAL_DATA);
   auto Qc_8 = Qc_7.add(Qc_0);
   // Qc_8.print("Qc_8: ", PARTIAL_DATA);
-  auto Qc_9 = Qc_8.mul(std::pow(2, s.nonlinear_in_shift));
+  auto Qc_9 = Qc_8.mul(std::pow(2, nonlinear_in_shift));
   // Qc_9.print("Qc_9: ", PARTIAL_DATA);
   WTensor<int32_t> NB_i32 = WTensor<int32_t>::createFromVector(Qc_9.data());
   // NB_i32.print("--- Qc int(NB_i32): ", PARTIAL_DATA);
@@ -790,15 +781,17 @@ int VaimlSubgraphProcessor::htGenerateLstmInput(
       }
     }
   }
+  memcpy(p, lstm_rpt_ptr, 16 * sizeof(uint32_t));
+  p += 16 * sizeof(uint32_t);
   size_t wts_size = p - wts;
   saveMemoryToCache((const char*)wts, wts_size, cache_dir, s.layer_name);
   return 0;
 }
 
-std::vector<uint8_t>
-VaimlSubgraphProcessor::ht_wts_gen_lstm_b2b(const lstm_init_wts& param,
-                                            std::filesystem::path cache_dir) {
-  uint8_t* result = new uint8_t[8448 * 1024 * 2 + 64 * 2];
+std::vector<uint8_t> VaimlSubgraphProcessor::ht_wts_gen_lstm_b2b(
+    const lstm_init_wts& param, std::filesystem::path cache_dir) const {
+  uint8_t* result = new uint8_t[8448 * 1024 * 2 + 64 * 2 +
+                                64 * 2 /* lstm_320_rtp lstm_1024_rtp*/];
 #ifdef VAIP_PASS_VAIML_PARTITION_PROFILING
   auto start2 = std::chrono::steady_clock::now();
 #endif
@@ -833,48 +826,249 @@ VaimlSubgraphProcessor::ht_wts_gen_lstm_b2b(const lstm_init_wts& param,
   return wts;
 }
 
-void VaimlSubgraphProcessor::InitHtLstmWeights() {
-  lstm_init_wts lstm_in;
-  lstm_in.scale[9] = /*Sx;*/ 0.00391764659434557;
-  lstm_in.zp[9] = /*Zx;*/ 0;
-  lstm_in.scale[10] = /*Sw;*/ 0.006932056043297052;
-  lstm_in.zp[10] = /*Zw;*/ 128;
-  lstm_in.scale[11] = /*Sr;*/ 0.015886442735791206;
-  lstm_in.zp[11] = /*Zr;*/ 128;
-  lstm_in.scale[12] = /*Sb;*/ 0.0008717934833839536;
-  lstm_in.zp[12] = /*Zb;*/ 128;
-  lstm_in.scale[4] = /*Sh;*/ 0.007369006518274546;
-  lstm_in.zp[4] = /*Zh;*/ 134;
-  lstm_in.scale[1] = /*Sc;*/ 0.018779641017317772;
-  lstm_in.zp[1] = /*Zc;*/ 141;
-  lstm_in.scale[14] = /*Sy1;*/ 0.0073768566362559795;
-  lstm_in.zp[14] = /*Zy1;*/ 134;
-  lstm_in.scale[15] = /*Sy2;*/ 0.02116578258574009;
-  lstm_in.zp[15] = /*Zy2;*/ 146;
+static void InitLstmQdqParams(lstm_init_wts& lstm_in) {
+  struct lstm_params_st {
+    uint16_t k_iter_cnt_x;
+    uint16_t k_iter_cnt_h;
+    uint16_t c_sv_idx;
+    uint16_t total_iter_cnt;
+    uint16_t n_iter_cnt;
 
-  lstm_in.scale[13] = /*Sx;*/ 0.0073768566362559795;
-  lstm_in.zp[13] = /*Zx;*/ 134;
-  lstm_in.scale[16] = /*Sw;*/ 0.012618417851626873;
-  lstm_in.zp[16] = /*Zw;*/ 128;
-  lstm_in.scale[17] = /*Sr;*/ 0.024344857782125473;
-  lstm_in.zp[17] = /*Zr;*/ 128;
-  lstm_in.scale[18] = /*Sb;*/ 0.009427288547158241;
-  lstm_in.zp[18] = /*Zb;*/ 128;
-  lstm_in.scale[5] = /*Sh;*/ 0.007312173489481211;
-  lstm_in.zp[5] = /*Zh;*/ 133;
-  lstm_in.scale[2] = /*Sc;*/ 0.017122190445661545;
-  lstm_in.zp[2] = /*Zc;*/ 161;
-  lstm_in.scale[20] = /*Sy1;*/ 0.007354839239269495;
-  lstm_in.zp[20] = /*Zy1;*/ 134;
-  lstm_in.scale[21] = /*Sy2;*/ 0.02068982645869255;
-  lstm_in.zp[21] = /*Zy2;*/ 164;
+    uint8_t xw_shift;
+    uint8_t hr_shift;
+    uint8_t xs_shift;
+    uint8_t hs_shift;
+    uint8_t xwq_shift;
+    uint8_t hrq_shift;
+    uint8_t nonlinear_in_shift;
+    uint8_t nonlinear_out_h_shift;
+    uint8_t nonlinear_out_c_shift;
+    uint8_t output_h_shift;
+    uint8_t output_c_shift;
+    uint8_t c_shift0;
+    uint8_t c_shift1;
+    uint8_t c_shift2;
 
-  lstm_in.lstm0_h_wts = (int8_t*)(ht_weights_preformat_[ht_lstm_wts_name_[48]]);
-  lstm_in.lstm0_x_wts = (int8_t*)(ht_weights_preformat_[ht_lstm_wts_name_[49]]);
-  lstm_in.lstm0_bias = (int8_t*)(ht_weights_preformat_[ht_lstm_wts_name_[50]]);
-  lstm_in.lstm1_h_wts = (int8_t*)(ht_weights_preformat_[ht_lstm_wts_name_[51]]);
-  lstm_in.lstm1_x_wts = (int8_t*)(ht_weights_preformat_[ht_lstm_wts_name_[52]]);
-  lstm_in.lstm1_bias = (int8_t*)(ht_weights_preformat_[ht_lstm_wts_name_[53]]);
+    uint32_t qa;
+    uint32_t qb;
+    uint32_t qx;
+    uint32_t qh;
+    uint16_t output_h_scale;
+    uint16_t output_h_zp;
+    uint16_t output_c_scale;
+    uint16_t output_c_zp;
+    uint16_t c_scale;
+    uint16_t c_zp;
+  };
+
+  auto calc_lstm_params = [&](uint32_t lstm_params_rpt[16], int lstm_len_x) {
+    double lstm_sx{};
+    double lstm_sw{};
+    double lstm_sh{};
+    double lstm_sr{};
+    double lstm_sc{};
+    double lstm_sy1{};
+    double lstm_sy2{};
+
+    int32_t lstm_zw{};
+    int32_t lstm_zr{};
+    int32_t lstm_c_zp{};
+    int32_t lstm_output_c_zp{};
+    int32_t lstm_output_h_zp{};
+
+    uint32_t lstm_len_h = 1024;
+    uint32_t lstm_sv_k = 64;
+    uint32_t lstm_sv_n = 64;
+
+    if (lstm_len_x == 320) {
+      lstm_sx = lstm_in.scale[9];
+      lstm_sw = lstm_in.scale[10];
+      lstm_sh = lstm_in.scale[4];
+      lstm_sr = lstm_in.scale[11];
+      lstm_sc = lstm_in.scale[1];
+      lstm_sy1 = lstm_in.scale[14]; // h
+      lstm_sy2 = lstm_in.scale[15]; // c
+
+      lstm_zw = lstm_in.zp[10];
+      lstm_zr = lstm_in.zp[11];
+      lstm_c_zp = lstm_in.zp[1];
+      lstm_output_c_zp = lstm_in.zp[15];
+      lstm_output_h_zp = lstm_in.zp[14];
+    } else if (lstm_len_x == 1024) {
+      lstm_sx = lstm_in.scale[13];
+      lstm_sw = lstm_in.scale[16];
+      lstm_sh = lstm_in.scale[5];
+      lstm_sr = lstm_in.scale[17];
+      lstm_sc = lstm_in.scale[2];
+      lstm_sy1 = lstm_in.scale[20]; // h
+      lstm_sy2 = lstm_in.scale[21]; // c
+
+      lstm_zw = lstm_in.zp[16];
+      lstm_zr = lstm_in.zp[17];
+      lstm_c_zp = lstm_in.zp[2];
+      lstm_output_c_zp = lstm_in.zp[21];
+      lstm_output_h_zp = lstm_in.zp[20];
+    }
+
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+    // init qx_shift qh_shift qa_shift qb_shift -> currently make it fixed, can
+    // be smaller
+    uint32_t uint32_max_value = (1ll << 32) - 1;
+    uint32_t qx_shift =
+        MIN(std::floor(std::log2(uint32_max_value / lstm_sx / lstm_sw)), 30);
+    uint32_t qh_shift =
+        MIN(std::floor(std::log2(uint32_max_value / lstm_sh / lstm_sr)), 30);
+    uint32_t qa_shift = MIN(
+        std::floor(std::log2(uint32_max_value / lstm_sx / lstm_sw / lstm_zw)),
+        30);
+    uint32_t qb_shift = MIN(
+        std::floor(std::log2(uint32_max_value / lstm_sh / lstm_sr / lstm_zr)),
+        30);
+
+    uint32_t lstm_qx = std::round(lstm_sx * lstm_sw * (1 << qx_shift));
+    uint32_t lstm_qh = std::round(lstm_sh * lstm_sr * (1 << qh_shift));
+    uint32_t lstm_qa =
+        std::round(lstm_sx * lstm_sw * lstm_zw * (1 << qa_shift));
+    uint32_t lstm_qb =
+        std::round(lstm_sh * lstm_sr * lstm_zr * (1 << qb_shift));
+
+    // x/h_bit = 8, len_x/h_bit = log2(len_x/h) -> 9/10, wts_bit = 8,
+    // mul_bit = x/h_bit + wts_bit + 10 [log2(1024)] = 26
+    // sum_x/h_bit = x/h_bit + len_x/h_bit
+    // sum_x/h_bit + qa/qb_bit - 29 <= xs/hs_shift
+    // mul_bit + qx/qh_bit - 30 <= xwq/hrq_shift
+    // qx_shift - xwq_shift = qa_shift - xs_shift = qh_shift - hrq_shift =
+    // qb_shift - hs_shift = nonlinear_in_shift
+
+    // init min shift below
+    uint32_t lstm_xs_shift = MAX(8 + std::ceil(std::log2(lstm_len_x)) +
+                                     std::ceil(std::log2(lstm_qa)) - 29,
+                                 0);
+    uint32_t lstm_xwq_shift = MAX(26 + std::ceil(std::log2(lstm_qx)) - 30, 0);
+    uint32_t lstm_hs_shift = MAX(8 + std::ceil(std::log2(lstm_len_h)) +
+                                     std::ceil(std::log2(lstm_qb)) - 29,
+                                 0);
+    uint32_t lstm_hrq_shift = MAX(26 + std::ceil(std::log2(lstm_qh)) - 30, 0);
+
+    uint32_t lstm_nonlinear_in_shift =
+        MAX(MAX(qx_shift - lstm_xwq_shift, qa_shift - lstm_xs_shift),
+            MAX(qh_shift - lstm_hrq_shift, qb_shift - lstm_hs_shift));
+
+    lstm_xs_shift = qa_shift - lstm_nonlinear_in_shift;
+    lstm_xwq_shift = qx_shift - lstm_nonlinear_in_shift;
+    lstm_hs_shift = qb_shift - lstm_nonlinear_in_shift;
+    lstm_hrq_shift = qh_shift - lstm_nonlinear_in_shift;
+
+    uint32_t lstm_c_shift2 = 20;
+    uint32_t lstm_nonlinear_out_h_shift = 20;
+    uint32_t lstm_nonlinear_out_c_shift = 20;
+
+    uint32_t lstm_output_h_shift =
+        std::floor(std::log2(lstm_sy1)) + lstm_nonlinear_out_h_shift + 16;
+    uint32_t lstm_output_c_shift =
+        std::floor(std::log2(lstm_sy2)) + lstm_nonlinear_out_c_shift + 16;
+    uint32_t lstm_output_h_scale = std::round(
+        std::pow(2, lstm_output_h_shift - lstm_nonlinear_out_h_shift) /
+        lstm_sy1);
+    uint32_t lstm_output_c_scale = std::round(
+        std::pow(2, lstm_output_c_shift - lstm_nonlinear_out_c_shift) /
+        lstm_sy2);
+    uint32_t lstm_c_scale = lstm_sc * (1 << lstm_c_shift2);
+
+    struct lstm_params_st* lstm_param = (struct lstm_params_st*)lstm_params_rpt;
+    lstm_param->k_iter_cnt_x = lstm_len_x / lstm_sv_k;
+    lstm_param->k_iter_cnt_h = lstm_len_h / lstm_sv_k;
+    lstm_param->total_iter_cnt =
+        MAX(lstm_param->k_iter_cnt_x, lstm_param->k_iter_cnt_h);
+    lstm_param->n_iter_cnt = 4;
+    lstm_param->xs_shift = lstm_xs_shift;
+    lstm_param->hs_shift = lstm_hs_shift;
+    lstm_param->xwq_shift = lstm_xwq_shift;
+    lstm_param->hrq_shift = lstm_hrq_shift;
+    lstm_param->nonlinear_in_shift = lstm_nonlinear_in_shift;
+    lstm_param->nonlinear_out_h_shift = lstm_nonlinear_out_h_shift;
+    lstm_param->nonlinear_out_c_shift = lstm_nonlinear_out_c_shift;
+    lstm_param->output_h_shift = lstm_output_h_shift;
+    lstm_param->output_c_shift = lstm_output_c_shift;
+    lstm_param->c_shift2 = lstm_c_shift2;
+    lstm_param->qa = lstm_qa;
+    lstm_param->qb = lstm_qb;
+    lstm_param->qx = lstm_qx;
+    lstm_param->qh = lstm_qh;
+    lstm_param->output_h_scale = lstm_output_h_scale;
+    lstm_param->output_c_scale = lstm_output_c_scale;
+    lstm_param->output_h_zp = lstm_output_h_zp;
+    lstm_param->output_c_zp = lstm_output_c_zp;
+    lstm_param->c_scale = lstm_c_scale;
+    lstm_param->c_zp = lstm_c_zp;
+
+#undef MIN
+#undef MAX
+  };
+
+  calc_lstm_params(lstm_in.lstm_320_rtp, 320);
+  calc_lstm_params(lstm_in.lstm_1024_rtp, 1024);
+}
+
+void VaimlSubgraphProcessor::InitHtLstmWeights(
+    const std::unordered_map<std::string, std::string>& initializer_map) const {
+
+  const auto cxx_graph = vaip_cxx::GraphConstRef(graph_);
+  auto getRawData = [&](const std::string& name) -> void* {
+    return (void*)(cxx_graph.find_node_arg(initializer_map.at(name))
+                       ->const_data_as_raw()
+                       .data());
+  };
+
+  lstm_init_wts lstm_in{};
+  lstm_in.scale[9] = /*Sx;*/ *((float*)(getRawData("lstm320_x_s")));
+  lstm_in.zp[9] = /*Zx;*/ *((int8_t*)(getRawData("lstm320_x_zp"))) + 128;
+  lstm_in.scale[10] = /*Sw;*/ *((float*)(getRawData("lstm320_x_wts_s")));
+  lstm_in.zp[10] = /*Zw;*/ *((int8_t*)(getRawData("lstm320_x_wts_zp"))) + 128;
+  lstm_in.scale[11] = /*Sr;*/ *((float*)(getRawData("lstm320_h_wts_s")));
+  lstm_in.zp[11] = /*Zr;*/ *((int8_t*)(getRawData("lstm320_h_wts_zp"))) + 128;
+  lstm_in.scale[12] = /*Sb;*/ *((float*)(getRawData("lstm320_bias_s")));
+  lstm_in.zp[12] = /*Zb;*/ *((int8_t*)(getRawData("lstm320_bias_zp"))) + 128;
+  lstm_in.scale[4] = /*Sh;*/ *((float*)(getRawData("lstm320_init_h_s")));
+  lstm_in.zp[4] = /*Zh;*/ *((int8_t*)(getRawData("lstm320_init_h_zp"))) + 128;
+  lstm_in.scale[1] = /*Sc;*/ *((float*)(getRawData("lstm320_init_c_s")));
+  lstm_in.zp[1] = /*Zc;*/ *((int8_t*)(getRawData("lstm320_init_c_zp"))) + 128;
+  lstm_in.scale[14] = /*Sy1;*/ *((float*)(getRawData("lstm320_output_1_s")));
+  lstm_in.zp[14] =
+      /*Zy1;*/ *((int8_t*)(getRawData("lstm320_output_1_zp"))) + 128;
+  lstm_in.scale[15] = /*Sy2;*/ *((float*)(getRawData("lstm320_output_2_s")));
+  lstm_in.zp[15] =
+      /*Zy2;*/ *((int8_t*)(getRawData("lstm320_output_2_zp"))) + 128;
+
+  lstm_in.scale[13] = /*Sx;*/ *((float*)(getRawData("lstm1024_x_s")));
+  lstm_in.zp[13] = /*Zx;*/ *((int8_t*)(getRawData("lstm1024_x_zp"))) + 128;
+  lstm_in.scale[16] = /*Sw;*/ *((float*)(getRawData("lstm1024_x_wts_s")));
+  lstm_in.zp[16] = /*Zw;*/ *((int8_t*)(getRawData("lstm1024_x_wts_zp"))) + 128;
+  lstm_in.scale[17] = /*Sr;*/ *((float*)(getRawData("lstm1024_h_wts_s")));
+  lstm_in.zp[17] = /*Zr;*/ *((int8_t*)(getRawData("lstm1024_h_wts_zp"))) + 128;
+  lstm_in.scale[18] = /*Sb;*/ *((float*)(getRawData("lstm1024_bias_s")));
+  lstm_in.zp[18] = /*Zb;*/ *((int8_t*)(getRawData("lstm1024_bias_zp"))) + 128;
+  lstm_in.scale[5] = /*Sh;*/ *((float*)(getRawData("lstm1024_init_h_s")));
+  lstm_in.zp[5] = /*Zh;*/ *((int8_t*)(getRawData("lstm1024_init_h_zp"))) + 128;
+  lstm_in.scale[2] = /*Sc;*/ *((float*)(getRawData("lstm1024_init_c_s")));
+  lstm_in.zp[2] = /*Zc;*/ *((int8_t*)(getRawData("lstm1024_init_c_zp"))) + 128;
+  lstm_in.scale[20] = /*Sy1;*/ *((float*)(getRawData("lstm1024_output_1_s")));
+  lstm_in.zp[20] =
+      /*Zy1;*/ *((int8_t*)(getRawData("lstm1024_output_1_zp"))) + 128;
+  lstm_in.scale[21] = /*Sy2;*/ *((float*)(getRawData("lstm1024_output_2_s")));
+  lstm_in.zp[21] =
+      /*Zy2;*/ *((int8_t*)(getRawData("lstm1024_output_2_zp"))) + 128;
+
+  InitLstmQdqParams(lstm_in);
+
+  lstm_in.lstm0_h_wts = (int8_t*)(getRawData("lstm320_h_wts"));
+  lstm_in.lstm0_x_wts = (int8_t*)(getRawData("lstm320_x_wts"));
+  lstm_in.lstm0_bias = (int8_t*)(getRawData("lstm320_bias"));
+  lstm_in.lstm1_h_wts = (int8_t*)(getRawData("lstm1024_h_wts"));
+  lstm_in.lstm1_x_wts = (int8_t*)(getRawData("lstm1024_x_wts"));
+  lstm_in.lstm1_bias = (int8_t*)(getRawData("lstm1024_bias"));
 
 #ifdef VAIP_PASS_VAIML_PARTITION_PROFILING
   auto start1 = std::chrono::steady_clock::now();
@@ -895,66 +1089,18 @@ void VaimlSubgraphProcessor::dumpConstants(const Graph& graph) {
   std::filesystem::path fullCntsFileName = cache_dir_ / constants_file_name_;
   VAIML_DEBUG_PRINT("VaimlSubgraphProcessor::dumpConstants to :",
                     fullCntsFileName);
-  bool in_mem = self_.get_context()->cache_in_mem();
 
-  std::unique_ptr<std::ostream> cnts_file;
-  if (in_mem) {
-    cnts_file = std::make_unique<std::ostringstream>();
-  } else {
-    auto f =
-        std::make_unique<std::ofstream>(fullCntsFileName, std::ios::binary);
-    // Check if the file is open
-    if (!f->is_open()) {
-      throw std::runtime_error("Failed to open the constant file for writing.");
-    }
-    cnts_file = std::move(f);
-  }
+  std::unique_ptr<std::ostream> cnts_file =
+      std::make_unique<std::ostringstream>();
   size_t cnt_offset = 0;
   auto all_constants = VAIP_ORT_API(graph_get_all_initialized_tensors)(graph_);
   auto cxx_graph = vaip_cxx::GraphConstRef(graph_);
-
-  // Preformat following constants for HT model to save cache loading time
-  std::vector<std::string> ht_weight_names_preformat = {
-      ht_lstm_wts_name_[48], ht_lstm_wts_name_[49], ht_lstm_wts_name_[50],
-      ht_lstm_wts_name_[51], ht_lstm_wts_name_[52], ht_lstm_wts_name_[53]};
-
-  if (model_name_ == "HT_v1.2") {
-    for (const auto& constant : all_constants) {
-      auto const_name = constant.first;
-      if (std::find(ht_weight_names_preformat.begin(),
-                    ht_weight_names_preformat.end(),
-                    const_name) == ht_weight_names_preformat.end()) {
-        continue;
-      }
-      auto tensor_proto_ptr = constant.second;
-      if (tensor_proto_ptr == nullptr) {
-        continue;
-      }
-      auto& tensor_proto = *tensor_proto_ptr;
-      auto raw_values =
-          cxx_graph.find_node_arg(constant.first)->const_data_as_raw();
-      VAIML_DEBUG_PRINT("    Constant: ", const_name,
-                        " size: ", raw_values.size());
-      ht_weights_preformat_[const_name] = (char*)raw_values.data();
-    }
-
-    InitHtLstmWeights();
-  }
 
   // Dump weights to a binary file
   bool weight_preformated;
   for (const auto& constant : all_constants) {
     weight_preformated = false;
     auto const_name = constant.first;
-    if (model_name_ == "HT_v1.2") {
-      if (std::find(ht_weight_names_preformat.begin(),
-                    ht_weight_names_preformat.end(),
-                    const_name) != ht_weight_names_preformat.end()) {
-        // Preformated HT weights. no need to save to wts.bin
-        VAIML_DEBUG_PRINT("Preformatted weight: ", const_name);
-        weight_preformated = true;
-      }
-    }
     ConstantInfo cnt_info;
     cnt_info.offset = cnt_offset;
     auto tensor_proto_ptr = constant.second;
@@ -997,17 +1143,15 @@ void VaimlSubgraphProcessor::dumpConstants(const Graph& graph) {
     //                    constants_map_[constant.first].offset);
   }
 
-  if (in_mem) {
-    auto charStream = dynamic_cast<std::ostringstream*>(cnts_file.get());
-    self_.get_context()->write_file(constants_file_name_, charStream->str());
-  }
+  auto charStream = dynamic_cast<std::ostringstream*>(cnts_file.get());
+  self_.get_context()->write_file(constants_file_name_, charStream->str());
 }
 
 std::vector<std::unique_ptr<IndexedSubGraph>>
 VaimlSubgraphProcessor::GetPartitions(const Graph& graph) const {
   VAIML_DEBUG_PRINT("DEBUG: In GetPartitions...");
   std::vector<std::unique_ptr<IndexedSubGraph>> result;
-  std::vector<std::vector<size_t>> node_groups;
+  std::vector<PartitionInfo> node_groups;
 
   // Graph mode: run VAIML frontend to get all supported nodes in the full
   // graph
@@ -1022,7 +1166,8 @@ VaimlSubgraphProcessor::GetPartitions(const Graph& graph) const {
 
   size_t num_of_supported_nodes = 0;
 
-  for (const auto& group : node_groups) {
+  for (const auto& partition : node_groups) {
+    const std::vector<size_t>& group = partition.partition_nodes;
     if (group.empty())
       continue;
     // Dont modify std::cout for now. This message is needed for lit tests
@@ -1176,7 +1321,7 @@ VaimlSubgraphProcessor::GetPartitions(const Graph& graph) const {
     }
     // sub_graph->SetMetaDef(std::move(meta_def));
     // result.push_back(ComputeCapability::Create(std::move(sub_graph)));
-    sub_graph->name = "vaiml_par_" + std::to_string(result.size());
+    sub_graph->name = partition.partition_name;
     sub_graph->name_id = result.size();
 
     MY_LOG(2) << "VaimlSubgraphProcessor::Partition, " << sub_graph->name
@@ -1262,12 +1407,38 @@ void VaimlSubgraphProcessor::process() const {
   std::vector<std::unique_ptr<IndexedSubGraph>> result;
   bool is_model_name_matched = false;
   if (model_name_ == "GT_v1.2" || model_name_ == "HT_v1.2" ||
-      model_name_ == "GT_v1.3") {
+      model_name_ == "GT_v1.3" || model_name_ == "GTC_v1.0") {
     is_model_name_matched = true;
   } else {
     std::cout << "WARNING: not supported model\n";
   }
 
+  if (model_name_ == "GT_v1.3" || model_name_ == "GTC_v1.0") {
+    auto initializer_map = vaip_core::MetaDefProto();
+    GT_initializer_mapping_pass pass(self_, initializer_map);
+    pass.process(graph_);
+    std::string buf;
+    initializer_map.SerializeToString(&buf);
+    self_.get_context()->write_file(
+        "gt_init_map.proto.bin", gsl::span<const char>(buf.data(), buf.size()));
+    msig_ops_map_.insert(
+        std::make_pair(model_name_, pass.get_partitioned_nodes()));
+  } else if (model_name_ == "HT_v1.2") {
+    auto initializer_map = vaip_core::MetaDefProto();
+    HT_initializer_mapping_pass pass(self_, initializer_map);
+    pass.process(graph_);
+    std::unordered_map<std::string, std::string> initializer_unordered_map(
+        initializer_map.generic_param().begin(),
+        initializer_map.generic_param().end());
+    InitHtLstmWeights(initializer_unordered_map);
+
+    std::string buf;
+    initializer_map.SerializeToString(&buf);
+    self_.get_context()->write_file(
+        "ht_init_map.proto.bin", gsl::span<const char>(buf.data(), buf.size()));
+    msig_ops_map_.insert(
+        std::make_pair("HT_v1.2", pass.get_partitioned_nodes()));
+  }
   if (is_model_name_matched) {
     result = GetPartitions(graph_);
     for (auto& res : result) {

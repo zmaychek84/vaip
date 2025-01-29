@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include "stat.hpp"
 #include "vitis/ai/env_config.hpp"
@@ -168,6 +140,12 @@ static void collect_subgraph_stat(StatProto& proto,
   }
   for (auto& meta_def : context.meta_def()) {
     auto device = meta_def.device();
+    // concat and qdq custom ops are internally running on cpu only, so no need
+    // to display as seperate ops There may be other custom ops which were
+    // running on NPU internally, do not add them here eg:gqa or matmulnbits etc
+    if ("CONCAT" == device || "QDQ_OP" == device) {
+      device = "VITIS_EP_CPU";
+    }
     auto iter = subgraph_count.find(device);
     if (iter == subgraph_count.end()) {
       subgraph_count[device] = 1;
@@ -244,6 +222,10 @@ thread_local StatProto stat_proto;
 StatProto& get_stat_proto() { return stat_proto; }
 
 void clean_stat() { get_stat_proto().Clear(); }
+static std::set<std::string> g_vitis_ep_custom_ops;
+void set_vitis_ep_custom_ops(const std::set<std::string>& vitis_ep_custom_ops) {
+  g_vitis_ep_custom_ops = vitis_ep_custom_ops;
+}
 
 void collect_stat(const onnxruntime::Graph& graph,
                   const ContextProto& context_proto) {
@@ -260,9 +242,19 @@ void collect_stat(const onnxruntime::Graph& graph,
     if ("DPU" == device || "DOD" == device) {
       device = "NPU";
     }
+    // concat and qdq custom ops are internally running on cpu only, so no need
+    // to display as seperate ops There may be other custom ops which were
+    // running on NPU internally, do not add them here eg:gqa or matmulnbits etc
+    if ("CONCAT" == device || "QDQ_OP" == device) {
+      device = "VITIS_EP_CPU";
+    }
     auto comment = node_as_string(*node);
     add_node_stat(proto, input, output, domain, op_type, comment, device);
     auto domain_op = domain + "::" + op_type;
+    if ("CPU" == device && g_vitis_ep_custom_ops.count(domain_op)) {
+      device = "VITIS_EP_CPU";
+    }
+
     update_device_stat(device, device_stat_map, domain_op);
     update_device_stat(ALL_DEVICE_NAME, device_stat_map, domain_op);
     write_shape_info(proto, *node);

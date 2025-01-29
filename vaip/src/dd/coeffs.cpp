@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include "vaip/dd/coeffs.hpp"
 
@@ -39,6 +11,76 @@ namespace vaip::dd::qmatmulcalc {
 #  pragma GCC diagnostic ignored "-Wpedantic"
 #  pragma GCC diagnostic ignored "-Wconversion"
 #endif
+
+std::pair<int32_t, int16_t>
+find_closest_shifted_int32_shiftmax(double float_val, int32_t max_value,
+                                    float shift_max) {
+  int32_t INT32_MAX_ = max_value; // Typically 2147483647 for int32_t
+  double prev_rel_err = 1e9;
+  double curr_float_val = float_val;
+  // double best_float_val = 0.0;
+  int16_t shift_val = 0;
+  int32_t best_int = 0;
+  int64_t closest_curr_int = 0;
+  int16_t best_shift_val = 0;
+
+  while ((curr_float_val <= INT32_MAX_) && (shift_val <= shift_max)) {
+    closest_curr_int = static_cast<int64_t>(std::round(curr_float_val));
+    double cur_rel_err =
+        std::abs((double)float_val -
+                 ((double)closest_curr_int /
+                  static_cast<double>((uint64_t)1 << shift_val))) /
+        (double)float_val;
+
+    if (cur_rel_err <= prev_rel_err) {
+      prev_rel_err = cur_rel_err;
+      // best_float_val = static_cast<double>(closest_curr_int >> shift_val);
+      best_shift_val = shift_val;
+      best_int = (int32_t)closest_curr_int;
+    }
+    curr_float_val *= 2;
+    shift_val++;
+  }
+
+  return std::make_pair(best_int, best_shift_val);
+}
+
+std::pair<std::vector<int64_t>, int32_t>
+find_closest_shifted_int32_vec(std::vector<double> float_val,
+                               int32_t max_value) {
+  int32_t INT32_MAX_ = max_value; // Typically 2147483647 for int32_t
+
+  std::vector<int64_t> int_vec(float_val.size(), 0);
+  std::vector<int64_t> shift_vec(float_val.size(), 0);
+  int32_t shift_min = 10000; // some arbitrarily large number
+  float shift_max = std::numeric_limits<float>::infinity();
+
+  for (size_t i = 0; i < float_val.size(); i++) {
+    int32_t int_val;
+    int32_t shift_val;
+    std::tie(int_val, shift_val) =
+        find_closest_shifted_int32_shiftmax(float_val[i], max_value, shift_max);
+    int_vec[i] = int_val;
+    shift_vec[i] = shift_val;
+
+    if (shift_val < shift_min)
+      shift_min = shift_val;
+  }
+
+  for (size_t i = 0; i < float_val.size(); i++) {
+    int32_t shift_val = shift_vec[i];
+    if (shift_val > shift_min) {
+
+      int32_t shift_diff = shift_val - shift_min;
+      int32_t int_val = int_vec[i];
+      // std::vector<int32_t> int_val_vec = {int_val};
+      int32_t new_int_val = srs_int32_even_fast(int_val, shift_diff);
+      int_vec[i] = new_int_val;
+    }
+  }
+
+  return std::make_pair(int_vec, shift_min);
+}
 
 std::pair<int32_t, int16_t> find_closest_shifted_int32(double float_val,
                                                        int32_t max_value) {
@@ -241,9 +283,340 @@ MatmulQDQParams calculate_matmuladd_qdq_params_uint16_uint8(
   return ret;
 }
 
+std::pair<int32_t, int16_t>
+find_closest_shifted_int32_with_max_shift(double float_val, int32_t max_value,
+                                          int32_t max_shift_val) {
+  int32_t INT32_MAX_ = max_value; // Typically 2147483647 for int32_t
+  double prev_rel_err = 1e9;
+  double curr_float_val = float_val;
+  // double best_float_val = 0.0;
+  int16_t shift_val = 0;
+  int32_t best_int = 0;
+  int64_t closest_curr_int = 0;
+  int16_t best_shift_val = 0;
+
+  while (curr_float_val <= INT32_MAX_ && shift_val <= max_shift_val) {
+    closest_curr_int = static_cast<int64_t>(std::round(curr_float_val));
+    double cur_rel_err =
+        std::abs((double)float_val -
+                 ((double)closest_curr_int /
+                  static_cast<double>((uint64_t)1 << shift_val))) /
+        (double)float_val;
+
+    if (cur_rel_err <= prev_rel_err) {
+      prev_rel_err = cur_rel_err;
+      // best_float_val = static_cast<double>(closest_curr_int >> shift_val);
+      best_shift_val = shift_val;
+      best_int = (int32_t)closest_curr_int;
+    }
+
+    curr_float_val *= 2;
+    shift_val++;
+  }
+
+  return std::make_pair(best_int, best_shift_val);
+}
+
+int32_t srs_int32_even_fast(int32_t inp, int shift) {
+  int32_t result;
+
+  if (shift == 0) {
+    // If shift is zero, clip the input values to [-2147483648, 2147483647]
+    result = static_cast<int32_t>(
+        std::clamp(inp, (int32_t)(-2147483647 - 1), (int32_t)2147483647));
+    return result;
+  }
+
+  int64_t value = inp;
+  int sign_inp = (value < 0) ? -1 : 1;
+  value = std::abs(value);
+
+  // Calculate floor and fraction parts
+  int64_t inp_floor = value >> shift;
+  int64_t inp_frac = value - (inp_floor << shift);
+  int64_t frac_lead_bit = inp_frac >> (shift - 1);
+
+  // Boolean matrices
+  bool frac_lead_bit_nonzero = (frac_lead_bit != 0);
+  bool inp_floor_even = (inp_floor % 2 == 0);
+  bool inp_frac_eq_half = (inp_frac == (1LL << (shift - 1)));
+
+  // Calculate intermediate values
+  int64_t inp_floor_plus_1 = inp_floor + 1;
+
+  // Determine rounded result
+  int32_t round_res = 0;
+  if (!frac_lead_bit_nonzero) {
+    round_res = inp_floor;
+  } else if (!inp_frac_eq_half) {
+    round_res = inp_floor_plus_1;
+  } else {
+    round_res = inp_floor_even ? inp_floor : inp_floor_plus_1;
+  }
+
+  round_res *= sign_inp;
+  round_res =
+      std::clamp(round_res, (int32_t)(-2147483647 - 1), (int32_t)2147483647);
+  result = static_cast<int32_t>(round_res);
+
+  return result;
+}
+std::vector<int32_t> calculate_add_qdq_params(float a_sc, uint16_t a_zp,
+                                              float b_sc, uint16_t b_zp,
+                                              float o_sc, uint16_t o_zp) {
+  auto in0_scale = a_sc / o_sc;
+
+  auto in1_scale = b_sc / o_sc;
+  int32_t max_shift_val = 47;
+  int16_t shift_diff;
+  int32_t shift;
+
+  int32_t max_int32_c_val = 2147483647;
+  auto [C2, shift_C2] =
+      find_closest_shifted_int32_with_max_shift(in0_scale, 2147483647, 47);
+  auto [C1, shift_C1] =
+      find_closest_shifted_int32_with_max_shift(in1_scale, 2147483647, 47);
+
+  if (C2 > max_int32_c_val) {
+    throw std::overflow_error("C2 in add calculation has exceeded int range "
+                              "which may result in overflow");
+  }
+
+  if (C1 > max_int32_c_val) {
+    throw std::overflow_error("C1 in add calculation has exceeded int range "
+                              "which may result in overflow");
+  }
+
+  if (shift_C2 > max_shift_val) {
+    throw std::overflow_error("C2's shift in add calculation has exceeded int "
+                              "range which may result in overflow");
+  }
+
+  if (shift_C1 > max_shift_val) {
+    throw std::overflow_error("C1's shift in add calculation has exceeded int "
+                              "range which may result in overflow");
+  }
+  if (shift_C2 < shift_C1) {
+    shift_diff = shift_C1 - shift_C2;
+    C1 = srs_int32_even_fast(C1, shift_diff);
+    shift = shift_C2;
+  } else if (shift_C1 < shift_C2) {
+    shift_diff = shift_C2 - shift_C1;
+    C2 = srs_int32_even_fast(C2, shift_diff);
+    shift = shift_C1;
+  } else {
+    shift = shift_C1;
+  }
+  int64_t C0 =
+      (static_cast<int64_t>(o_zp) << shift) -
+      (static_cast<int64_t>(C2) * a_zp + static_cast<int64_t>(C1) * b_zp);
+  int64_t INT64_max = (1LL << 63) - 1;
+  int64_t INT64_min = -(1LL << 63);
+  if (C0 > INT64_max || C0 < INT64_min) {
+    throw std::overflow_error("C0 in dq-add-q calculation has exceeded int "
+                              "range which may result in overflow");
+  }
+
+  std::vector<int32_t> qdq_params(16, 0);
+  *(int64_t*)(&qdq_params[1]) = C0;
+  qdq_params[0] = shift;
+  // qdq_params[1]=C0;
+  qdq_params[3] = C1;
+  qdq_params[4] = C2;
+
+  return qdq_params;
+}
 MatmulQDQParams calculate_matmuladd_qdq_params_uint8_uint8(
     const std::vector<std::vector<uint8_t>>& weights,
     const std::vector<uint16_t>& bias, float a_sc, uint16_t a_zp, float w_sc,
+    uint16_t w_zp, float b_sc, uint16_t b_zp, float q_sc, uint16_t q_zp) {
+  int64_t a_zp_int64 = static_cast<int64_t>(a_zp);
+  int64_t w_zp_int64 = static_cast<int64_t>(w_zp);
+  int64_t b_zp_int64 = static_cast<int64_t>(b_zp);
+  int64_t q_zp_int64 = static_cast<int64_t>(q_zp);
+  int64_t weights_in_ch = static_cast<int64_t>(weights.size());
+  int64_t matmul_shift = 0;
+  // Copy weights to int64_t
+  std::vector<std::vector<int64_t>> weights_int64(
+      weights.size(), std::vector<int64_t>(weights[0].size()));
+  for (size_t i = 0; i < weights.size(); ++i) {
+    for (size_t j = 0; j < weights[i].size(); ++j) {
+      weights_int64[i][j] = static_cast<int64_t>(weights[i][j]);
+    }
+  }
+  std::vector<int64_t> bias_min_zp(bias.size());
+  for (size_t i = 0; i < bias.size(); ++i) {
+    bias_min_zp[i] = (int64_t)bias[i] - b_zp_int64;
+  }
+  double c2_coeff = (a_sc * w_sc) / q_sc;
+  double c4_coeff = b_sc / q_sc;
+  auto [c2_coeff_prime, shft_c2] =
+      find_closest_shifted_int32(c2_coeff, 8388607);
+  auto [c4_coeff_prime, shft_c4] =
+      find_closest_shifted_int32(c4_coeff, 8388607);
+  if (shft_c2 != shft_c4) {
+    auto diff_shft_c2_c4 = shft_c2 - shft_c4;
+    auto abs_diff_shft_c2_c4 = std::abs((int64_t)(diff_shft_c2_c4));
+    if (diff_shft_c2_c4 > 0)
+      c4_coeff_prime = c4_coeff_prime << abs_diff_shft_c2_c4;
+    else if (diff_shft_c2_c4 < 0)
+      c4_coeff_prime = c4_coeff_prime >> abs_diff_shft_c2_c4;
+    else
+      c4_coeff_prime = c4_coeff_prime;
+  }
+
+  c2_coeff_prime = static_cast<int64_t>(c2_coeff_prime);
+  std::vector<int64_t> c1_coeff(weights[0].size());
+  for (size_t i = 0; i < weights[0].size(); ++i) {
+    int64_t weights_sum = 0;
+    for (size_t j = 0; j < weights.size(); ++j) {
+      weights_sum += weights_int64[j][i];
+    }
+    c1_coeff[i] = (-a_zp_int64) * c2_coeff_prime * weights_sum +
+                  (q_zp_int64 << shft_c2) + bias_min_zp[i] * c4_coeff_prime;
+  }
+  int64_t num_weights_unrolled = weights_in_ch;
+  int32_t c3_coeff_offset = (int32_t)(-a_zp_int64 * num_weights_unrolled);
+  int64_t c3_coeff_scale = -c2_coeff_prime * w_zp_int64;
+
+  int64_t c3_coeff_scale_shift = 0;
+  // right shift c3 coeff_scale to ensure fits into int32
+  if (std::abs(c3_coeff_scale) > 2147483647) { // Max int32 number
+    c3_coeff_scale_shift = static_cast<int64_t>(
+        std::ceil(std::log2(std::abs(c3_coeff_scale))) - 31);
+  } else {
+    c3_coeff_scale_shift = 0;
+  }
+
+  c3_coeff_scale = static_cast<int32_t>(c3_coeff_scale >> c3_coeff_scale_shift);
+  int64_t temp = c3_coeff_scale * c3_coeff_offset;
+  std::transform(c1_coeff.begin(), c1_coeff.end(), c1_coeff.begin(),
+                 [temp](int64_t c) { return c + temp; });
+  MatmulQDQParams ret;
+  ret.c0_coeffs = c1_coeff;
+  ret.qdq_params.resize(16, 0);
+  ret.qdq_params[2] = (int32_t)c3_coeff_scale;
+  ret.qdq_params[3] = c2_coeff_prime;
+  // ret.qdq_params[4] = 0;
+  ret.qdq_params[5] = 64;
+  ret.qdq_params[6] = 64;
+  ret.qdq_params[7] = (int32_t)c3_coeff_scale_shift;
+  ret.qdq_params[8] = shft_c2;
+  ret.qdq_params[9] = (int32_t)matmul_shift;
+  // ret.qdq_params[10] = 0L;
+  ret.c3_coeff_scale = (int32_t)c3_coeff_scale;
+  ret.c2_coeff_prime = c2_coeff_prime;
+  ret.c3_coeff_scale_shift = c3_coeff_scale_shift;
+  ret.shft_c2 = shft_c2;
+  ret.matmul_shift = matmul_shift;
+  // ret.qdq_params.resize(16);
+
+  return ret;
+}
+
+MatmulQDQParams calculate_matmuladd_qdq_params_uint16_uint8_b32(
+    const std::vector<std::vector<uint8_t>>& weights,
+    const std::vector<int32_t>& bias, float a_sc, uint16_t a_zp, float w_sc,
+    uint16_t w_zp, float b_sc, uint16_t b_zp, float q_sc, uint16_t q_zp) {
+  int64_t a_zp_int64 = static_cast<int64_t>(a_zp);
+  int64_t w_zp_int64 = static_cast<int64_t>(w_zp);
+  int64_t b_zp_int64 = static_cast<int64_t>(b_zp);
+  int64_t q_zp_int64 = static_cast<int64_t>(q_zp);
+  int64_t weights_in_ch = static_cast<int64_t>(weights.size());
+  int64_t matmul_shift = (int64_t)(std::min(
+      std::max((int)std::ceil(std::log2(weights_in_ch)) - 7, 0), 7));
+  // Copy weights to int64_t
+  std::vector<std::vector<int64_t>> weights_int64(
+      weights.size(), std::vector<int64_t>(weights[0].size()));
+  for (size_t i = 0; i < weights.size(); ++i) {
+    for (size_t j = 0; j < weights[i].size(); ++j) {
+      weights_int64[i][j] = static_cast<int64_t>(weights[i][j]);
+    }
+  }
+  std::vector<int64_t> bias_min_zp(bias.size());
+  for (size_t i = 0; i < bias.size(); ++i) {
+    bias_min_zp[i] = (int64_t)bias[i] - b_zp_int64;
+  }
+  double c2_coeff = (a_sc * w_sc) / q_sc;
+  double c4_coeff = b_sc / q_sc;
+  auto [c2_coeff_prime, shft_c2] =
+      find_closest_shifted_int32(c2_coeff, 8388607);
+  auto [_c4_coeff_prime, shft_c4] =
+      find_closest_shifted_int32(c4_coeff, 8388607);
+  int64_t c4_coeff_prime = _c4_coeff_prime;
+  if (shft_c2 != shft_c4) {
+    auto diff_shft_c2_c4 = shft_c2 - shft_c4;
+    auto abs_diff_shft_c2_c4 = std::abs((int64_t)(diff_shft_c2_c4));
+    if (diff_shft_c2_c4 > 0)
+      c4_coeff_prime = c4_coeff_prime << abs_diff_shft_c2_c4;
+    else if (diff_shft_c2_c4 < 0)
+      c4_coeff_prime = c4_coeff_prime >> abs_diff_shft_c2_c4;
+    else
+      c4_coeff_prime = c4_coeff_prime;
+  }
+
+  c2_coeff_prime = static_cast<int64_t>(c2_coeff_prime);
+  std::vector<int64_t> c1_coeff(weights[0].size());
+  for (size_t i = 0; i < weights[0].size(); ++i) {
+    int64_t weights_sum = 0;
+    for (size_t j = 0; j < weights.size(); ++j) {
+      weights_sum += weights_int64[j][i];
+    }
+
+    c1_coeff[i] = (-a_zp_int64) * c2_coeff_prime * weights_sum +
+                  (q_zp_int64 << shft_c2) + bias_min_zp[i] * c4_coeff_prime;
+  }
+
+  int64_t num_weights_unrolled = weights_in_ch;
+  int32_t c3_coeff_offset = (int32_t)(-a_zp_int64 * num_weights_unrolled);
+  int64_t c3_coeff_scale = -c2_coeff_prime * w_zp_int64;
+
+  int64_t c3_coeff_scale_shift = 0;
+  // right shift c3 coeff_scale to ensure fits into int32
+  if (std::abs(c3_coeff_scale) > 2147483647) { // Max int32 number
+    c3_coeff_scale_shift = static_cast<int64_t>(
+        std::ceil(std::log2(std::abs(c3_coeff_scale))) - 31);
+  } else {
+    c3_coeff_scale_shift = 0;
+  }
+
+  c3_coeff_scale = static_cast<int32_t>(c3_coeff_scale >> c3_coeff_scale_shift);
+  int32_t c2 = int(c2_coeff_prime << matmul_shift);
+  int32_t c1 = int(c3_coeff_scale);
+
+  MatmulQDQParams ret;
+  std::vector<int64_t> c0(weights[0].size(), 0);
+
+  int64_t temp2 = static_cast<int64_t>(
+      c3_coeff_scale * ((int64_t)c3_coeff_offset << c3_coeff_scale_shift));
+  std::transform(c1_coeff.begin(), c1_coeff.end(), c0.begin(),
+                 [temp2](int64_t c) { return c + temp2; });
+  ret.c0_coeffs = c0;
+  ret.qdq_params.resize(16, 0);
+  ret.qdq_params[2] = (int32_t)c3_coeff_scale;
+  ret.qdq_params[3] = c2;
+  // ret.qdq_params[4] = 0;
+  ret.qdq_params[5] = 64;
+  ret.qdq_params[6] = 64;
+  ret.qdq_params[7] = (int32_t)c3_coeff_scale_shift;
+  ret.qdq_params[8] = shft_c2;
+  ret.qdq_params[9] = (int32_t)matmul_shift;
+  ret.qdq_params[10] = 1;
+  ret.c1 = c1;
+  ret.c2 = c2;
+  ret.c3_coeff_scale = (int32_t)c3_coeff_scale;
+  ret.c2_coeff_prime = c2_coeff_prime;
+  ret.c3_coeff_scale_shift = c3_coeff_scale_shift;
+  ret.shft_c2 = shft_c2;
+  ret.matmul_shift = matmul_shift;
+  // ret.qdq_params.resize(16);
+
+  return ret;
+}
+
+MatmulQDQParams calculate_matmuladd_qdq_params_uint8_uint8_b32(
+    const std::vector<std::vector<uint8_t>>& weights,
+    const std::vector<int32_t>& bias, float a_sc, uint16_t a_zp, float w_sc,
     uint16_t w_zp, float b_sc, uint16_t b_zp, float q_sc, uint16_t q_zp) {
   int64_t a_zp_int64 = static_cast<int64_t>(a_zp);
   int64_t w_zp_int64 = static_cast<int64_t>(w_zp);
@@ -387,6 +760,84 @@ MatmulQDQParams calculate_matmul_qdq_params_uint8_uint8(
   ret.qdq_params[8] = shft_c2;
   ret.qdq_params[9] = (int32_t)matmul_shift;
   // ret.qdq_params[10] = 0L;
+  ret.c3_coeff_scale = (int32_t)c3_coeff_scale;
+  ret.c2_coeff_prime = c2_coeff_prime;
+  ret.c3_coeff_scale_shift = c3_coeff_scale_shift;
+  ret.shft_c2 = shft_c2;
+  ret.matmul_shift = matmul_shift;
+  // ret.qdq_params.resize(16);
+
+  return ret;
+}
+
+MatmulQDQParams_3d calculate_matmul_3d_qdq_params_uint16_uint8(
+    const std::vector<std::vector<std::vector<uint8_t>>>& weights, float a_sc,
+    uint16_t a_zp, float w_sc, uint16_t w_zp, float q_sc, uint16_t q_zp) {
+  int64_t a_zp_int64 = static_cast<int64_t>(a_zp);
+  int64_t w_zp_int64 = static_cast<int64_t>(w_zp);
+  int64_t q_zp_int64 = static_cast<int64_t>(q_zp);
+  int64_t weights_in_ch = static_cast<int64_t>(weights[0].size());
+  int64_t matmul_shift = (int64_t)(std::min(
+      std::max(25 + (int)std::ceil(std::log2(weights_in_ch)) - 32, 0), 7));
+  // Copy weights to int64_t
+  std::vector<std::vector<std::vector<int64_t>>> weights_int64(
+      weights.size(),
+      std::vector<std::vector<int64_t>>(
+          weights[0].size(), std::vector<int64_t>(weights[0][0].size())));
+
+  MatmulQDQParams_3d ret;
+  ret.c0_coeffs.resize(weights.size());
+  double c2_coeff = (a_sc * w_sc) / q_sc;
+  auto [c2_coeff_prime, shft_c2] =
+      find_closest_shifted_int32(c2_coeff, 8388607);
+  c2_coeff_prime = static_cast<int64_t>(c2_coeff_prime);
+
+  int64_t num_weights_unrolled = weights_in_ch;
+  int32_t c3_coeff_offset = (int32_t)(-a_zp_int64 * num_weights_unrolled);
+  int64_t c3_coeff_scale = -c2_coeff_prime * w_zp_int64;
+
+  int64_t c3_coeff_scale_shift = 0;
+  // right shift c3 coeff_scale to ensure fits into int32
+  if (std::abs(c3_coeff_scale) > 2147483647) { // Max int32 number
+    c3_coeff_scale_shift = static_cast<int64_t>(
+        std::ceil(std::log2(std::abs(c3_coeff_scale))) - 31);
+  } else {
+    c3_coeff_scale_shift = 0;
+  }
+
+  c3_coeff_scale = static_cast<int32_t>(c3_coeff_scale >> c3_coeff_scale_shift);
+  int32_t c2 = (c2_coeff_prime << matmul_shift);
+  int64_t temp = c3_coeff_scale * (c3_coeff_offset << c3_coeff_scale_shift);
+
+  for (size_t batch = 0; batch < weights.size(); ++batch) {
+    for (size_t i = 0; i < weights[batch].size(); ++i) {
+      for (size_t j = 0; j < weights[batch][i].size(); ++j) {
+        weights_int64[batch][i][j] = static_cast<int64_t>(weights[batch][i][j]);
+      }
+    }
+    std::vector<int64_t> c1_coeff(weights[0][0].size());
+    for (size_t i = 0; i < weights[0][0].size(); ++i) {
+      int64_t weights_sum = 0;
+      for (size_t j = 0; j < weights[0].size(); ++j) {
+        weights_sum += weights_int64[batch][j][i];
+      }
+      c1_coeff[i] = (-a_zp_int64) * c2_coeff_prime * weights_sum +
+                    (q_zp_int64 << shft_c2);
+    }
+    std::transform(c1_coeff.begin(), c1_coeff.end(), c1_coeff.begin(),
+                   [temp](int64_t c) { return c + temp; });
+    ret.c0_coeffs[batch] = c1_coeff;
+  }
+  ret.qdq_params.resize(16, 0);
+  ret.qdq_params[2] = (int32_t)c3_coeff_scale;
+  ret.qdq_params[3] = c2;
+  ret.qdq_params[4] = c2;
+  ret.qdq_params[5] = 64;
+  ret.qdq_params[6] = 64;
+  ret.qdq_params[7] = (int32_t)c3_coeff_scale_shift;
+  ret.qdq_params[8] = shft_c2;
+  ret.qdq_params[9] = (int32_t)matmul_shift;
+  ret.qdq_params[10] = 1;
   ret.c3_coeff_scale = (int32_t)c3_coeff_scale;
   ret.c2_coeff_prime = c2_coeff_prime;
   ret.c3_coeff_scale_shift = c3_coeff_scale_shift;
@@ -1126,6 +1577,91 @@ qdq_matmul_uint16_uint8_cstm(std::vector<uint8_t> weights, float a_dq_xscale,
 //   return qdq_params;
 // }
 
+// This utility is for DeMHA QDQ params
+// - Set 0 –
+// 0, 1 --> DeQuant zp, scale of 2nd input of Add (position encoding addition
+// position+context addition (pos_con_add)) which is again coming from another
+// node (SkipAdd ) 2, 3 --> DeQuant zp, scale of attention mask input going to
+// second Add 4, 5 --> DeQuant zp, scale of 1st input of Add3 which is coming
+// from QKt
+std::vector<int32_t> DeMHA_qdq_params_fill(
+    std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t>
+        qkt_qdq,
+    std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t>
+        smv_qdq,
+    std::tuple<int64_t, int64_t> sm_qdq_before,
+    std::tuple<int64_t, int64_t> sm_qdq_after,
+    std::tuple<float, int16_t, float, int16_t, float, int16_t>
+        qdq_pos_con_add_in,
+    std::tuple<float, int16_t, float, int16_t, float, int16_t> qdq_att_mask,
+    int64_t is_qkt_smv_int16, int64_t smv_swap) {
+  std::vector<int32_t> qdq_params(96, 0);
+
+  std::vector<int32_t> elt_coeffs_1 =
+      vaip::dd::qmatmulcalc::calculate_add_qdq_params(
+          std::get<0>(qdq_pos_con_add_in), std::get<1>(qdq_pos_con_add_in),
+          std::get<2>(qdq_pos_con_add_in), std::get<3>(qdq_pos_con_add_in),
+          std::get<4>(qdq_pos_con_add_in), std::get<5>(qdq_pos_con_add_in));
+
+  std::vector<int32_t> elt_coeffs_2 =
+      vaip::dd::qmatmulcalc::calculate_add_qdq_params(
+          std::get<0>(qdq_att_mask), std::get<1>(qdq_att_mask),
+          std::get<2>(qdq_att_mask), std::get<3>(qdq_att_mask),
+          std::get<4>(qdq_att_mask), std::get<5>(qdq_att_mask));
+
+  // pos_con_add 2nd input qdq params ( input comming from pos encoding)
+  for (size_t i = 0; i < elt_coeffs_1.size() && i < 16; ++i) {
+    qdq_params[(16 * 0) + i] = elt_coeffs_1[i];
+  }
+
+  // qdq params of pos_con_add 1st input comming from div
+  // qdq_params[(16 * 0) + 4] = std::get<3>(qdq_pos_con_add_in);
+  // qdq_params[(16 * 0) + 5] = std::get<2>(qdq_pos_con_add_in);
+
+  // qdq params of output to add of attetion mask
+  for (size_t i = 0; i < elt_coeffs_2.size() && i < 16; ++i) {
+    qdq_params[(16 * 1) + i] = elt_coeffs_2[i];
+  }
+
+  // QKT
+  reinterpret_cast<int64_t*>(qdq_params.data())[16] = std::get<0>(qkt_qdq);
+
+  qdq_params[(16 * 2) + 2] = std::get<1>(qkt_qdq);
+  qdq_params[(16 * 2) + 3] = std::get<2>(qkt_qdq);
+  qdq_params[(16 * 2) + 4] = std::get<3>(qkt_qdq);
+  qdq_params[(16 * 2) + 5] = 16;
+  qdq_params[(16 * 2) + 6] = 64;
+  qdq_params[(16 * 2) + 7] = std::get<4>(qkt_qdq);
+  qdq_params[(16 * 2) + 8] = std::get<5>(qkt_qdq);
+  qdq_params[(16 * 2) + 9] = std::get<6>(qkt_qdq);
+
+  // SM *V
+  reinterpret_cast<int64_t*>(qdq_params.data())[24] = std::get<0>(smv_qdq);
+  if (smv_swap != 0) {
+    qdq_params[(16 * 3) + 2] = std::get<3>(smv_qdq); // swapping
+    qdq_params[(16 * 3) + 4] = std::get<1>(smv_qdq);
+  } else {
+    qdq_params[(16 * 3) + 2] = std::get<1>(smv_qdq);
+    qdq_params[(16 * 3) + 4] = std::get<3>(smv_qdq);
+  }
+
+  qdq_params[(16 * 3) + 3] = std::get<2>(smv_qdq);
+  qdq_params[(16 * 3) + 5] = 16;
+  qdq_params[(16 * 3) + 6] = 64;
+  qdq_params[(16 * 3) + 7] = std::get<4>(smv_qdq);
+  qdq_params[(16 * 3) + 8] = std::get<5>(smv_qdq);
+  qdq_params[(16 * 3) + 9] = std::get<6>(smv_qdq);
+
+  // DQ before SM
+  qdq_params[(16 * 4) + 0] = std::get<1>(sm_qdq_before);
+  qdq_params[(16 * 4) + 1] = std::get<0>(sm_qdq_before);
+
+  // Q after SM
+  qdq_params[(16 * 5) + 0] = std::get<1>(sm_qdq_after);
+  qdq_params[(16 * 5) + 1] = std::get<0>(sm_qdq_after);
+
+  return qdq_params;
+}
 std::vector<int32_t> mha_channel_qdq_params_fill(
     std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t>
         qkt_qdq,
@@ -1191,6 +1727,137 @@ std::vector<int32_t> mha_channel_qdq_params_fill(
   qdq_params[(16 * 5) + 1] = std::get<0>(sm_qdq_after);
 
   return qdq_params;
+}
+
+std::tuple<std::vector<int64_t>, std::vector<int32_t>, std::vector<int32_t>,
+           int64_t, int64_t>
+dq_uint16A_int4W_conv_chwise_q_param_gen(
+    float in_s, uint16_t in_zp, const std::vector<int8_t>& w,
+    gsl::span<const float> w_s, const std::vector<int8_t>& w_zp,
+    const std::vector<int64_t>& w_shape, gsl::span<const int32_t> b, float b_s,
+    int32_t b_zp, float o_s, uint16_t o_zp) {
+
+  CHECK(w_shape.size() == 4);
+  int64_t num_weights_unrolled = w_shape[1] * w_shape[2] * w_shape[3];
+  int64_t num_weights_unrolled_origin = num_weights_unrolled;
+
+  auto max_abs_it =
+      std::max_element(w_zp.begin(), w_zp.end(),
+                       [](int a, int b) { return std::abs(a) < std::abs(b); });
+  int32_t max_W_zpt = 0;
+  int32_t shft_w_zpt_slack;
+  if (max_abs_it != w_zp.end()) {
+    max_W_zpt = std::abs(*max_abs_it);
+  }
+
+  if (max_W_zpt > 0)
+    shft_w_zpt_slack = std::ceil(std::log2(max_W_zpt));
+  else
+    shft_w_zpt_slack = 0;
+
+  int64_t conv_shift = (int64_t)(std::min(
+      std::max((int)std::ceil(std::log2(num_weights_unrolled)) - 12, 0), 15));
+
+  std::vector<double> c2_coeff(w_shape[0], 0);
+  for (size_t i = 0; i < c2_coeff.size(); i++)
+    c2_coeff[i] = (in_s * w_s[i]) / o_s;
+
+  std::vector<int64_t> c2_coeff_prime(w_shape[0], 0);
+  int32_t max_c2_int_val = (1 << (31 - conv_shift - shft_w_zpt_slack)) - 1;
+
+  int32_t shft_c2 = 0;
+  std::tie(c2_coeff_prime, shft_c2) =
+      find_closest_shifted_int32_vec(c2_coeff, max_c2_int_val);
+
+  int64_t o_zp_int64 = static_cast<int64_t>(o_zp);
+  std::vector<int64_t> c3_coeff_scale(w_shape[0], 0);
+
+  for (size_t i = 0; i < c3_coeff_scale.size(); i++)
+    c3_coeff_scale[i] = -c2_coeff_prime[i] * w_zp[i];
+
+  int32_t c3_coeff_offset = -in_zp * num_weights_unrolled;
+  int64_t c3_coeff_scale_shift = 0;
+  CHECK(std::abs(c3_coeff_scale[0]) <= std::numeric_limits<int32_t>::max())
+      << "Current AIE uint16A_uint8W qdq implementation does not support ifm "
+         "sum shift";
+
+  std::vector<int32_t> C2(w_shape[0], 0);
+  std::vector<int32_t> C1(w_shape[0], 0);
+  for (size_t i = 0; i < C2.size(); i++) {
+    C2[i] = static_cast<int32_t>(c2_coeff_prime[i] << conv_shift);
+    C1[i] = static_cast<int32_t>(c3_coeff_scale[i]);
+  }
+
+  std::vector<int64_t> C0(w_shape[0], 0);
+  for (size_t i = 0; i < C0.size(); ++i) {
+    int range_start = i * num_weights_unrolled_origin;
+    int range_end = (i + 1) * num_weights_unrolled_origin;
+    C0[i] = (-in_zp * c2_coeff_prime[i]) *
+                (std::accumulate(w.begin() + range_start, w.begin() + range_end,
+                                 0LL)) +
+            (b.size() > 0 ? b[i] * c2_coeff_prime[i] : 0) +
+            (o_zp_int64 << shft_c2) +
+            c3_coeff_scale[i] * (c3_coeff_offset << c3_coeff_scale_shift);
+  }
+
+  return {C0, C1, C2, conv_shift, (int64_t)shft_c2};
+}
+
+std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>
+dq_uint16A_int8W_conv_q_param_gen(float in_s, uint16_t in_zp,
+                                  gsl::span<const int8_t> w, float w_s,
+                                  int8_t w_zp,
+                                  const std::vector<int64_t>& w_shape,
+                                  gsl::span<const int32_t> b, float b_s,
+                                  int32_t b_zp, float o_s, uint16_t o_zp) {
+  // not a must, may need to relax
+  CHECK(w_shape.size() == 4);
+  int64_t num_weights_unrolled = w_shape[1] * w_shape[2] * w_shape[3];
+  int64_t num_weights_unrolled_origin = num_weights_unrolled;
+
+  int64_t conv_shift = (int64_t)(std::min(
+      std::max((int)std::ceil(std::log2(num_weights_unrolled)) - 8, 0), 15));
+  float c2_coeff = (in_s * w_s) / o_s;
+
+  int64_t c2_coeff_prime;
+  int32_t shft_c2;
+  int32_t max_W_zpt = 0;
+  int32_t shft_w_zpt_slack;
+  max_W_zpt = std::abs(w_zp);
+  if (max_W_zpt > 0)
+    shft_w_zpt_slack = std::ceil(std::log2(max_W_zpt));
+  else
+    shft_w_zpt_slack = 0;
+
+  int32_t max_c2_int_val = (1 << (31 - conv_shift - shft_w_zpt_slack)) - 1;
+  float shift_max = std::numeric_limits<float>::infinity();
+
+  std::tie(c2_coeff_prime, shft_c2) =
+      find_closest_shifted_int32_shiftmax(c2_coeff, max_c2_int_val, shift_max);
+
+  int64_t o_zp_int64 = static_cast<int64_t>(o_zp);
+  int64_t c3_coeff_scale = -c2_coeff_prime * w_zp;
+  int32_t c3_coeff_offset = -in_zp * num_weights_unrolled;
+  int64_t c3_coeff_scale_shift = 0;
+  CHECK(std::abs(c3_coeff_scale) <= std::numeric_limits<int32_t>::max())
+      << "Current AIE uint16A_uint8W qdq implementation does not support ifm "
+         "sum shift";
+  int32_t C2 = static_cast<int32_t>(c2_coeff_prime << conv_shift);
+  int32_t C1 = static_cast<int32_t>(c3_coeff_scale);
+
+  std::vector<int64_t> C0(w_shape[0], 0);
+  for (size_t i = 0; i < C0.size(); ++i) {
+    int range_start = i * num_weights_unrolled_origin;
+    int range_end = (i + 1) * num_weights_unrolled_origin;
+    C0[i] = (-in_zp * c2_coeff_prime) *
+                (std::accumulate(w.begin() + range_start, w.begin() + range_end,
+                                 0LL)) +
+            (b.size() > 0 ? b[i] * c2_coeff_prime : 0) +
+            (o_zp_int64 << shft_c2) +
+            c3_coeff_scale * (c3_coeff_offset << c3_coeff_scale_shift);
+  }
+
+  return {C0, C1, C2, conv_shift, (int64_t)shft_c2};
 }
 
 std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>

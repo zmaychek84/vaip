@@ -1,3 +1,4 @@
 vaip_pass_dd_merge_qmatmul_add_gelu__hook
 vaip_pass_dd_merge_qmatmul_add_gelu2__hook
 vaip_pass_dd_merge_qmatmul_add_gelu3__hook
+vaip_pass_dd_merge_qmatmul_add_gelu4__hook

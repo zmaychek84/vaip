@@ -1,38 +1,24 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
+
+#ifdef __GNUC__
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wpedantic"
+#  pragma GCC diagnostic ignored "-Wconversion"
+#endif
+
+#include "vaip/dd/coeffs.hpp"
+// #include "vaip/pattern_zoo.hpp"
+#ifdef __GNUC__
+#  pragma GCC diagnostic pop
+#endif
 
 #include "vaip/dd/dd_utils.hpp"
 #include "vaip/vaip.hpp"
+#include "vitis/ai/env_config.hpp"
+
 #include <cmath>
 #include <glog/logging.h>
 #include <unordered_map>
@@ -113,10 +99,53 @@ struct MergeQConcat {
         pattern_, [=](onnxruntime::Graph* graph, binder_t& binder) -> bool {
           auto matched_input = get_matched_input(dq_input_vec_wildcard, binder);
           auto ni_output = binder[pattern_->get_id()];
+          auto out_scale = binder[constant_0->get_id()];
+          auto out_zp = binder[constant_1->get_id()];
 
           // Excluding the op fusion of 2 concats, as they are causing high
           // l2norms
-          if (node_arg_get_name(*ni_output.node_arg) ==
+          bool is_custom = false;
+          auto args = self->get_pass_proto().args();
+          if (!args.empty()) {
+            std::vector<std::string> arg;
+            for (const auto& str : args) {
+              arg.push_back(str);
+            }
+            if (arg[0] == "custom_op")
+              is_custom = true;
+          }
+          if (is_custom) {
+            auto shape = *node_arg_get_shape_i64(*ni_output.node_arg);
+            auto output_scale =
+                node_arg_get_const_data_as_float(*graph, *out_scale.node_arg);
+            auto output_zp =
+                node_arg_get_const_data_as_u16(*graph, *out_zp.node_arg);
+            std::vector<std::string> in_dtypes(matched_input.size(), "uint16");
+            std::vector<std::string> out_dtypes = {"uint16"};
+            auto node_name = node_arg_get_name(*ni_output.node_arg);
+            std::vector<std::string> inputs;
+            for (int i = 0; i < matched_input.size(); i++) {
+              const NodeArg* inps = matched_input[i];
+              inputs.push_back(node_arg_get_name(*inps));
+            }
+            std::vector<std::string> outputs = {node_name};
+            auto constant_initializers = std::vector<std::string>{};
+            auto [meta_def, err] =
+                self->try_fuse(*graph, "concat_" + node_name, inputs, outputs,
+                               constant_initializers, "CONCAT");
+            if (meta_def == nullptr) {
+              LOG(FATAL) << "Cannot fuse DQ:  " << err.comments;
+            }
+            auto& generic_param = *meta_def->mutable_generic_param();
+            generic_param["out_scale"] = std::to_string(output_scale);
+            generic_param["out_zero_point"] = std::to_string(output_zp);
+            [[maybe_unused]] auto& fused_node =
+                self->fuse(*graph, std::move(*meta_def));
+
+            return true;
+
+          } else if (
+              node_arg_get_name(*ni_output.node_arg) ==
                   "/up_blocks.2/cats.2/Concat_output_0_QuantizeLinear_Output" ||
               node_arg_get_name(*ni_output.node_arg) ==
                   "/up_blocks.3/cats.0/Concat_output_0_QuantizeLinear_Output") {

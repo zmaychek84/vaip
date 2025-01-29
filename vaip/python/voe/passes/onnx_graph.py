@@ -1,6 +1,6 @@
 ##
-## Copyright (C) 2024 Advanced Micro Devices, Inc. All rights reserved.
-## Licensed under the MIT License.
+##  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+##  Licensed under the MIT License.
 ##
 
 import onnx

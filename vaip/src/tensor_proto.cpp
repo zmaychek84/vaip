@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2022 Xilinx, Inc. All rights reserved.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #include "./xir_ops/xir_ops_defs.hpp"
@@ -131,6 +102,21 @@ VAIP_DLL_SPEC TensorProtoPtr
 tensor_proto_new_u64(const std::string& name, const std::vector<int64_t>& shape,
                      const std::vector<uint64_t>& data) {
   return TensorProtoPtr(VAIP_ORT_API(tensor_proto_new_u64)(name, shape, data));
+}
+
+#endif
+
+#if VAIP_ORT_API_MAJOR >= 13
+VAIP_DLL_SPEC TensorProtoPtr
+tensor_proto_new_i4(const std::string& name, const std::vector<int64_t>& shape,
+                    const std::vector<int8_t>& data) {
+  return TensorProtoPtr(VAIP_ORT_API(tensor_proto_new_i4)(name, shape, data));
+}
+
+VAIP_DLL_SPEC TensorProtoPtr
+tensor_proto_new_u4(const std::string& name, const std::vector<int64_t>& shape,
+                    const std::vector<uint8_t>& data) {
+  return TensorProtoPtr(VAIP_ORT_API(tensor_proto_new_u4)(name, shape, data));
 }
 
 #endif
@@ -268,6 +254,44 @@ VAIP_DLL_SPEC uint64_t tensor_proto_as_u64(const onnxruntime::Graph& graph,
 
 void TensorProtoDeleter::operator()(TensorProto* p) const {
   VAIP_ORT_API(tensor_proto_delete)(p);
+}
+
+VAIP_DLL_SPEC
+int8_t get_int4_value(gsl::span<const int8_t> data, size_t idx) {
+  constexpr int8_t lookup_table_[16] = {0,  1,  2,  3,  4,  5,  6,  7,
+                                        -8, -7, -6, -5, -4, -3, -2, -1};
+  // Process a full byte at once
+  uint8_t byte = static_cast<uint8_t>(data[idx >> 1]);
+  // Use bit manipulation instead of branching
+  uint8_t value = (byte >> ((idx & 1) << 2)) & 0xf;
+  // Use lookup table instead of conditional
+  return lookup_table_[value];
+}
+
+VAIP_DLL_SPEC
+uint8_t get_uint4_value(gsl::span<const uint8_t> data, size_t idx) {
+  size_t byte_idx = idx / 2;
+  uint8_t value = data[byte_idx];
+  if (idx & 1) { // odd, upper
+    value = value >> 4;
+  } else {
+    value = value & 0xf;
+  }
+  return value;
+}
+
+VAIP_DLL_SPEC
+gsl::span<const int8_t> tensor_proto_as_i4s(const onnxruntime::Graph& graph,
+                                            const TensorProto& tensor) {
+  return tensor_proto_as<int8_t>(graph, tensor,
+
+                                 onnx::TensorProto_DataType_INT4);
+}
+VAIP_DLL_SPEC
+gsl::span<const uint8_t> tensor_proto_as_u4s(const onnxruntime::Graph& graph,
+                                             const TensorProto& tensor) {
+  return tensor_proto_as<uint8_t>(graph, tensor,
+                                  onnx::TensorProto_DataType_UINT4);
 }
 
 VAIP_DLL_SPEC

@@ -1,33 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 #include <glog/logging.h>
 
@@ -132,21 +105,10 @@ struct Dd_merge_gather_add {
           auto log_dir = self->get_log_path();
           std::string name = node_arg_get_name(*input_data_node.node_arg);
           auto data_bin = get_file_name(name);
-          bool in_mem = self_.get_context()->cache_in_mem();
-          if (in_mem) {
-            auto char_data = gsl::span<const char>(
-                reinterpret_cast<const char*>(in_data.data()),
-                in_data.size() * sizeof(uint8_t));
-            self_.get_context()->write_file(data_bin, char_data);
-          } else {
-            auto path = log_dir / data_bin;
-            std::string data_file{path.u8string()};
-            std::ofstream file(data_file, std::ios::binary);
-            file.write(reinterpret_cast<const char*>(in_data.data()),
-                       in_data.size() * sizeof(uint8_t));
-
-            file.close();
-          }
+          auto char_data = gsl::span<const char>(
+              reinterpret_cast<const char*>(in_data.data()),
+              in_data.size() * sizeof(uint8_t));
+          self_.get_context()->write_file(data_bin, char_data);
 
           std::string wts_file;
           auto const_inp_node = binder[const_inp->get_id()];
@@ -159,19 +121,11 @@ struct Dd_merge_gather_add {
 
           std::string wname = node_arg_get_name(*const_inp_node.node_arg);
           auto wts_bin = get_file_name(wname);
-          if (in_mem) {
-            auto char_data = gsl::span<const char>(
-                reinterpret_cast<const char*>(wts_data.data()),
-                wts_data.size() * sizeof(uint8_t));
-            self_.get_context()->write_file(wts_bin, char_data);
-          } else {
-            auto path2 = log_dir / wts_bin;
-            std::string wts_data_file{path2.u8string()};
-            std::ofstream file2(wts_data_file, std::ios::binary);
-            file2.write(reinterpret_cast<const char*>(wts_data.data()),
-                        wts_data.size() * sizeof(uint8_t));
-            file2.close();
-          }
+          char_data = gsl::span<const char>(
+              reinterpret_cast<const char*>(wts_data.data()),
+              wts_data.size() * sizeof(uint8_t));
+          self_.get_context()->write_file(wts_bin, char_data);
+
           auto act_sc = node_arg_get_const_data_as_float(
               *graph, *act_scale_node.node_arg);
           auto act_zp =

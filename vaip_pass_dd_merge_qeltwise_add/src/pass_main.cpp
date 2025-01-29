@@ -1,35 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
-# Copyright (C) 2022 Xilinx, Inc.
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 #ifdef __GNUC__
@@ -47,6 +18,8 @@
 #endif
 #include "vaip/vaip.hpp"
 #include "vitis/ai/env_config.hpp"
+#include <cmath>
+
 #include <fstream>
 #include <glog/logging.h>
 
@@ -71,7 +44,7 @@ get_concat_input_qparams_add_sibling(onnxruntime::Graph* graph,
         inp_sc = node_get_attr_float(*in_node_found, "output_scale");
         inp_zp = (uint16_t)(node_get_attr_float(*in_node_found, "output_zp"));
         concat_in_sibling = "true";
-        MY_LOG(1) << "QEltwiseAdd  a has concat in silbling";
+        MY_LOG(1) << "QEltWiseAdd  a has concat in silbling";
       }
     }
   }
@@ -82,7 +55,7 @@ std::tuple<float, uint16_t, std::string>
 get_concat_output_qparams_add(onnxruntime::Graph* graph,
                               const NodeInput& out_node, float out_sc,
                               uint16_t out_zp) {
-  // Concat pass would be completed before QEltwiseAdd pass, so we read the
+  // Concat pass would be completed before QEltWiseAdd pass, so we read the
   // attributes of Concat (consumer of eltwise add) and update the output
   // qparams
   std::string concat_in_child = "false";
@@ -99,12 +72,73 @@ get_concat_output_qparams_add(onnxruntime::Graph* graph,
       out_zp = (uint16_t)(node_get_attr_float(*consumer, "output_zp"));
       concat_in_child = "true";
 
-      MY_LOG(1) << "Concat is a child of QEltwiseadd node";
+      MY_LOG(1) << "Concat is a child of QEltWiseAdd node";
     }
   }
   return std::make_tuple(out_sc, out_zp, concat_in_child);
 }
 
+static std::vector<const Node*> get_all_parent_nodes(const Node* cnode) {
+  auto node_inputs = node_get_inputs(*cnode);
+  std::vector<const Node*> ret;
+  for (const auto& ni : node_inputs) {
+    if (ni.node != nullptr) {
+      ret.emplace_back(ni.node);
+    }
+  }
+  return ret;
+}
+
+static bool check_div_parent(Graph& g, const Node* a, float& div_scale,
+                             uint16_t& div_zp, NodeArg*& div_node_arg) {
+  auto inputs = get_all_parent_nodes(a);
+  if (inputs.size() == 0)
+    return false;
+  auto x = inputs[0];
+  auto parent_op_type = VAIP_ORT_API(node_op_type)(*x);
+  if (parent_op_type != "Div")
+    return false;
+  else {
+    inputs = get_all_parent_nodes(x);
+    if (inputs.size() == 0)
+      return false;
+    x = inputs[0];
+    parent_op_type = VAIP_ORT_API(node_op_type)(*x);
+    // if (parent_op_type != "DequantizeLinear")
+    //   return false;
+
+    while (parent_op_type != "GatherElements") {
+      inputs = get_all_parent_nodes(x);
+      if (inputs.size() == 0)
+        return false;
+      x = inputs[0];
+      parent_op_type = VAIP_ORT_API(node_op_type)(*x);
+    }
+    inputs = get_all_parent_nodes(x);
+    if (inputs.size() == 0)
+      return false;
+    x = inputs[0];
+    parent_op_type = VAIP_ORT_API(node_op_type)(*x);
+    if (parent_op_type != "DequantizeLinear")
+      return false;
+  }
+  auto input_node_args = node_get_input_node_args(*x);
+  for (auto ni : input_node_args) {
+    if (!node_arg_is_constant(g, *ni)) {
+      div_node_arg = const_cast<NodeArg*>(ni);
+      continue;
+    }
+    auto ni_dtype = node_arg_get_element_type(*ni);
+    if (ni_dtype == (int)ONNX_NAMESPACE::TensorProto_DataType_FLOAT)
+      div_scale = node_arg_get_const_data_as_float(g, *ni) / std::sqrt(192.0);
+    else if (ni_dtype == (int)ONNX_NAMESPACE::TensorProto_DataType_UINT8 ||
+             ni_dtype == (int)ONNX_NAMESPACE::TensorProto_DataType_UINT16)
+      div_zp = vaip::dd::get_zp_from_node(g, *ni);
+    else
+      MY_LOG(1) << "Div Zero point not valid" << std::endl;
+  }
+  return true;
+}
 struct MergeQEltWiseAdd {
   MergeQEltWiseAdd(IPass& self) {}
   static std::tuple<bool, bool> check_add_in_parent(const Node* in_0,
@@ -149,9 +183,9 @@ struct MergeQEltWiseAdd {
       dtypes.emplace_back("uint8");
 
     auto b_dtype = node_arg_get_element_type(b);
-    if (b_dtype == (int)ONNX_NAMESPACE::TensorProto_DataType_UINT16)
+    if (b_dtype == (int)ONNX_NAMESPACE::TensorProto_DataType_UINT16) {
       dtypes.emplace_back("uint16");
-    else
+    } else
       dtypes.emplace_back("uint8");
     dtypes.emplace_back("int32");
     return dtypes;
@@ -184,12 +218,30 @@ struct MergeQEltWiseAdd {
             MY_LOG(1) << "Shape mismatch, not fusing eltwiseadd";
             return false;
           }
+          std::string design_param_ = "4x2";
+
+          auto args = self->get_pass_proto().args();
+          if (!args.empty()) {
+            std::vector<std::string> arg;
+            for (const auto& str : args) {
+              arg.push_back(str);
+            }
+            if (arg[0] == "4x4PSU")
+              design_param_ = arg[0];
+          }
 
           int is_biasadd = false;
           if ((*node_arg_is_constant)(*graph, *a_node.node_arg) ||
               (*node_arg_is_constant)(*graph, *b_node.node_arg))
             is_biasadd = true;
-
+          float div_scale_0, div_scale_1;
+          uint16_t div_zp_0, div_zp_1;
+          NodeArg* div_node_arg_0 = nullptr;
+          NodeArg* div_node_arg_1 = nullptr;
+          bool is_div_add = check_div_parent(*graph, a_node.node, div_scale_0,
+                                             div_zp_0, div_node_arg_0) &&
+                            check_div_parent(*graph, b_node.node, div_scale_1,
+                                             div_zp_1, div_node_arg_1);
           auto q_node = binder["q"];
 
           // get qparams
@@ -302,19 +354,75 @@ struct MergeQEltWiseAdd {
                 .add("in_dtypes", inp_dtype)
                 .add("out_dtypes", out_dtype)
                 .build();
+          } else if (is_div_add) {
+            input_q_params = {div_scale_0, (float)div_zp_0, div_scale_1,
+                              (float)div_zp_1};
+            std::vector<int32_t> elt_coeffs =
+                vaip::dd::qmatmulcalc::calculate_add_qdq_params(
+                    div_scale_0, div_zp_0, div_scale_1, div_zp_1, y_sc, y_zp);
+            std::string elt_coeff_name = std::string(node_name + "_qdq_");
+            auto& elt_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
+                graph, elt_coeff_name, elt_coeffs,
+                std::vector({(int64_t)elt_coeffs.size()}));
+            std::vector<const NodeArg*> new_inputs{div_node_arg_0,
+                                                   div_node_arg_1, &elt_arg};
+            auto node_builder = NodeBuilder(*graph, *self);
+            node_builder.set_input_node_args(new_inputs);
+            node_builder.set_op_type("QGatherDivAdd", "com.xilinx");
+            node_builder.set_anchor_point1(*q_node.node);
+            node_builder.add("nodes", attr_nodes);
+            node_builder.add("input_q_params", input_q_params);
+            node_builder.add("output_q_params", output_q_params);
+            node_builder.add(
+                "in_dtypes",
+                change_inputs(*div_node_arg_0, *div_node_arg_1, amat_uint16));
+            node_builder.add("out_dtypes",
+                             change_outputs(*q_node.node_arg, cmat_uint16));
+            node_builder.add("amat_uint16", (int64_t)amat_uint16);
+            node_builder.add("cmat_uint16", (int64_t)cmat_uint16);
+            node_builder.add(
+                "concat_in_child",
+                concat_in_child); // used by ops that are consumers of
+                                  // EltWiseAdd, if concat is one of the
+                                  // consumers of EltwiseAdd
+            node_builder.add("output_scale", y_sc);
+            node_builder.add("output_zp", (float)y_zp);
+            node_builder.build();
           } else {
+            // Accessing the args value from config proto, if it is intadd then
+            // select QIntEltwiseAdd
+            std::string op_name = "QEltWiseAdd";
+            bool intadd = false;
+            auto args = self->get_pass_proto().args();
+            if (!args.empty()) {
+              std::vector<std::string> arg;
+              for (const auto& str : args) {
+                arg.push_back(str);
+              }
+              if (arg[0] == "intadd")
+                intadd = true;
+            }
             std::vector<int32_t> elt_coeffs(16, 0);
-            elt_coeffs[0] =
-                vaip::dd::qmatmulcalc::float_to_bfloat16(input_q_params[0]);
-            elt_coeffs[1] = int32_t(input_q_params[1]);
-            elt_coeffs[2] =
-                vaip::dd::qmatmulcalc::float_to_bfloat16(input_q_params[2]);
-            elt_coeffs[3] = int32_t(input_q_params[3]);
-            elt_coeffs[4] =
-                vaip::dd::qmatmulcalc::float_to_bfloat16(1.0f / y_sc);
-            elt_coeffs[5] = y_zp;
-            elt_coeffs[6] = (int32_t)amat_uint16;
-            elt_coeffs[7] = (int32_t)cmat_uint16;
+            if (intadd == false) {
+              elt_coeffs[0] =
+                  vaip::dd::qmatmulcalc::float_to_bfloat16(input_q_params[0]);
+              elt_coeffs[1] = int32_t(input_q_params[1]);
+              elt_coeffs[2] =
+                  vaip::dd::qmatmulcalc::float_to_bfloat16(input_q_params[2]);
+              elt_coeffs[3] = int32_t(input_q_params[3]);
+              elt_coeffs[4] =
+                  vaip::dd::qmatmulcalc::float_to_bfloat16(1.0f / y_sc);
+              elt_coeffs[5] = y_zp;
+              elt_coeffs[6] = (int32_t)amat_uint16;
+              elt_coeffs[7] = (int32_t)cmat_uint16;
+              op_name = "QEltWiseAdd";
+
+            } else {
+
+              elt_coeffs = vaip::dd::qmatmulcalc::calculate_add_qdq_params(
+                  a_sc, a_zp, b_sc, b_zp, y_sc, y_zp);
+              op_name = "QIntEltwiseAdd";
+            }
             std::string elt_coeff_name = std::string(node_name + "_qdq_");
             auto& elt_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
                 graph, elt_coeff_name, elt_coeffs,
@@ -326,7 +434,7 @@ struct MergeQEltWiseAdd {
             }
             NodeBuilder(*graph, *self)
                 .set_input_node_args(new_inputs)
-                .set_op_type("QEltWiseAdd", "com.xilinx")
+                .set_op_type(op_name, "com.xilinx")
                 .set_anchor_point1(*q_node.node)
                 .add("nodes", attr_nodes)
                 .add("input_q_params", input_q_params)
@@ -336,6 +444,7 @@ struct MergeQEltWiseAdd {
                 .add("out_dtypes",
                      change_outputs(*q_node.node_arg, cmat_uint16))
                 .add("amat_uint16", (int64_t)amat_uint16)
+                .add("design_param", design_param_)
                 .add("cmat_uint16", (int64_t)cmat_uint16)
                 .add("concat_in_child",
                      concat_in_child) // used by ops that are consumers of

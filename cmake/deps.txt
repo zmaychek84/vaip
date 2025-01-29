@@ -11,6 +11,6 @@ trace_logging;https://github.com/amd/trace_logging.git;8f3785a9aa0241d7dc5e8300b
 graph_engine;https://github.com/amd/graph_engine.git;2410822ec0450ff3602ef26bbe074685765c9144
 spdlog;https://github.com/gabime/spdlog.git;v1.x
 GTest;https://github.com/google/googletest.git;main
-dod;https://github.com/amd/DynamicDispatch.git;cf7e9381e7117c64548d2bf608ffaa5a70732952
+dod;https://github.com/amd/DynamicDispatch.git;f50a85234d8a8cd0b2b441425247b93498c8fc4d
 transformers;https://github.com/amd/transformers.git;f5eb3dfe9955c7836d6d7fe562e1f612aa2950e4
 xaiengine;https://github.com/Xilinx/aie-rt.git;4a012d7932155217d2c9368a3588a3c41d2b9edb

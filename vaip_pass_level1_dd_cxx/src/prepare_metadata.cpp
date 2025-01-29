@@ -1,34 +1,6 @@
 /*
- *     The Xilinx Vitis AI Vaip in this distribution are provided under the
- * following free and permissive binary-only license, but are not provided in
- * source code form.  While the following free and permissive license is similar
- * to the BSD open source license, it is NOT the BSD open source license nor
- * other OSI-approved open source license.
- *
- *      Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights
- * reserved.
- *
- *      Redistribution and use in binary form only, without modification, is
- * permitted provided that the following conditions are met:
- *
- *      1. Redistributions must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other
- * materials provided with the distribution.
- *
- *      2. The name of Xilinx, Inc. may not be used to endorse or promote
- * products redistributed with this software without specific prior written
- * permission.
- *
- *      THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ *  Copyright (C) 2023 – 2024 Advanced Micro Devices, Inc. All rights reserved.
+ *  Licensed under the MIT License.
  */
 
 // clang-format off
@@ -78,10 +50,10 @@ using namespace vaip_core;
 
 static size_t get_size_of_type(const std::string& type) {
   static const std::unordered_map<std::string, size_t> elem_size{
-      {"int8", 1},     {"uint8", 1},   {"int16", 2}, {"uint16", 2},
-      {"int32", 4},    {"uint32", 4},  {"int64", 8}, {"uint64", 8},
-      {"bfloat16", 2}, {"float32", 4}, {"float", 4}, {"double", 8},
-      {"float64", 8}};
+      {"int4", 1},  {"uint4", 1},  {"int8", 1},     {"uint8", 1},
+      {"int16", 2}, {"uint16", 2}, {"int32", 4},    {"uint32", 4},
+      {"int64", 8}, {"uint64", 8}, {"bfloat16", 2}, {"float32", 4},
+      {"float", 4}, {"double", 8}, {"float64", 8}};
   if (elem_size.find(type) == elem_size.end()) {
     throw std::runtime_error("get_size_of_type - Invalid type : " + type);
   }
