@@ -3,6 +3,7 @@ microsoft_gsl;https://github.com/microsoft/GSL/archive/refs/tags/v4.0.0.zip;cf36
 zlib;https://github.com/madler/zlib.git;v1.2.13
 glog;https://github.com/google/glog/archive/refs/tags/v0.6.0.zip;b9c4c032e79300665a92d8dbc25513a0ee7ea47c
 Boost;https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz;893b5203b862eb9bbd08553e24ff146a
+tar;https://github.com/freebsd/freebsd-src/archive/refs/tags/release/12.0.0.zip;03e620eb5ed4c3858a4451966d8cb73d
 unilog;https://github.com/amd/unilog.git;3abf8046d7ec8e651b8ec7ef19627a667ffaa741
 xir;https://github.com/amd/xir.git;402341dd389d2f3ecd128e0a414d3fae3ca42db0
 target_factory;https://github.com/amd/target_factory.git;7270acd2eb90e8f5b4fc7354c66c2a3fd960111f
