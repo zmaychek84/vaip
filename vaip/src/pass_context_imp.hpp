@@ -68,7 +68,20 @@ private:
 private:
   PassContext* context;
 };
+class CacheFileVecStreamWriterBuilder : public IStreamWriterBuilder {
+public:
+  CacheFileVecStreamWriterBuilder(
+      PassContext* ctx, std::map<std::string, std::string> filename_to_md5)
+      : filename_to_md5_(filename_to_md5), context(ctx) {}
 
+private:
+  virtual std::unique_ptr<IStreamWriter>
+  build(const std::string& filename) override final;
+
+private:
+  std::map<std::string, std::string> filename_to_md5_;
+  PassContext* context;
+};
 class CacheFileStreamReader : public IStreamReader {
 public:
   CacheFileStreamReader(const std::string& name,
@@ -172,6 +185,11 @@ public:
   measure(const std::string& label) override final;
   virtual void on_custom_op_create_end() override final;
 
+  virtual void set_cache_file_md5_map(
+      const std::map<std::string, std::string>& cache_file_md5) override final;
+  virtual std::map<std::string, std::string>
+  get_cache_file_md5_map() override final;
+
   // helper class
   struct WithPass {
     WithPass(PassContextImp& context, IPass& pass);
@@ -187,6 +205,7 @@ public:
 private:
   // use std::map to keep filename ordered.
   std::map<std::string, FILE*> cache_files_;
+  std::map<std::string, std::string> cache_file_md5s_;
   friend int vitisai_ep_set_ep_dynamic_options(
       const std::vector<std::unique_ptr<vaip_core::ExecutionProvider>>& eps,
       const char* const* keys, const char* const* values, size_t kv_len);

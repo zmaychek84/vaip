@@ -31,7 +31,7 @@ struct DDMergeShapemzdk5 {
     auto strs_value = VAIP_ORT_API(attr_proto_get_strings)(*attr_proto);
     std::vector<std::string> ret = strs_value;
 
-    if (node_op == "QEltWiseAdd") {
+    if (node_op == "QEltWiseAdd" && !node_has_attr(*node, "generic_fusion")) {
       int parent_index = 0;
       for (auto x : ctx.parent_ops) {
         auto parent_op_type = VAIP_ORT_API(node_op_type)(*x);
@@ -81,7 +81,8 @@ struct DDMergeShapemzdk5 {
       }
 
       // std::cout<<"\n";
-    } else if (node_op == "QEltWiseAdd") {
+    } else if (node_op == "QEltWiseAdd" &&
+               !node_has_attr(*node, "generic_fusion")) {
       // auto& attrs = node_get_attributes_ref(*node);
       // auto attr_proto = node_attributes_get(attrs, attr_name);
       // auto strs_value = VAIP_ORT_API(attr_proto_get_strings)(*attr_proto);
@@ -121,7 +122,7 @@ struct DDMergeShapemzdk5 {
   }
   void update_qdq_tensor(Graph& graph, const Node* node) {
     auto node_op = VAIP_ORT_API(node_op_type)(*node);
-    if (node_op == "QGroupNorm") {
+    if (node_op == "QGroupNorm" && !node_has_attr(*node, "generic_fusion")) {
       //
 
       std::vector<const NodeArg*> node_args = node_get_input_node_args(*node);
@@ -177,9 +178,8 @@ struct DDMergeShapemzdk5 {
           // .add("output_shape", new_out_shape)
           .set_anchor_point1(*node)
           .build();
-    } else if (node_op == "QEltWiseAdd") {
-      //
-
+    } else if (node_op == "QEltWiseAdd" &&
+               !node_has_attr(*node, "generic_fusion")) {
       std::vector<const NodeArg*> node_args = node_get_input_node_args(*node);
       const NodeArg* qdq_node_arg = node_args[node_args.size() - 1];
       auto node_name = node_arg_get_name(*qdq_node_arg);

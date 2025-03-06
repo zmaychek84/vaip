@@ -8,6 +8,11 @@ import "capability.proto";
 import "config.proto";
 import "anchor_point.proto";
 
+message SubgraphProto {
+  string op_name = 1;
+  MetaDefProto metadef = 2;
+}
+
 message ContextProto {
   repeated MetaDefProto meta_def = 1;
   ConfigProto config = 3;
@@ -19,6 +24,7 @@ message ContextProto {
   repeated EventProto events = 9;
   repeated CPUUsageProto cpu_usage = 10;
   repeated string cache_files = 11;
+  map<string, SubgraphProto> subgraph_metadefs = 12;
 }
 /*
 {

@@ -30,6 +30,8 @@ public:
 public:
   static std::unique_ptr<IStreamWriter> from_bytes(std::vector<char>&);
   static std::unique_ptr<IStreamWriter> from_FILE(FILE*);
+  static std::unique_ptr<IStreamWriter>
+  from_stream_writers(std::vector<std::unique_ptr<IStreamWriter>>&&);
 };
 class IStreamWriterBuilder {
 public:

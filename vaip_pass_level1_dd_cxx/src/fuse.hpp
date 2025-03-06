@@ -51,7 +51,7 @@ prepare_metadef_context_json_from_subgraph2(
 void prepare_metadef_context_json_from_subgraph3(
     const onnxruntime::Graph& graph, vaip_core::MetaDefProto* metadef,
     const std::string& model_category, std::string qos_priority = "",
-    std::string is_preemptible = "false");
+    std::string is_preemptible = "0");
 
 using ret_type = std::pair<std::vector<std::string>, std::vector<std::string>>;
 ret_type get_subgraph_input_outputs(

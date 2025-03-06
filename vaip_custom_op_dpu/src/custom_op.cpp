@@ -180,13 +180,14 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
   // LOG(INFO) << " Vitis AI EP running " << meta_def->nodes_size() << " Nodes";
 
   CHECK(subgraph_ != nullptr);
-
 #ifdef ENABLE_XRT_SHARED_CONTEXT
 #else
   std::shared_ptr<xir::Attrs> shared_attrs = xir::Attrs::create();
 #endif
 
   auto cfg_sess_opts = context->get_config_proto().provider_options();
+  if (cfg_sess_opts.contains("model_category"))
+    model_category_ = cfg_sess_opts.at("model_category");
   int num_of_runners = 1;
   auto runners_num = cfg_sess_opts.find("num_of_dpu_runners");
   if (runners_num != cfg_sess_opts.end()) {
@@ -297,20 +298,17 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
     std::map<std::string, std::uint32_t> qos_map;
     // https://github.com/Xilinx/XRT/blob/72f7994e24e21e3f16dd0db23c93c19929f44f72/src/runtime_src/core/include/xrt/xrt_hw_context.h#L36-L52
     // FIXME: "tops" on users' side? "gops" handled by GE opaquely?
-    for (auto param : {"tops", "fps", "dma_bandwidth", "latency",
-                       "latency_in_us", "frame_execution_time", "priority"}) {
+    for (auto param :
+         {"tops", "fps", "dma_bandwidth", "latency", "latency_in_us",
+          "frame_execution_time", "priority", "perf_pref"}) {
       auto it = cfg_sess_opts.find(param);
       if (it != cfg_sess_opts.end()) {
         std::string qos_string = it->second;
         try {
           std::uint32_t qos_int = std::atoi(qos_string.c_str());
-          // When priority is set, set perf_pref to 1 to enable efficient mode.
+          qos_map[param] = qos_int;
+          // set perf_pref to 1 to enable efficient mode.
           // qos_map will be used either by share_context or GE.
-          if (param == "priority") {
-            qos_map["perf_pref"] = 1;
-          } else {
-            qos_map[param] = qos_int;
-          }
         } catch (std::exception& e) {
           LOG(WARNING) << "Failed to convert qos param :" << param
                        << " from string to int : " << e.what();
@@ -454,19 +452,21 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
       attrs->set_attr<int>("ctx_idx", std::atoi(ge_ctx_id.c_str()));
     }
 
-    try {
-      auto vart_runner = vart::RunnerExt::create_runner(subgraph_, attrs);
-      if (!share_context_) {
-        auto ge_update_qos_impl =
-            std::make_shared<vaip_core::GEUpdateQosImpl>(vart_runner.get());
-        context->add_QosUpdater(ge_update_qos_impl);
-      }
+    if (model_category_ != "PSS" && model_category_ != "PST") {
+      try {
+        auto vart_runner = vart::RunnerExt::create_runner(subgraph_, attrs);
+        if (!share_context_) {
+          auto ge_update_qos_impl =
+              std::make_shared<vaip_core::GEUpdateQosImpl>(vart_runner.get());
+          context->add_QosUpdater(ge_update_qos_impl);
+        }
 
-      runner_holder->runner_ = std::move(vart_runner);
-    } catch (std::exception& e) {
-      LOG(FATAL) << "-- Error: Failed to create GE handle: " << e.what();
+        runner_holder->runner_ = std::move(vart_runner);
+      } catch (std::exception& e) {
+        LOG(FATAL) << "-- Error: Failed to create GE handle: " << e.what();
+      }
     }
-    runners.push_back(std::move(runner_holder));
+    runners.emplace_back(std::move(runner_holder));
   }
   runnerRequestsQueue_ =
       std::unique_ptr<RunnerRequestsQueue>(new RunnerRequestsQueue(runners));
@@ -480,6 +480,29 @@ void MyCustomOp::Compute(const OrtApi* api, OrtKernelContext* context) const {
 
   if (Ort::Global<void>::api_ == nullptr) {
     Ort::Global<void>::api_ = api;
+  }
+  if (!initialized_ && (model_category_ == "PSS" || model_category_ == "PST")) {
+    std::lock_guard<std::mutex> guard(init_mutex_);
+    if (!initialized_) {
+      auto rr = runnerRequestsQueue_->getRunnerRequst();
+      for (auto i = 0; i < rr.size(); ++i) {
+
+#if ENABLE_XRT_SHARED_CONTEXT
+        auto attr = rr[i]->context_->get_attrs();
+#else
+        auto attr = rr[i]->attrs_.get();
+#endif
+        auto vart_runner = vart::RunnerExt::create_runner(subgraph_, attr);
+        if (!share_context_) {
+          auto ge_update_qos_impl =
+              std::make_shared<vaip_core::GEUpdateQosImpl>(vart_runner.get());
+          context_->add_QosUpdater(ge_update_qos_impl);
+        }
+
+        rr[i]->runner_ = std::move(vart_runner);
+      }
+      initialized_ = true;
+    }
   }
   __TIC__(GET_RUNNER);
   auto runner_request = runnerRequestsQueue_->getIdleRequest();

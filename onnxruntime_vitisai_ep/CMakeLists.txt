@@ -32,7 +32,7 @@ vai_add_library(
 
 
 if(WIN32)
-  target_link_libraries(onnxruntime_vitisai_ep PUBLIC vaip::core vart::dummy-runner)
+  target_link_libraries(onnxruntime_vitisai_ep PRIVATE vaip::core vart::dummy-runner)
   target_compile_definitions(onnxruntime_vitisai_ep PUBLIC "-DONNX_NAMESPACE=onnx")
   get_target_property(core_include vaip::core INTERFACE_INCLUDE_DIRECTORIES)
   target_include_directories(onnxruntime_vitisai_ep PUBLIC ${core_include})

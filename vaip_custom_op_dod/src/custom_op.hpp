@@ -65,8 +65,13 @@ namespace vaip_dod_custom_op {
 
 static enum DTypeConvert { TO_BF16 = 1, FROM_BF16 = 2, AS_IS = 3 };
 
+static std::unordered_map<std::string, std::string> dtype_map;
+
+static std::unordered_map<std::string, bool> dtype_convert_map;
+
 using namespace vaip_core;
 class MyCustomOp : public CustomOpImp {
+
 public:
   MyCustomOp(std::shared_ptr<const PassContext> context,
              const std::shared_ptr<MetaDefProto>& meta_def,
@@ -97,6 +102,8 @@ private:
                      std::vector<Tensor>& out_tensors) const;
   virtual void outputs_postprocess(std::vector<Ort::UnownedValue> ort_outputs,
                                    std::vector<Tensor>& out_tensors) const;
+  std::vector<std::string> input_names;
+  std::vector<std::string> output_names;
 
   std::shared_ptr<void> runner_;
   std::vector<Tensor> in_tensors_;

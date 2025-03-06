@@ -41,6 +41,19 @@ private:
 private:
   std::vector<char>& bytes_;
 };
+
+class VecStreamWriter : public IStreamWriter {
+public:
+  VecStreamWriter(std::vector<std::unique_ptr<IStreamWriter>> writers)
+      : writers_(std::move(writers)){};
+
+private:
+  VAIP_DLL_SPEC size_t write(const char* data, size_t size) override final;
+
+private:
+  std::vector<std::unique_ptr<IStreamWriter>> writers_;
+};
+
 class ByteStreamReader : public IStreamReader {
 public:
   ByteStreamReader(std::vector<char>& bytes) : bytes_(bytes) {}
@@ -71,6 +84,10 @@ std::unique_ptr<IStreamWriter> IStreamWriter::from_FILE(FILE* file) {
   return std::make_unique<FileStreamWriter>(file);
 }
 
+std::unique_ptr<IStreamWriter> IStreamWriter::from_stream_writers(
+    std::vector<std::unique_ptr<IStreamWriter>>&& writers) {
+  return std::make_unique<VecStreamWriter>(std::move(writers));
+}
 size_t FileStreamReader::read(char* data, size_t size) {
   return std::fread(data, sizeof(char), size, this->file_);
 }
@@ -87,6 +104,12 @@ size_t ByteStreamWriter::write(const char* data, size_t size) {
   return size;
 }
 
+size_t VecStreamWriter::write(const char* data, size_t size) {
+  for (auto& writer : writers_) {
+    writer->write(data, size);
+  }
+  return size;
+}
 size_t ByteStreamReader::read(char* data, size_t size) {
   if (pos + size < bytes_.size()) {
     std::memcpy(data, bytes_.data() + pos, size);

@@ -128,12 +128,12 @@ void MyCustomOp::depad(SrcDType* src, std::vector<size_t>& src_shape,
   WRAP(auto t2 = GET_TIMESTAMP();)
   WRAP(ddtimer_.depad_time.push_back(GET_INTERVAL(t1, t2));)
 }
-
 MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
                        const std::shared_ptr<MetaDefProto>& meta_def,
                        onnxruntime::Model* model)
     : CustomOpImp(context, meta_def, model) { //,
   {
+
     auto mutable_context = const_cast<PassContext*>(context.get());
     auto custom_op_constructor =
         mutable_context->measure("dd_custom_op_constructor");
@@ -173,6 +173,9 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
 
     auto dod_input_names = meta.fused_tensors.at("in").packed_tensors;
     auto ort_input_names = meta_def->inputs();
+    for (auto i : ort_input_names) {
+      input_names.push_back(i);
+    }
 
     for (int i = 0; i < dod_input_names.size(); i++) {
       for (int j = 0; j < ort_input_names.size(); j++) {
@@ -196,6 +199,10 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
 
     auto dod_output_names = meta.fused_tensors.at("out").packed_tensors;
     auto ort_output_names = meta_def->outputs();
+
+    for (auto i : ort_output_names) {
+      output_names.push_back(i);
+    }
 
     for (int i = 0; i < dod_output_names.size(); i++) {
       for (int j = 0; j < ort_output_names.size(); j++) {
@@ -244,6 +251,29 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
         }
         LOG_THIS(1) << "output dtypes: " << out_dtypes_str;
       }
+      /*
+      Basic idea : if output tensor of a dod subgraph(meta_def) is input to any
+      other dod subgraph and the dod dtypes matches , then dont convert the
+      dtype of that tensor from bf16 -> float -> uint16 and viceversa in input
+      preprocessing and output processing
+      - The code is designed to manage data type mappings for input and output
+      names in dod subgraphs. It ensures that the data types are correctly
+      mapped and identifies which inputs and outputs need type conversion
+      - Note: Currently supported only for bfloat16
+      */
+      for (int i = 0; i < output_names.size(); i++) {
+        dtype_map.try_emplace(output_names[i], out_dtypes_.at(i));
+      }
+      for (int i = 0; i < input_names.size(); i++) {
+        const auto& input_name = input_names[i];
+        dtype_convert_map[input_name] = true;
+
+        auto it = dtype_map.find(input_name);
+        if (it != dtype_map.end() && it->second == in_dtypes_.at(i) &&
+            in_dtypes_.at(i) == "bfloat16") {
+          dtype_convert_map[input_name] = false;
+        }
+      }
 
       in_scale_zps_ = cs_string_to_nested_list<float>(input_q_params);
       out_scale_zps_ = cs_string_to_nested_list<float>(output_q_params);
@@ -277,22 +307,28 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
       // share_context_ is enabled or not.
       std::map<std::string, std::uint32_t> qos_map;
       std::uint32_t qos_priority;
-      DEF_ENV_PARAM(ENABLE_PREEMPTION, "0")
-      bool enable_preemption = ENV_PARAM(ENABLE_PREEMPTION);
-      if (enable_preemption) {
-        qos_map["is_preemptible"] = false;
-        if (meta_def->generic_param().contains("is_preemptible")) {
-          qos_map["is_preemptible"] =
-              meta_def->generic_param().at("is_preemptible") == "true";
-        }
+      bool is_preemptible = false;
+      bool enable_preemption = false;
+      if (meta_def->generic_param().contains("is_preemptible") &&
+          meta_def->generic_param().at("is_preemptible") == "1") {
+        qos_map["is_preemptible"] = true;
+        is_preemptible = true;
+        enable_preemption = true;
       }
 
-      if (meta_def->generic_param().contains("qos_priority")) {
-        qos_priority = static_cast<uint32_t>(
-            std::stoul(meta_def->generic_param().at("qos_priority")));
-        qos_map["perf_pref"] = 1;
-        LOG_THIS(1) << "Setting custom QoS Priority to DPM0";
+      // if (meta_def->generic_param().contains("qos_priority")) {
+      //   qos_priority = static_cast<uint32_t>(
+      //       std::stoul(meta_def->generic_param().at("qos_priority")));
+      //   qos_map["perf_pref"] = 1;
+      //   LOG_THIS(1) << "Setting custom QoS Priority to DPM0";
+      // }
+
+      if (meta_def->generic_param().contains("perf_pref")) {
+        qos_map["perf_pref"] =
+            meta_def->generic_param().at("perf_pref") == "1" ? 1 : 0;
+        LOG_THIS(1) << "Setting perf_pref";
       }
+
       support_eff_mode_ = true;
       if (share_context_) {
         LOG_THIS(1) << "DOD using shared context";
@@ -376,6 +412,35 @@ MyCustomOp::MyCustomOp(std::shared_ptr<const PassContext> context,
       if (meta_def->generic_param().contains("model_category"))
         cfg.model_name = meta_def->generic_param().at("model_category");
       cfg.cache_dir = dd_cache_dir.string();
+
+      cfg.use_lazy_scratch_bo = true;
+      if (all_provider_options.contains("dd_use_lazy_scratch_bo")) {
+        cfg.use_lazy_scratch_bo =
+            all_provider_options.at("dd_use_lazy_scratch_bo") == "1";
+      }
+      cfg.constbo_sharing_key = "";
+      if (all_provider_options.contains("constbo_sharing_key")) {
+        cfg.constbo_sharing_key =
+            all_provider_options.at("constbo_sharing_key");
+      }
+
+      cfg.en_lazy_constbo = false;
+      if (all_provider_options.contains("dd_use_lazy_const_bo")) {
+        cfg.en_lazy_constbo =
+            all_provider_options.at("dd_use_lazy_const_bo") == "1";
+      }
+
+      cfg.dealloc_scratch_bo = false;
+      if (all_provider_options.contains("dd_dealloc_scratch_bo")) {
+        cfg.dealloc_scratch_bo =
+            all_provider_options.at("dd_dealloc_scratch_bo") == "1";
+      }
+
+      cfg.enable_preemption = is_preemptible;
+      if (meta_def->generic_param().contains("enable_preemption")) {
+        cfg.enable_preemption =
+            meta_def->generic_param().at("enable_preemption") == "1";
+      }
       auto fusion_runtime_load_state =
           mutable_context->measure("fusion_runtime_load_state");
       load_function func = nullptr;
@@ -457,9 +522,27 @@ void MyCustomOp::inputs_preprocess(OrtKernelContext* context,
 
   // Inputs
   for (size_t i = 0; i < num_inputs; i++) {
+
     auto input_tensor = ctx.GetInput(dod_in_index_[i]);
     auto input_type = input_tensor.GetTensorTypeAndShapeInfo().GetElementType();
     auto input_shape = input_tensor.GetTensorTypeAndShapeInfo().GetShape();
+
+    /*
+    Feature summary :
+    - In the constructor, each input and output tensor is labeled whether to
+    convert or not (if any subgraph output is comming as an input, dont do dtype
+    conversion)
+    - We use that info here to perform dtype conversion or not
+    - Note : Feature supported currently only for bfloat16
+
+    - inputs_names are ort input names, we are fetching the flag from the map
+    and setting the dtype_convert flag to false (dont convert)
+    */
+    bool dtype_convert = true;
+    if (dtype_convert_map[input_names[dod_in_index_[i]]] == false) {
+      dtype_convert = false;
+    }
+
     size_t elems = std::accumulate(input_shape.begin(), input_shape.end(),
                                    (size_t)1, std::multiplies<int64_t>());
 
@@ -474,8 +557,17 @@ void MyCustomOp::inputs_preprocess(OrtKernelContext* context,
       }
     }
 
-    if (in_tensors[i].dtype == "bfloat16" &&
-        input_type == ONNX_TENSOR_ELEMENT_DATA_TYPE_BFLOAT16) {
+    /*
+    2 conditions are being checked here
+    condition 1: in_tensor dtype is bfloat16 and ort data type is bf16 --- do
+    not perform dtype copnversion Condition 2: intensor daype of current
+    subgraph is bfloat16 and out tensor of previous subgraph is bloaot16 (ort
+    dtype can be anything) --- do not perform dtype copnversion
+    */
+
+    if ((in_tensors[i].dtype == "bfloat16" &&
+         input_type == ONNX_TENSOR_ELEMENT_DATA_TYPE_BFLOAT16) ||
+        (in_tensors[i].dtype == "bfloat16" && dtype_convert == false)) {
       LOG_THIS(1) << "Output tensor is already bfloat16, no need to convert"
                   << std::endl;
       // SHOULD BE VOID NOT UINT16?
@@ -486,12 +578,14 @@ void MyCustomOp::inputs_preprocess(OrtKernelContext* context,
       auto zp = in_scale_zps_[i][1];
 
       if (input_type == ONNX_TENSOR_ELEMENT_DATA_TYPE_UINT16) {
+
         auto input_data = input_tensor.GetTensorData<uint16_t>();
         if (en_pad) {
           pad<uint16_t, uint16_t>(input_data, input_shape,
                                   in_buffer_i16_[i].data(), in_tensors[i].shape,
                                   pad_dim, DTypeConvert::TO_BF16, scale, zp);
         } else {
+
           WRAP(auto t1 = GET_TIMESTAMP();)
           for (auto cnt = 0; cnt < elems; cnt++) {
             float value = (static_cast<float>(input_data[cnt]) - zp) * scale;
@@ -501,6 +595,7 @@ void MyCustomOp::inputs_preprocess(OrtKernelContext* context,
           WRAP(ddtimer_.data_conv_time.push_back(GET_INTERVAL(t1, t2));)
         }
         in_tensors[i].data = (void*)(in_buffer_i16_[i].data());
+
       } else if (input_type == ONNX_TENSOR_ELEMENT_DATA_TYPE_UINT8) {
         auto input_data = input_tensor.GetTensorData<uint8_t>();
         if (en_pad) {
@@ -648,7 +743,9 @@ MyCustomOp::outputs_preprocess(OrtKernelContext* context,
   out_buffer_i16_.clear();
   out_buffer_i8_.clear();
   for (size_t i = 0; i < num_outputs_; i++) {
+
     // Create ORT output tensor based on original shape
+
     size_t ort_out_index = dod_out_index_[i];
     auto output_tensor = ctx.GetOutput(
         ort_out_index, {orig_output_shapes_[ort_out_index].begin(),
@@ -658,6 +755,26 @@ MyCustomOp::outputs_preprocess(OrtKernelContext* context,
     auto output_shape = output_tensor.GetTensorTypeAndShapeInfo().GetShape();
     auto output_type =
         output_tensor.GetTensorTypeAndShapeInfo().GetElementType();
+
+    /*
+Feature summary :
+- In the constructor, each input and output tensor is labeled whether to convert
+or not (if this subgraph output is going as an input to any other dod subgraph,
+dont do dtype conversion)
+- We use that info here to perform dtype conversion or not
+- Note : Feature supported currently only for bfloat16
+
+- output_names are ort input names, we are fetching the flag from the map and
+setting the dtype_convert flag to false (dont convert)
+*/
+    bool dtype_convert = true;
+    if (dtype_convert_map.find(output_names[dod_out_index_[i]]) !=
+            dtype_convert_map.end() &&
+        dtype_convert_map[output_names[dod_out_index_[i]]] == false) {
+      // check if the output name is present in the the dtype convert map and if
+      // the value is false then set the dtype_convert flag,
+      dtype_convert = false;
+    }
 
     // Enable depad if required
     bool en_depad = false;
@@ -674,10 +791,19 @@ MyCustomOp::outputs_preprocess(OrtKernelContext* context,
                                   out_tensors_[i].shape.end(), size_t{1},
                                   std::multiplies{});
 
-    if (out_tensors[i].dtype == "bfloat16" &&
-        output_type == ONNX_TENSOR_ELEMENT_DATA_TYPE_BFLOAT16) {
+    /*
+    2 conditions are being checked here
+    condition 1: in_tensor dtype is bfloat16 and ort data type is bf16 --- do
+    not perform dtype copnversion Condition 2: intensor daype of current
+    subgraph is bfloat16 and out tensor of previous subgraph is bloaot16 (ort
+    dtype can be anything) --- do not perform dtype copnversion
+    */
+    if ((out_tensors[i].dtype == "bfloat16" &&
+         output_type == ONNX_TENSOR_ELEMENT_DATA_TYPE_BFLOAT16) ||
+        (out_tensors[i].dtype == "bfloat16" && dtype_convert == false)) {
       LOG_THIS(1) << "Output tensor is already bfloat16, no need to convert"
                   << std::endl;
+
       out_tensors[i].data = (void*)output_data;
     }
     // Convert to bfloat16, if kernel expects it
@@ -726,6 +852,26 @@ void MyCustomOp::outputs_postprocess(std::vector<Ort::UnownedValue> ort_outputs,
 
     size_t elems = std::accumulate(output_shape.begin(), output_shape.end(),
                                    (size_t)1, std::multiplies<int64_t>());
+    /*
+      Feature summary :
+      - In the constructor, each input and output tensor is labeled whether to
+      convert or not (if this subgraph output is going as an input to any other
+      dod subgraph, dont do dtype conversion)
+      - We use that info here to perform dtype conversion or not
+      - Note : Feature supported currently only for bfloat16
+
+      - output_names are ort input names, we are fetching the flag from the map
+      and setting the dtype_convert flag to false (dont convert)
+      */
+    bool dtype_convert = true;
+    if (dtype_convert_map.find(output_names[dod_out_index_[i]]) !=
+            dtype_convert_map.end() &&
+        dtype_convert_map[output_names[dod_out_index_[i]]] == false) {
+      // check if the output name is present in the the dtype convert map and if
+      // the value is false then set the dtype_convert flag,
+      dtype_convert = false;
+    }
+
     // ORT tensor type
     auto tensor_type = ort_outputs[dod_out_index_[i]]
                            .GetTensorTypeAndShapeInfo()
@@ -740,8 +886,16 @@ void MyCustomOp::outputs_postprocess(std::vector<Ort::UnownedValue> ort_outputs,
       }
     }
 
-    if (out_tensors[i].dtype == "bfloat16" &&
-        tensor_type == ONNX_TENSOR_ELEMENT_DATA_TYPE_BFLOAT16) {
+    /*
+    2 conditions are being checked here
+    condition 1: in_tensor dtype is bfloat16 and ort data type is bf16 --- do
+    not perform dtype copnversion Condition 2: intensor daype of current
+    subgraph is bfloat16 and out tensor of previous subgraph is bloaot16 (ort
+    dtype can be anything) --- do not perform dtype copnversion
+    */
+    if ((out_tensors[i].dtype == "bfloat16" &&
+         tensor_type == ONNX_TENSOR_ELEMENT_DATA_TYPE_BFLOAT16) ||
+        (out_tensors[i].dtype == "bfloat16" && dtype_convert == false)) {
       auto output_data =
           ort_outputs[dod_out_index_[i]].GetTensorMutableData<uint16_t>();
       out_tensors[i].data = (uint16_t*)output_data;

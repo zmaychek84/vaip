@@ -22,6 +22,7 @@ message ConfigProto {
   string target = 12; // default proto, comma seperated
   map<string, string> session_configs = 13 [json_name = "ort_session_config"];
 
+
   // static table for whitelist for xclbin, vaip_config
   repeated MepConfigTable mep_table = 100;
   
@@ -42,6 +43,11 @@ message MepConfigTable {
   optional int32 node_count = 11;
   optional int64 model_clone_threshold = 12;
   optional bool is_preemptible = 13;
+  optional bool dd_use_lazy_scratch_bo = 14;
+  optional string constbo_sharing_key = 15;
+  optional bool dd_use_lazy_const_bo = 16;
+  optional bool dd_dealloc_scratch_bo = 17;
+  optional string perf_pref = 18;
 }
 
 message TargetProto {
@@ -76,7 +82,8 @@ message PassProto {
     PassGraphLabelParamProto graph_label_param = 104; // for graph label and compiler
     PassAsrConfigProto pass_asr_config = 105; // config for gemm asr pass
     PassDDParamProto pass_dd_param = 106;
-    PassVaimlConfigProto vaiml_config = 107; // config for vaiml pass
+    PassVaimlConfigProto vaiml_config = 107; // config for vaiml 
+    PassFusionParamProto pass_fusion_param = 108;
   }
 }
 
@@ -92,11 +99,61 @@ message PassDpuParamProto {
   int32 minimum_num_of_conv = 4;
   repeated string supported_op = 5;
   string xclbin = 6;
+  
 }
 message PassDDParamProto{
   repeated PassProto sub_pass = 1;
   string xclbin = 2;
 }
+
+message PassFusionParamProto {
+    PatternPlusProto pattern = 1;
+    string op_name = 2;
+    ExtractorProto extractor = 3;
+    string predicate = 4;
+}
+
+message PatternPlusProto {
+    string pattern_name = 1;
+    //Cutpoints
+    repeated string input_names = 2;
+    string output_names = 3;
+}
+
+message ExtractorProto{
+    repeated string initializers = 1;
+    repeated string input_q_params = 2;
+    repeated string output_q_params = 3;
+    repeated AttributeAccessorProto accessor_attributes = 4;
+    repeated ExplicitAttributeAccessorProto explicit_attributes = 5;
+    repeated string modifiers = 6;
+}
+
+message AccessorProto{
+    oneof accessor_field{
+        AttributeAccessorProto attribute_accessor = 1;
+        InitializerAccessorProto initializer_accessor = 2;
+        ExplicitAttributeAccessorProto explicit_attribute_accessor = 3;
+    }
+}
+
+message AttributeAccessorProto{
+    string node_binder_name = 1;
+    string attribute_name = 2;
+    string dtype = 3;
+}
+
+message InitializerAccessorProto{
+    string node_binder_name = 1;
+    optional uint32 initializer_position = 2;
+}
+
+message ExplicitAttributeAccessorProto{
+    string attribute_name = 1;
+    string attribute_value = 2;
+    optional string attribute_dtype = 3;
+}
+
 
 message PassFuseDeviceSubgraphProto {
   string pattern = 1; // in python code

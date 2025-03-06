@@ -99,9 +99,15 @@ struct DDMergeShape_psw {
       auto node = VAIP_ORT_API(graph_get_node)(graph, node_idx);
       auto node_ctx = vaip::dtype_util::build_context(graph, node, precision);
       auto node_op = VAIP_ORT_API(node_op_type)(*node);
-      update_node_attributes(node_ctx);
-      if (node_op == "QLayerNorm" || node_op == "QEltWiseAdd")
-        update_qdq_tensor(graph, node);
+
+      // The functions below are only used in the old flow and are not required
+      // in the generic flow. Therefore, node_has_attr(*node, "generic_fusion")
+      // is used in the if condition.
+      if (!node_has_attr(*node, "generic_fusion")) {
+        update_node_attributes(node_ctx);
+        if (node_op == "QLayerNorm" || node_op == "QEltWiseAdd")
+          update_qdq_tensor(graph, node);
+      }
     }
   }
 

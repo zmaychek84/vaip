@@ -38,7 +38,6 @@ struct MergeFlatMLP {
     return Rule::create_rule(
         result, [=](onnxruntime::Graph* graph, binder_t& binder) -> bool {
           std::vector<std::string> ns = vaip::dd::get_node_names(graph, binder);
-          // Node and Data Access
           auto input_0 = binder["/model/layers.31/post_attention_layernorm/"
                                 "Mul_1_output_0_QuantizeLinear_Output"];
           auto flat_mlp_node =
@@ -88,10 +87,20 @@ struct MergeFlatMLP {
           auto out_matmul_zp_node = binder["/model/layers.31/mlp/gate_up_proj/"
                                            "MatMul_output_0nchw_zero_point"];
 
+          auto out_matmul_sc_node1 = binder
+              ["/model/layers.31/mlp/gate_up_proj/MatMul_output_0nchw_scale"];
+          auto out_matmul_zp_node1 =
+              binder["/model/layers.31/mlp/Slice_1_output_0_zero_point"];
+
           auto out_sc_mm = node_arg_get_const_data_as_float(
               *graph, *out_matmul_sc_node.node_arg);
           auto out_zp_mm = node_arg_get_const_data_as_u16(
               *graph, *out_matmul_zp_node.node_arg);
+
+          auto out_sc_mm1 = node_arg_get_const_data_as_float(
+              *graph, *out_matmul_sc_node1.node_arg);
+          auto out_zp_mm1 = node_arg_get_const_data_as_u16(
+              *graph, *out_matmul_zp_node1.node_arg);
           // Input + output Q params
           std::vector<float> input_q_params{in_scale, float(in_zero_point)};
           std::vector<float> output_q_params{out_sc_mm, float(out_zp_mm)};
@@ -152,8 +161,8 @@ struct MergeFlatMLP {
                   in_scale, in_zero_point, wts_vec, weights_scale, w_zp,
                   weights_shape, bias, 0.0f, 0, out_sc_mm, out_zp_mm);
 
-          // auto [C0_mm_silu, C1_mm_silu, C2_mm_silu, conv_shift_mm_silu,
-          // shft_c2_mm_silu] =
+          //   auto [C0_mm_silu, C1_mm_silu, C2_mm_silu, conv_shift_mm_silu,
+          //         shft_c2_mm_silu] =
           //       vaip::dd::qmatmulcalc::dq_uint16A_int4W_conv_chwise_q_param_gen(
           //           in_scale, in_zero_point, wts_vec_silu, w_sc_silu,
           //           w_zp_silu, w_shape2, bias, 0.0f, 0, out_sc_mm,
@@ -196,9 +205,9 @@ struct MergeFlatMLP {
               ["/model/layers.31/mlp/activation_fn/Mul_output_0_zero_point"];
           auto silu_op_zp =
               vaip::dd::get_zp_from_node(*graph, *silu_op_zp_node.node_arg);
-          silu_qdq[0] = (int32_t)silu_ip_zp;
+          silu_qdq[0] = (int32_t)out_zp_mm;
           silu_qdq[1] =
-              (int32_t)vaip::dd::qmatmulcalc::float_to_bfloat16(silu_ip_sc);
+              (int32_t)vaip::dd::qmatmulcalc::float_to_bfloat16(out_sc_mm);
           silu_qdq[2] = (int32_t)silu_op_zp;
           silu_qdq[3] =
               (int32_t)vaip::dd::qmatmulcalc::float_to_bfloat16(1 / silu_op_sc);
@@ -226,6 +235,7 @@ struct MergeFlatMLP {
           std::vector<std::string> input_types{
               "uint16", "int4", "int64", "int32", "int32", "int32", "int32"};
           std::vector<std::string> output_types{"uint16"};
+          std::vector<std::string> output_types_silu{"bfloat16"};
           auto matmulsilu_builder = NodeBuilder(*graph, *self);
           matmulsilu_builder.set_input_node_args(
               {input_0.node_arg, &wts_arg_silu, &input_c0_arg, &input_qdq_arg,
@@ -244,16 +254,15 @@ struct MergeFlatMLP {
           matmulsilu_builder.add("input_format", "NHWC");
           matmulsilu_builder.add("design_param", "4x4PSU");
           matmulsilu_builder.add("in_dtypes", input_types);
-          matmulsilu_builder.add("out_dtypes", output_types);
+          matmulsilu_builder.add("out_dtypes", output_types_silu);
           matmulsilu_builder.add("input_q_params", input_q_params);
           matmulsilu_builder.add("output_q_params", output_q_params);
           auto& mm_silu_node = matmulsilu_builder.build();
 
           // auto [C0_mm, C1_mm, C2_mm, conv_shift_mm, shft_c2_mm] =
-          //       vaip::dd::qmatmulcalc::dq_uint16A_int4W_conv_chwise_q_param_gen(
-          //           in_scale, in_zero_point, wts_vec_matm, w_sc_matm,
-          //           w_zp_matm, w_shape2, bias, 0.0f, 0, out_sc_mm,
-          //           out_zp_mm);
+          //     vaip::dd::qmatmulcalc::dq_uint16A_int4W_conv_chwise_q_param_gen(
+          //         in_scale, in_zero_point, wts_vec_matm, w_sc_matm,
+          //         w_zp_matm, w_shape2, bias, 0.0f, 0, out_sc_mm, out_zp_mm);
 
           std::vector<int32_t> input_qdq_matm(16, 0);
           input_qdq_matm[8] = static_cast<int32_t>(shft_c2);
@@ -322,8 +331,8 @@ struct MergeFlatMLP {
           auto [mul_in0_sc_q, mul_in0_zp_q] =
               vaip::dd::qmatmulcalc::calc_lrn_coeff(mul_in0_sc, mul_in0_zp);
 
-          auto mul_in1_sc_node =
-              binder["/model/layers.31/mlp/Slice_output_0_scale"];
+          auto mul_in1_sc_node = binder
+              ["/model/layers.31/mlp/gate_up_proj/MatMul_output_0nchw_scale"];
           auto mul_in1_sc = node_arg_get_const_data_as_float(
               *graph, *mul_in1_sc_node.node_arg);
           auto mul_in1_zp_node =
@@ -331,8 +340,11 @@ struct MergeFlatMLP {
           auto mul_in1_zp =
               vaip::dd::get_zp_from_node(*graph, *mul_in1_zp_node.node_arg);
 
+          //   auto [mul_in1_sc_q, mul_in1_zp_q] =
+          //       vaip::dd::qmatmulcalc::calc_lrn_coeff(mul_in1_sc,
+          //       mul_in1_zp);
           auto [mul_in1_sc_q, mul_in1_zp_q] =
-              vaip::dd::qmatmulcalc::calc_lrn_coeff(mul_in1_sc, mul_in1_zp);
+              vaip::dd::qmatmulcalc::calc_lrn_coeff(out_sc_mm, out_zp_mm);
 
           auto mul_op_sc_node =
               binder["/model/layers.31/mlp/Mul_2_output_0_scale"];
@@ -355,13 +367,13 @@ struct MergeFlatMLP {
           elt_coeffs[3] = mul_in1_zp_q;
           elt_coeffs[4] = mul_final_sc;
           elt_coeffs[5] = mul_final_zp;
-          elt_coeffs[6] = 1;
+          elt_coeffs[6] = 0;
           elt_coeffs[7] = 1;
           std::string elt_coeff_name = std::string(node_name + "_mul_qdq_");
           auto& elt_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
               graph, elt_coeff_name, elt_coeffs,
               std::vector({(int64_t)elt_coeffs.size()}));
-          std::vector<std::string> mul_in_types{"uint16", "uint16", "int32"};
+          std::vector<std::string> mul_in_types{"bfloat16", "uint16", "int32"};
           auto& mm_node = matmul_builder.build();
           int64_t mul_op_sz =
               std::accumulate(op_shape2.begin(), op_shape2.end(), (size_t)1,
@@ -381,8 +393,8 @@ struct MergeFlatMLP {
           elemul_builder.set_anchor_point1(*flat_mlp_node.node);
           elemul_builder.add("nodes", ns);
           elemul_builder.add("orig_output_shape", *flat_mlp_shape);
-          elemul_builder.add("dd_op_in_shape", i_shapes_mul);
-          elemul_builder.add("dd_op_out_shape", o_shapes_mul);
+          //   elemul_builder.add("dd_op_in_shape", i_shapes_mul);
+          //   elemul_builder.add("dd_op_out_shape", o_shapes_mul);
           elemul_builder.add("design_param", "4x4PSU");
           elemul_builder.add("input_q_params", input_q_params1);
           elemul_builder.add("output_q_params", output_q_params1);

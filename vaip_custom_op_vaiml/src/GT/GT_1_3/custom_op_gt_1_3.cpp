@@ -22,9 +22,8 @@ constexpr unsigned linear_out_tmp_size = 2129920;
 constexpr unsigned linear_out_ofm_size = 25600;
 constexpr unsigned linear_out_wts_size = 5418432;
 constexpr unsigned transformer_io_size =
-    4300800;  // unified size for 3 in 1 transformer block
-constexpr unsigned transformer_wts_size =
-    11608064; // this is the same as gt1.2, but there are holes internally
+    4300800; // unified size for 3 in 1 transformer block
+constexpr unsigned transformer_wts_size = 6032384;
 constexpr unsigned transformer_tmp_size =
     102400 + 576000 + 499200; // same as 1.2
 constexpr unsigned rtp_skip_size = 1472;
@@ -100,9 +99,10 @@ MyCustomOpGT1_3::MyCustomOpGT1_3(std::shared_ptr<const PassContext> context,
   auto& session_option = context->get_config_proto().provider_options();
   // FIXME: remove polymorphism when preemption is by default
   if (session_option.at("enable_preemption") == "1") {
-    runner_ = std::make_unique<vaiml_elf_runner::hw_elf_runner>();
+    runner_ =
+        std::make_unique<vaiml_elf_runner::hw_elf_runner>(lazy_ifm_creation_);
   } else {
-    runner_ = std::make_unique<hw_runner>();
+    runner_ = std::make_unique<hw_runner>(lazy_ifm_creation_);
   }
   sg_name_ = meta_def->vaiml_param().vaiml_model_path();
   LoadConstantsToWts(context, meta_def);
@@ -157,6 +157,13 @@ MyCustomOpGT1_3::MyCustomOpGT1_3(std::shared_ptr<const PassContext> context,
 
   VAIML_DEBUG_PRINT("Begin wts format for ", model_version_);
   InitWeights();
+  if (subgraph_id_ < GT_CPU_OR_CONSTANT) {
+    runner_->pre_run_bo_sync();
+  }
+  {
+    wts_buffers_.clear();
+    initializer_map_.clear();
+  }
 }
 
 void MyCustomOpGT1_3::PrepareHwRunner(
@@ -183,10 +190,10 @@ void MyCustomOpGT1_3::PrepareHwRunner(
   } else if (subgraph_id_ == GT_FRONT_MM) {
     ifm_size = 16480 /*conv input*/ + 552960 /*conv transpose reshape output*/ +
                25600 /*mm and add output*/;
-    wts_size = 2501056 /*conv weights*/ + 5418432 /*mm and add weight */;
+    wts_size = 5418432 /*mm and add weight */;
     ofm_size = 0;
-    tmp_size = 2129920;
-    xrt_offset.emplace_back(16480 /*input offset*/, 2501056 /*wts offset*/,
+    tmp_size = 4096;
+    xrt_offset.emplace_back(16480 /*input offset*/, 0 /*wts offset*/,
                             16480 + 552960 /*ofm offset*/, 0);
     v_elf_istream.emplace_back(getElf_out_matmul_bias(model_version_));
     v_txn_bins.push_back(getBins_out_matmul_bias_ml_txn_1_3(model_version_));
@@ -196,7 +203,7 @@ void MyCustomOpGT1_3::PrepareHwRunner(
     v_bo_order.push_back(BO_ORDER::ODR_GT_HEAD);
   } else if (subgraph_id_ == GT_LN_MATMUL_ADD_LN) {
     ifm_size = 25600 /*first ln input*/ + 25600 /*last ln output*/;
-    wts_size = 590400;
+    wts_size = 302656;
     ofm_size = 0;
     tmp_size = 51200;
     xrt_offset.emplace_back(0 /*input offset*/, 0 /*wts offset*/,
@@ -209,12 +216,12 @@ void MyCustomOpGT1_3::PrepareHwRunner(
     v_bo_order.push_back(BO_ORDER::ODR_GT_TAIL);
   } else if (subgraph_id_ == GT_TRANSFORMER_BLOCK) {
     ifm_size = 4300800 * transformer_block_num_ + 25600;
-    wts_size = 11608064 * transformer_block_num_;
+    wts_size = 6032384 * transformer_block_num_;
     ofm_size = 0;
     tmp_size = 1536000;
     for (int i = 0; i < transformer_block_num_; i++) {
       size_t inout_base_ddr = i * 4300800 + GT_FRONT_SZ;
-      size_t wts_base_ddr = i * 11608064;
+      size_t wts_base_ddr = i * 6032384;
       xrt_offset.emplace_back(inout_base_ddr /*input offset*/,
                               wts_base_ddr /*wts offset*/,
                               inout_base_ddr /*ofm offset*/, 0);
@@ -233,9 +240,8 @@ void MyCustomOpGT1_3::PrepareHwRunner(
 void MyCustomOpGT1_3::LoadConstantsToWts(
     std::shared_ptr<const PassContext> context,
     const std::shared_ptr<MetaDefProto>& meta_def) {
-  std::vector<char> wts_file;
   auto wts_file_opt = context->read_file_c8("wts.bin");
-  wts_file = wts_file_opt.value();
+  const std::vector<char>& wts_file = wts_file_opt.value();
   auto const_info = meta_def->vaiml_param().const_data_info();
   wts_buffers_.resize(const_info.size());
   VAIML_DEBUG_PRINT("const_info.size(): ", const_info.size());
@@ -395,9 +401,8 @@ void MyCustomOpGT1_3::InitWeights() {
     std::string w_name = Alias("front_mmb_wts");
     std::string b_name = Alias("front_mmb_bias");
     int8_t* wts_ptr_linear_out =
-        (int8_t*)(wts_ptr_ + 2501056 + 1472); // leave space for rtp
-    int8_t* rtp_ptr =
-        wts_ptr_ + 2501056 + gt_global_rtp_offset_.at(subgraph_id_);
+        (int8_t*)(wts_ptr_ + 1472); // leave space for rtp
+    int8_t* rtp_ptr = wts_ptr_ + gt_global_rtp_offset_.at(subgraph_id_);
     total_wts_bytes += GT_MMB_WTS_convert_ptr(
         wts_, wts_ptr_linear_out, rtp_ptr, i_s_name, i_z_name, w_s_name,
         w_z_name, b_s_name, b_z_name, o_s_name, o_z_name, w_name, b_name, 25,
@@ -423,7 +428,6 @@ void MyCustomOpGT1_3::InitWeights() {
         Alias("lin_enc_mmb_out_zp"), Alias("lin_enc_mmb_wts"),
         Alias("lin_enc_mmb_bias"), 25, 512, 512, 25 /*bias broadcast*/, 32, 64,
         16 /*sv_N changed to 16*/, false /*performs padding*/, model_version_);
-    wts_ptr = wts_ptr_ + 588288;
     total_wts_bytes += GT_LN_WTS_convert(
         wts_, wts_ptr, Alias("lin_enc_ln_1_in_s"), Alias("lin_enc_ln_1_in_zp"),
         Alias("lin_enc_ln_1_wts_s"), Alias("lin_enc_ln_1_wts_zp"),
@@ -437,17 +441,17 @@ void MyCustomOpGT1_3::InitWeights() {
   } else if (subgraph_id_ == SUBGRAPH_ID::GT_TRANSFORMER_BLOCK) {
     // set wts from onnx model
     for (int i = 0; i < transformer_block_num_; i++) {
-      size_t wts_base = 11608064 * i;
+      size_t wts_base = 6032384 * i;
       subgraph_id_ = SUBGRAPH_ID::GT_QKV;
       InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base, i);
       subgraph_id_ = SUBGRAPH_ID::GT_MATMUL_REDUCE;
-      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base + 1783296, i);
+      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base + 920064, i);
       subgraph_id_ = SUBGRAPH_ID::GT_SM_LINEAR_OUT_FEED_FORWARD;
-      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base + 1843712, i);
+      InitTransformerBlockWeights(wts_, wts_ptr_ + wts_base + 980480, i);
     }
     subgraph_id_ = SUBGRAPH_ID::GT_TRANSFORMER_BLOCK;
 
-    // to_file("wts_tf_gen.bin", 11608064 * transformer_block_num_, wts_ptr_);
+    // to_file("wts_tf_gen.bin", 6032384 * transformer_block_num_, wts_ptr_);
 
     { // q-bmm wts
       uint8_t* bmm_wts = (uint8_t*)wts_.at(Alias("tf_0_q_bmm_0_in_1")).data;
@@ -514,7 +518,6 @@ void MyCustomOpGT1_3::InitTransformerBlockWeights(
         "-> MM ", wts_sz_loaded, "loaded",
         " , rtp offset: ", rtp_ptr - rtp_ptr_start);
     // update wts ptr position
-    wts_ptr += 584704 - wts_sz_loaded + 64;
     rtp_ptr += 64;
 
     ifm_s_name = Alias(str_fmt("tf_%d_linear_out_add_in_0_s", tf_idx));
@@ -570,7 +573,6 @@ void MyCustomOpGT1_3::InitTransformerBlockWeights(
         "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
         "-> MM_W1", wts_sz_loaded,
         "loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
-    wts_ptr += 4677632 - wts_sz_loaded + 64;
     rtp_ptr += 64;
 
     ifm_s_name = Alias(str_fmt("tf_%d_feed_forward_1_mmb_in_s", tf_idx));
@@ -591,7 +593,6 @@ void MyCustomOpGT1_3::InitTransformerBlockWeights(
         "Finish to format WTS for linear_out_feed_forward subgraph-", tf_idx,
         "-> MM_W2 ", wts_sz_loaded,
         " loaded, rtp offset: ", rtp_ptr - rtp_ptr_start);
-    wts_ptr += 4498432 - wts_sz_loaded + 64;
     rtp_ptr += 64;
 
     ifm_s_name = Alias(str_fmt("tf_%d_feed_forward_add_in_0_s", tf_idx));
@@ -650,7 +651,6 @@ void MyCustomOpGT1_3::InitTransformerBlockWeights(
           bias_z_name, ofm_s_name, ofm_z_name, bias_name, 25, 512, 512, 25,
           32 /*sv_M*/, 64 /*sv_K*/, 16 /*sv_N*/, model_version_);
       ++fan_id;
-      wts_ptr += 584704 - wts_sz_loaded + 64;
       rtp_ptr += 64;
       VAIML_DEBUG_PRINT("Finish to format WTS for qkv subgraph-", tf_idx,
                         "-> MMB ", fanout, ", ", wts_sz_loaded,
@@ -1033,7 +1033,11 @@ void MyCustomOpGT1_3::Compute(const OrtApi* api,
     Slice144Compute_GT(ctx);
     return;
   }
-  const void* input_deq_dup = nullptr;
+  if (lazy_ifm_creation_ && ifm_ptr_ == nullptr) {
+    runner_->create_ifm_and_update_run_obj();
+    runner_->get_bo_ptrs(ifm_ptr_, wts_ptr_, ofm_ptr_);
+  }
+
   // prepare for input
   if (subgraph_id_ == SUBGRAPH_ID::GT_FRONT) {
     {

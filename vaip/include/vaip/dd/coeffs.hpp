@@ -204,7 +204,21 @@ dq_uint16A_int4W_conv_chwise_q_param_gen(
     gsl::span<const float> w_s, const std::vector<int8_t>& w_zp,
     const std::vector<int64_t>& w_shape, gsl::span<const int32_t> b, float b_s,
     int32_t b_zp, float o_s, uint16_t o_zp);
-
+std::tuple<std::vector<int64_t>, std::vector<int32_t>, std::vector<int32_t>,
+           int64_t, int64_t>
+dq_uint16A_int4W_conv_chwise_bias_add_q_param_gen(
+    float in_s, uint16_t in_zp, const std::vector<int8_t>& w,
+    gsl::span<const float> w_s, const std::vector<int8_t>& w_zp,
+    const std::vector<int64_t>& w_shape, gsl::span<const uint16_t> b, float b_s,
+    uint16_t b_zp, float o_s, uint16_t o_zp);
+std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>
+dq_uint16A_uint8W_conv_q_param_gen_shiftmax(float in_s, uint16_t in_zp,
+                                            gsl::span<const uint8_t> w,
+                                            float w_s, uint8_t w_zp,
+                                            const std::vector<int64_t>& w_shape,
+                                            gsl::span<const int32_t> b,
+                                            float b_s, int32_t b_zp, float o_s,
+                                            uint16_t o_zp);
 std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>
 dq_uint16A_uint16W_conv_q_param_gen(float in_s, uint16_t in_zp,
                                     gsl::span<const uint16_t> w, float w_s,

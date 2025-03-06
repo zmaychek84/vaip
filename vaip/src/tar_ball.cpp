@@ -224,4 +224,5 @@ int TarReader::read(IStreamWriterBuilder* dst_builder) {
   }
   return 1;
 }
+
 } // namespace vaip_core

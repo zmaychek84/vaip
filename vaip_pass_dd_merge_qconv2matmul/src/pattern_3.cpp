@@ -58,6 +58,45 @@ get_all_child_nodes(const onnxruntime::Graph& graph, const Node* node) {
   return ret;
 }
 
+static std::vector<const Node*> get_all_parent_nodes(const Node* cnode) {
+  auto node_inputs = node_get_inputs(*cnode);
+  std::vector<const Node*> ret;
+  for (const auto& ni : node_inputs) {
+    if (ni.node != nullptr) {
+      ret.emplace_back(ni.node);
+    }
+  }
+  return ret;
+}
+
+static bool check_no_op_parent(Graph& g, const Node* a,
+                               NodeArg*& updated_node_arg,
+                               std::string no_op_name) {
+  auto inputs = get_all_parent_nodes(a);
+  if (inputs.size() == 0)
+    return false;
+  auto x = inputs[0];
+  auto parent_op_type = VAIP_ORT_API(node_op_type)(*x);
+  if (parent_op_type != no_op_name)
+    return false;
+  else {
+    inputs = get_all_parent_nodes(x);
+    if (inputs.size() == 0)
+      return false;
+    x = inputs[0];
+    parent_op_type = VAIP_ORT_API(node_op_type)(*x);
+    if (parent_op_type != "DequantizeLinear")
+      return false;
+  }
+  auto input_node_args = node_get_input_node_args(*x);
+  for (auto ni : input_node_args) {
+    if (!node_arg_is_constant(g, *ni)) {
+      updated_node_arg = const_cast<NodeArg*>(ni);
+      continue;
+    }
+  }
+  return true;
+}
 static bool check_no_op_child(Graph& g, const Node* a,
                               NodeArg*& updated_node_arg,
                               std::string no_op_name) {
@@ -116,12 +155,28 @@ struct Dd_merge_qconv2matmul_3 {
           auto wts_zp_node = binder["constant_8"];
           auto out_scale_node = binder["constant_13"];
           auto out_zp_node = binder["constant_14"];
-          NodeArg* no_op_node_arg = nullptr;
 
-          bool no_op_in_parent = check_no_op_child(*graph, out_node.node,
-                                                   no_op_node_arg, "Squeeze");
+          // If q - Squeeze -dq pattern is presnt in the below part of the
+          // pattern, it will be pulled into the conv2matmul pattern
+          // update the out_node's node_arg (anchorpoint)
+          NodeArg* no_op_child_node_arg = nullptr;
+          bool no_op_in_child = check_no_op_child(
+              *graph, out_node.node, no_op_child_node_arg, "Squeeze");
+          if (no_op_in_child) {
+            out_node.node_arg = no_op_child_node_arg;
+          }
+          // if Q-Reshape-q pattern is presnt in the above part of the pattern,
+          // it will be pulled in the conv2matmul pattern Update the in_node's
+          // node_arg
+          NodeArg* no_op_parent_node_arg = nullptr;
+
+          bool no_op_in_parent =
+              check_no_op_parent(*graph, in_node.node, no_op_parent_node_arg,
+                                 "Unsqueeze") ||
+              check_no_op_parent(*graph, in_node.node, no_op_parent_node_arg,
+                                 "Reshape");
           if (no_op_in_parent) {
-            out_node.node_arg = no_op_node_arg;
+            in_node.node_arg = no_op_parent_node_arg;
           }
 
           std::vector<std::string> ns = vaip::dd::get_node_names(graph, binder);
@@ -174,7 +229,74 @@ struct Dd_merge_qconv2matmul_3 {
 
           // Weight DataType = 3 is for int8 weights and else part takes care of
           // int4 weights
-          if (weight_data_type == 3) {
+          if (weight_data_type == 2) {
+            gsl::span<const uint8_t> weights;
+            uint8_t weights_zp;
+            weights =
+                node_arg_get_const_data_as_u8s(*graph, *wts_node.node_arg);
+            weights_sc = node_arg_get_const_data_as_float(
+                *graph, *wts_scale_node.node_arg);
+            weights_zp =
+                node_arg_get_const_data_as_u8(*graph, *wts_zp_node.node_arg);
+
+            gsl::span<const int32_t> bias;
+
+            // auto [C0, C1, C2, conv_shift, shft_c2] =
+            //     vaip::dd::qmatmulcalc::dq_uint16A_int8W_conv_q_param_gen(
+            //         in_scale, in_zero_point, weights, weights_sc, weights_zp,
+            //         wts_shape, bias, 0.0f, 0, out_scale, out_zero_point);
+            auto [C0, C1, C2, conv_shift, shft_c2] =
+                vaip::dd::qmatmulcalc::dq_uint16A_uint8W_conv_q_param_gen(
+                    in_scale, in_zero_point, weights, weights_sc, weights_zp,
+                    wts_shape, bias, 0.0f, 0, out_scale, out_zero_point);
+
+            auto node_name = node_arg_get_name(*out_node.node_arg);
+            auto& input_c0_arg =
+                vaip::dd::insert_named_tensor_in_graph<int64_t>(
+                    graph, node_name + "_c0_", C0,
+                    std::vector({(int64_t)C0.size()}));
+            std::vector<int32_t> input_qdq(16, 0);
+            input_qdq[2] = static_cast<int32_t>(C1);
+            input_qdq[3] = static_cast<int32_t>(C2);
+            input_qdq[8] = static_cast<int32_t>(shft_c2);
+            input_qdq[9] = static_cast<int32_t>(conv_shift);
+            auto& input_qdq_arg =
+                vaip::dd::insert_named_tensor_in_graph<int32_t>(
+                    graph, node_name + "_qdq_", input_qdq,
+                    std::vector({(int64_t)input_qdq.size()}));
+
+            std::vector<std::string> input_types{"uint16", "uint8", "int64",
+                                                 "int32"};
+            std::vector<std::string> output_types{"uint16"};
+
+            NodeBuilder(*graph, *self)
+                .set_input_node_args({in_node.node_arg, wts_node.node_arg,
+                                      &input_c0_arg, &input_qdq_arg})
+                .set_op_type("QConv2MatMul", "com.xilinx")
+                //.clone_attrs(*conv_node.node)
+                .add("nodes", ns)
+                .add("orig_input_shape", *in0_shape)
+                .add("input_shape", *in0_shape)
+                .add("weight_shape", *w_shape)
+                .add("output_shape", *out_shape)
+                .add("zero_point", int64_t(in_zero_point))
+                .add("wt_name", wt_name)
+                .add("orig_output_shape", *out_shape)
+                //.add("transpose_perm", transpose_perm)
+                .add("in_dtypes", input_types)
+                .add("out_dtypes", output_types)
+                .add("input_format", "NCHW")
+                .add("design_param", "4x4PSU")
+                .add("input_q_params", input_q_params)
+                .add("output_q_params", output_q_params)
+                .add("C1", std::to_string(C1))
+                .add("C2", std::to_string(C2))
+                .add("qconv_pattern", "4")
+                .add("shift_conv", std::to_string(conv_shift))
+                .add("shift_final", std::to_string(shft_c2))
+                .set_anchor_point1(*out_node.node)
+                .build();
+          } else if (weight_data_type == 3) {
             // return false;
             weights =
                 node_arg_get_const_data_as_i8s(*graph, *wts_node.node_arg);

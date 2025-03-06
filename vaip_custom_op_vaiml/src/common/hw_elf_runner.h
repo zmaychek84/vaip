@@ -56,7 +56,9 @@ public:
 
 class hw_elf_runner : public hw_runner_base {
 public:
-  hw_elf_runner(){};
+  hw_elf_runner();
+  hw_elf_runner(bool lazy_ifm_creation);
+
   // Constructor for hw_runner
 
   // Destructor
@@ -90,8 +92,12 @@ public:
     }
   }
   xrt::kernel& get_kernel(uint32_t idx = 0) { return kernel_vec_[idx]; }
+  void create_ifm_and_update_run_obj();
 
 private:
+  std::vector<XRTRunOffset> run_offsets_;
+  std::vector<KERNEL_NM> kernel_index_;
+  bool lazy_ifm_creation_ = false;
   std::map<KERNEL_NM, std::string> kernel_name_map = {
       {KERNEL_NM::GT_CONV, "GT"},
       {KERNEL_NM::GT_MM, "GT"},

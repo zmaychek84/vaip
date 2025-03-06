@@ -110,4 +110,7 @@ void profiler_collect_c(std::vector<EventInfo>& api_events,
                         std::vector<EventInfo>& kernel_events) {
   // TODO
 }
+ONNXRUNTIME_VITISAI_EP_DLL_SPEC void deinitialize_onnxruntime_vitisai_ep_c() {
+  // TODO
+}
 }

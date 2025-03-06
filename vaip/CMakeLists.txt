@@ -18,7 +18,6 @@ find_package(vart REQUIRED util trace) # used for ENV_PARAM
 find_package(xir) # only used for md5sum
 find_package(nlohmann_json REQUIRED)
 
-
 set(vaip_lib_file)
 if(USE_STATIC_PYTHON)
   execute_process(

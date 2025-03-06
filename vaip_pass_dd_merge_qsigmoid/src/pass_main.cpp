@@ -67,7 +67,6 @@ struct Dd_merge_qsigmoid {
           auto q_shape = node_arg_get_shape_i64(*q_node.node_arg);
           auto node_name = node_arg_get_name(*q_node.node_arg);
           MY_LOG(1) << "Matched QSigmoid.";
-          std::cout << "Matched QSigmoid\n";
           std::vector<std::string> input_types{"uint16", "uint16"};
           std::vector<std::string> output_types{"bfloat16"};
           std::vector<int32_t> qdq_out(16, 0);

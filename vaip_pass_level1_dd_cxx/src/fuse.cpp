@@ -209,7 +209,8 @@ static std::vector<std::string> extract_subgraph_outputs(
   // for (const auto& name : unique_subgraph_output_tensors) {
   // LOG(DEBUG) << "Subgraph output : " << name;
   // }
-
+  std::sort(unique_subgraph_output_tensors.begin(),
+            unique_subgraph_output_tensors.end());
   return unique_subgraph_output_tensors;
 }
 

@@ -51,21 +51,21 @@ static bool check_no_op_child(Graph& g, const Node* a,
 
         if (child_op_type == no_op_name) {
           next_nodes = get_all_child_nodes(g, x);
-          if (next_nodes.size() == 1) {
-            auto x = next_nodes[0];
-            auto child_op_type = VAIP_ORT_API(node_op_type)(*x);
+          // if (next_nodes.size() == 1) {
+          auto x = next_nodes[0];
+          auto child_op_type = VAIP_ORT_API(node_op_type)(*x);
 
-            if (child_op_type == "QuantizeLinear") {
-              auto output_node_args = node_get_output_node_args(*x);
-              for (auto ni : output_node_args) {
-                if (!node_arg_is_constant(g, *ni)) {
-                  updated_node_arg = const_cast<NodeArg*>(ni);
-                  continue;
-                }
+          if (child_op_type == "QuantizeLinear") {
+            auto output_node_args = node_get_output_node_args(*x);
+            for (auto ni : output_node_args) {
+              if (!node_arg_is_constant(g, *ni)) {
+                updated_node_arg = const_cast<NodeArg*>(ni);
+                continue;
               }
-              return true;
             }
+            return true;
           }
+          // }
         }
       }
     }
@@ -97,9 +97,23 @@ struct MergeQLPnorm_3 {
               node_arg_get_const_data_as_float(*graph, *q2_s_node.node_arg);
           auto q2_zp = vaip::dd::get_zp_from_node(*graph, *q2_z_node.node_arg);
           NodeArg* no_op_node_arg = nullptr;
+          bool input_bf16 = false;
 
-          bool no_op_in_parent = check_no_op_child(*graph, q2_node.node,
-                                                   no_op_node_arg, "Squeeze");
+          auto args = self->get_pass_proto().args();
+          std::string child_node_name = "Squeeze";
+          if (!args.empty()) {
+            std::vector<std::string> arg;
+            for (const auto& str : args) {
+              arg.push_back(str);
+            }
+            if (arg[0] == "bf16")
+              input_bf16 = true;
+            if (arg.size() == 2)
+              child_node_name = arg[1];
+          }
+
+          bool no_op_in_parent = check_no_op_child(
+              *graph, q2_node.node, no_op_node_arg, child_node_name);
           if (no_op_in_parent) {
             q2_node.node_arg = no_op_node_arg;
           }
@@ -118,6 +132,9 @@ struct MergeQLPnorm_3 {
 
           auto scale_1 = b_data_vec[0] * dq3_sc;
 
+          std::vector<std::string> in_dtypes = {"uint16", "int32"};
+          std::vector<std::string> out_dtypes = {"uint16"};
+
           std::vector<int32_t> qdq_coeffs(16, 0);
 
           qdq_coeffs[0] =
@@ -127,7 +144,14 @@ struct MergeQLPnorm_3 {
           qdq_coeffs[3] =
               vaip::dd::qmatmulcalc::float_to_bfloat16(a_sc); // 0;//dq2_zp;
           qdq_coeffs[4] = a_zp;
-          qdq_coeffs[5] = 1; // out_quant_enable
+          std::string design_param = "4x2";
+          if (input_bf16) {
+            qdq_coeffs[5] = 0;
+            in_dtypes[0] = "bfloat16";
+            design_param = "4x4";
+          } else {
+            qdq_coeffs[5] = 1; // out_quant_enable
+          }
           auto node_name = node_arg_get_name(*q2_node.node_arg);
           std::vector<std::string> ns = vaip::dd::get_node_names(graph, binder);
 
@@ -135,9 +159,6 @@ struct MergeQLPnorm_3 {
           auto& qdq_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
               graph, qdq_name, qdq_coeffs,
               std::vector({(int64_t)qdq_coeffs.size()}));
-
-          std::vector<std::string> in_dtypes = {"uint16", "int32"};
-          std::vector<std::string> out_dtypes = {"uint16"};
 
           NodeBuilder(*graph, self_)
               .set_op_type("L2_Norm", "com.xilinx")
@@ -149,6 +170,7 @@ struct MergeQLPnorm_3 {
               .set_anchor_point1(*q2_node.node_arg)
               .add("in_dtypes", in_dtypes)
               .add("out_dtypes", out_dtypes)
+              .add("design_param", design_param)
               .add("nodes", ns)
               .build();
 

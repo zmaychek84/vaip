@@ -44,10 +44,9 @@ FetchContent_Declare(
   URL ${DEP_URL_Boost}
   URL_MD5 ${DEP_SHA1_Boost}
   DOWNLOAD_EXTRACT_TIMESTAMP ON
-  CMAKE_ARGS -DBOOST_EXCLUDE_LIBRARIES=mp11,headers
   OVERRIDE_FIND_PACKAGE
 )
-set(BOOST_INCLUDE_LIBRARIES config filesystem system graph interprocess)
+set(BOOST_INCLUDE_LIBRARIES config filesystem system graph interprocess uuid format lexical_cast property_tree algorithm)
 set(BOOST_EXCLUDE_LIBRARIES mp11 headers)
 set(Boost_VERBOSE TRUE)
 set(Boost_DEBUG TRUE)
@@ -104,12 +103,6 @@ FetchContent_Declare(
   OVERRIDE_FIND_PACKAGE
 )
 FetchContent_Declare(
-  Eigen3
-  URL ${DEP_URL_eigen}
-  URL_HASH SHA1=${DEP_SHA1_eigen}
-  OVERRIDE_FIND_PACKAGE
-)
-FetchContent_Declare(
   ZLIB
   GIT_REPOSITORY ${DEP_URL_zlib}
   GIT_TAG ${DEP_SHA1_zlib}
@@ -132,14 +125,7 @@ FetchContent_Declare(
 #  CMAKE_ARGS -Dgtest_force_shared_crt=ON
 #  OVERRIDE_FIND_PACKAGE
 #)
-FetchContent_Declare(
-  dod
-  GIT_REPOSITORY ${DEP_URL_dod}
-  GIT_TAG ${DEP_SHA1_dod}
-  GIT_SHALLOW FALSE
-  CMAKE_ARGS -DBUILD_TEST=OFF -DDISABLE_LARGE_TXN_OPS=ON
-  OVERRIDE_FIND_PACKAGE
-)
+
 FetchContent_Declare(
   transformers
   GIT_REPOSITORY ${DEP_URL_transformers}
@@ -148,14 +134,13 @@ FetchContent_Declare(
 )
 FetchContent_Populate(transformers)
 FetchContent_Declare(
-  xaiengine
-  GIT_REPOSITORY ${DEP_URL_xaiengine}
-  GIT_TAG ${DEP_SHA1_xaiengine}
-  SOURCE_SUBDIR driver/src
+  dod
+  GIT_REPOSITORY ${DEP_URL_dod}
+  GIT_TAG ${DEP_SHA1_dod}
   GIT_SHALLOW FALSE
+  CMAKE_ARGS -DBUILD_TEST=OFF -DDISABLE_LARGE_TXN_OPS=ON
   OVERRIDE_FIND_PACKAGE
 )
-set(XAIENGINE_BUILD_SHARED OFF CACHE INTERNAL "We want static library")
 
 ## configurations
 set(WITH_XCOMPILER ON CACHE BOOL "enable XCOMPILER")
@@ -170,37 +155,47 @@ set(ENABLE_BUILD_VOE_WHEEL OFF CACHE BOOL "internal used only" FORCE)
 set(INSTALL_USER ON CACHE BOOL "internal used only" FORCE)
 set(ENABLE_XRT_SHARED_CONTEXT ON CACHE BOOL "internal used only" FORCE)
 set(DISABLE_LARGE_TXN_OPS ON CACHE BOOL "Disable large txn binaries in the package")
+set(DD_DISABLE_AIEBU ON CACHE BOOL "Disable AIEBU" FORCE)
 ## make them available.
-find_package(unilog)
-find_package(Protobuf)
-find_package(xir)
+find_package(unilog REQUIRED)
+find_package(Protobuf REQUIRED)
+find_package(xir REQUIRED)
 add_library(xir::xir ALIAS xir)
-find_package(target-factory)
+find_package(target-factory REQUIRED)
 add_library(target-factory::target-factory ALIAS target-factory)
 find_package(XRT)
-find_package(vart)
+find_package(vart REQUIRED)
 if(WITH_CPURUNNER)
   add_library(vart::cpu-runner ALIAS cpu-runner)
 endif(WITH_CPURUNNER)
-find_package(trace-logging)
-find_package(graph-engine)
+find_package(trace-logging REQUIRED)
+find_package(graph-engine REQUIRED)
 add_library(graph-engine::graph-engine ALIAS graph-engine)
-find_package(Eigen3)
-find_package(ZLIB)
+find_package(Eigen3 REQUIRED)
+find_package(ZLIB REQUIRED)
 if(NOT TARGET ZLIB::ZLIB)
   add_library(ZLIB::ZLIB ALIAS zlibstatic)
 endif()
-find_package(vaip)
-if(MSVC)
-  find_package(xaiengine)
-  add_library(xaiengine::xaiengine ALIAS xaiengine)
-endif(MSVC)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+find_package(dod REQUIRED)
+if(TARGET dyn_dispatch_core)
+  set_property(TARGET dyn_dispatch_core PROPERTY COMPILE_WARNING_AS_ERROR OFF)
+  message(WARNING "ignore compilation errors for DOD")
+endif(TARGET dyn_dispatch_core)
+execute_process(
+  COMMAND
+  ${CMAKE_COMMAND} -E make_directory
+  ${CMAKE_CURRENT_SOURCE_DIR}/vaip/include/ryzenai/dynamic_dispatch
+  COMMAND
+    ${CMAKE_COMMAND} -E copy_directory
+    ${dod_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/vaip/include/ryzenai/dynamic_dispatch
+  COMMAND_ERROR_IS_FATAL ANY)
 
 foreach(_target
     boost_filesystem
     boost_system
     boost_graph
-    xaiengine
     dd_metastate_proto
     dummy-runner
     cpu-runner
@@ -237,19 +232,3 @@ foreach(_target
     set_target_properties(${_target} PROPERTIES FOLDER "VAIP")
   endif()
 endforeach()
-
-find_package(Python3 REQUIRED COMPONENTS Interpreter)
-find_package(dod)
-if(TARGET dyn_dispatch_core)
-  set_property(TARGET dyn_dispatch_core PROPERTY COMPILE_WARNING_AS_ERROR OFF)
-  message(WARNING "ignore compilation errors for DOD")
-endif(TARGET dyn_dispatch_core)
-execute_process(
-  COMMAND
-  ${CMAKE_COMMAND} -E make_directory
-  ${CMAKE_CURRENT_SOURCE_DIR}/vaip/include/ryzenai/dynamic_dispatch
-  COMMAND
-    ${CMAKE_COMMAND} -E copy_directory
-    ${dod_SOURCE_DIR}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/vaip/include/ryzenai/dynamic_dispatch
-  COMMAND_ERROR_IS_FATAL ANY)

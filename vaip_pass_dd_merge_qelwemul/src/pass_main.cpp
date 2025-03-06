@@ -112,6 +112,14 @@ static bool check_no_op_parent(Graph& g, const Node* a,
   }
   return true;
 }
+
+static std::tuple<bool, bool> check_silu_in_parent(const Node* in_0) {
+  if (in_0 && (node_is_op(*in_0, "QGelu", "com.xilinx") ||
+               node_is_op(*in_0, "QConv2MatMulSilu", "com.xilinx"))) {
+    return {true, true};
+  }
+  return {false, false};
+}
 static std::pair<float, uint16_t> get_scale_zp_with_ancestor_check(
     onnxruntime::Graph* graph, binder_t& binder, vaip_core::NodeInput& a,
     vaip_core::NodeInput& as_node, vaip_core::NodeInput& az_node) {
@@ -196,6 +204,7 @@ struct Dd_merge_qelwemul {
           std::vector<std::string> output_types{"uint16"};
           std::vector<int32_t> elt_coeffs(16, 0);
           bool intmul = false;
+          std::string design_param = "4x4";
 
           auto node_name = node_arg_get_name(*out_node.node_arg);
 
@@ -207,6 +216,8 @@ struct Dd_merge_qelwemul {
             }
             if (arg[0] == "intmul")
               intmul = true;
+            else
+              design_param = arg[0];
           }
           if (intmul == true) {
             op_name = "QIntEltwiseMul";
@@ -239,11 +250,21 @@ struct Dd_merge_qelwemul {
             amat_uint16 = 0; // is_matA_uint16
             cmat_uint16 = 1; // is_matC_uint16
             op_name = "QELWEMUL_qdq";
-
-            elt_coeffs[0] = b_scale;
-            elt_coeffs[1] = b_zp;
-            elt_coeffs[2] = a_scale;
-            elt_coeffs[3] = a_zp;
+            auto [silu_in_parent, first_parent_is_silu] =
+                check_silu_in_parent(in_node_0.node);
+            if (silu_in_parent) {
+              elt_coeffs[0] = a_scale;
+              elt_coeffs[1] = a_zp;
+              elt_coeffs[2] = b_scale;
+              elt_coeffs[3] = b_zp;
+              std::swap(input_q_params[0], input_q_params[2]);
+              std::swap(input_q_params[1], input_q_params[3]);
+            } else {
+              elt_coeffs[0] = b_scale;
+              elt_coeffs[1] = b_zp;
+              elt_coeffs[2] = a_scale;
+              elt_coeffs[3] = a_zp;
+            }
             elt_coeffs[4] = final_out_scale;
             elt_coeffs[5] = final_out_zp;
             elt_coeffs[6] = amat_uint16;
@@ -253,17 +274,25 @@ struct Dd_merge_qelwemul {
             auto& elt_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
                 graph, elt_coeff_name, elt_coeffs,
                 std::vector({(int64_t)elt_coeffs.size()}));
+
+            std::vector<const NodeArg*> new_inputs;
+            if (silu_in_parent) {
+              new_inputs = {in_node_0.node_arg, in_node_1.node_arg, &elt_arg};
+            } else {
+              new_inputs = {in_node_1.node_arg, in_node_0.node_arg, &elt_arg};
+            }
+
             // hard code for mzdk5, may need to change
             // input order is changed
             NodeBuilder(*graph, *self)
-                .set_input_node_args(
-                    {in_node_1.node_arg, in_node_0.node_arg, &elt_arg})
+                .set_input_node_args(new_inputs)
                 .set_op_type(op_name, "com.xilinx")
                 .add("nodes", ns)
                 .add("input_shape", *out_shape)
                 .add("orig_output_shape", *out_shape)
                 .add("input_q_params", input_q_params)
                 .add("output_q_params", output_q_params)
+                .add("design_param", design_param)
                 //   .add("modified_b_input_scale",
                 //        std::to_string(modified_b_input_scale))
                 //   .add("modified_b_input_zp",

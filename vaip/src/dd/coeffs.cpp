@@ -1803,6 +1803,156 @@ dq_uint16A_int4W_conv_chwise_q_param_gen(
   return {C0, C1, C2, conv_shift, (int64_t)shft_c2};
 }
 
+std::tuple<std::vector<int64_t>, std::vector<int32_t>, std::vector<int32_t>,
+           int64_t, int64_t>
+dq_uint16A_int4W_conv_chwise_bias_add_q_param_gen(
+    float in_s, uint16_t in_zp, const std::vector<int8_t>& w,
+    gsl::span<const float> w_s, const std::vector<int8_t>& w_zp,
+    const std::vector<int64_t>& w_shape, gsl::span<const uint16_t> bias,
+    float b_s, uint16_t b_zp, float o_s, uint16_t o_zp) {
+
+  CHECK(w_shape.size() == 4);
+  int64_t num_weights_unrolled = w_shape[1] * w_shape[2] * w_shape[3];
+  int64_t num_weights_unrolled_origin = num_weights_unrolled;
+
+  auto max_abs_it =
+      std::max_element(w_zp.begin(), w_zp.end(),
+                       [](int a, int b) { return std::abs(a) < std::abs(b); });
+  int32_t max_W_zpt = 0;
+  int32_t shft_w_zpt_slack;
+  if (max_abs_it != w_zp.end()) {
+    max_W_zpt = std::abs(*max_abs_it);
+  }
+
+  if (max_W_zpt > 0)
+    shft_w_zpt_slack = std::ceil(std::log2(max_W_zpt));
+  else
+    shft_w_zpt_slack = 0;
+
+  int64_t conv_shift = (int64_t)(std::min(
+      std::max((int)std::ceil(std::log2(num_weights_unrolled)) - 12, 0), 15));
+
+  std::vector<double> c2_coeff(w_shape[0], 0);
+  double c4_coeff = (b_s / o_s);
+  for (size_t i = 0; i < c2_coeff.size(); i++)
+    c2_coeff[i] = (in_s * w_s[i]) / o_s;
+
+  std::vector<int64_t> c2_coeff_prime(w_shape[0], 0);
+  int32_t max_c2_int_val = (1 << (31 - conv_shift - shft_w_zpt_slack)) - 1;
+
+  std::vector<int64_t> bias_min_zp(bias.size());
+  std::transform(bias.begin(), bias.end(), bias_min_zp.begin(),
+                 [b_zp](uint16_t b) {
+                   return static_cast<int64_t>(b) - static_cast<int64_t>(b_zp);
+                 });
+
+  float shift_max = std::numeric_limits<float>::infinity();
+  int32_t shft_c2 = 0;
+  std::tie(c2_coeff_prime, shft_c2) =
+      find_closest_shifted_int32_vec(c2_coeff, max_c2_int_val);
+  int64_t c4_coeff_prime = 0;
+  int32_t shft_c4 = 0;
+  std::tie(c4_coeff_prime, shft_c4) =
+      find_closest_shifted_int32_shiftmax(c4_coeff, 8388607, shift_max);
+  if (shft_c2 != shft_c4) {
+    int64_t diff_shft_c2_c4 = shft_c2 - shft_c4;
+    int64_t abs_diff_shft_c2_c4 = std::abs(diff_shft_c2_c4);
+    if (diff_shft_c2_c4 > 0) {
+      c4_coeff_prime = c4_coeff_prime << abs_diff_shft_c2_c4;
+    } else if (diff_shft_c2_c4 < 0) {
+      c4_coeff_prime = c4_coeff_prime >> abs_diff_shft_c2_c4;
+    } else {
+      c4_coeff_prime = c4_coeff_prime;
+    }
+  }
+
+  int64_t o_zp_int64 = static_cast<int64_t>(o_zp);
+  std::vector<int64_t> c3_coeff_scale(w_shape[0], 0);
+
+  for (size_t i = 0; i < c3_coeff_scale.size(); i++)
+    c3_coeff_scale[i] = -c2_coeff_prime[i] * w_zp[i];
+
+  int32_t c3_coeff_offset = -in_zp * num_weights_unrolled;
+  int64_t c3_coeff_scale_shift = 0;
+  CHECK(std::abs(c3_coeff_scale[0]) <= std::numeric_limits<int32_t>::max())
+      << "Current AIE uint16A_uint8W qdq implementation does not support ifm "
+         "sum shift";
+
+  std::vector<int32_t> C2(w_shape[0], 0);
+  std::vector<int32_t> C1(w_shape[0], 0);
+  for (size_t i = 0; i < C2.size(); i++) {
+    C2[i] = static_cast<int32_t>(c2_coeff_prime[i] << conv_shift);
+    C1[i] = static_cast<int32_t>(c3_coeff_scale[i]);
+  }
+
+  std::vector<int64_t> C0(w_shape[0], 0);
+  for (size_t i = 0; i < C0.size(); ++i) {
+    int range_start = i * num_weights_unrolled_origin;
+    int range_end = (i + 1) * num_weights_unrolled_origin;
+    C0[i] = (-in_zp * c2_coeff_prime[i]) *
+                (std::accumulate(w.begin() + range_start, w.begin() + range_end,
+                                 0LL)) +
+            (bias_min_zp[i] * c4_coeff_prime) + (o_zp_int64 << shft_c2) +
+            c3_coeff_scale[i] * (c3_coeff_offset << c3_coeff_scale_shift);
+  }
+
+  return {C0, C1, C2, conv_shift, (int64_t)shft_c2};
+}
+
+std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>
+dq_uint16A_uint8W_conv_q_param_gen_shiftmax(float in_s, uint16_t in_zp,
+                                            gsl::span<const uint8_t> w,
+                                            float w_s, uint8_t w_zp,
+                                            const std::vector<int64_t>& w_shape,
+                                            gsl::span<const int32_t> b,
+                                            float b_s, int32_t b_zp, float o_s,
+                                            uint16_t o_zp) {
+  // not a must, may need to relax
+  CHECK(w_shape.size() == 4);
+  int64_t num_weights_unrolled = w_shape[1] * w_shape[2] * w_shape[3];
+  int64_t num_weights_unrolled_origin = num_weights_unrolled;
+  // hardcode for m3uec? may need to change later
+  int64_t num_weight_zp_padded = 0;
+  if (num_weights_unrolled == 3 * 7 * 7) {
+    int64_t num_weights_unrolled_new = 4 * 7 * 8;
+    num_weight_zp_padded = num_weights_unrolled_new - num_weights_unrolled;
+    num_weights_unrolled = num_weights_unrolled_new;
+  }
+  int64_t conv_shift = (int64_t)(std::min(
+      std::max((int)std::ceil(std::log2(num_weights_unrolled)) - 7, 0), 7));
+  float c2_coeff = (in_s * w_s) / o_s;
+  float shift_max = std::numeric_limits<float>::infinity();
+  int64_t c2_coeff_prime;
+  int32_t shft_c2;
+  std::tie(c2_coeff_prime, shft_c2) =
+      find_closest_shifted_int32_shiftmax(c2_coeff, 8388607, shift_max);
+
+  int64_t o_zp_int64 = static_cast<int64_t>(o_zp);
+  int64_t c3_coeff_scale = -c2_coeff_prime * w_zp;
+  int32_t c3_coeff_offset = -in_zp * num_weights_unrolled;
+  int64_t c3_coeff_scale_shift = 0;
+  CHECK(std::abs(c3_coeff_scale) <= std::numeric_limits<int32_t>::max())
+      << "Current AIE uint16A_uint8W qdq implementation does not support ifm "
+         "sum shift";
+  int32_t C2 = static_cast<int32_t>(c2_coeff_prime << conv_shift);
+  int32_t C1 = static_cast<int32_t>(c3_coeff_scale);
+
+  std::vector<int64_t> C0(w_shape[0], 0);
+  for (size_t i = 0; i < C0.size(); ++i) {
+    int range_start = i * num_weights_unrolled_origin;
+    int range_end = (i + 1) * num_weights_unrolled_origin;
+    C0[i] = (-in_zp * c2_coeff_prime) *
+                (std::accumulate(w.begin() + range_start, w.begin() + range_end,
+                                 0LL) +
+                 num_weight_zp_padded * w_zp) +
+            (b.size() > 0 ? b[i] * c2_coeff_prime : 0) +
+            (o_zp_int64 << shft_c2) +
+            c3_coeff_scale * (c3_coeff_offset << c3_coeff_scale_shift);
+  }
+
+  return {C0, C1, C2, conv_shift, (int64_t)shft_c2};
+}
+
 std::tuple<std::vector<int64_t>, int64_t, int64_t, int64_t, int64_t>
 dq_uint16A_int8W_conv_q_param_gen(float in_s, uint16_t in_zp,
                                   gsl::span<const int8_t> w, float w_s,

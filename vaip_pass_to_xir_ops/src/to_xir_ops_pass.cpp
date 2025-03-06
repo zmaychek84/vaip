@@ -335,9 +335,8 @@ ToXirRule& ToXirRule::set_shape_1_for_scalar() {
 static ToXirRule::action_t convert_quant_dequant() {
   return [](ToXirRule* self, const Graph& graph, const Node& node,
             NodeAttributesBuilder& attrs) -> bool {
-    if (self->pass_.get_context()
-            ->get_provider_option("xlnx_enable_old_qdq")
-            .value() != "1") {
+    if (self->pass_.get_context()->get_provider_option("xlnx_enable_old_qdq",
+                                                       "1") != "1") {
       return false;
     }
     auto builder = PatternBuilder();
@@ -427,15 +426,13 @@ static ToXirRule::action_t convert_quant_dequant() {
 static ToXirRule::action_t convert_qdq() {
   return [](ToXirRule* self, const Graph& graph, const Node& node,
             NodeAttributesBuilder& attrs) -> bool {
-    if (self->pass_.get_context()
-            ->get_provider_option("xlnx_enable_old_qdq")
-            .value() == "1") {
+    if (self->pass_.get_context()->get_provider_option("xlnx_enable_old_qdq",
+                                                       "1") == "1") {
       return false;
     }
     auto round_mode = "DPU_ROUND";
-    if (self->pass_.get_context()
-            ->get_provider_option("xlnx_enable_py3_round")
-            .value() == "1") {
+    if (self->pass_.get_context()->get_provider_option("xlnx_enable_py3_round",
+                                                       "0") == "1") {
       round_mode = "PY3_ROUND";
     }
     attrs.add("round_mode", round_mode);
@@ -481,9 +478,8 @@ static ToXirRule::action_t convert_fixneuron() {
       return false;
     }
     auto round_mode = "DPU_ROUND";
-    if (self->pass_.get_context()
-            ->get_provider_option("xlnx_enable_py3_round")
-            .value() == "1") {
+    if (self->pass_.get_context()->get_provider_option("xlnx_enable_py3_round",
+                                                       "0") == "1") {
       round_mode = "PY3_ROUND";
     }
     attrs.add("fix_point", static_cast<int64_t>(fix_point))

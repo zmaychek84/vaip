@@ -3,7 +3,7 @@ microsoft_gsl;https://github.com/microsoft/GSL/archive/refs/tags/v4.0.0.zip;cf36
 zlib;https://github.com/madler/zlib.git;v1.2.13
 glog;https://github.com/google/glog/archive/refs/tags/v0.6.0.zip;b9c4c032e79300665a92d8dbc25513a0ee7ea47c
 Boost;https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz;893b5203b862eb9bbd08553e24ff146a
-tar;https://github.com/freebsd/freebsd-src/archive/refs/tags/release/12.0.0.zip;03e620eb5ed4c3858a4451966d8cb73d
+tar;https://github.com/freebsd/freebsd-src/archive/refs/tags/release/12.2.0.zip;8b93f761118fa753aaad526b46542a97
 unilog;https://github.com/amd/unilog.git;3abf8046d7ec8e651b8ec7ef19627a667ffaa741
 xir;https://github.com/amd/xir.git;402341dd389d2f3ecd128e0a414d3fae3ca42db0
 target_factory;https://github.com/amd/target_factory.git;7270acd2eb90e8f5b4fc7354c66c2a3fd960111f
@@ -12,6 +12,6 @@ trace_logging;https://github.com/amd/trace_logging.git;8f3785a9aa0241d7dc5e8300b
 graph_engine;https://github.com/amd/graph_engine.git;2410822ec0450ff3602ef26bbe074685765c9144
 spdlog;https://github.com/gabime/spdlog.git;v1.x
 GTest;https://github.com/google/googletest.git;main
-dod;https://github.com/amd/DynamicDispatch.git;f50a85234d8a8cd0b2b441425247b93498c8fc4d
+dod;https://github.com/amd/DynamicDispatch.git;cb103f2a2d95a546fec7217956269971efb65112
 transformers;https://github.com/amd/transformers.git;f5eb3dfe9955c7836d6d7fe562e1f612aa2950e4
 xaiengine;https://github.com/Xilinx/aie-rt.git;4a012d7932155217d2c9368a3588a3c41d2b9edb

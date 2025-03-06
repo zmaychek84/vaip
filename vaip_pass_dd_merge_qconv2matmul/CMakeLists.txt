@@ -46,3 +46,28 @@ vai_add_library(
 
 target_link_libraries(pass_dd_merge_qconv2matmul_4 PRIVATE vaip::core vart::util glog::glog vaip::vaip_pattern_zoo)
 target_compile_definitions(pass_dd_merge_qconv2matmul_4 PUBLIC "-DENABLE_VAIP_PASS_DD_MERGE_QCONV2MATMUL=1")
+vai_add_library(
+  NAME
+  pass_dd_merge_qconv2matmul_5
+  SRCS
+  src/pattern_qkv_bias_add.cpp)
+
+target_link_libraries(pass_dd_merge_qconv2matmul_5 PRIVATE vaip::core vart::util glog::glog vaip::vaip_pattern_zoo)
+target_compile_definitions(pass_dd_merge_qconv2matmul_5 PUBLIC "-DENABLE_VAIP_PASS_DD_MERGE_QCONV2MATMUL=1")
+vai_add_library(
+  NAME
+  pass_dd_merge_qconv2matmul_6
+  SRCS
+  src/pattern_up_proj.cpp)
+
+target_link_libraries(pass_dd_merge_qconv2matmul_6 PRIVATE vaip::core vart::util glog::glog vaip::vaip_pattern_zoo)
+target_compile_definitions(pass_dd_merge_qconv2matmul_6 PUBLIC "-DENABLE_VAIP_PASS_DD_MERGE_QCONV2MATMUL=1")
+
+vai_add_library(
+  NAME
+  pass_dd_merge_qconv2matmul_7
+  SRCS
+  src/pattern_conv2matmul_silu.cpp)
+
+target_link_libraries(pass_dd_merge_qconv2matmul_7 PRIVATE vaip::core vart::util glog::glog vaip::vaip_pattern_zoo)
+target_compile_definitions(pass_dd_merge_qconv2matmul_7 PUBLIC "-DENABLE_VAIP_PASS_DD_MERGE_QCONV2MATMUL=1")

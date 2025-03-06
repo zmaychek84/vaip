@@ -13,7 +13,10 @@
 // namespace vaip_vaiml_custom_op {
 namespace vaiml_elf_runner {
 
-// Constructor for hw_elf_runner
+hw_elf_runner::hw_elf_runner() : lazy_ifm_creation_(false) {}
+hw_elf_runner::hw_elf_runner(bool lazy_ifm_creation)
+    : lazy_ifm_creation_(lazy_ifm_creation) {}
+
 void hw_elf_runner::load_xclbin(const std::vector<char>& xclbin) {
   context_ = &xrt_context::get_instance(xclbin);
 }
@@ -31,36 +34,53 @@ void hw_elf_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
   VAIML_DEBUG_PRINT("sizes passed to hw runner", ifm_size, ",", wts_size, ",",
                     ofm_size, ",", tmp_size);
   if (!gt_mode_) { // legacy mode
-    ifm_bo_ = xrt::ext::bo{context_->get_device(), ifm_size_};
     wts_bo_ = xrt::ext::bo{context_->get_device(), wts_size_};
     ofm_bo_ = xrt::ext::bo{context_->get_device(), ofm_size_};
     tmp_bo_ = xrt::ext::bo{context_->get_device(), tmp_size_};
     logical_ofm_bo_ = &ofm_bo_;
+    if (!lazy_ifm_creation_) {
+      ifm_bo_ = xrt::ext::bo{context_->get_device(), ifm_size_};
+      ifm_ptr_ = ifm_bo_.map<int8_t*>();
+    }
+    wts_ptr_ = wts_bo_.map<int8_t*>();
+    ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
   } else {
-    ifm_bo_ = xrt::ext::bo{context_->get_device(), ifm_size_ + ofm_size_};
     wts_bo_ = xrt::ext::bo{context_->get_device(), wts_size_};
     tmp_bo_ = xrt::ext::bo{context_->get_device(), tmp_size_};
-
     logical_ofm_bo_ = &ifm_bo_;
-
-    ifm_ptr_ = ifm_bo_.map<int8_t*>();
-    memset(ifm_ptr_, 0, ifm_size_ + ofm_size_);
+    if (!lazy_ifm_creation_) {
+      ifm_bo_ = xrt::ext::bo{context_->get_device(), ifm_size_};
+      ifm_ptr_ = ifm_bo_.map<int8_t*>();
+      ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
+    }
     wts_ptr_ = wts_bo_.map<int8_t*>();
-    memset(wts_ptr_, 0, wts_size_);
-    ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
-    int8_t* tmp_buff_ptr_ = tmp_bo_.map<int8_t*>();
-    memset(tmp_buff_ptr_, 0, tmp_size_);
   }
+  this->create_ert_kernel(mod_vec_, kernel_index);
+
+  run_offsets_ = run_offsets;
+  kernel_index_ = kernel_index;
 
   runlist_wrapped_.emplace_back(context_->get_context());
   xrt::runlist& cmdq = runlist_wrapped_[0];
 
-  this->create_ert_kernel(mod_vec_, kernel_index);
-
-  for (int sg_id = 0; sg_id < run_offsets.size(); sg_id++) {
+  for (int sg_id = 0; sg_id < run_offsets_.size(); sg_id++) {
     // create xrt run obj in advance
     // uint32_t idx = kernel_index[sg_id];
-    auto run = xrt::run(this->get_kernel()); // always use kernel at idx-0
+    run_obj_vec_.emplace_back(this->get_kernel()); // always use kernel at idx-0
+    cmdq.add(run_obj_vec_.back());
+  }
+  if (!lazy_ifm_creation_) {
+    create_ifm_and_update_run_obj();
+  }
+}
+void hw_elf_runner::create_ifm_and_update_run_obj() {
+  if (lazy_ifm_creation_) {
+    ifm_bo_ = xrt::ext::bo{context_->get_device(), ifm_size_};
+    ifm_ptr_ = ifm_bo_.map<int8_t*>();
+    ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
+  }
+  for (int sg_id = 0; sg_id < run_offsets_.size(); sg_id++) {
+    auto& run = run_obj_vec_[sg_id];
 
     if (bo_order_vec_[sg_id] == BO_ORDER::ODR_GT_CONV) {
       sub_bo_.push_back(
@@ -76,7 +96,7 @@ void hw_elf_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
       run.set_arg(7, sub_bo_.back()[3]);
     }
     if (bo_order_vec_[sg_id] == BO_ORDER::ODR_GT_HEAD) {
-      sub_bo_.push_back({xrt::bo(wts_bo_, 5418432, 2501056),
+      sub_bo_.push_back({xrt::bo(wts_bo_, 5418432, 0),
                          xrt::bo(ifm_bo_, 552960, 16480),
                          xrt::bo(ifm_bo_, 25600, 16480 + 552960)});
       run.set_arg(0, 3);
@@ -89,7 +109,7 @@ void hw_elf_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
       run.set_arg(7, 0);
     }
     if (bo_order_vec_[sg_id] == BO_ORDER::ODR_GT_TAIL) {
-      sub_bo_.push_back({xrt::bo(wts_bo_, 590400, 0),
+      sub_bo_.push_back({xrt::bo(wts_bo_, 302656, 0),
                          xrt::bo(ifm_bo_, 25600, 0), xrt::bo(tmp_bo_, 51200, 0),
                          xrt::bo(ifm_bo_, 25600, 0)});
       run.set_arg(0, 3);
@@ -103,10 +123,10 @@ void hw_elf_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
     }
     if (bo_order_vec_[sg_id] == BO_ORDER::ODR_GT_TRANSFORMER) {
       sub_bo_.push_back(
-          {xrt::bo(wts_bo_, 11608064, run_offsets[sg_id].wts_offset),
-           xrt::bo(ifm_bo_, 4300800, run_offsets[sg_id].ifm_offset),
+          {xrt::bo(wts_bo_, 6032384, run_offsets_[sg_id].wts_offset),
+           xrt::bo(ifm_bo_, 4300800, run_offsets_[sg_id].ifm_offset),
            xrt::bo(tmp_bo_, 1536000, 0),
-           xrt::bo(ifm_bo_, 4300800, run_offsets[sg_id].ofm_offset)});
+           xrt::bo(ifm_bo_, 4300800, run_offsets_[sg_id].ofm_offset)});
       run.set_arg(0, 3);
       run.set_arg(1, 0);
       run.set_arg(2, 0);
@@ -129,11 +149,7 @@ void hw_elf_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
       run.set_arg(6, 0);
       run.set_arg(7, sub_bo_.back()[3]);
     }
-    cmdq.add(run);
   }
-  ifm_ptr_ = ifm_bo_.map<int8_t*>();
-  wts_ptr_ = wts_bo_.map<int8_t*>();
-  ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
 }
 
 void hw_elf_runner::set_bo_order(BO_ORDER order) { bo_order_ = order; }

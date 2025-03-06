@@ -38,10 +38,6 @@ struct MergeFlatMLP2 {
     return Rule::create_rule(
         result, [=](onnxruntime::Graph* graph, binder_t& binder) -> bool {
           std::vector<std::string> ns = vaip::dd::get_node_names(graph, binder);
-          // std::cout<< ns[4] << std::endl;
-          //   if (ns[4] == "/model/layers.1/mlp/gate_up_proj/"
-          //                "MatMul_nhwc_to_nchw_output_DequantizeLinear_Output")
-          //     return false;
           //  Node and Data Access
           auto input_0 = binder["/model/layers.31/post_attention_layernorm/"
                                 "Mul_1_output_0_QuantizeLinear_Output"];
@@ -87,10 +83,10 @@ struct MergeFlatMLP2 {
           std::vector<int64_t> op_shape2(*out_shape);
           op_shape2[3] = op_shape2[3] / 2;
           auto node_name = node_arg_get_name(*out_matmul_node.node_arg);
-          auto out_matmul_sc_node =
-              binder["/model/layers.31/mlp/Slice_output_0_scale"];
-          auto out_matmul_zp_node =
-              binder["/model/layers.31/mlp/Slice_output_0_zero_point"];
+          auto out_matmul_sc_node = binder
+              ["/model/layers.31/mlp/gate_up_proj/MatMul_output_0nchw_scale"];
+          auto out_matmul_zp_node = binder["/model/layers.31/mlp/gate_up_proj/"
+                                           "MatMul_output_0nchw_zero_point"];
 
           auto out_matmul_sc_node1 =
               binder["/model/layers.31/mlp/Slice_1_output_0_scale"];
@@ -161,32 +157,31 @@ struct MergeFlatMLP2 {
 
           gsl::span<const int32_t> bias;
           LOG(INFO) << "Bias size:" << bias.size();
-          //   auto [C0, C1, C2, conv_shift, shft_c2] =
-          //          vaip::dd::qmatmulcalc::dq_uint16A_int4W_conv_chwise_q_param_gen(
-          //            in_scale, in_zero_point, wts_vec, weights_scale, w_zp,
-          //            weights_shape, bias, 0.0f, 0, out_sc_mm, out_zp_mm
-          //          );
-
-          auto [C0_mm_silu, C1_mm_silu, C2_mm_silu, conv_shift_mm_silu,
-                shft_c2_mm_silu] =
+          auto [C0, C1, C2, conv_shift, shft_c2] =
               vaip::dd::qmatmulcalc::dq_uint16A_int4W_conv_chwise_q_param_gen(
-                  in_scale, in_zero_point, wts_vec_silu, w_sc_silu, w_zp_silu,
-                  w_shape2, bias, 0.0f, 0, out_sc_mm, out_zp_mm);
-          // std::vector<int64_t> C0_mm_silu(C0.data(), C0.data()+C0.size()/2);
-          // std::vector<int64_t> C0_mm(C0.data()+C0.size()/2,
-          // C0.data()+C0.size());
+                  in_scale, in_zero_point, wts_vec, weights_scale, w_zp,
+                  weights_shape, bias, 0.0f, 0, out_sc_mm, out_zp_mm);
 
-          // std::vector<int32_t> C1_mm_silu(C1.data(), C1.data()+C1.size()/2);
-          // std::vector<int32_t> C1_mm(C1.data()+C1.size()/2,
-          // C1.data()+C1.size());
+          // auto [C0_mm_silu, C1_mm_silu, C2_mm_silu, conv_shift_mm_silu,
+          //       shft_c2_mm_silu] =
+          //     vaip::dd::qmatmulcalc::dq_uint16A_int4W_conv_chwise_q_param_gen(
+          //         in_scale, in_zero_point, wts_vec_silu, w_sc_silu,
+          //         w_zp_silu, w_shape2, bias, 0.0f, 0, out_sc_mm, out_zp_mm);
+          std::vector<int64_t> C0_mm_silu(C0.data(), C0.data() + C0.size() / 2);
+          std::vector<int64_t> C0_mm(C0.data() + C0.size() / 2,
+                                     C0.data() + C0.size());
 
-          // std::vector<int32_t> C2_mm_silu(C2.data(), C2.data()+C2.size()/2);
-          // std::vector<int32_t> C2_mm(C2.data()+C2.size()/2,
-          // C2.data()+C2.size());
+          std::vector<int32_t> C1_mm_silu(C1.data(), C1.data() + C1.size() / 2);
+          std::vector<int32_t> C1_mm(C1.data() + C1.size() / 2,
+                                     C1.data() + C1.size());
+
+          std::vector<int32_t> C2_mm_silu(C2.data(), C2.data() + C2.size() / 2);
+          std::vector<int32_t> C2_mm(C2.data() + C2.size() / 2,
+                                     C2.data() + C2.size());
 
           std::vector<int32_t> input_qdq(16, 0);
-          input_qdq[8] = static_cast<int32_t>(shft_c2_mm_silu);
-          input_qdq[9] = static_cast<int32_t>(conv_shift_mm_silu);
+          input_qdq[8] = static_cast<int32_t>(shft_c2);
+          input_qdq[9] = static_cast<int32_t>(conv_shift);
           input_qdq[10] = 4;
           auto& input_qdq_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
               graph, node_name + "_qdq_", input_qdq,
@@ -210,9 +205,9 @@ struct MergeFlatMLP2 {
               ["/model/layers.31/mlp/activation_fn/Mul_output_0_zero_point"];
           auto silu_op_zp =
               vaip::dd::get_zp_from_node(*graph, *silu_op_zp_node.node_arg);
-          silu_qdq[0] = (int32_t)silu_ip_zp;
+          silu_qdq[0] = (int32_t)out_zp_mm;
           silu_qdq[1] =
-              (int32_t)vaip::dd::qmatmulcalc::float_to_bfloat16(silu_ip_sc);
+              (int32_t)vaip::dd::qmatmulcalc::float_to_bfloat16(out_sc_mm);
           silu_qdq[2] = (int32_t)silu_op_zp;
           silu_qdq[3] =
               (int32_t)vaip::dd::qmatmulcalc::float_to_bfloat16(1 / silu_op_sc);
@@ -239,6 +234,7 @@ struct MergeFlatMLP2 {
                   graph, wts_initializer_name, wts_data_silu, w_shape2, true);
           std::vector<std::string> input_types{
               "uint16", "int4", "int64", "int32", "int32", "int32", "int32"};
+          std::vector<std::string> output_types_silu{"bfloat16"};
           std::vector<std::string> output_types{"uint16"};
           auto matmulsilu_builder = NodeBuilder(*graph, *self);
           matmulsilu_builder.set_input_node_args(
@@ -258,19 +254,19 @@ struct MergeFlatMLP2 {
           matmulsilu_builder.add("input_format", "NHWC");
           matmulsilu_builder.add("design_param", "4x4PSU");
           matmulsilu_builder.add("in_dtypes", input_types);
-          matmulsilu_builder.add("out_dtypes", output_types);
+          matmulsilu_builder.add("out_dtypes", output_types_silu);
           matmulsilu_builder.add("input_q_params", input_q_params);
           matmulsilu_builder.add("output_q_params", output_q_params);
           auto& mm_silu_node = matmulsilu_builder.build();
 
-          auto [C0_mm, C1_mm, C2_mm, conv_shift_mm, shft_c2_mm] =
-              vaip::dd::qmatmulcalc::dq_uint16A_int4W_conv_chwise_q_param_gen(
-                  in_scale, in_zero_point, wts_vec_matm, w_sc_matm, w_zp_matm,
-                  w_shape2, bias, 0.0f, 0, out_sc_mm1, out_zp_mm1);
+          // auto [C0_mm, C1_mm, C2_mm, conv_shift_mm, shft_c2_mm] =
+          //     vaip::dd::qmatmulcalc::dq_uint16A_int4W_conv_chwise_q_param_gen(
+          //         in_scale, in_zero_point, wts_vec_matm, w_sc_matm,
+          //         w_zp_matm, w_shape2, bias, 0.0f, 0, out_sc_mm, out_zp_mm);
 
           std::vector<int32_t> input_qdq_matm(16, 0);
-          input_qdq_matm[8] = static_cast<int32_t>(shft_c2_mm);
-          input_qdq_matm[9] = static_cast<int32_t>(conv_shift_mm);
+          input_qdq_matm[8] = static_cast<int32_t>(shft_c2);
+          input_qdq_matm[9] = static_cast<int32_t>(conv_shift);
           input_qdq_matm[10] = 4;
           auto& input_qdq_mm_arg =
               vaip::dd::insert_named_tensor_in_graph<int32_t>(
@@ -345,7 +341,7 @@ struct MergeFlatMLP2 {
               vaip::dd::get_zp_from_node(*graph, *mul_in1_zp_node.node_arg);
 
           auto [mul_in1_sc_q, mul_in1_zp_q] =
-              vaip::dd::qmatmulcalc::calc_lrn_coeff(mul_in1_sc, mul_in1_zp);
+              vaip::dd::qmatmulcalc::calc_lrn_coeff(out_sc_mm, out_zp_mm);
 
           auto mul_op_sc_node =
               binder["/model/layers.31/mlp/Mul_2_output_0_scale"];
@@ -368,42 +364,40 @@ struct MergeFlatMLP2 {
           elt_coeffs[3] = mul_in1_zp_q;
           elt_coeffs[4] = mul_final_sc;
           elt_coeffs[5] = mul_final_zp;
-          elt_coeffs[6] = 1;
+          elt_coeffs[6] = 0;
           elt_coeffs[7] = 1;
           std::string elt_coeff_name = std::string(node_name + "_mul_qdq_");
           auto& elt_arg = vaip::dd::insert_named_tensor_in_graph<int32_t>(
               graph, elt_coeff_name, elt_coeffs,
               std::vector({(int64_t)elt_coeffs.size()}));
-          std::vector<std::string> mul_in_types{"uint16", "uint16", "int32"};
+          std::vector<std::string> mul_in_types{"bfloat16", "uint16", "int32"};
           auto& mm_node = matmul_builder.build();
-          //   int64_t mul_op_sz =
-          //       std::accumulate(op_shape2.begin(), op_shape2.end(),
-          //       (size_t)1,
-          //                       std::multiplies<int64_t>());
-          //   std::vector<int64_t> shape_mul = {mul_op_sz, 1};
-          //   std::vector<std::string> i_shapes_mul = {
-          //       shape_as_dd_string(shape_mul),
-          //       shape_as_dd_string(shape_mul)};
-          //   std::vector<std::string> o_shapes_mul = {
-          //       shape_as_dd_string(shape_mul)};
-          //   auto elemul_builder = NodeBuilder(*graph, *self);
-          //   elemul_builder.set_input_node_args(
-          //       {node_get_output_node_args(mm_silu_node)[0],
-          //        node_get_output_node_args(mm_node)[0], &elt_arg});
-          //   elemul_builder.set_op_type("QELWEMUL_qdq", "com.xilinx");
-          //   elemul_builder.clone_data_type(*flat_mlp_node.node);
-          //   elemul_builder.clone_attrs(*flat_mlp_node.node);
-          //   elemul_builder.set_anchor_point1(*flat_mlp_node.node);
-          //   elemul_builder.add("nodes", ns);
-          //   elemul_builder.add("orig_output_shape", *flat_mlp_shape);
-          //   // elemul_builder.add("dd_op_in_shape", i_shapes_mul);
-          //   // elemul_builder.add("dd_op_out_shape", o_shapes_mul);
-          //   elemul_builder.add("design_param", "4x4PSU");
-          //   elemul_builder.add("input_q_params", input_q_params1);
-          //   elemul_builder.add("output_q_params", output_q_params1);
-          //   elemul_builder.add("in_dtypes", mul_in_types);
-          //   elemul_builder.add("out_dtypes", dtypes);
-          //   elemul_builder.build();
+          int64_t mul_op_sz =
+              std::accumulate(op_shape2.begin(), op_shape2.end(), (size_t)1,
+                              std::multiplies<int64_t>());
+          std::vector<int64_t> shape_mul = {mul_op_sz, 1};
+          std::vector<std::string> i_shapes_mul = {
+              shape_as_dd_string(shape_mul), shape_as_dd_string(shape_mul)};
+          std::vector<std::string> o_shapes_mul = {
+              shape_as_dd_string(shape_mul)};
+          auto elemul_builder = NodeBuilder(*graph, *self);
+          elemul_builder.set_input_node_args(
+              {node_get_output_node_args(mm_silu_node)[0],
+               node_get_output_node_args(mm_node)[0], &elt_arg});
+          elemul_builder.set_op_type("QELWEMUL_qdq", "com.xilinx");
+          elemul_builder.clone_data_type(*flat_mlp_node.node);
+          elemul_builder.clone_attrs(*flat_mlp_node.node);
+          elemul_builder.set_anchor_point1(*flat_mlp_node.node);
+          elemul_builder.add("nodes", ns);
+          elemul_builder.add("orig_output_shape", *flat_mlp_shape);
+          // elemul_builder.add("dd_op_in_shape", i_shapes_mul);
+          // elemul_builder.add("dd_op_out_shape", o_shapes_mul);
+          elemul_builder.add("design_param", "4x4PSU");
+          elemul_builder.add("input_q_params", input_q_params1);
+          elemul_builder.add("output_q_params", output_q_params1);
+          elemul_builder.add("in_dtypes", mul_in_types);
+          elemul_builder.add("out_dtypes", dtypes);
+          elemul_builder.build();
           return true;
         });
   }

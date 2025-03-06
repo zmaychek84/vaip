@@ -70,15 +70,9 @@ void hw_runner::load_xclbin(const std::vector<char>& xclbin) {
   context_ = &xrt_context::get_instance(xclbin);
 }
 
-// void hw_runner::hw_runner_init(const std::string& xclbin_filename,
-//                                uint32_t ifm_size, uint32_t wts_size,
-//                                uint32_t ofm_size, uint32_t tmp_size,
-//                                bool gt_mode_) {
-//   this->load_xclbin(xclbin_filename);
-//   this->hw_runner_init(ifm_size, wts_size, ofm_size, tmp_size, gt_mode_, {},
-//   {});
-// }
-
+hw_runner::hw_runner() : lazy_ifm_creation_(false) {}
+hw_runner::hw_runner(bool lazy_ifm_creation)
+    : lazy_ifm_creation_(lazy_ifm_creation) {}
 void hw_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
                                uint32_t ofm_size, uint32_t tmp_size,
                                bool gt_mode_,
@@ -92,8 +86,6 @@ void hw_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
   VAIML_DEBUG_PRINT("sizes passed to hw runner", ifm_size, ",", wts_size, ",",
                     ofm_size, ",", tmp_size);
   if (!gt_mode_) { // legacy mode
-    ifm_bo_ = xrt::bo(context_->get_device(), ifm_size_, XRT_BO_FLAGS_HOST_ONLY,
-                      context_->get_kernel().group_id(0));
     wts_bo_ = xrt::bo(context_->get_device(), wts_size_, XRT_BO_FLAGS_HOST_ONLY,
                       context_->get_kernel().group_id(0));
     ofm_bo_ = xrt::bo(context_->get_device(), ofm_size_, XRT_BO_FLAGS_HOST_ONLY,
@@ -101,39 +93,60 @@ void hw_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
     tmp_bo_ = xrt::bo(context_->get_device(), tmp_size_, XRT_BO_FLAGS_HOST_ONLY,
                       context_->get_kernel().group_id(0));
     logical_ofm_bo_ = &ofm_bo_;
+    if (!lazy_ifm_creation_) {
+      ifm_bo_ =
+          xrt::bo(context_->get_device(), ifm_size_, XRT_BO_FLAGS_HOST_ONLY,
+                  context_->get_kernel().group_id(0));
+      ifm_ptr_ = ifm_bo_.map<int8_t*>();
+    }
+    wts_ptr_ = wts_bo_.map<int8_t*>();
+    ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
   } else {
-    ifm_bo_ =
-        xrt::bo(context_->get_device(), ifm_size_ + ofm_size_,
-                XRT_BO_FLAGS_HOST_ONLY, context_->get_kernel().group_id(0));
     wts_bo_ = xrt::bo(context_->get_device(), wts_size_, XRT_BO_FLAGS_HOST_ONLY,
                       context_->get_kernel().group_id(0));
     tmp_bo_ = xrt::bo(context_->get_device(), tmp_size_, XRT_BO_FLAGS_HOST_ONLY,
                       context_->get_kernel().group_id(0));
     logical_ofm_bo_ = &ifm_bo_;
-
-    ifm_ptr_ = ifm_bo_.map<int8_t*>();
-    memset(ifm_ptr_, 0, ifm_size_ + ofm_size_);
+    if (!lazy_ifm_creation_) {
+      ifm_bo_ =
+          xrt::bo(context_->get_device(), ifm_size_, XRT_BO_FLAGS_HOST_ONLY,
+                  context_->get_kernel().group_id(0));
+      ifm_ptr_ = ifm_bo_.map<int8_t*>();
+      ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
+    }
     wts_ptr_ = wts_bo_.map<int8_t*>();
-    memset(wts_ptr_, 0, wts_size_);
-    ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
-    int8_t* tmp_buff_ptr_ = tmp_bo_.map<int8_t*>();
-    memset(tmp_buff_ptr_, 0, tmp_size_);
   }
-#ifdef HW_RUNNER_USE_CMDLIST
+  run_offsets_ = run_offsets;
+  kernel_index_ = kernel_index;
+
+  // create xrt run obj in advance
   runlist_wrapped_.emplace_back(context_->get_context());
   xrt::runlist& cmdq = runlist_wrapped_[0];
-#endif
   std::uint64_t fm_0, fm_1, fm_2, fm_3, fm_4;
-  XRTRunOffset dummy_run_offset;
-  for (int sg_id = 0; sg_id < run_offsets.size(); sg_id++) {
+  for (int sg_id = 0; sg_id < run_offsets_.size(); sg_id++) {
+    uint32_t idx = kernel_index_[sg_id];
+    run_obj_vec_.emplace_back(context_->get_kernel(idx));
+    cmdq.add(run_obj_vec_.back());
+  }
+  if (!lazy_ifm_creation_) {
+    create_ifm_and_update_run_obj();
+  }
+}
+void hw_runner::create_ifm_and_update_run_obj() {
+  if (lazy_ifm_creation_) {
+    ifm_bo_ = xrt::bo(context_->get_device(), ifm_size_, XRT_BO_FLAGS_HOST_ONLY,
+                      context_->get_kernel().group_id(0));
+    ifm_ptr_ = ifm_bo_.map<int8_t*>();
+    ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
+  }
+  xrt::runlist& cmdq = runlist_wrapped_[0];
+  std::uint64_t fm_0, fm_1, fm_2, fm_3, fm_4;
+  for (int sg_id = 0; sg_id < run_offsets_.size(); sg_id++) {
     hw_runner_helper::set_fm(
         ifm_bo_, wts_bo_, tmp_bo_, *logical_ofm_bo_, bo_order_vec_[sg_id],
-        run_offsets[sg_id], fm_0, fm_1, fm_2, fm_3, fm_4,
+        run_offsets_[sg_id], fm_0, fm_1, fm_2, fm_3, fm_4,
         ctrl_pkt_bo_vec_.empty() ? nullptr : &ctrl_pkt_bo_vec_[sg_id]);
-    // create xrt run obj in advance
-#ifdef HW_RUNNER_USE_CMDLIST
-    uint32_t idx = kernel_index[sg_id];
-    auto run = xrt::run(context_->get_kernel(idx));
+    auto& run = run_obj_vec_[sg_id];
     run.set_arg(0, OPCODE);
     run.set_arg(1, instr_bo_vec_[sg_id]);
     run.set_arg(2, instr_bo_vec_[sg_id].size() / sizeof(uint32_t));
@@ -142,23 +155,7 @@ void hw_runner::hw_runner_init(uint32_t ifm_size, uint32_t wts_size,
     run.set_arg(5, fm_2);
     run.set_arg(6, fm_3);
     run.set_arg(7, fm_4);
-    cmdq.add(run);
-#else
-    run_obj_vec_.emplace_back(context_->get_kernel(sg_id));
-    run_obj_vec_.back().set_arg(0, OPCODE);
-    run_obj_vec_.back().set_arg(1, instr_bo_vec_[sg_id]);
-    run_obj_vec_.back().set_arg(2,
-                                instr_bo_vec_[sg_id].size() / sizeof(uint32_t));
-    run_obj_vec_.back().set_arg(3, fm_0);
-    run_obj_vec_.back().set_arg(4, fm_1);
-    run_obj_vec_.back().set_arg(5, fm_2);
-    run_obj_vec_.back().set_arg(6, fm_3);
-    run_obj_vec_.back().set_arg(7, fm_4);
-#endif
   }
-  ifm_ptr_ = ifm_bo_.map<int8_t*>();
-  wts_ptr_ = wts_bo_.map<int8_t*>();
-  ofm_ptr_ = logical_ofm_bo_->map<int8_t*>();
 }
 
 void hw_runner::set_bo_order(BO_ORDER order) { bo_order_ = order; }

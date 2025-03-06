@@ -126,6 +126,7 @@ static TargetProto* get_target_proto(ConfigProto& proto,
   TargetProto* ret = nullptr;
   for (auto& target : *proto.mutable_targets()) {
     if (target.name() == target_name) {
+      LOG_VERBOSE(1) << "use target: " << target_name;
       ret = &target;
       break;
     }
@@ -296,6 +297,16 @@ void update_config_by_target(ConfigProto& proto, const MepConfigTable* mep) {
   if (target.empty()) {
     target = proto.target();
   }
+
+  // Target priority
+  // 1. provider option
+  // 2. meptable
+  // 3. default target in config file
+  auto target_it = proto.provider_options().find("target");
+  if (target_it != proto.provider_options().end()) {
+    target = target_it->second;
+  }
+
   if (target.empty()) {
     LOG_VERBOSE(1)
         << "Target is empty, run all passes."; // old version, compatible
@@ -330,19 +341,20 @@ void update_config_by_target(ConfigProto& proto, const MepConfigTable* mep) {
     if (target_proto->has_old_qdq()) {
       use_old_qdq = target_proto->old_qdq();
     }
-    if (target_proto->has_py3_round()) {
-      use_py3_round = target_proto->py3_round();
+  }
+  if (target_proto->has_py3_round()) {
+    bool use_py3_round = target_proto->py3_round();
+    auto iter = proto.provider_options().find("xlnx_enable_py3_round");
+    if (iter == proto.provider_options().end()) {
+      (*proto.mutable_provider_options())["xlnx_enable_py3_round"] =
+          std::to_string(use_py3_round);
     }
   }
+
   auto iter = proto.provider_options().find("xlnx_enable_old_qdq");
   if (iter == proto.provider_options().end()) {
     (*proto.mutable_provider_options())["xlnx_enable_old_qdq"] =
         std::to_string(use_old_qdq);
-  }
-  iter = proto.provider_options().find("xlnx_enable_py3_round");
-  if (iter == proto.provider_options().end()) {
-    (*proto.mutable_provider_options())["xlnx_enable_py3_round"] =
-        std::to_string(use_py3_round);
   }
   std::unordered_map<std::string, PassProto> pass_map;
   remove_pass(proto, pass_map);
@@ -411,6 +423,11 @@ void add_custom_field(ConfigProto& proto, const std::string& str) {
   }
   auto po = proto.mutable_provider_options();
   for (auto key : to_be_delete) {
+    if (key == "target") {
+      // The target needs to be kept in the provider options , "target" has
+      // default value in config file.
+      continue;
+    }
     LOG_VERBOSE(1) << "picked_out_config: " << key << " = " << po->at(key);
     po->erase(key);
   }

@@ -62,5 +62,6 @@ public:
   virtual void get_bo_ptrs(int8_t*& ifm_ptr, int8_t*& wts_ptr,
                            int8_t*& ofm_ptr) = 0;
   virtual void pre_run_bo_sync() = 0;
+  virtual void create_ifm_and_update_run_obj() = 0;
 };
 } // namespace vaip_vaiml_custom_op

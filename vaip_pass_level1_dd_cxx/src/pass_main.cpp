@@ -246,13 +246,26 @@ struct Level1DynamicDispatch {
           << "cannot fuse subgraph:" << error.comments;
 
       // reading preemptible from the from provider options.
-      std::string is_preemptible = "false";
+      std::string is_preemptible = "0";
       if (session_option.find("is_preemptible") != session_option.end())
         is_preemptible = session_option.find("is_preemptible")->second;
+
+      bool enable_preemption = is_preemptible == "1";
+      if (session_option.find("enable_preemption") != session_option.end()) {
+        enable_preemption =
+            session_option.find("enable_preemption")->second == "1";
+      }
 
       std::string qos_priority = "";
       if (session_option.find("qos_priority") != session_option.end())
         qos_priority = session_option.find("qos_priority")->second;
+
+      bool dd_use_lazy_scratch_bo = true;
+      if (session_option.find("dd_use_lazy_scratch_bo") !=
+          session_option.end()) {
+        dd_use_lazy_scratch_bo =
+            session_option.find("dd_use_lazy_scratch_bo")->second == "1";
+      }
 
       dd::prepare_metadef_context_json_from_subgraph3(
           cloned_graph, meta_def_proto.get(), model_category, qos_priority,
@@ -299,7 +312,9 @@ struct Level1DynamicDispatch {
                                         read_xclbin.value().end());
         cfg.cache_dir = dd_cache_dir.string();
         cfg.xclbin_content = &xclbin;
+        cfg.enable_preemption = enable_preemption;
         cfg.model_name = model_category;
+        cfg.use_lazy_scratch_bo = dd_use_lazy_scratch_bo;
         // TODO : Model name missing in cfg. will add it while rebasing
         std::string dod_txn_root = "dynamic_dispatch_vaiep";
         LOG(INFO) << "BEFORE FUSION_RT";

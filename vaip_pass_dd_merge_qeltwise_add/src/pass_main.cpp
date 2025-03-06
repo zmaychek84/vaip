@@ -155,7 +155,8 @@ struct MergeQEltWiseAdd {
   static bool lrn_in_consumer(const Graph& g, const NodeArg* out) {
     auto consumers = graph_get_consumer_nodes(g, node_arg_get_name(*out));
     for (auto node : consumers) {
-      if (node_is_op(*node, "QLayerNorm", "com.xilinx")) {
+      if (node_is_op(*node, "QLayerNorm", "com.xilinx") ||
+          node_is_op(*node, "L2_Norm", "com.xilinx")) {
         return true;
       }
     }

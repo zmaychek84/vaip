@@ -30,8 +30,6 @@
 
 namespace vaip_vaiml_custom_op {
 
-size_t MyCustomOpHT1_2::gt_qkv_compute_iter = 0;
-std::map<std::string, std::vector<char>> MyCustomOpHT1_2::node_cache;
 SUBGRAPH_ID
 MyCustomOpHT1_2::IdentifySubgraph(
     const std::shared_ptr<MetaDefProto>& meta_def) {
@@ -144,9 +142,8 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
   datatype_to_string[ONNX_TENSOR_ELEMENT_DATA_TYPE_UINT64] = "uint64_t";
 
   // retrieve wts file from the cache directory to populate wts_
-  std::vector<char> wts_file;
   auto wts_file_opt = context->read_file_c8(constants_file_name_);
-  wts_file = wts_file_opt.value();
+  std::vector<char>& wts_file = wts_file_opt.value();
 
   auto const_info = meta_def->vaiml_param().const_data_info();
   wts_buffers_.resize(const_info.size());
@@ -289,6 +286,44 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
     VAIML_DEBUG_PRINT("Running InitHtWeight subgraph_id_: ", subgraph_id_);
     InitHtWeight(wts_, wts_ptr_, *context);
   }
+  if (subgraph_id_ == SUBGRAPH_ID::HT_SLICE) {
+    scales_["Slice_13_output_0_s"] =
+        *((float*)(wts_.at(Alias("Slice_13_output_0_s")).data));
+    scales_["Slice_27_output_0_s"] =
+        *((float*)(wts_.at(Alias("Slice_27_output_0_s")).data));
+    scales_["Slice_12_output_0_s"] =
+        *((float*)(wts_.at(Alias("Slice_12_output_0_s")).data));
+    scales_["Slice_26_output_0_s"] =
+        *((float*)(wts_.at(Alias("Slice_26_output_0_s")).data));
+
+    zero_points_["Slice_13_output_0_zp"] =
+        *((int8_t*)(wts_.at(Alias("Slice_13_output_0_zp")).data));
+    zero_points_["Slice_27_output_0_zp"] =
+        *((int8_t*)(wts_.at(Alias("Slice_27_output_0_zp")).data));
+    zero_points_["Slice_12_output_0_zp"] =
+        *((int8_t*)(wts_.at(Alias("Slice_12_output_0_zp")).data));
+    zero_points_["Slice_26_output_0_zp"] =
+        *((int8_t*)(wts_.at(Alias("Slice_26_output_0_zp")).data));
+  }
+  if (subgraph_id_ == SUBGRAPH_ID::HT_CONCAT) {
+    scales_["lstm320_output_1_s"] =
+        *((float*)(wts_.at(Alias("lstm320_output_1_s")).data));
+    scales_["lstm1024_output_1_s"] =
+        *((float*)(wts_.at(Alias("lstm1024_output_1_s")).data));
+    scales_["lstm320_output_2_s"] =
+        *((float*)(wts_.at(Alias("lstm320_output_2_s")).data));
+    scales_["lstm1024_output_2_s"] =
+        *((float*)(wts_.at(Alias("lstm1024_output_2_s")).data));
+
+    zero_points_["lstm320_output_1_zp"] =
+        *((int8_t*)(wts_.at(Alias("lstm320_output_1_zp")).data));
+    zero_points_["lstm1024_output_1_zp"] =
+        *((int8_t*)(wts_.at(Alias("lstm1024_output_1_zp")).data));
+    zero_points_["lstm320_output_2_zp"] =
+        *((int8_t*)(wts_.at(Alias("lstm320_output_2_zp")).data));
+    zero_points_["lstm1024_output_2_zp"] =
+        *((int8_t*)(wts_.at(Alias("lstm1024_output_2_zp")).data));
+  }
   VAIML_DEBUG_PRINT("Finish wts formated");
   // read_file_c8(wts_ptr_, vaiml_model_path_ + '/' + "wts32.txt", wts_size);
 
@@ -296,6 +331,7 @@ MyCustomOpHT1_2::MyCustomOpHT1_2(std::shared_ptr<const PassContext> context,
     runner_->pre_run_bo_sync();
   }
   VAIML_DEBUG_PRINT("DEBUG: MyCustomOpHT1_2 created for ", sg_name_);
+  { wts_buffers_.clear(); }
 }
 
 MyCustomOpHT1_2::~MyCustomOpHT1_2() {}
@@ -561,38 +597,8 @@ int32_t MyCustomOpHT1_2::GetOnputDataAndSet(Ort::KernelContext& ctx, int index,
     ((int8_t*)data)[i] = int8_t(((uint16_t*)ofm_ptr)[i] - 128);
   }
 
-  // flexmlrt::client::ErtIoType ofm_vec;
-  // ofm_vec.data = std::move(data);
-  // ofm_vec.name =
-  //     (index == 0) ? "ofm_ddr" : ("ofm_ddr_" + std::to_string(index));
-  // ofm_vec.idx = (int)index;
-  // ofm_vec.size = num_elements * datatype_to_size.at(tensor_type);
-  // VAIML_DEBUG_PRINT("    output ", index, " data buffer size: ",
-  // ofm_vec.size); ofm_vec.type = datatype_to_string.at(tensor_type);
-  // VAIML_DEBUG_PRINT("    output ", index, " type: ", ofm_vec.type);
-  // for (int i = 0; i < 10; ++i)
-  //   VAIML_DEBUG_PRINT("    output[", index, "]  ",
-  //   (int)(((int8_t*)(data))[i]));
-
   return num_elements * sizeof(uint16_t);
 }
-
-// int32_t MyCustomOpHT1_2::Slice144Compute_GT(Ort::KernelContext& ctx) const {
-//   auto inputvalue = ctx.GetInput(0);
-//   const void* input = inputvalue.GetTensorRawData();
-//
-//   auto output_shapes = ort_output_shapes_;
-//   auto& output_shape = output_shapes[0];
-//   auto ortvalue = ctx.GetOutput(0, output_shape.data(), output_shape.size());
-//   void* output = ortvalue.GetTensorMutableRawData();
-//   int zp = 0;
-//   float scale = 0.000409241154557094;
-//   for (int i = 0; i < 3 * 80; i++) {
-//     ((float*)output)[i] = (((const uint16_t*)input)[100 * 80 + i] - zp) *
-//     scale;
-//   }
-//   return 3 * 80 * sizeof(float);
-// }
 
 int32_t MyCustomOpHT1_2::SliceCompute_HT(Ort::KernelContext& ctx) const {
   const float* c0 = ctx.GetInput(0).GetTensorData<float>();
@@ -612,17 +618,15 @@ int32_t MyCustomOpHT1_2::SliceCompute_HT(Ort::KernelContext& ctx) const {
       ctx.GetOutput(3, output_shapes[3].data(), output_shapes[3].size())
           .GetTensorMutableData<int8_t>();
 
-  q_int8(c0, slice_13, *((float*)(wts_.at(Alias("Slice_13_output_0_s")).data)),
-         *((int8_t*)(wts_.at(Alias("Slice_13_output_0_zp")).data)), 1024);
-  q_int8(c0 + 1024, slice_27,
-         *((float*)(wts_.at(Alias("Slice_27_output_0_s")).data)),
-         *((int8_t*)(wts_.at(Alias("Slice_27_output_0_zp")).data)), 1024);
+  q_int8(c0, slice_13, scales_.at("Slice_13_output_0_s"),
+         zero_points_.at("Slice_13_output_0_zp"), 1024);
+  q_int8(c0 + 1024, slice_27, scales_.at("Slice_27_output_0_s"),
+         zero_points_.at("Slice_27_output_0_zp"), 1024);
 
-  q_int8(h0, slice_12, *((float*)(wts_.at(Alias("Slice_12_output_0_s")).data)),
-         *((int8_t*)(wts_.at(Alias("Slice_12_output_0_zp")).data)), 1024);
-  q_int8(h0 + 1024, slice_26,
-         *((float*)(wts_.at(Alias("Slice_26_output_0_s")).data)),
-         *((int8_t*)(wts_.at(Alias("Slice_26_output_0_zp")).data)), 1024);
+  q_int8(h0, slice_12, scales_.at("Slice_12_output_0_s"),
+         zero_points_.at("Slice_12_output_0_zp"), 1024);
+  q_int8(h0 + 1024, slice_26, scales_.at("Slice_26_output_0_s"),
+         zero_points_.at("Slice_26_output_0_zp"), 1024);
 
   return 2 * 1024 * 2 * sizeof(int8_t);
 }
@@ -645,17 +649,15 @@ int32_t MyCustomOpHT1_2::ConcatCompute_HT(Ort::KernelContext& ctx) const {
   // dq_int8(lstm_0_2, c1, 0.02116578258574009, 18, 1024);
   // dq_int8(lstm_1_2, c1 + 1024, 0.02068982645869255, 36, 1024);
 
-  dq_int8(lstm_0_1, h1, *((float*)(wts_.at(Alias("lstm320_output_1_s")).data)),
-          *((int8_t*)(wts_.at(Alias("lstm320_output_1_zp")).data)), 1024);
-  dq_int8(lstm_1_1, h1 + 1024,
-          *((float*)(wts_.at(Alias("lstm1024_output_1_s")).data)),
-          *((int8_t*)(wts_.at(Alias("lstm1024_output_1_zp")).data)), 1024);
+  dq_int8(lstm_0_1, h1, scales_.at("lstm320_output_1_s"),
+          zero_points_.at("lstm320_output_1_zp"), 1024);
+  dq_int8(lstm_1_1, h1 + 1024, scales_.at("lstm1024_output_1_s"),
+          zero_points_.at("lstm1024_output_1_zp"), 1024);
 
-  dq_int8(lstm_0_2, c1, *((float*)(wts_.at(Alias("lstm320_output_2_s")).data)),
-          *((int8_t*)(wts_.at(Alias("lstm320_output_2_zp")).data)), 1024);
-  dq_int8(lstm_1_2, c1 + 1024,
-          *((float*)(wts_.at(Alias("lstm1024_output_2_s")).data)),
-          *((int8_t*)(wts_.at(Alias("lstm1024_output_2_zp")).data)), 1024);
+  dq_int8(lstm_0_2, c1, scales_.at("lstm320_output_2_s"),
+          zero_points_.at("lstm320_output_2_zp"), 1024);
+  dq_int8(lstm_1_2, c1 + 1024, scales_.at("lstm1024_output_2_s"),
+          zero_points_.at("lstm1024_output_2_zp"), 1024);
   return 2 * 1024 * 2 * sizeof(float);
 }
 void MyCustomOpHT1_2::Compute(const OrtApi* api,
@@ -665,21 +667,6 @@ void MyCustomOpHT1_2::Compute(const OrtApi* api,
   }
   Ort::KernelContext ctx(context);
   TIMER(Compute, sg_name_ + " ort compute total ")
-
-  // GT_NORM_K is now merged into GT_FRONT because EPContext does not support
-  // subgraph without input
-  // if (subgraph_id_ == SUBGRAPH_ID::GT_NORM_K) {
-  //  // cpu constant folding, return the cached result directly
-  //  GetOutputDataAndSet_GT(
-  //      ctx, 0,
-  //      (int8_t*)transpose_6_output_0_QuantizeLinear_output_str.data());
-  //  return;
-  //}
-
-  if (subgraph_id_ == SUBGRAPH_ID::GT_CACHE_FRAMES_SLICE) {
-    // Slice144Compute_GT(ctx);
-    // return;
-  }
 
   if (subgraph_id_ == SUBGRAPH_ID::HT_SLICE) {
     SliceCompute_HT(ctx);
@@ -692,54 +679,7 @@ void MyCustomOpHT1_2::Compute(const OrtApi* api,
   auto num_inputs = ctx.GetInputCount();
   VAIML_DEBUG_PRINT("    inputs number: ", num_inputs);
   int32_t ifm_offset = 0;
-  if (model_version_ == "GT_v1.2") {
-    //  TIMER(IFM, sg_name_ + " gt mode input memcpy ")
-    //  if (subgraph_id_ == SUBGRAPH_ID::GT_LN_MATMUL_ADD_LN) {
-    //    ifm_offset += GetInputDataAndSet_GT(ctx, 0, ifm_ptr_, subgraph_id_);
-    //  } else if (subgraph_id_ == SUBGRAPH_ID::GT_TRANSFORMER_BLOCK) {
-    //    GetInputDataAndSet_GT(
-    //        ctx, 0, ifm_ptr_,
-    //        SUBGRAPH_ID::GT_FRONT); // this is the input for conv part
-    //    const size_t gt_front_io_sz = 16480 + 552960;
-    //    for (int i = 0; i < TRANSFORMER_BLOCK_NUM; i++) {
-    //      gt_qkv_compute_iter++;
-    //      if (gt_qkv_compute_iter == 37) {
-    //        gt_qkv_compute_iter = 1;
-    //      }
-    //      /* onnx order:
-    //              cache_frames_QuantizeLinear_Output --> conv
-    //              inp_cache_k (k-gather)
-    //              inp_cache_v (v-gather)
-    //              mask_QuantizeLinear_Output (2 mul)
-    //        txn order:
-    //          bmm, v gather, k gather,
-    //          |mul after reducemin(0:475 of mask), mul before
-    //          reducemin(475:950 of
-    //        mask)|
-    //      */
-    //      // txn order: qkv ln, bmm, v gather, k gather, |mul after
-    //      // reducemin(0:475 of mask), mul before reducemin(475:950 of mask)|
-    //      size_t base_ddr = i * 4300800;
-    //      // setting bmm using directly result of constant folding
-    //      SetUpGTBmmWithConstants(ifm_ptr_ + gt_front_io_sz + base_ddr +
-    //      25600); GetInputDataAndSet_GT(ctx, 2,
-    //                            ifm_ptr_ + gt_front_io_sz + base_ddr +
-    //                            1561600, subgraph_id_);
-    //      GetInputDataAndSet_GT(ctx, 1,
-    //                            ifm_ptr_ + gt_front_io_sz + base_ddr +
-    //                            2048000, subgraph_id_);
-    //      GetInputDataAndSet_GT(ctx, 3,
-    //                            ifm_ptr_ + gt_front_io_sz + base_ddr +
-    //                            2534400, subgraph_id_);
-    //    }
-    //    // no need to set tail input as it is to be produced by intermediate
-    //    // blocks
-    //    if (node_cache.find("Mul_3") != node_cache.end()) {
-    //      node_cache.erase("Mul_3");
-    //      node_cache.erase("Mul_4");
-    //    }
-    //  }
-  } else if (model_version_ == "HT_v1.2") {
+  if (model_version_ == "HT_v1.2") {
     ifm_offset += GetInputDataAndSet(ctx, 4, ifm_ptr_ + ifm_offset); // ifm
     memcpy(ifm_ptr_ + ifm_offset, (int8_t*)lstm_lut.data(),
            lstm_lut.size() * sizeof(int16_t));                       // lstm_lut
@@ -767,31 +707,7 @@ void MyCustomOpHT1_2::Compute(const OrtApi* api,
       runner_->run((void*)ifm_ptr_, (void*)wts_ptr_, (void*)ofm_ptr_);
 
   int32_t ofm_offset = 0;
-  if (model_version_ == "GT_v1.2") {
-    // TIMER(OFM, sg_name_ + " gt mode output memcpy ")
-    // if (subgraph_id_ == SUBGRAPH_ID::GT_TRANSFORMER_BLOCK) {
-    //   /*
-    //    onnx order:
-    //         oup_lid_QuantizeLinear_Output
-    //         oup_cache_v
-    //         oup_cache_k
-    //         /Add_179_output_0_QuantizeLinear_Output
-    //    */
-    //   {
-    //     // v concat /concat_400
-    //     GetOutputDataAndSet_GT(ctx, 1, ofm_ptr_);
-    //     // k concat /concat_399
-    //     GetOutputDataAndSet_GT(ctx, 2, ofm_ptr_);
-    //   }
-    //   // /oup_lid_QuantizeLinear_Output
-    //   size_t gt_front_sz = 16480 + 552960;
-    //   size_t gt_tail_in_sz = 25600;
-    //   GetOutputDataAndSet_GT(ctx, 0, ofm_ptr_ + gt_front_sz + 64512000);
-    //   // /Add_179_output_0_QuantizeLinear_Output
-    //   GetOutputDataAndSet_GT(
-    //       ctx, 3, ofm_ptr_ + gt_front_sz + 154828800 + gt_tail_in_sz);
-    // }
-  } else if (model_version_ == "HT_v1.2") {
+  if (model_version_ == "HT_v1.2") {
     ofm_offset += 128;
     ofm_offset += GetOnputDataAndSet(ctx, 2, ofm_ptr_ + ofm_offset); // h1
     ofm_offset += GetOnputDataAndSet(ctx, 4, ofm_ptr_ + ofm_offset); // h1-lstm1

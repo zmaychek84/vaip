@@ -102,6 +102,26 @@ public:
   std::optional<vaip_cxx::NodeInput> operator()(size_t pattern_id) const;
 
   /**
+   * Retrieves the Node Name associated with the given pattern key.
+   *
+   * @param value The key of the pattern to retrieve.
+   * @return The Node binder name associated with the pattern key, or a
+   * default-constructed string if the pattern ID is not found.
+   */
+
+  std::optional<std::string> GetNodeNameFromKey(int value) const {
+    if (!name_to_ids_)
+      return std::nullopt; // Check if the map is valid
+
+    for (const auto& pair : *name_to_ids_) {
+      if (pair.second == value) {
+        return pair.first; // Found the corresponding string
+      }
+    }
+    return std::nullopt; // Value not found
+  }
+
+  /**
    * Retrieves the NodeInput associated with the specified pattern name.
    *
    * @param pattern_name The name of the pattern.

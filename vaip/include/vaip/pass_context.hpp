@@ -344,5 +344,10 @@ public:
   virtual bool get_is_ep_context_model() = 0;
 
   virtual void on_custom_op_create_end() = 0;
+
+  // for support combined shared context models
+  virtual void set_cache_file_md5_map(
+      const std::map<std::string, std::string>& cache_file_md5) = 0;
+  virtual std::map<std::string, std::string> get_cache_file_md5_map() = 0;
 };
 } // namespace vaip_core

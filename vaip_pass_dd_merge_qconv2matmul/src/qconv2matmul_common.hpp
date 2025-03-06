@@ -43,5 +43,58 @@ get_NCHW_NHWC(const std::vector<int64_t>& shapes) {
   }
   return {shapes, shapes};
 }
+static std::vector<const Node*>
+get_all_child_nodes(const onnxruntime::Graph& graph, const Node* node) {
+  std::vector<const Node*> ret;
+  for (const auto& output_arg : node_get_output_node_args(*node)) {
+    std::string output_name = node_arg_get_name(*output_arg);
+    std::vector<const onnxruntime::Node*> consumers =
+        graph_get_consumer_nodes(graph, output_name);
+
+    for (const auto consumer_node : consumers) {
+      ret.push_back(consumer_node);
+    }
+  }
+  return ret;
+}
+
+static bool check_no_op_child(Graph& g, const Node* a,
+                              NodeArg*& updated_node_arg,
+                              std::string no_op_name) {
+  auto next_nodes = get_all_child_nodes(g, a);
+  if (next_nodes.size() == 1) {
+    auto x = next_nodes[0];
+    auto child_op_type = VAIP_ORT_API(node_op_type)(*x);
+    if (child_op_type ==
+        "DequantizeLinear") { // check if dq --- sqeeze -- q  is found
+      next_nodes = get_all_child_nodes(g, x);
+      if (next_nodes.size() == 1) {
+        auto x = next_nodes[0];
+
+        auto child_op_type = VAIP_ORT_API(node_op_type)(*x);
+
+        if (child_op_type == no_op_name) {
+          next_nodes = get_all_child_nodes(g, x);
+          if (next_nodes.size() == 1) {
+            auto x = next_nodes[0];
+            auto child_op_type = VAIP_ORT_API(node_op_type)(*x);
+
+            if (child_op_type == "QuantizeLinear") {
+              auto output_node_args = node_get_output_node_args(*x);
+              for (auto ni : output_node_args) {
+                if (!node_arg_is_constant(g, *ni)) {
+                  updated_node_arg = const_cast<NodeArg*>(ni);
+                  continue;
+                }
+              }
+              return true;
+            }
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
 
 } // namespace qconv2matmul

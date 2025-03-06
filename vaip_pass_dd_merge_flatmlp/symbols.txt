@@ -1,2 +1,3 @@
 vaip_pass_dd_merge_flatmlp__hook
 vaip_pass_dd_merge_flatmlp2__hook
+vaip_pass_dd_merge_flatmlp3__hook

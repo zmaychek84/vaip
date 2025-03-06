@@ -64,7 +64,8 @@ public:
 
 class hw_runner : public hw_runner_base {
 public:
-  hw_runner(){};
+  hw_runner();
+  hw_runner(bool lazy_ifm_creation);
   // Constructor for hw_runner
 
   // Destructor
@@ -90,8 +91,12 @@ public:
 
   void get_bo_ptrs(int8_t*& ifm_ptr, int8_t*& wts_ptr, int8_t*& ofm_ptr);
   void pre_run_bo_sync();
+  void create_ifm_and_update_run_obj();
 
 private:
+  std::vector<XRTRunOffset> run_offsets_;
+  std::vector<KERNEL_NM> kernel_index_;
+  bool lazy_ifm_creation_ = false;
   BO_ORDER bo_order_ = BO_ORDER::WTS_IFM_TMP_OFM;
   std::vector<BO_ORDER> bo_order_vec_ = {};
   std::vector<xrt::run> run_obj_vec_;
@@ -110,10 +115,10 @@ private:
   std::vector<xrt::bo> instr_bo_vec_;
   std::vector<xrt::bo> ctrl_pkt_bo_vec_;
 
-  int8_t* ifm_ptr_;
-  int8_t* wts_ptr_;
-  int8_t* ofm_ptr_;
-  int8_t* tmp_ptr_;
+  int8_t* ifm_ptr_ = nullptr;
+  int8_t* wts_ptr_ = nullptr;
+  int8_t* ofm_ptr_ = nullptr;
+  int8_t* tmp_ptr_ = nullptr;
   xrt::bo ifm_bo_;
   xrt::bo wts_bo_;
   xrt::bo ofm_bo_;

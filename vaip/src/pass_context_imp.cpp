@@ -148,6 +148,13 @@ void PassContextImp::set_is_ep_context_model(bool is_ep_context_model) {
 bool PassContextImp::get_is_ep_context_model() {
   return this->is_ep_context_model;
 }
+void PassContextImp::set_cache_file_md5_map(
+    const std::map<std::string, std::string>& cache_file_md5) {
+  cache_file_md5s_ = cache_file_md5;
+}
+std::map<std::string, std::string> PassContextImp::get_cache_file_md5_map() {
+  return cache_file_md5s_;
+}
 
 int64_t PassContextImp::get_provider_option_i64(const std::string& option_name,
                                                 int64_t default_value) const {
@@ -535,17 +542,42 @@ CacheFileStreamWriterBuilder::build(const std::string& filename) {
   return std::make_unique<CacheFileStreamWriter>(std::move(stream));
 }
 
+std::unique_ptr<IStreamWriter>
+CacheFileVecStreamWriterBuilder::build(const std::string& filename) {
+  std::vector<std::unique_ptr<IStreamWriter>> writers;
+  for (auto pair : filename_to_md5_) {
+    if (pair.second == filename) {
+      auto stream = context->open_file_for_write(pair.first);
+      writers.push_back(
+          std::make_unique<CacheFileStreamWriter>(std::move(stream)));
+    }
+  }
+  return IStreamWriter::from_stream_writers(std::move(writers));
+}
 size_t CacheFileStreamReader::read(char* data, size_t size) {
   return reader_->fread(data, size);
 }
+
 bool PassContextImp::tar_file_to_cache_files(FILE* file) {
-  auto p = IStreamReader::from_FILE(file);
-  TarReader tar_reader(p.get());
-  CacheFileStreamWriterBuilder build(this);
-  for (;;) {
-    bool is_continue = tar_reader.read(&build);
-    if (!is_continue) {
-      break;
+  if (!get_cache_file_md5_map().empty()) {
+    auto p = IStreamReader::from_FILE(file);
+    TarReader tar_reader(p.get());
+    CacheFileVecStreamWriterBuilder builder(this, get_cache_file_md5_map());
+    for (;;) {
+      bool is_continue = tar_reader.read(&builder);
+      if (!is_continue) {
+        break;
+      }
+    }
+  } else {
+    auto p = IStreamReader::from_FILE(file);
+    TarReader tar_reader(p.get());
+    CacheFileStreamWriterBuilder builder(this);
+    for (;;) {
+      bool is_continue = tar_reader.read(&builder);
+      if (!is_continue) {
+        break;
+      }
     }
   }
   return true;

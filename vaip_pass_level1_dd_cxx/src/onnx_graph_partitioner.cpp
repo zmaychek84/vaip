@@ -92,6 +92,7 @@ partition_onnx_model(onnxruntime::Graph& graph) {
                                             "SILU",
                                             "QGelu",
                                             "QMatMulDynamic",
+                                            "FlatRMSAdd",
                                             "QMatMulDynamicSoftmax",
                                             "QMulSoftmax",
                                             "xcom-conv2d",

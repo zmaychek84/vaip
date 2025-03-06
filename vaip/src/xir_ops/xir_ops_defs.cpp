@@ -120,6 +120,7 @@ Ort::CustomOpDomain get_xir_domain() {
     // multi-output ops
     // (op_name , num_outputs)
     xir_custom_ops.emplace_back("sample_multi_outputs_op", 3);
+    xir_custom_ops.emplace_back("FlatRMSAdd", 2);
   }
   for (auto& op : xir_custom_ops) {
     domain.Add(&op);

@@ -60,6 +60,7 @@ private:
   }
 
 private:
+  const bool lazy_ifm_creation_ = true;
   int oup_lid_idx_ = -1;
   // default to 36 for GT, could be updated from vaiml pass statistics
   int transformer_block_num_ = 36;
@@ -74,9 +75,9 @@ private:
   std::string sg_name_;
   std::vector<std::vector<int64_t>> ort_output_shapes_;
   std::unique_ptr<hw_runner_base> runner_;
-  int8_t* wts_ptr_;
-  int8_t* ifm_ptr_;
-  int8_t* ofm_ptr_;
+  mutable int8_t* wts_ptr_;
+  mutable int8_t* ifm_ptr_;
+  mutable int8_t* ofm_ptr_;
   static std::map<std::string, std::vector<char>> node_cache;
   const std::map<SUBGRAPH_ID, size_t> gt_global_rtp_offset_ = {
       {SUBGRAPH_ID::GT_QKV, 0},

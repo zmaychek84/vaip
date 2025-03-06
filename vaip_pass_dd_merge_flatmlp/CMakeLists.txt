@@ -11,3 +11,5 @@ target_link_libraries(pass_dd_merge_flatmlp PRIVATE vaip::core vart::util glog::
 
 vai_add_library(NAME pass_dd_merge_flatmlp2 INCLUDE_DIR include SRCS src/pass_main2.cpp)
 target_link_libraries(pass_dd_merge_flatmlp2 PRIVATE vaip::core vart::util glog::glog vaip::vaip_pattern_zoo)
+vai_add_library(NAME pass_dd_merge_flatmlp3 INCLUDE_DIR include SRCS src/pass_main2_layer1.cpp)
+target_link_libraries(pass_dd_merge_flatmlp3 PRIVATE vaip::core vart::util glog::glog vaip::vaip_pattern_zoo)

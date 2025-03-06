@@ -53,8 +53,11 @@ private:
   const xir::Subgraph* subgraph_;
   const google::protobuf::RepeatedPtrField<MetaSchedule>& input_schedules_;
   const google::protobuf::RepeatedPtrField<MetaSchedule>& output_schedules_;
-  std::unique_ptr<RunnerRequestsQueue> runnerRequestsQueue_;
+  mutable std::unique_ptr<RunnerRequestsQueue> runnerRequestsQueue_;
   bool share_context_;
+  mutable bool initialized_;
+  mutable std::mutex init_mutex_;
+  std::string model_category_;
 };
 
 struct RunnerHolder {
@@ -99,6 +102,9 @@ public:
     auto request = runner_requests_.at(0);
     runner_requests_.erase(runner_requests_.begin());
     return request;
+  }
+  std::vector<std::shared_ptr<RunnerHolder>>& getRunnerRequst() {
+    return runner_requests_;
   }
 
 private:

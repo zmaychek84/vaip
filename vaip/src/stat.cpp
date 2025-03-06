@@ -140,10 +140,11 @@ static void collect_subgraph_stat(StatProto& proto,
   }
   for (auto& meta_def : context.meta_def()) {
     auto device = meta_def.device();
-    // concat and qdq custom ops are internally running on cpu only, so no need
-    // to display as seperate ops There may be other custom ops which were
-    // running on NPU internally, do not add them here eg:gqa or matmulnbits etc
-    if ("CONCAT" == device || "QDQ_OP" == device) {
+    // concat and qdq custom ops, QDQUNSQUEEZE are internally running on cpu
+    // only, so no need to display as seperate ops There may be other custom ops
+    // which were running on NPU internally, do not add them here eg:gqa or
+    // matmulnbits etc
+    if ("CONCAT" == device || "QDQ_OP" == device || "QDQUNSQUEEZE" == device) {
       device = "VITIS_EP_CPU";
     }
     auto iter = subgraph_count.find(device);
@@ -242,10 +243,11 @@ void collect_stat(const onnxruntime::Graph& graph,
     if ("DPU" == device || "DOD" == device) {
       device = "NPU";
     }
-    // concat and qdq custom ops are internally running on cpu only, so no need
-    // to display as seperate ops There may be other custom ops which were
-    // running on NPU internally, do not add them here eg:gqa or matmulnbits etc
-    if ("CONCAT" == device || "QDQ_OP" == device) {
+    // concat and qdq custom ops, QDQUNSQUEEZE are internally running on cpu
+    // only, so no need to display as seperate ops There may be other custom ops
+    // which were running on NPU internally, do not add them here eg:gqa or
+    // matmulnbits etc
+    if ("CONCAT" == device || "QDQ_OP" == device || "QDQUNSQUEEZE" == device) {
       device = "VITIS_EP_CPU";
     }
     auto comment = node_as_string(*node);

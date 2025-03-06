@@ -82,12 +82,12 @@ private:
   }
   // from developer designed alias to names in model
   std::unordered_map<std::string, std::string> initializer_map_;
+  std::unordered_map<std::string, float> scales_;
+  std::unordered_map<std::string, int8_t> zero_points_;
 
   SUBGRAPH_ID subgraph_id_ = SUBGRAPH_ID::UNKNOWN;
 
   std::string sg_name_;
-  static std::map<std::string, std::vector<char>> node_cache;
-  static size_t gt_qkv_compute_iter;
   bool debug_ = false;
   std::string vaiml_model_path_ = "vaiml_par_0";
   std::string device_name_ = "phx";

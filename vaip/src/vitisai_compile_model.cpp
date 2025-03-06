@@ -503,14 +503,22 @@ initialize_context(const std::string& model_path, const Graph& onnx_graph,
     context->context_proto.mutable_config()->mutable_provider_options()->insert(
         {"model_variant", model_variant});
 
-    std::string is_preemptible = "false";
+    std::string is_preemptible = "0";
     if (mep_table->has_is_preemptible()) {
-      is_preemptible = mep_table->is_preemptible() ? "true" : "false";
+      is_preemptible = mep_table->is_preemptible() ? "1" : "0";
 
       context->context_proto.mutable_config()
           ->mutable_provider_options()
           ->insert({"is_preemptible", is_preemptible});
     }
+
+    std::string dd_use_lazy_scratch_bo = "1";
+    if (mep_table->has_dd_use_lazy_scratch_bo()) {
+      dd_use_lazy_scratch_bo = mep_table->dd_use_lazy_scratch_bo() ? "1" : "0";
+    }
+
+    context->context_proto.mutable_config()->mutable_provider_options()->insert(
+        {"dd_use_lazy_scratch_bo", dd_use_lazy_scratch_bo});
 
     std::string qos_priority = "";
     if (mep_table->has_qos_priority()) {
@@ -519,6 +527,39 @@ initialize_context(const std::string& model_path, const Graph& onnx_graph,
       context->context_proto.mutable_config()
           ->mutable_provider_options()
           ->insert({"qos_priority", qos_priority});
+    }
+
+    std::string perf_pref = "";
+    if (mep_table->has_perf_pref()) {
+      perf_pref = mep_table->perf_pref();
+
+      context->context_proto.mutable_config()
+          ->mutable_provider_options()
+          ->insert({"perf_pref", perf_pref});
+    }
+
+    std::string dd_use_lazy_const_bo = "0";
+    if (mep_table->has_dd_use_lazy_const_bo()) {
+      dd_use_lazy_const_bo = mep_table->dd_use_lazy_const_bo() ? "1" : "0";
+      context->context_proto.mutable_config()
+          ->mutable_provider_options()
+          ->insert({"dd_use_lazy_const_bo", dd_use_lazy_const_bo});
+    }
+
+    std::string dealloc_scratch_bo = "0";
+    if (mep_table->has_dd_dealloc_scratch_bo()) {
+      dealloc_scratch_bo = mep_table->dd_dealloc_scratch_bo() ? "1" : "0";
+      context->context_proto.mutable_config()
+          ->mutable_provider_options()
+          ->insert({"dd_dealloc_scratch_bo", dealloc_scratch_bo});
+    }
+
+    std::string constbo_sharing_key = "";
+    if (mep_table->has_constbo_sharing_key()) {
+      constbo_sharing_key = mep_table->constbo_sharing_key();
+      context->context_proto.mutable_config()
+          ->mutable_provider_options()
+          ->insert({"constbo_sharing_key", constbo_sharing_key});
     }
   }
   vaip_core::update_config_by_target(*context->context_proto.mutable_config(),
@@ -877,6 +918,22 @@ store_cache_directory_from_main_node(PassContextImp& context,
     ep_context_file = temp_file;
     rewind(ep_context_file);
   }
+
+  // get attr "ep_cache_md5s" map from main node
+  if (main_node.has_attr("ep_cache_md5s")) {
+    auto md5_map_str = main_node.get_attr_string("ep_cache_md5s");
+    MY_LOG(2) << "get 'ep_cache_md5s' attr form shared ep context model : "
+              << md5_map_str;
+    // string to jsonObject
+    auto md5_map = std::map<std::string, std::string>();
+    auto md5_map_json_obj = nlohmann::json::parse(md5_map_str);
+    for (auto it = md5_map_json_obj.begin(); it != md5_map_json_obj.end();
+         ++it) {
+      md5_map[it.key()] = it.value();
+    }
+    context.set_cache_file_md5_map(md5_map);
+  }
+
   context.tar_file_to_cache_files(ep_context_file);
   fclose(ep_context_file);
   LOG_IF(INFO, ENV_PARAM(DEBUG_EP_CONTEXT))
